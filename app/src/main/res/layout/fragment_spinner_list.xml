@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:padding="2dp"
+    android:orientation="horizontal">
+
+    <Button
+        android:id="@+id/login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="login" />
+
+    <TextView
+        android:id="@+id/connected_device"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1.2"
+        android:background="@drawable/shape_help_category_tv_bg"
+        android:drawableRight="@mipmap/icon_down"
+        android:padding="10dp"
+        android:text="@string/unable_to_connect_device"
+        android:textColor="@color/content_color"
+        android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/scan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/devices_list" />
+
+</LinearLayout>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?><!--
+/*
+* Copyright (C) 2008 The Android Open Source Project
+*
+* Licensed under the Apache License, Version 2.0 (the "License");
+* you may not use this file except in compliance with the License.
+* You may obtain a copy of the License at
+*
+*      http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions and
+* limitations under the License.
+*/
+ -->
+
+<resources xmlns:android="http://schemas.android.com/apk/res/android" xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <string name="app_name">遥控器</string>
+    <string name="unable_to_connect_device">未连接设备</string>
+    <string name="devices_list">设备列表</string>
+    <string name="manual_ip_label">请输入斐讯盒子的IP</string>
+    <string name="manual_ip_entry_label">IP地址输入</string>
+    <string name="manual_ip_hint">xxx.xxx.xxx.xxx</string>
+    <string name="manual_ip_message">IP地址在斐讯盒子:设置 &gt; 网络设备 &gt; 网络信息查看</string>
+    <string name="manual_ip_error_address">无效IP地址.</string>
+    <string name="manual_ip_default_box_name">未知盒子</string>
+    <string name="manual_ip_connect">连接</string>
+    <string name="manual_ip_cancel">取消</string>
+    <string name="manual_ip_input">输入IP</string>
+    <string name="current_wifi">当前Wifi</string>
+    <!--  DiscoveryDevice - more devices -->
+
+    <string name="choose_box_controll">选择盒子进行控制</string>
+    <string name="recent_connect_devices">连接记录</string>
+    <string name="research_discovery_devices">重新搜索</string>
+    <string name="finder_searching">正在搜索网络上的设备.</string>
+    <string name="finder_searching_with_ssid">搜索网络 \"%s\" 上的设备.</string>
+    <string name="finder_wifi_waiting">等待wifi网络.</string>
+    <string name="finder_add_other">添加其他设备</string>
+    <string name="finder_connect">连接</string>
+    <string name="finder_cancel">取消</string>
+    <string name="finder_manual">手动输入盒子</string>
+    <string name="finder_enable">可用</string>
+    <string name="finder_configure">配置</string>
+    <string name="finder_wait">等待</string>
+    <string name="finder_no_devices">没有发现斐讯盒子</string>
+    <string name="finder_no_devices_with_ssid">没有发现斐讯盒子 \"%s\"</string>
+    <string name="finder_wifi_not_available">WiFi 不可用</string>
+
+    <string name="edit_recent_connect_devices">编辑</string>
+    <string name="cancel_choose_box">取消选择</string>
+    <string name="delete_choose_box">删除</string>
+    <string name ="no_item">没有记录</string>
+
+    <plurals name="choose_count_box">
+        <item quantity="other">共计<xliff:g id="count">%d</xliff:g>项</item>
+    </plurals>
+
+    <string name="device_find_tip">提示:\n \n
+        1:当前只支持斐讯盒子 \n
+        2:请确保盒子和手机在一个局域网内 \n
+        3:请尝试重新扫描或者输入ip \n
+    </string>
+    <plurals name="NdeviceCount">
+        <item quantity="other">搜索到 <xliff:g id="count">%d</xliff:g> 个盒子</item>
+    </plurals>
+
+
+</resources>

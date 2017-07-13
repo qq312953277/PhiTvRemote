@@ -1,0 +1,56 @@
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="app_name">RemoteControll</string>
+    <string name="devices_list">devices list</string>
+    <string name ="unable_to_connect_device">unable to connect</string>
+
+    <string name="manual_ip_label">Add Phicomm BOX</string>
+    <string name="manual_ip_entry_label">IP Address</string>
+    <string name="manual_ip_hint">xxx.xxx.xxx.xxx</string>
+    <string name="manual_ip_message">You can find IP address of your Phicomm Box device by going to:\nSettings &gt; Network &gt; Network Information</string>
+    <string name="manual_ip_error_address">Invalid address.</string>
+    <string name="manual_ip_default_box_name">Unknown box</string>
+    <string name="manual_ip_connect">Connect</string>
+    <string name="manual_ip_cancel">Cancel</string>
+    <string name="manual_ip_input">Manual IP</string>
+
+
+    <!--  Device Finder - more devices -->
+    <string name="choose_box_controll">choose box controll</string>
+    <string name="recent_connect_devices">connected devices</string>
+    <string name="research_discovery_devices">research</string>
+    <string name="finder_searching">Searching for Phicomm Box on your network.</string>
+    <string name="finder_searching_with_ssid">Searching for Phicomm Box on \"%s\" network.</string>
+    <string name="finder_wifi_waiting">Waiting for WiFi network.</string>
+    <string name="current_wifi">Current Wifi</string>
+    <string name="finder_add_other">Add other device</string>
+    <string name="finder_connect">Connect</string>
+    <string name="finder_cancel">Cancel</string>
+    <string name="finder_manual">Add Phicomm TV manually</string>
+    <string name="finder_enable">Enable</string>
+    <string name="finder_configure">Configure</string>
+    <string name="finder_wait">Wait</string>
+    <string name="finder_no_devices">No Phicomm Box found</string>
+    <string name="finder_no_devices_with_ssid">No Phicomm Box found on \"%s\"</string>
+    <string name="finder_wifi_not_available">WiFi network not available</string>
+    <string name="finder_recently_connected">Recently connected devices</string>
+
+    <!--  edit recent connected devices -->
+    <string name="edit_recent_connect_devices">edit</string>
+    <string name="cancel_choose_box">cancel</string>
+    <string name="delete_choose_box">delete</string>
+    <string name ="no_item">no item</string>
+
+    <string name="device_find_tip">Notice:\n \n
+        1:Support Phicomm Box \n
+        2:On the same network \n
+        3:Restart or ip input \n
+    </string>
+    <plurals name="NdeviceCount">
+        <item quantity="other">Total <xliff:g id="count">%d</xliff:g> devices</item>
+    </plurals>
+
+    <plurals name="choose_count_box">
+        <item quantity="other">Total <xliff:g id="count">%d</xliff:g>Item</item>
+    </plurals>
+
+</resources>
