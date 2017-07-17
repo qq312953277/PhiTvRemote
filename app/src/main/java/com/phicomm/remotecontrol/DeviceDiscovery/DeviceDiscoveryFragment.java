@@ -41,7 +41,7 @@ import com.phicomm.remotecontrol.PhiConstants;
 import com.phicomm.remotecontrol.R;
 import com.phicomm.remotecontrol.RecentDevices.RecentDevicesActivity;
 import com.phicomm.remotecontrol.RemoteBoxDevice;
-
+import com.phicomm.remotecontrol.Util.DevicesUtil;
 import static android.content.Context.WIFI_SERVICE;
 
 
@@ -104,7 +104,6 @@ public class DeviceDiscoveryFragment extends Fragment implements DeviceDiscovery
         mBroadcastHandler = new DiscoveryHandler();
         mWifiManager = (WifiManager) getContext().getSystemService(WIFI_SERVICE);
         mNetworkNameTv.setText(getNetworkName());
-        mPresenter.getCurrentDeviceList();
     }
 
     private void initAdapter() {
@@ -125,7 +124,6 @@ public class DeviceDiscoveryFragment extends Fragment implements DeviceDiscovery
     View.OnClickListener buttonOnClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Log.d(TAG, "v=" + v);
             if (v == mDiscoveryBtn) {
                 startJmdnsDiscoveryDevice();
             } else if (v == mManualIpBtn) {
@@ -148,6 +146,8 @@ public class DeviceDiscoveryFragment extends Fragment implements DeviceDiscovery
                     if (target == null || (target != null
                             && !(target.getBssid().equals(remoteDevice.getBssid())))) {
                         mPresenter.insertOrUpdateRecentDevices(remoteDevice);
+                        mDiscoveryAdapter.clearStates(position);
+                        mDiscoveryAdapter.notifyDataSetInvalidated();
                     }
                 } else {
                     mDiscoveryAdapter.getDeviceList().remove(remoteDevice);
@@ -159,9 +159,9 @@ public class DeviceDiscoveryFragment extends Fragment implements DeviceDiscovery
 
     @Override
     public void onResume() {
+        mPresenter.getCurrentDeviceList();
         mPresenter.loadRecentList();
         super.onResume();
-
     }
 
     @Override
@@ -182,9 +182,13 @@ public class DeviceDiscoveryFragment extends Fragment implements DeviceDiscovery
             mChooseTv.setVisibility(View.INVISIBLE);
         }
         mCountTv.setText(makeDeviceCountLabel(currentlist.size()));
+        int findIndex = findTargetPos(currentlist);
+        if (findIndex != -1) {
+            mDiscoveryAdapter.clearStates(findIndex);
+        }
         mDiscoveryAdapter.notifyDataChange(currentlist);
-
     }
+
 
     private final class DiscoveryHandler extends Handler {
         @Override
@@ -368,5 +372,18 @@ public class DeviceDiscoveryFragment extends Fragment implements DeviceDiscovery
         } else {
             return false;
         }
+    }
+
+    private int findTargetPos(List<RemoteBoxDevice> currentList) {
+        RemoteBoxDevice target = DevicesUtil.getTarget();
+        if (target == null || !(currentList.size() > 0)) {
+            return -1;
+        }
+        for (int i = 0; i < currentList.size(); i++) {
+            if (target.getBssid().equals(currentList.get(i).getBssid())) {
+                return i;
+            }
+        }
+        return -1;
     }
 }
