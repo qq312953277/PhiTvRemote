@@ -9,12 +9,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-        <fragment
-            android:id="@+id/spinnerlist"
-            class="com.phicomm.remotecontrol.fragments.spinnerlist.SpinnerListFragment"
+
+        <FrameLayout
+            android:id="@+id/spinner_container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:layout="@layout/fragment_spinner_list" />
+            android:layout_height="match_parent" />
 
         <View
             android:layout_width="fill_parent"
@@ -24,5 +23,12 @@
             android:layout_marginTop="2dp"
             android:background="#aa000000" />
     </LinearLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewPageMainContent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp"
+        android:overScrollMode="never"/>
 
 </LinearLayout>

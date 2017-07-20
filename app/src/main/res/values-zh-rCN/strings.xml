@@ -68,5 +68,11 @@
         <item quantity="other">搜索到 <xliff:g id="count">%d</xliff:g> 个盒子</item>
     </plurals>
 
-
+    <string name="tab_screenshot">截图</string>
+    <string name="tab_dlna">投屏</string>
+    <string name="tab_control">遥控</string>
+    <string name="tab_childrenlock">儿童锁</string>
+    <string name="tab_clean">一键清理</string>
+    <string name="btn_screenshot">截图</string>
+    <string name="btn_save">保存</string>
 </resources>

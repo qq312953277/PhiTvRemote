@@ -10,15 +10,17 @@ import android.os.Parcelable;
 public final class RemoteBoxDevice implements Parcelable {
     private final String mName;
     private final String mAddress;
+    private final int mPort;
     private final String mBssid;
 
-    public RemoteBoxDevice(String name, String address, String bssid) {
+    public RemoteBoxDevice(String name, String address, int port, String bssid) {
         if (address == null) {
             throw new NullPointerException("Address is null");
         }
         this.mName = name;
         this.mAddress = address;
         this.mBssid = bssid;
+        this.mPort = port;
     }
 
     /**
@@ -33,6 +35,10 @@ public final class RemoteBoxDevice implements Parcelable {
      */
     public String getAddress() {
         return mAddress;
+    }
+
+    public int getPort() {
+        return mPort;
     }
 
     /**
@@ -84,6 +90,7 @@ public final class RemoteBoxDevice implements Parcelable {
     public void writeToParcel(Parcel parcel, int flags) {
         parcel.writeString(mName);
         parcel.writeSerializable(mAddress);
+        parcel.writeInt(mPort);
         parcel.writeString(mBssid);
     }
 
@@ -100,7 +107,7 @@ public final class RemoteBoxDevice implements Parcelable {
             };
 
     private RemoteBoxDevice(Parcel parcel) {
-        this(parcel.readString(), (String) parcel.readSerializable(),
+        this(parcel.readString(), (String) parcel.readSerializable(), parcel.readInt(),
                 parcel.readString());
     }
 }

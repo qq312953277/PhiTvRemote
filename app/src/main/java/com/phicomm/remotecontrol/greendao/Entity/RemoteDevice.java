@@ -14,6 +14,7 @@ public class RemoteDevice {
     private Long id;
     private String name;
     private String address;
+    private int port;
     private String bssid;
     private long time;
 
@@ -41,6 +42,14 @@ public class RemoteDevice {
         this.address = address;
     }
 
+    public int getPort() {
+        return this.port;
+    }
+
+    public void setPort(int port) {
+        this.port = port;
+    }
+
     public String getName() {
         return this.name;
     }
@@ -62,11 +71,12 @@ public class RemoteDevice {
     }
 
     @Keep
-    public RemoteDevice(Long id, String name, String address, String bssid,
+    public RemoteDevice(Long id, String name, String address, int port, String bssid,
                         long time) {
         this.id = id;
         this.name = name;
         this.address = address;
+        this.port = port;
         this.bssid = bssid;
         this.time = time;
     }
