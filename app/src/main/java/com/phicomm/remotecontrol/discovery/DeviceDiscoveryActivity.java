@@ -9,7 +9,8 @@ import android.view.MenuItem;
 
 import com.phicomm.remotecontrol.constant.PhiConstants;
 import com.phicomm.remotecontrol.R;
-import com.phicomm.remotecontrol.util.ActivityUtils;
+
+import static com.phicomm.remotecontrol.util.ActivityUtils.*;
 
 /**
  * Created by chunya02.li on 2017/7/11.
@@ -32,15 +33,17 @@ public class DeviceDiscoveryActivity extends AppCompatActivity {
         // new fragment
         if (deviceDiscoveryFragment == null) {
             deviceDiscoveryFragment = DeviceDiscoveryFragment.newInstance();
-            ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),
+            addFragmentToActivity(getSupportFragmentManager(),
                     deviceDiscoveryFragment, R.id.layout_single_container);
         }
         //action Bar set
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayShowTitleEnabled(true);
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setDisplayShowHomeEnabled(false);
-        actionBar.setTitle(title);
+        if (actionBar != null) {
+            actionBar.setDisplayShowTitleEnabled(true);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setDisplayShowHomeEnabled(false);
+            actionBar.setTitle(title);
+        }
         mDiscoveryDevicePresenter = new DeviceDiscoveryPresenter(deviceDiscoveryFragment, this);
     }
 

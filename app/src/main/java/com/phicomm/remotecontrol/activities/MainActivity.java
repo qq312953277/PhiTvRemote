@@ -5,7 +5,8 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.phicomm.remotecontrol.R;
 import com.phicomm.remotecontrol.fragments.spinnerlist.SpinnerListFragment;
-import com.phicomm.remotecontrol.util.ActivityUtils;
+
+import static com.phicomm.remotecontrol.util.ActivityUtils.addFragmentToActivity;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -20,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (spinnerListFragment == null) {
             spinnerListFragment = SpinnerListFragment.newInstance();
-            ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),
+            addFragmentToActivity(getSupportFragmentManager(),
                     spinnerListFragment, R.id.spinnerlist);
         }
 

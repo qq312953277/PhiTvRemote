@@ -45,7 +45,7 @@ public class RecentDevicesPresenter implements RecentDevicesContract.Presenter {
 
     @Override
     public void removeSelectedDevice(List<RemoteDevice> listDelete) {
-        List<Long> listDeleteId = new ArrayList<Long>(0);
+        List<Long> listDeleteId = new ArrayList<>(0);
         for (int i = 0; i < listDelete.size(); i++) {
             listDeleteId.add(listDelete.get(i).getId());
         }

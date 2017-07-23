@@ -1,7 +1,6 @@
 package com.phicomm.remotecontrol.discovery;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,7 +51,7 @@ public class DeviceDiscoveryAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        DeviceViewHolder holder = null;
+        DeviceViewHolder holder;
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
         if (convertView == null) {
@@ -72,8 +71,8 @@ public class DeviceDiscoveryAdapter extends BaseAdapter {
                 notifyDataSetChanged();
             }
         });
-        boolean res = false;
-        if (getStates(position) == null || getStates(position) == false) {
+        boolean res;
+        if (getStates(position) == null || !(getStates(position))) {
             res = false;
             setStates(position, false);
         } else {
@@ -92,11 +91,11 @@ public class DeviceDiscoveryAdapter extends BaseAdapter {
         mStatus.put(String.valueOf(position), true);
     }
 
-    public Boolean getStates(int position) {
+    private Boolean getStates(int position) {
         return mStatus.get(String.valueOf(position));
     }
 
-    public void setStates(int position, boolean isChecked) {
+    private void setStates(int position, boolean isChecked) {
         mStatus.put(String.valueOf(position), isChecked);
     }
 
@@ -121,7 +120,7 @@ public class DeviceDiscoveryAdapter extends BaseAdapter {
             mRadioButton = (RadioButton) mItemView.findViewById(R.id.box_connect_device);
         }
 
-        public void bind(RemoteBoxDevice device) {
+        private void bind(RemoteBoxDevice device) {
             if (device != null) {
                 mBoxBssid.setText(device.getBssid());
                 mBoxName.setText(device.getName());

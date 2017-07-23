@@ -32,6 +32,7 @@ import android.widget.Toast;
 import java.util.Formatter;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.atomic.AtomicReference;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -43,7 +44,9 @@ import com.phicomm.remotecontrol.R;
 import com.phicomm.remotecontrol.activities.RecentDevicesActivity;
 import com.phicomm.remotecontrol.RemoteBoxDevice;
 import com.phicomm.remotecontrol.util.DevicesUtil;
+
 import static android.content.Context.WIFI_SERVICE;
+import static android.content.DialogInterface.BUTTON_NEGATIVE;
 
 
 /**
@@ -80,8 +83,9 @@ public class DeviceDiscoveryFragment extends Fragment implements DeviceDiscovery
     }
 
     public static DeviceDiscoveryFragment newInstance() {
-        DeviceDiscoveryFragment fragment = new DeviceDiscoveryFragment();
-        return fragment;
+        AtomicReference<DeviceDiscoveryFragment> fragment = new AtomicReference<>(new
+                DeviceDiscoveryFragment());
+        return fragment.get();
     }
 
     @Override
@@ -144,8 +148,7 @@ public class DeviceDiscoveryFragment extends Fragment implements DeviceDiscovery
             if (remoteDevice != null) {
                 if (ConnectManager.getInstance().connect(remoteDevice)) {
                     RemoteBoxDevice target = mPresenter.getTarget();
-                    if (target == null || (target != null
-                            && !(target.getBssid().equals(remoteDevice.getBssid())))) {
+                    if (target == null || !(target.getBssid().equals(remoteDevice.getBssid()))) {
                         mPresenter.insertOrUpdateRecentDevices(remoteDevice);
                         mDiscoveryAdapter.clearStates(position);
                         mDiscoveryAdapter.notifyDataSetInvalidated();
@@ -191,16 +194,13 @@ public class DeviceDiscoveryFragment extends Fragment implements DeviceDiscovery
     }
 
 
-    private final class DiscoveryHandler extends Handler {
+    private class DiscoveryHandler extends Handler {
         @Override
         public void handleMessage(Message msg) {
             Log.d(TAG, "timeout it is need dismiss mDiscoveryDialog and begin TimeoutDialog");
             switch (msg.what) {
                 case PhiConstants.BROADCAST_TIMEOUT:
-                    if (mDiscoveryDialog.isShowing()) {
-                        mDiscoveryDialog.dismiss();
-                    }
-                    stopDiscoveryService();
+                    dismissDialog();
                     break;
             }
         }
@@ -275,16 +275,15 @@ public class DeviceDiscoveryFragment extends Fragment implements DeviceDiscovery
         ProgressDialog dialog = new ProgressDialog(getContext());
         dialog.setMessage(message);
         dialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
-            public boolean onKey(
-                    DialogInterface dialogInterface, int which, KeyEvent event) {
+            public boolean onKey(DialogInterface dialogInterface, int which, KeyEvent event) {
                 if (event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
-                    stopDiscoveryService();
+                    dismissDialog();
                     return true;
                 }
                 return false;
             }
         });
-        dialog.setButton(getString(R.string.finder_cancel), cancelListener);
+        dialog.setButton(BUTTON_NEGATIVE,getString(R.string.finder_cancel), cancelListener);
         return dialog;
     }
 
@@ -296,7 +295,7 @@ public class DeviceDiscoveryFragment extends Fragment implements DeviceDiscovery
             String f = getResources().getQuantityText(R.plurals.NdeviceCount, count)
                     .toString();
             deviceCount.setLength(0);
-            sFormatter.format(f, Integer.valueOf(count));
+            sFormatter.format(f, count);
             deviceCount.append(formatBuilder);
             return deviceCount.toString();
         } else {
@@ -314,7 +313,6 @@ public class DeviceDiscoveryFragment extends Fragment implements DeviceDiscovery
         View view = LayoutInflater.from(getContext()).inflate(R.layout.dialog_manual_ip, null);
         final EditText ipEditText =
                 (EditText) view.findViewById(R.id.manual_ip_entry);
-
         ipEditText.setFilters(new InputFilter[]{
                 new NumberKeyListener() {
                     @Override
@@ -386,5 +384,13 @@ public class DeviceDiscoveryFragment extends Fragment implements DeviceDiscovery
             }
         }
         return -1;
+    }
+
+    private void dismissDialog() {
+        if ((mDiscoveryDialog != null) && mDiscoveryDialog.isShowing()) {
+            mDiscoveryDialog.dismiss();
+            mDiscoveryDialog = null;
+        }
+        stopDiscoveryService();
     }
 }

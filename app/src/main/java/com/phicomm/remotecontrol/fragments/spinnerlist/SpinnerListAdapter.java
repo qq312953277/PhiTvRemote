@@ -45,11 +45,11 @@ public class SpinnerListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder holder = null;
+        ViewHolder holder;
         Context context = parent.getContext();
         LayoutInflater layoutInflater = LayoutInflater.from(context);
         if (convertView == null) {
-            convertView = layoutInflater.inflate(R.layout.item_spinner_device, null);
+            convertView = layoutInflater.inflate(R.layout.item_spinner_device, parent,false);
             holder = new ViewHolder();
             holder.mTextView = (TextView) convertView.findViewById(R.id.tv_device_name);
             convertView.setTag(holder);

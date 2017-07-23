@@ -64,7 +64,7 @@ public class RecentDeviceAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        DeviceViewHolder holder = null;
+        DeviceViewHolder holder;
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
         if (convertView == null) {
@@ -105,7 +105,7 @@ public class RecentDeviceAdapter extends BaseAdapter {
     public class DeviceViewHolder {
         TextView mBoxName;
         ImageView mDeviceIcon;
-        public CheckBox mCollectCheckBox;
+        CheckBox mCollectCheckBox;
         View mItemView;
 
         DeviceViewHolder(View itemView) {
@@ -115,13 +115,17 @@ public class RecentDeviceAdapter extends BaseAdapter {
             mDeviceIcon = (ImageView) mItemView.findViewById(R.id.recent_device_icon);
         }
 
-        public void bind(RemoteDevice device, int position) {
+        private void bind(RemoteDevice device, int position) {
             if (device != null) {
                 mBoxName.setText(device.getName());
                 mDeviceIcon.setBackgroundColor(Color.RED);
                 mCollectCheckBox.setChecked(mCheckedMap.get(position));
                 mCollectCheckBox.setVisibility((int) mCheckBosVisibleMap.get(position));
             }
+        }
+
+        public CheckBox getCollectCheckBox() {
+            return mCollectCheckBox;
         }
     }
 }

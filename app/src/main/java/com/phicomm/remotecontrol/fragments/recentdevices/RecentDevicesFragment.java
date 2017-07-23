@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -101,7 +102,7 @@ public class RecentDevicesFragment extends Fragment implements RecentDevicesCont
         mPresenter = presenter;
     }
 
-    private void updateView(boolean mIsMultiSelect) {
+    private void updateView() {
         int listCount = mRecentDeviceAdapter.getCount();
         if (mIsMultiSelect) {
             for (int i = 0; i < listCount; i++) {
@@ -122,14 +123,12 @@ public class RecentDevicesFragment extends Fragment implements RecentDevicesCont
 
     @Override
     public void showRecentDevices(List<RemoteDevice> devices) {
-        checkNotNull(devices);
         Log.d(TAG, "devices.size=" + devices.size());
         mRecentDeviceAdapter.notifyDataChange(devices);
     }
 
     @Override
     public void removeItems(List<RemoteDevice> removeItems) {
-        checkNotNull(removeItems);
         mRecentDeviceAdapter.removeItems(removeItems);
     }
 
@@ -156,11 +155,12 @@ public class RecentDevicesFragment extends Fragment implements RecentDevicesCont
             RecentDeviceAdapter.DeviceViewHolder holder = (RecentDeviceAdapter.DeviceViewHolder)
                     view.getTag();
             if (mIsMultiSelect && mRecentDeviceAdapter.getRecentDeviceList().size() > 0) {
-                if (holder.mCollectCheckBox.isChecked()) {
-                    holder.mCollectCheckBox.setChecked(false);
+                CheckBox collectCheckBox = holder.getCollectCheckBox();
+                if (collectCheckBox.isChecked()) {
+                    collectCheckBox.setChecked(false);
                     mDeleteList.remove(device);
                 } else {
-                    holder.mCollectCheckBox.setChecked(true);
+                    collectCheckBox.setChecked(true);
                     mDeleteList.add(device);
                 }
                 mCountTv.setText(makeDeviceCountLabel(mDeleteList.size()));
@@ -173,15 +173,15 @@ public class RecentDevicesFragment extends Fragment implements RecentDevicesCont
         public void onClick(View v) {
             if (v == mEditBtn && mRecentDeviceAdapter.getRecentDeviceList().size() > 0) {
                 mIsMultiSelect = true;
-                updateView(mIsMultiSelect);
+                updateView();
                 clearListDelete();
             } else if (v == mCancelBtn) {
                 mIsMultiSelect = false;
-                updateView(mIsMultiSelect);
+                updateView();
             } else if (v == mDeleteBtn) {
                 mIsMultiSelect = false;
                 deleteChooseBox();
-                updateView(mIsMultiSelect);
+                updateView();
             } else if (v == mBackIv) {
                 getActivity().onBackPressed();
             }

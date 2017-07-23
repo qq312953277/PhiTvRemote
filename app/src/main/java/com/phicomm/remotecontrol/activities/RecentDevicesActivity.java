@@ -6,14 +6,15 @@ import android.support.v7.app.AppCompatActivity;
 import com.phicomm.remotecontrol.R;
 import com.phicomm.remotecontrol.fragments.recentdevices.RecentDevicesFragment;
 import com.phicomm.remotecontrol.fragments.recentdevices.RecentDevicesPresenter;
-import com.phicomm.remotecontrol.util.ActivityUtils;
+
+import static com.phicomm.remotecontrol.util.ActivityUtils.addFragmentToActivity;
 
 /**
  * Created by chunya02.li on 2017/7/10.
  */
 
 public class RecentDevicesActivity extends AppCompatActivity {
-    private RecentDevicesPresenter mRecentPresenter;
+    public RecentDevicesPresenter mRecentPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,7 +24,7 @@ public class RecentDevicesActivity extends AppCompatActivity {
                 getSupportFragmentManager().findFragmentById(R.id.layout_single_container);
         if (recentDevicesFragment == null) {
             recentDevicesFragment = RecentDevicesFragment.newInstance();
-            ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),
+            addFragmentToActivity(getSupportFragmentManager(),
                     recentDevicesFragment, R.id.layout_single_container);
         }
         mRecentPresenter = new RecentDevicesPresenter(recentDevicesFragment);

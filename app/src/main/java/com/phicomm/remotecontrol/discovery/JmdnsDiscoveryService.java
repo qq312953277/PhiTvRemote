@@ -173,7 +173,7 @@ public class JmdnsDiscoveryService extends Service {
                 return;
             }
             final RemoteBoxDevice findDevice = parseSeviceInfo2RemoteDevice(info);
-            if (!mBoxDeviceListMap.containsKey(findDevice.getBssid())) {
+            if (findDevice != null && !mBoxDeviceListMap.containsKey(findDevice.getBssid())) {
                 mBoxDeviceList.add(findDevice);
                 mBoxDeviceListMap.put(findDevice.getBssid(), findDevice);
                 if (mBoxDeviceList != null && mDiscoverResultListener != null) {
@@ -193,9 +193,9 @@ public class JmdnsDiscoveryService extends Service {
         Log.d(TAG, "parseSeviceInfo2RemoteDevice(): textBytes toString: " + new String(textBytes));
         int index = 0;
         InetAddress inetAddress = serviceInfo.getInet4Addresses()[0];
-        Map<String, String> keyValue = new HashMap<String, String>();
-        String part = null;
-        String[] subParts = null;
+        Map<String, String> keyValue = new HashMap<>();
+        String part;
+        String[] subParts;
         while (index < textBytes.length) {
             part = new String(textBytes, index + 1, textBytes[index]);
             subParts = part.split("=");
@@ -212,7 +212,8 @@ public class JmdnsDiscoveryService extends Service {
             return null;
         }
         Log.d(TAG, "bssid=" + bssid + " name=" + name + "inetAddress=" + inetAddress);
-        RemoteBoxDevice mRemoteBoxDevice = new RemoteBoxDevice(name, inetAddress.toString(), serviceInfo.getPort(), bssid);
+        RemoteBoxDevice mRemoteBoxDevice;
+        mRemoteBoxDevice = new RemoteBoxDevice(name, inetAddress.toString(), serviceInfo.getPort(), bssid);
         return mRemoteBoxDevice;
     }
 
@@ -221,10 +222,6 @@ public class JmdnsDiscoveryService extends Service {
         mMulticastLock.setReferenceCounted(false);
         mMulticastLock.acquire();
         Log.d(TAG, "mMulticastLock.acquire()");
-    }
-
-    public List<RemoteBoxDevice> getBoxDeviceList() {
-        return mBoxDeviceList;
     }
 
     public interface IDiscoverResultListener {

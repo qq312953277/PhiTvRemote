@@ -1,10 +1,9 @@
 package com.phicomm.remotecontrol.discovery;
 
-import android.content.ComponentName;
+
+import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
-import android.content.ServiceConnection;
-import android.os.IBinder;
+import android.net.wifi.WifiManager;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -16,9 +15,8 @@ import java.util.Map;
 import com.phicomm.remotecontrol.discovery.DeviceDiscoveryContract.View;
 import com.phicomm.remotecontrol.RemoteBoxDevice;
 import com.phicomm.remotecontrol.util.DevicesUtil;
-import com.phicomm.remotecontrol.discovery.JmdnsDiscoveryService.IDiscoverResultListener;
-
-import static android.content.Context.BIND_AUTO_CREATE;
+import com.phicomm.remotecontrol.discovery.JmdnsDiscoveryClient.IDiscoverResultListener;
+import static android.content.Context.WIFI_SERVICE;
 
 /**
  * Created by chunya02.li on 2017/7/11.
@@ -30,23 +28,26 @@ public class DeviceDiscoveryPresenter implements DeviceDiscoveryContract.Present
     private View mView;
     private List<RemoteBoxDevice> mDiscoveryDeviceList;
     private Map<String, RemoteBoxDevice> mCachedRemoteAddress;
-    public Context mContext;
+    private WifiManager mWifiManager;
+    private WifiManager.MulticastLock mMulticastLock = null;
+    private JmdnsDiscoveryClient mJmdnsDiscoveryClient;
+    private List<RemoteBoxDevice> currentDeviceList;
+    private Thread mJmdnsClientThread;
 
-    private JmdnsDiscoveryService.DiscoveryBinder mDiscoveryBinder;
-    private boolean mIsBind;
 
     public DeviceDiscoveryPresenter(View view, Context context) {
         mView = view;
-        mContext = context;
         mView.setPresenter(this);
         mDiscoveryDeviceList = new ArrayList<>(0);
         mCachedRemoteAddress = new HashMap<>(0);
+        currentDeviceList = new ArrayList<>(0);
+        mWifiManager = (WifiManager) context.getSystemService(WIFI_SERVICE);
     }
 
     @Override
     public void start() {
-        mDiscoveryDeviceList.clear();
-        mCachedRemoteAddress.clear();
+        allowMulticast();
+        clearListArray();
         startDiscoveryService();
     }
 
@@ -55,9 +56,21 @@ public class DeviceDiscoveryPresenter implements DeviceDiscoveryContract.Present
         stopDiscoveryService();
     }
 
+    private void startDiscoveryService() {
+        mJmdnsDiscoveryClient = new JmdnsDiscoveryClient(mDiscoverResultListener);
+        mJmdnsClientThread = new Thread(mJmdnsDiscoveryClient);
+        mJmdnsClientThread.start();
+
+    }
+
+    private void stopDiscoveryService() {
+        releaseMulticast();
+        mJmdnsDiscoveryClient.stopDiscovery();
+    }
+
     @Override
     public List<RemoteBoxDevice> getCurrentDeviceList() {
-        List<RemoteBoxDevice> currentDeviceList = DevicesUtil.getCurrentDevicesListResult();
+        currentDeviceList= DevicesUtil.getCurrentDevicesListResult();
         mView.refreshListView(currentDeviceList);
         return currentDeviceList;
     }
@@ -77,43 +90,14 @@ public class DeviceDiscoveryPresenter implements DeviceDiscoveryContract.Present
         DevicesUtil.insertOrUpdateRecentDevices(device);
     }
 
-    private ServiceConnection mServiceConnect = new ServiceConnection() {
-
-        @Override
-        public void onServiceDisconnected(ComponentName name) {
-
-        }
-
-        @Override
-        public void onServiceConnected(ComponentName name, IBinder service) {
-            Log.d(TAG, "onServiceConnected and setLister");
-            mDiscoveryBinder = (JmdnsDiscoveryService.DiscoveryBinder) service;
-            JmdnsDiscoveryService mService = mDiscoveryBinder.getService();
-            mService.setDiscoverResultListener(mDiscoverResultListener);
-        }
-    };
-
-    private void startDiscoveryService() {
-        Intent bindIntent = new Intent(mContext, JmdnsDiscoveryService.class);
-        mIsBind = mContext.bindService(bindIntent, mServiceConnect, BIND_AUTO_CREATE);
-    }
-
-    private void stopDiscoveryService() {
-        if (mIsBind) {
-            mContext.unbindService(mServiceConnect);
-            mIsBind = false;
-        }
-    }
-
-
     private IDiscoverResultListener mDiscoverResultListener = new IDiscoverResultListener() {
         @Override
         public void onDeviceAdd(RemoteBoxDevice device) {
-            String bssid = device.getBssid();
-            Log.d(TAG, "dev.mBssid=" + bssid + "mSearchDeviceList.size()=" +
+            String deviceBssid = device.getBssid();
+            Log.d(TAG, "dev.mBssid=" + deviceBssid + "mSearchDeviceList.size()=" +
                     mDiscoveryDeviceList.size());
-            if (!mCachedRemoteAddress.containsKey(bssid)) {
-                mCachedRemoteAddress.put(bssid, device);
+            if (!mCachedRemoteAddress.containsKey(deviceBssid)) {
+                mCachedRemoteAddress.put(deviceBssid, device);
                 mDiscoveryDeviceList.add(device);
                 setCurrentDeviceList(mDiscoveryDeviceList);
                 mView.refreshListView(mDiscoveryDeviceList);
@@ -126,4 +110,24 @@ public class DeviceDiscoveryPresenter implements DeviceDiscoveryContract.Present
         return DevicesUtil.getTarget();
     }
 
+    private void allowMulticast() {
+        mMulticastLock = mWifiManager.createMulticastLock(getClass().getSimpleName());
+        mMulticastLock.setReferenceCounted(false);
+        mMulticastLock.acquire();
+        Log.d(TAG, "mMulticastLock.acquire()");
+    }
+
+    private void clearListArray(){
+        mDiscoveryDeviceList.clear();
+        mCachedRemoteAddress.clear();
+        currentDeviceList.clear();
+    }
+
+    private void releaseMulticast() {
+        if (mMulticastLock != null) {
+            Log.i(TAG, "Releasing Mutlicast Lock...");
+            mMulticastLock.release();
+            mMulticastLock = null;
+        }
+    }
 }
