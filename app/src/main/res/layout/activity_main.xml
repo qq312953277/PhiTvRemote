@@ -21,7 +21,6 @@
             android:layout_height="1dp"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
-            android:layout_marginTop="2dp"
             android:background="#aa000000" />
     </LinearLayout>
 

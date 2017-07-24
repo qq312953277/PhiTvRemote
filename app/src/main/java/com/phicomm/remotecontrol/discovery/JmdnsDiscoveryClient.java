@@ -70,6 +70,8 @@ public class JmdnsDiscoveryClient implements Runnable {
                     if (mMdnsService != null) {
                         Log.i(TAG, "Stopping probe....");
                         mMdnsService.unregisterAllServices();
+                        mMdnsService.removeServiceListener(PhiConstants
+                                .REMOTE_SERVICE_TYPE_JMDNS, mDiscoveryListener);
                         mMdnsService.close();
                         mMdnsService = null;
                     }
@@ -90,8 +92,25 @@ public class JmdnsDiscoveryClient implements Runnable {
         }
 
         public void serviceRemoved(ServiceEvent event) {
+            ServiceInfo info = event.getInfo();
             Log.d(TAG, "Remove service type = " + event.getType() + ", name = "
-                    + event.getName());
+                    + event.getName() + "info=" + info);
+            if (info.getInet4Addresses().length <= 0) {
+                return;
+            }
+            final RemoteBoxDevice findDevice = parseSeviceInfo2RemoteDevice(info);
+            if ((findDevice != null) && mBoxDeviceListMap.containsKey(findDevice.getBssid())) {
+                mBoxDeviceList.remove(findDevice);
+                mBoxDeviceListMap.remove(findDevice.getBssid());
+                if (mDiscoverResultListener != null) {
+                    mHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            mDiscoverResultListener.onDeviceRemove(findDevice);
+                        }
+                    });
+                }
+            }
         }
 
         public void serviceResolved(ServiceEvent event) {
@@ -105,7 +124,7 @@ public class JmdnsDiscoveryClient implements Runnable {
             if ((findDevice != null) && !(mBoxDeviceListMap.containsKey(findDevice.getBssid()))) {
                 mBoxDeviceList.add(findDevice);
                 mBoxDeviceListMap.put(findDevice.getBssid(), findDevice);
-                if (mBoxDeviceList != null && mDiscoverResultListener != null) {
+                if (mDiscoverResultListener != null) {
                     mHandler.post(new Runnable() {
                         @Override
                         public void run() {
@@ -149,5 +168,7 @@ public class JmdnsDiscoveryClient implements Runnable {
 
     public interface IDiscoverResultListener {
         void onDeviceAdd(RemoteBoxDevice device);
+
+        void onDeviceRemove(RemoteBoxDevice device);
     }
 }

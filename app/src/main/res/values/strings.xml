@@ -19,6 +19,7 @@
     <string name="recent_connect_devices">connected devices</string>
     <string name="research_discovery_devices">research</string>
     <string name="finder_searching">Searching for Phicomm Box on your network.</string>
+    <string name="searching">Searching...</string>
     <string name="finder_searching_with_ssid">Searching for Phicomm Box on \"%s\" network.</string>
     <string name="finder_wifi_waiting">Waiting for WiFi network.</string>
     <string name="current_wifi">Current Wifi</string>

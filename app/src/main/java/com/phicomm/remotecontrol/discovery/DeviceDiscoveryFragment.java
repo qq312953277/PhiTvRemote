@@ -25,6 +25,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -71,6 +72,10 @@ public class DeviceDiscoveryFragment extends Fragment implements DeviceDiscovery
     public TextView mCountTv;
     @BindView(android.R.id.empty)
     public TextView mEmptyTv;
+    @BindView(R.id.back)
+    public ImageView mBackIv;
+    @BindView(R.id.title)
+    public TextView mTitleTv;
 
     private Presenter mPresenter;
     private DeviceDiscoveryAdapter mDiscoveryAdapter;
@@ -105,10 +110,18 @@ public class DeviceDiscoveryFragment extends Fragment implements DeviceDiscovery
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
         initAdapter();
+        initActionBar();
         setOnClickListener();
         mBroadcastHandler = new DiscoveryHandler();
         mWifiManager = (WifiManager) getContext().getSystemService(WIFI_SERVICE);
         mNetworkNameTv.setText(getNetworkName());
+    }
+
+    private void initActionBar() {
+        Intent intent = getActivity().getIntent();
+        Bundle bundle = intent.getExtras();
+        String title = bundle.getString(PhiConstants.ACTION_BAR_NAME);
+        mTitleTv.setText(title);
     }
 
     private void initAdapter() {
@@ -121,12 +134,13 @@ public class DeviceDiscoveryFragment extends Fragment implements DeviceDiscovery
 
     private void setOnClickListener() {
         mDiscoveryListDevices.setOnItemClickListener(selectHandler);
-        mDiscoveryBtn.setOnClickListener(buttonOnClick);
-        mManualIpBtn.setOnClickListener(buttonOnClick);
-        mRecentDevicesBtn.setOnClickListener(buttonOnClick);
+        mDiscoveryBtn.setOnClickListener(onClickListener);
+        mManualIpBtn.setOnClickListener(onClickListener);
+        mRecentDevicesBtn.setOnClickListener(onClickListener);
+        mBackIv.setOnClickListener(onClickListener);
     }
 
-    View.OnClickListener buttonOnClick = new View.OnClickListener() {
+    View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             if (v == mDiscoveryBtn) {
@@ -136,6 +150,8 @@ public class DeviceDiscoveryFragment extends Fragment implements DeviceDiscovery
             } else if (v == mRecentDevicesBtn) {
                 Intent intent = new Intent(getContext(), RecentDevicesActivity.class);
                 startActivity(intent);
+            } else if (v == mBackIv) {
+                getActivity().onBackPressed();
             }
         }
     };
@@ -152,10 +168,12 @@ public class DeviceDiscoveryFragment extends Fragment implements DeviceDiscovery
                         mPresenter.insertOrUpdateRecentDevices(remoteDevice);
                         mDiscoveryAdapter.clearStates(position);
                         mDiscoveryAdapter.notifyDataSetInvalidated();
+                        mTitleTv.setText(remoteDevice.getName());
                     }
                 } else {
                     mDiscoveryAdapter.getDeviceList().remove(remoteDevice);
                     mPresenter.setCurrentDeviceList(mDiscoveryAdapter.getDeviceList());
+                    mTitleTv.setText(R.string.unable_to_connect_device);
                 }
             }
         }
@@ -216,6 +234,13 @@ public class DeviceDiscoveryFragment extends Fragment implements DeviceDiscovery
 
 
     private void stopDiscoveryService() {
+        mBroadcastHandler.removeMessages(PhiConstants.BROADCAST_TIMEOUT);
+        RemoteBoxDevice target = mPresenter.getTarget();
+        if (target == null) {
+            mTitleTv.setText(R.string.unable_to_connect_device);
+        } else {
+            mTitleTv.setText(target.getName());
+        }
         mPresenter.stop();
     }
 
@@ -225,6 +250,7 @@ public class DeviceDiscoveryFragment extends Fragment implements DeviceDiscovery
         }
         mDiscoveryDialog = newDialog;
         newDialog.show();
+        mTitleTv.setText(R.string.searching);
     }
 
     private ProgressDialog buildDiscoveryProgressDialog() {
@@ -283,7 +309,7 @@ public class DeviceDiscoveryFragment extends Fragment implements DeviceDiscovery
                 return false;
             }
         });
-        dialog.setButton(BUTTON_NEGATIVE,getString(R.string.finder_cancel), cancelListener);
+        dialog.setButton(BUTTON_NEGATIVE, getString(R.string.finder_cancel), cancelListener);
         return dialog;
     }
 

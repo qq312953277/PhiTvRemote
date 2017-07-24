@@ -1,13 +1,9 @@
 package com.phicomm.remotecontrol.discovery;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.view.WindowCompat;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
-import android.view.MenuItem;
 
-import com.phicomm.remotecontrol.constant.PhiConstants;
+import android.support.v7.app.AppCompatActivity;
+
 import com.phicomm.remotecontrol.R;
 
 import static com.phicomm.remotecontrol.util.ActivityUtils.*;
@@ -22,11 +18,6 @@ public class DeviceDiscoveryActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Intent intent = getIntent();
-        Bundle bundle = intent.getExtras();
-        String title = bundle.getString(PhiConstants.ACTION_BAR_NAME);
-
-        supportRequestWindowFeature(WindowCompat.FEATURE_ACTION_BAR);
         setContentView(R.layout.activity_discovery_device);
         DeviceDiscoveryFragment deviceDiscoveryFragment = (DeviceDiscoveryFragment)
                 getSupportFragmentManager().findFragmentById(R.id.layout_single_container);
@@ -36,25 +27,7 @@ public class DeviceDiscoveryActivity extends AppCompatActivity {
             addFragmentToActivity(getSupportFragmentManager(),
                     deviceDiscoveryFragment, R.id.layout_single_container);
         }
-        //action Bar set
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayShowTitleEnabled(true);
-            actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setDisplayShowHomeEnabled(false);
-            actionBar.setTitle(title);
-        }
         mDiscoveryDevicePresenter = new DeviceDiscoveryPresenter(deviceDiscoveryFragment, this);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                this.finish();
-            default:
-                return super.onOptionsItemSelected(item);
-        }
     }
 }
 

@@ -62,7 +62,8 @@ public class DeviceDiscoveryAdapter extends BaseAdapter {
             holder = (DeviceViewHolder) convertView.getTag();
         }
         final DeviceViewHolder finalHolder = holder;
-        final int pos = position;
+        finalHolder.mRadioButton.setClickable(false);
+        /*final int pos = position;
         holder.mRadioButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -70,7 +71,7 @@ public class DeviceDiscoveryAdapter extends BaseAdapter {
                 finalHolder.mRadioButton.setChecked(getStates(pos));
                 notifyDataSetChanged();
             }
-        });
+        });*/
         boolean res;
         if (getStates(position) == null || !(getStates(position))) {
             res = false;

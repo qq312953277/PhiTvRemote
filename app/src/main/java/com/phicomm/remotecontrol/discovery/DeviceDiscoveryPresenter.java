@@ -103,7 +103,20 @@ public class DeviceDiscoveryPresenter implements DeviceDiscoveryContract.Present
                 mView.refreshListView(mDiscoveryDeviceList);
             }
         }
+        @Override
+        public void onDeviceRemove(RemoteBoxDevice device) {
+            String deviceBssid = device.getBssid();
+            Log.d(TAG, "onDeviceRemove dev.mBssid=" + deviceBssid + "mSearchDeviceList.size()=" +
+                    mDiscoveryDeviceList.size());
+            if (mCachedRemoteAddress.containsKey(deviceBssid) && mDiscoveryDeviceList.size() > 0) {
+                mCachedRemoteAddress.remove(deviceBssid);
+                mDiscoveryDeviceList.remove(device);
+                setCurrentDeviceList(mDiscoveryDeviceList);
+                mView.refreshListView(mDiscoveryDeviceList);
+            }
+        }
     };
+
 
     @Override
     public RemoteBoxDevice getTarget() {

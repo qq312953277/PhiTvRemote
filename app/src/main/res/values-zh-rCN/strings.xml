@@ -37,6 +37,7 @@
     <string name="recent_connect_devices">连接记录</string>
     <string name="research_discovery_devices">重新搜索</string>
     <string name="finder_searching">正在搜索网络上的设备.</string>
+    <string name="searching">正在搜索...</string>
     <string name="finder_searching_with_ssid">搜索网络 \"%s\" 上的设备.</string>
     <string name="finder_wifi_waiting">等待wifi网络.</string>
     <string name="finder_add_other">添加其他设备</string>

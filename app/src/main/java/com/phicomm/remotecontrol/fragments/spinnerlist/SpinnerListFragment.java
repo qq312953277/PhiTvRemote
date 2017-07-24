@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
@@ -46,7 +47,7 @@ public class SpinnerListFragment extends Fragment {
     @BindView(R.id.scan)
     public Button mDiscoveryBtn;
     @BindView(R.id.login)
-    public Button mLoginBtn;
+    public ImageButton mLoginIBtn;
 
     public SpinnerListFragment() {
 
@@ -106,7 +107,7 @@ public class SpinnerListFragment extends Fragment {
     private void setonClickListener() {
         mDeviceTv.setOnClickListener(onButtonClick);
         mDiscoveryBtn.setOnClickListener(onButtonClick);
-        mLoginBtn.setOnClickListener(onButtonClick);
+        mLoginIBtn.setOnClickListener(onButtonClick);
     }
 
     private void initAdapter() {
@@ -155,7 +156,7 @@ public class SpinnerListFragment extends Fragment {
             } else if (v == mDeviceTv) {
                 mSpinerPopWindow.setWidth(mDeviceTv.getWidth());
                 mSpinerPopWindow.showAsDropDown(mDeviceTv);
-                setTextImage(R.mipmap.icon_up);
+                setTextImage(R.drawable.icon_up);
             }
         }
     };
@@ -188,7 +189,7 @@ public class SpinnerListFragment extends Fragment {
     private PopupWindow.OnDismissListener dismissListener = new PopupWindow.OnDismissListener() {
         @Override
         public void onDismiss() {
-            setTextImage(R.mipmap.icon_down);
+            setTextImage(R.drawable.icon_down);
         }
     };
 
