@@ -50,6 +50,7 @@
     <string name="finder_no_devices">没有发现斐讯盒子</string>
     <string name="finder_no_devices_with_ssid">没有发现斐讯盒子 \"%s\"</string>
     <string name="finder_wifi_not_available">WiFi 不可用</string>
+    <string name="finder_recently_connected">最近连接的设备</string>
 
     <string name="edit_recent_connect_devices">编辑</string>
     <string name="cancel_choose_box">取消选择</string>

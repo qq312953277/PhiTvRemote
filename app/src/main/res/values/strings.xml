@@ -15,11 +15,11 @@
 
 
     <!--  Device Finder - more devices -->
-    <string name="choose_box_controll">choose box controll</string>
+    <string name="choose_box_controll">choose box control</string>
     <string name="recent_connect_devices">connected devices</string>
     <string name="research_discovery_devices">research</string>
     <string name="finder_searching">Searching for Phicomm Box on your network.</string>
-    <string name="searching">Searching...</string>
+    <string name="searching">Searching ...</string>
     <string name="finder_searching_with_ssid">Searching for Phicomm Box on \"%s\" network.</string>
     <string name="finder_wifi_waiting">Waiting for WiFi network.</string>
     <string name="current_wifi">Current Wifi</string>
@@ -58,7 +58,7 @@
     <string name="key_down">Down</string>
     <string name="key_right">Right</string>
     <string name="key_left">Left</string>
-    <string name="key_enter">Ok</string>
+    <string name="key_enter">O</string>
     <string name="key_vol_down">Volume Down</string>
     <string name="key_vol_up">Volume Up</string>
     <string name="key_chanel_down">Chanel Down</string>
