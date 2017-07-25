@@ -12,7 +12,7 @@ public class KeyCode {
     public static int RIGHT = KeyEvent.KEYCODE_DPAD_RIGHT;
     public static int UP = KeyEvent.KEYCODE_DPAD_UP;
     public static int DOWN = KeyEvent.KEYCODE_DPAD_DOWN;
-    public static int ENTER = KeyEvent.KEYCODE_ENTER;
+    public static int CENTER = KeyEvent.KEYCODE_DPAD_CENTER;
 
     public static int VOL_DOWN = KeyEvent.KEYCODE_VOLUME_DOWN;
     public static int VOL_UP = KeyEvent.KEYCODE_VOLUME_UP;

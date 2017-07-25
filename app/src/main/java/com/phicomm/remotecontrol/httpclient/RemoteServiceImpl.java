@@ -37,6 +37,7 @@ public class RemoteServiceImpl implements IRemoterService {
 
             @Override
             public void call(final Subscriber<? super Status> subscriber) {
+                LogUtil.d("call getStatus");
                 try {
                     String tgtPath = mRootPath + "v1/status";
                     Gson gson = new Gson();
@@ -47,8 +48,8 @@ public class RemoteServiceImpl implements IRemoterService {
                     Response response = mOkHttpClient.newCall(request).execute();
                     int code = response.code();
                     if (ErrorCode.OK == code) {
+                        LogUtil.d("getStatus OK");
                         ResponseBody body = response.body();
-
                         Status status = gson.fromJson(body.string(), Status.class);
                         subscriber.onNext(status);
                     } else {
@@ -67,6 +68,7 @@ public class RemoteServiceImpl implements IRemoterService {
         return Observable.create(new Observable.OnSubscribe<String>() {
             @Override
             public void call(final Subscriber<? super String> subscriber) {
+
                 try {
                     String tgtPath = mRootPath + "v1/ping";
                     Request request = new Request.Builder()
@@ -93,6 +95,7 @@ public class RemoteServiceImpl implements IRemoterService {
         return Observable.create(new Observable.OnSubscribe<String>() {
             @Override
             public void call(final Subscriber<? super String> subscriber) {
+                LogUtil.d("call sendKeyEvent");
                 try {
                     String tgtPath = mRootPath + "v1/keyevent";
                     Gson gson = new Gson();
@@ -106,6 +109,7 @@ public class RemoteServiceImpl implements IRemoterService {
 
                     int code = response.code();
                     if (ErrorCode.OK == code) {
+                        LogUtil.d("sendKeyEvent OK");
                         ResponseBody body = response.body();
                         subscriber.onNext(body.string());
                     } else {

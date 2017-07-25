@@ -44,6 +44,8 @@ public class KeyPanelFregment extends Fragment implements PanelContract.View, an
     @BindView(R.id.btn_chanel_down)
     Button mChanelDownBtn;
 
+    @BindView(R.id.btn_menu)
+    Button mMenuBtn;
     @BindView(R.id.btn_home)
     Button mHomeBtn;
     @BindView(R.id.btn_back)
@@ -83,6 +85,7 @@ public class KeyPanelFregment extends Fragment implements PanelContract.View, an
         mChanelDownBtn.setOnClickListener(this);
         mChanelUpBtn.setOnClickListener(this);
 
+        mMenuBtn.setOnClickListener(this);
         mHomeBtn.setOnClickListener(this);
         mBackBtn.setOnClickListener(this);
     }
@@ -104,7 +107,7 @@ public class KeyPanelFregment extends Fragment implements PanelContract.View, an
         } else if (v == mDownBtn) {
             mPresenter.sendKeyEvent(KeyCode.DOWN);
         } else if (v == mEnterBtn) {
-            mPresenter.sendKeyEvent(KeyCode.ENTER);
+            mPresenter.sendKeyEvent(KeyCode.CENTER);
         } else if (v == mVolDownBtn) {
             mPresenter.sendKeyEvent(KeyCode.VOL_DOWN);
         } else if (v == mVolUpBtn) {
@@ -113,7 +116,9 @@ public class KeyPanelFregment extends Fragment implements PanelContract.View, an
             mPresenter.sendKeyEvent(KeyCode.CHANEL_DOWN);
         } else if (v == mChanelUpBtn) {
             mPresenter.sendKeyEvent(KeyCode.CHANEL_UP);
-        } else if (v == mHomeBtn) {
+        } else if (v == mMenuBtn) {
+            mPresenter.sendKeyEvent(KeyCode.MENU);
+        }else if (v == mHomeBtn) {
             mPresenter.sendKeyEvent(KeyCode.HOME);
         } else if (v == mBackBtn) {
             mPresenter.sendKeyEvent(KeyCode.BACK);
@@ -121,7 +126,7 @@ public class KeyPanelFregment extends Fragment implements PanelContract.View, an
     }
 
     @Override
-    public void toastMessage() {
+    public void toastMessage(String msg) {
 
     }
 }

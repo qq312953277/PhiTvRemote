@@ -63,6 +63,7 @@
     <string name="key_vol_up">Volume Up</string>
     <string name="key_chanel_down">Chanel Down</string>
     <string name="key_chanel_up">Chanel Up</string>
+    <string name="key_menu">Menu</string>
     <string name="key_home">Home</string>
     <string name="key_back">Back</string>
 
@@ -74,4 +75,6 @@
 
     <string name="btn_screenshot">Screnshot</string>
     <string name="btn_save">Save</string>
+
+    <string name="error_no_device">no device assigned</string>
 </resources>

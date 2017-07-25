@@ -1,6 +1,7 @@
 package com.phicomm.remotecontrol.fragments.screenshot;
 
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -9,7 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.phicomm.remotecontrol.BuildConfig;
 import com.phicomm.remotecontrol.R;
 import com.phicomm.remotecontrol.util.LogUtil;
 
@@ -39,6 +42,9 @@ public class ScreenshotFragment extends Fragment implements ScreenshotContract.V
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         LogUtil.d(TAG, "onViewCreated");
+        TextView version = (TextView) view.findViewById(R.id.tv_version);
+        version.setText("Curent Version:" + BuildConfig.VERSION_NAME);
+
         mImageView = (ImageView) view.findViewById(R.id.iv_preview);
         Button button = (Button) view.findViewById(R.id.btn_screenshot);
         button.setOnClickListener(new View.OnClickListener() {

@@ -76,4 +76,6 @@
     <string name="tab_clean">一键清理</string>
     <string name="btn_screenshot">截图</string>
     <string name="btn_save">保存</string>
+
+    <string name="error_no_device">没有指定设备</string>
 </resources>

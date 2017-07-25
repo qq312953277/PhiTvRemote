@@ -2,6 +2,7 @@ package com.phicomm.remotecontrol.fragments.controlpanel;
 
 import com.phicomm.remotecontrol.TaskQuene;
 import com.phicomm.remotecontrol.httpclient.PhiCallBack;
+import com.phicomm.remotecontrol.util.LogUtil;
 
 /**
  * Created by xufeng02.zhou on 2017/7/13.
@@ -18,7 +19,7 @@ public class PanelPresenter implements PanelContract.Presenter {
 
     @Override
     public void stop() {
-
+        TaskQuene.getInstance().unubscribe();
     }
 
     @Override
@@ -27,16 +28,19 @@ public class PanelPresenter implements PanelContract.Presenter {
     }
 
     @Override
-    public void sendKeyEvent(int keyCode) {
+    public void sendKeyEvent(final int keyCode) {
         TaskQuene.getInstance().sendKeyEvent(keyCode, new PhiCallBack() {
             @Override
             public void onSuccess(Object model) {
+                LogUtil.d("keyevent "+keyCode+" : success");
 
+                mView.toastMessage("success");
             }
 
             @Override
             public void onFailure(String msg) {
-
+                LogUtil.d("keyevent "+keyCode+" : fail");
+                mView.toastMessage("fail");
             }
 
             @Override
@@ -47,16 +51,17 @@ public class PanelPresenter implements PanelContract.Presenter {
     }
 
     @Override
-    public void sendKeyLongClickEvent(int keyCode) {
+    public void sendKeyLongClickEvent(final int keyCode) {
         TaskQuene.getInstance().sendKeyLonClickEvent(keyCode, new PhiCallBack() {
             @Override
             public void onSuccess(Object model) {
-
+                LogUtil.d("keyevent "+ keyCode +" : success");
+                mView.toastMessage("success");
             }
 
             @Override
             public void onFailure(String msg) {
-
+                mView.toastMessage("fail");
             }
 
             @Override
@@ -67,16 +72,18 @@ public class PanelPresenter implements PanelContract.Presenter {
     }
 
     @Override
-    public void sendCommand(String cmd) {
+    public void sendCommand(final String cmd) {
         TaskQuene.getInstance().sendCommand(cmd, new PhiCallBack() {
             @Override
             public void onSuccess(Object model) {
-
+                LogUtil.d("sendCommand "+ cmd +" : success");
+                mView.toastMessage("success");
             }
 
             @Override
             public void onFailure(String msg) {
-
+                LogUtil.d("sendCommand "+ cmd +" : fail");
+                mView.toastMessage("fail");
             }
 
             @Override

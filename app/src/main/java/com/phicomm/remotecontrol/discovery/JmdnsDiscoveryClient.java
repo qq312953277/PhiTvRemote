@@ -159,9 +159,9 @@ public class JmdnsDiscoveryClient implements Runnable {
             Log.d(TAG, "parseSeviceInfo2RemoteDevice(): bssid = null or type = null, return null");
             return null;
         }
-        Log.d(TAG, "bssid=" + bssid + " name=" + name + "inetAddress=" + inetAddress);
+        Log.d(TAG, "bssid=" + bssid + " name=" + name + "inetAddress=" + inetAddress.getHostAddress());
         RemoteBoxDevice mRemoteBoxDevice;
-        mRemoteBoxDevice = new RemoteBoxDevice(name, inetAddress.toString(),
+        mRemoteBoxDevice = new RemoteBoxDevice(name, inetAddress.getHostAddress(),
                 serviceInfo.getPort(), bssid);
         return mRemoteBoxDevice;
     }

@@ -1,7 +1,12 @@
 package com.phicomm.remotecontrol;
 
+import android.service.carrier.CarrierMessagingService;
+
+import com.phicomm.remotecontrol.beans.Status;
 import com.phicomm.remotecontrol.httpclient.IRemoterService;
+import com.phicomm.remotecontrol.httpclient.PhiCallBack;
 import com.phicomm.remotecontrol.httpclient.RemoteServiceImpl;
+import com.phicomm.remotecontrol.util.LogUtil;
 
 import java.util.ArrayList;
 
@@ -17,8 +22,14 @@ public class ConnectManager {
         private static ConnectManager instance = new ConnectManager();
     }
 
-    interface ConnectListener {
+    public interface ConnectListener {
         void onConnectChanged();
+    }
+
+    public interface ConnetResultCallback {
+        void onSuccess(RemoteBoxDevice device);
+
+        void onFail(String msg);
     }
 
     static public ConnectManager getInstance() {
@@ -31,19 +42,55 @@ public class ConnectManager {
         }
     }
 
+    @Deprecated
     public boolean connect(RemoteBoxDevice dev) {
         if (mConnectingDevice != null && mConnectingDevice.equals(dev)) {
             return true;
         }
 
-//        notifyConnectChange();
         mConnectingDevice = dev;
         initConnect(mConnectingDevice.getAddress(), mConnectingDevice.getPort());
         return true;
     }
 
-    public void unConnect( ) {
-            notifyConnectChange();
+    public void connect(final String ipAddress, final int port, final ConnetResultCallback result) {
+
+        LogUtil.d("connect:"+ipAddress +"/"+ port);
+        final IRemoterService service = new RemoteServiceImpl(ipAddress, port);
+
+        TaskQuene.getInstance().addSubscription(
+                service.getStatus(), new PhiCallBack<Status>() {
+                    @Override
+                    public void onSuccess(Status status) {
+                        LogUtil.d("connect onSuccess");
+                        TaskQuene.getInstance().setRemoterService(service);
+                        mConnectingDevice = new RemoteBoxDevice(status.getName(), ipAddress, port, status.getSn());
+                        result.onSuccess(mConnectingDevice);
+                    }
+
+                    @Override
+                    public void onFailure(String msg) {
+                        result.onFail(msg);
+                    }
+
+                    @Override
+                    public void onFinish() {
+
+                    }
+                }
+        );
+    }
+
+    public void connect(final RemoteBoxDevice dev, final ConnetResultCallback result) {
+        if (mConnectingDevice != null && mConnectingDevice.equals(dev)) {
+            result.onSuccess(mConnectingDevice);
+        }
+
+        this.connect(dev.getAddress(), dev.getPort(),result );
+    }
+
+    public void unConnect() {
+        notifyConnectChange();
     }
 
     public RemoteBoxDevice getConnectingDevice() {
@@ -52,7 +99,6 @@ public class ConnectManager {
 
     private void initConnect(String ip, int port) {
         IRemoterService service = new RemoteServiceImpl(ip, port);
-
         TaskQuene.getInstance().setRemoterService(service);
     }
 

@@ -21,5 +21,21 @@ public class Status {
         wifiStrength = strength;
         onLine = online;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getSn() {
+        return sn;
+    }
+
+    public long getOnLine() {
+        return onLine;
+    }
+
+    public int getWifiStrength() {
+        return wifiStrength;
+    }
 }
 

@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.phicomm.remotecontrol.ConnectManager;
 import com.phicomm.remotecontrol.discovery.DeviceDiscoveryActivity;
@@ -25,6 +26,7 @@ import com.phicomm.remotecontrol.R;
 import com.phicomm.remotecontrol.RemoteBoxDevice;
 import com.phicomm.remotecontrol.util.DevicesUtil;
 import com.phicomm.remotecontrol.greendao.GreenDaoUserUtil;
+import com.phicomm.remotecontrol.util.LogUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -166,21 +168,31 @@ public class SpinnerListFragment extends Fragment {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-            RemoteBoxDevice remoteDevice = (RemoteBoxDevice) parent.getAdapter().getItem(position);
+            final RemoteBoxDevice remoteDevice = (RemoteBoxDevice) parent.getAdapter().getItem(position);
             Log.d(TAG, "onItemSelected remoteDevice=" + remoteDevice);
             if (remoteDevice != null) {
-                if (ConnectManager.getInstance().connect(remoteDevice)) {
-                    RemoteBoxDevice target = DevicesUtil.getTarget();
-                    if (target != null && !(target.getBssid().equals(remoteDevice.getBssid()))) {
-                        DevicesUtil.insertOrUpdateRecentDevices(remoteDevice);
+                ConnectManager.getInstance().connect(remoteDevice, new  ConnectManager.ConnetResultCallback(){
+
+                    @Override
+                    public void onSuccess(RemoteBoxDevice device) {
+                        RemoteBoxDevice target = DevicesUtil.getTarget();
+                        if (target != null && !(target.getBssid().equals(device.getBssid()))) {
+                            DevicesUtil.insertOrUpdateRecentDevices(device);
+                        }
+                        mDeviceTv.setText(remoteDevice.getName());
+                        Toast.makeText(getContext(), "connect success", Toast.LENGTH_SHORT).show();
                     }
-                    mDeviceTv.setText(remoteDevice.getName());
-                } else {
-                    mCurrentDevicesList.remove(remoteDevice);
-                    DevicesUtil.setCurrentListResult(mCurrentDevicesList);
-                    mSpinerPopWindow.notifyDataChange(mCurrentDevicesList);
-                    mDeviceTv.setText(getString(R.string.unable_to_connect_device));
-                }
+
+                    @Override
+                    public void onFail(String msg) {
+                        LogUtil.d("Connect fail:"+ remoteDevice.toString());
+                        mCurrentDevicesList.remove(remoteDevice);
+                        DevicesUtil.setCurrentListResult(mCurrentDevicesList);
+                        mSpinerPopWindow.notifyDataChange(mCurrentDevicesList);
+                        mDeviceTv.setText(getString(R.string.unable_to_connect_device));
+                        Toast.makeText(getContext(), "connect fail", Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
             mSpinerPopWindow.dismiss();
         }

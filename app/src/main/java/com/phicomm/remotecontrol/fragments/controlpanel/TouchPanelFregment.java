@@ -42,7 +42,7 @@ public class TouchPanelFregment extends Fragment implements PanelContract.View {
     }
 
     @Override
-    public void toastMessage() {
+    public void toastMessage(String msg) {
 
     }
 }

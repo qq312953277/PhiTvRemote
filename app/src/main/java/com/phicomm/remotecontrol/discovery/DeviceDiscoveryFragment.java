@@ -159,22 +159,32 @@ public class DeviceDiscoveryFragment extends Fragment implements DeviceDiscovery
     private AdapterView.OnItemClickListener selectHandler = new AdapterView.OnItemClickListener() {
         public void onItemClick(AdapterView<?> parent, View v, int position,
                                 long id) {
-            RemoteBoxDevice remoteDevice = (RemoteBoxDevice) parent.getItemAtPosition(
+            final int pos = position;
+            final RemoteBoxDevice remoteDevice = (RemoteBoxDevice) parent.getItemAtPosition(
                     position);
             if (remoteDevice != null) {
-                if (ConnectManager.getInstance().connect(remoteDevice)) {
-                    RemoteBoxDevice target = mPresenter.getTarget();
-                    if (target == null || !(target.getBssid().equals(remoteDevice.getBssid()))) {
-                        mPresenter.insertOrUpdateRecentDevices(remoteDevice);
-                        mDiscoveryAdapter.clearStates(position);
-                        mDiscoveryAdapter.notifyDataSetInvalidated();
-                        mTitleTv.setText(remoteDevice.getName());
+                ConnectManager.getInstance().connect(remoteDevice, new ConnectManager.ConnetResultCallback() {
+
+                    @Override
+                    public void onSuccess(RemoteBoxDevice device) {
+                        RemoteBoxDevice target = mPresenter.getTarget();
+                        if (target == null || !(target.getBssid().equals(remoteDevice.getBssid()))) {
+                            mPresenter.insertOrUpdateRecentDevices(remoteDevice);
+                            mDiscoveryAdapter.clearStates(pos);
+                            mDiscoveryAdapter.notifyDataSetInvalidated();
+                            mTitleTv.setText(remoteDevice.getName());
+                            Toast.makeText(getContext(), "connect success", Toast.LENGTH_SHORT).show();
+                        }
                     }
-                } else {
-                    mDiscoveryAdapter.getDeviceList().remove(remoteDevice);
-                    mPresenter.setCurrentDeviceList(mDiscoveryAdapter.getDeviceList());
-                    mTitleTv.setText(R.string.unable_to_connect_device);
-                }
+
+                    @Override
+                    public void onFail(String msg) {
+                        mDiscoveryAdapter.getDeviceList().remove(remoteDevice);
+                        mPresenter.setCurrentDeviceList(mDiscoveryAdapter.getDeviceList());
+                        mTitleTv.setText(R.string.unable_to_connect_device);
+                        Toast.makeText(getContext(), "connect fail", Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         }
     };

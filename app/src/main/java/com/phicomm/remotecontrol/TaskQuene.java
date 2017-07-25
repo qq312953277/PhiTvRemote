@@ -19,7 +19,7 @@ import rx.subscriptions.CompositeSubscription;
 
 public class TaskQuene {
     private CompositeSubscription mCompositeSubscription;
-    IRemoterService mService;
+    private IRemoterService mService;
 
     private static class SingletonHolder {
         private static TaskQuene instance = new TaskQuene();
@@ -43,12 +43,12 @@ public class TaskQuene {
     public void setRemoterService(IRemoterService service) {
         LogUtil.d("TaskQuene setRemoterService");
         if (mCompositeSubscription.hasSubscriptions()) {
-            mCompositeSubscription.unsubscribe();
+            mCompositeSubscription.clear();
         }
         mService = service;
     }
 
-    private void addSubscription(Observable observable, Subscriber subscriber) {
+    public void addSubscription(Observable observable, Subscriber subscriber) {
         mCompositeSubscription.add(observable
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -74,10 +74,15 @@ public class TaskQuene {
 
     public void sendKeyEvent(int keycode, PhiCallBack callback) {
         LogUtil.d("TaskQuene sendKeyEvent");
-        KeyEvent event = new KeyEvent(keycode, false);
+       KeyEvent event = new KeyEvent(keycode, false);
         addSubscription(
                 mService.sendKeyEvent(event), callback
         );
+//
+//        Observable observable = mService.sendKeyEvent(event);
+//        observable.subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(callback);
     }
 
     public void sendKeyLonClickEvent(int keycode, PhiCallBack callback) {
@@ -96,6 +101,8 @@ public class TaskQuene {
     }
 
     public void unubscribe() {
-        mCompositeSubscription.unsubscribe();
+        if (mCompositeSubscription.hasSubscriptions()) {
+            mCompositeSubscription.clear();
+        }
     }
 }

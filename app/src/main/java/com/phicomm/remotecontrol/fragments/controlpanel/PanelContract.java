@@ -19,6 +19,6 @@ public interface PanelContract {
     }
 
     interface View extends BaseView<Presenter> {
-        void toastMessage();
+        void toastMessage(String msg);
     }
 }
