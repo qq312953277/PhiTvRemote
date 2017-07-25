@@ -24,8 +24,11 @@ android {
             minifyEnabled false
         }
     }
-}
 
+    lintOptions {
+        abortOnError false
+    }
+}
 
 greendao {
     schemaVersion 2 //数据库schema版本，也可以理解为数据库版本号

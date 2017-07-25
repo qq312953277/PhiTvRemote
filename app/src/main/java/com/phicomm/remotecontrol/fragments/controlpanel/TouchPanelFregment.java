@@ -37,7 +37,7 @@ public class TouchPanelFregment extends Fragment implements PanelContract.View {
     @Override
     public void onViewCreated(android.view.View view, @Nullable Bundle savedInstanceState) {
         TextView versionView = (TextView) view.findViewById(R.id.tv_version);
-        versionView.setText(BuildConfig.VERSION_NAME);
+        versionView.setText("version: "+BuildConfig.VERSION_NAME);
     }
 
     @Override
