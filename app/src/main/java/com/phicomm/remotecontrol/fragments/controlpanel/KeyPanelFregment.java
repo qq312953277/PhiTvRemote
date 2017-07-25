@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.phicomm.remotecontrol.R;
 import com.phicomm.remotecontrol.util.LogUtil;
@@ -21,7 +22,8 @@ import butterknife.ButterKnife;
 public class KeyPanelFregment extends Fragment implements PanelContract.View, android.view.View.OnClickListener {
     final static String TAG = "keypanel";
 
-    PanelContract.Presenter mPresenter;
+    private PanelContract.Presenter mPresenter;
+    private Toast mToast;
 
     @BindView(R.id.btn_right)
     Button mRightBtn;
@@ -57,7 +59,6 @@ public class KeyPanelFregment extends Fragment implements PanelContract.View, an
     }
 
     public KeyPanelFregment() {
-
     }
 
     @Override
@@ -93,6 +94,7 @@ public class KeyPanelFregment extends Fragment implements PanelContract.View, an
     @Override
     public void setPresenter(PanelContract.Presenter presenter) {
         mPresenter = presenter;
+        mPresenter.setView(this);
     }
 
     @Override
@@ -127,6 +129,11 @@ public class KeyPanelFregment extends Fragment implements PanelContract.View, an
 
     @Override
     public void toastMessage(String msg) {
-
+        if (mToast == null) {
+            mToast = Toast.makeText(this.getContext(), msg, Toast.LENGTH_SHORT);
+        } else {
+            mToast.setText(msg);
+        }
+        mToast.show();
     }
 }

@@ -5,7 +5,10 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.phicomm.remotecontrol.BuildConfig;
 import com.phicomm.remotecontrol.R;
 
 /**
@@ -14,7 +17,7 @@ import com.phicomm.remotecontrol.R;
 
 public class TouchPanelFregment extends Fragment implements PanelContract.View {
     PanelContract.Presenter mPresenter;
-
+    private Toast mToast;
 
     public static TouchPanelFregment newInstance() {
         return new TouchPanelFregment();
@@ -33,16 +36,23 @@ public class TouchPanelFregment extends Fragment implements PanelContract.View {
 
     @Override
     public void onViewCreated(android.view.View view, @Nullable Bundle savedInstanceState) {
-
+        TextView versionView = (TextView) view.findViewById(R.id.tv_version);
+        versionView.setText(BuildConfig.VERSION_NAME);
     }
 
     @Override
     public void setPresenter(PanelContract.Presenter presenter) {
         mPresenter = presenter;
+        mPresenter.setView(this);
     }
 
     @Override
     public void toastMessage(String msg) {
-
+        if (mToast == null) {
+            mToast = Toast.makeText(this.getContext(), msg, Toast.LENGTH_SHORT);
+        } else {
+            mToast.setText(msg);
+        }
+        mToast.show();
     }
 }

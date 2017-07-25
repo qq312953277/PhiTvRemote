@@ -113,7 +113,7 @@ public class DeviceDiscoveryFragment extends Fragment implements DeviceDiscovery
         initActionBar();
         setOnClickListener();
         mBroadcastHandler = new DiscoveryHandler();
-        mWifiManager = (WifiManager) getContext().getSystemService(WIFI_SERVICE);
+        mWifiManager = (WifiManager) getContext().getApplicationContext().getSystemService(WIFI_SERVICE);
         mNetworkNameTv.setText(getNetworkName());
     }
 

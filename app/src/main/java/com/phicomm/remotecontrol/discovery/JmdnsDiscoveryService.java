@@ -48,7 +48,7 @@ public class JmdnsDiscoveryService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        mWifiManager = (WifiManager) getSystemService(WIFI_SERVICE);
+        mWifiManager = (WifiManager)getApplicationContext(). getSystemService(WIFI_SERVICE);
         mHandler = new Handler();
     }
 

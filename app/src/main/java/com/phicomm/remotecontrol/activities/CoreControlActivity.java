@@ -6,59 +6,58 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentTabHost;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TabHost;
-import android.widget.TextView;
 
 import com.phicomm.remotecontrol.R;
+import com.phicomm.remotecontrol.fragments.controlpanel.KeyPanelFregment;
+import com.phicomm.remotecontrol.fragments.controlpanel.PanelPresenter;
+import com.phicomm.remotecontrol.fragments.controlpanel.TouchPanelFregment;
+import com.phicomm.remotecontrol.fragments.controlpanel.ViewPageAdapter;
+import com.phicomm.remotecontrol.fragments.spinnerlist.SpinnerListFragment;
+import com.phicomm.remotecontrol.util.ActivityUtils;
 import com.phicomm.remotecontrol.util.LogUtil;
-import com.phicomm.remotecontrol.fragments.childrenlock.ChildrenLockFragment;
-import com.phicomm.remotecontrol.fragments.clean.CleanFragment;
-import com.phicomm.remotecontrol.fragments.screenshot.ScreenshotFragment;
-import com.phicomm.remotecontrol.fragments.controlpanel.ControlPanelFragment;
-import com.phicomm.remotecontrol.fragments.dlna.DlnaFragment;
 
-public class CoreActivity extends AppCompatActivity {
+import java.util.ArrayList;
+
+public class CoreControlActivity extends AppCompatActivity {
 
     static final int REQUEST_CODE = 101;
-    private Class mFragmentArray[] = {ScreenshotFragment.class, DlnaFragment.class, ControlPanelFragment.class,
-            ChildrenLockFragment.class, CleanFragment.class};
 
-    private int mImageViewArray[] = {R.drawable.tab_home_btn, R.drawable.tab_home_btn, R.drawable.tab_home_btn,
-            R.drawable.tab_home_btn, R.drawable.tab_home_btn};
-
-    private int mTextIdArray[] = {R.string.tab_screenshot,
-            R.string.tab_dlna,
-            R.string.tab_control,
-            R.string.tab_childrenlock,
-            R.string.tab_clean};
+    private KeyPanelFregment mKeypanelFragment;
+    private TouchPanelFregment mTouchPanelFragment;
+    private ArrayList<Fragment> mFragmentList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_core);
+        setContentView(R.layout.core_controler);
 
-        FragmentTabHost fragmentTabHost = (FragmentTabHost) findViewById(android.R.id.tabhost);
-        fragmentTabHost.setup(this, getSupportFragmentManager(), R.id.realtabcontent);
+        PanelPresenter keyPresenter = new PanelPresenter();
+        mKeypanelFragment = KeyPanelFregment.newInstance();
+        mKeypanelFragment.setPresenter(keyPresenter);
 
-        int count = mFragmentArray.length;
+        PanelPresenter touchPresenter = new PanelPresenter();
+        mTouchPanelFragment = TouchPanelFregment.newInstance();
+        mTouchPanelFragment.setPresenter(touchPresenter);
 
-        for (int i = 0; i < count; i++) {
-            String spec = getResources().getString(mTextIdArray[i]);
-            TabHost.TabSpec tabSpec = fragmentTabHost.newTabSpec(spec).setIndicator(getTabItemView(i));
+        mFragmentList = new ArrayList<Fragment>();
+        mFragmentList.add(mKeypanelFragment);
+        mFragmentList.add(mTouchPanelFragment);
 
-            fragmentTabHost.addTab(tabSpec, mFragmentArray[i], null);
+        SpinnerListFragment spinnerListFragment = (SpinnerListFragment)
+                getSupportFragmentManager().findFragmentById(R.id.spinner_container);
 
-            fragmentTabHost.getTabWidget().getChildAt(i).setBackgroundResource(R.drawable.selector_tab_background);
+        if (spinnerListFragment == null) {
+            spinnerListFragment = SpinnerListFragment.newInstance();
+            ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),
+                    spinnerListFragment, R.id.spinner_container);
         }
 
-        fragmentTabHost.getTabWidget().setShowDividers(LinearLayout.SHOW_DIVIDER_NONE);
+        ViewPager viewPager = (ViewPager) findViewById(R.id.viewPageMainContent);
+        viewPager.setAdapter(new ViewPageAdapter(getSupportFragmentManager(), mFragmentList));
     }
 
     @Override
@@ -78,16 +77,4 @@ public class CoreActivity extends AppCompatActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
-    private View getTabItemView(int index) {
-        LayoutInflater layoutInflater = LayoutInflater.from(this);
-        View view = layoutInflater.inflate(R.layout.tab_item_view, null);
-
-        ImageView imageView = (ImageView) view.findViewById(R.id.imageview);
-        imageView.setImageResource(mImageViewArray[index]);
-
-        TextView textView = (TextView) view.findViewById(R.id.textview);
-        textView.setText(mTextIdArray[index]);
-
-        return view;
-    }
 }
