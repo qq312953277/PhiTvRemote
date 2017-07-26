@@ -43,6 +43,7 @@ public class SpinnerListFragment extends Fragment {
     private SpinnerWindowView mSpinerPopWindow;
     private GreenDaoUserUtil mGreenDaoUserUtil;
     private List<RemoteBoxDevice> mCurrentDevicesList = new ArrayList<>(0);
+    private boolean mIsSuccess = false;
 
     @BindView(R.id.connected_device)
     public TextView mDeviceTv;
@@ -124,36 +125,61 @@ public class SpinnerListFragment extends Fragment {
     Runnable mLoadConnectedTask = new Runnable() {
         @Override
         public void run() {
-            Message msg = new Message();
-            Bundle data = new Bundle();
-            data.putParcelableArrayList(PhiConstants.SPINNER_DEVICES_LIST, (ArrayList<? extends
-                    Parcelable>) loadLastestConnectionDevice());
-            msg.setData(data);
-            mLoadTargetDevice.sendMessage(msg);
+            loadLastestConnectionDevice();
         }
     };
 
-    private List<RemoteBoxDevice> loadLastestConnectionDevice() {
-        List<RemoteBoxDevice> recenteddevices = mGreenDaoUserUtil.querydata();
+    private void loadLastestConnectionDevice() {
+        final List<RemoteBoxDevice> recentDevices = mGreenDaoUserUtil.querydata();
         Log.d(TAG, "loadLastestConnectionDevice mCurrentDevicesList=" + mCurrentDevicesList);
         mCurrentDevicesList.clear();
-        if (recenteddevices.size() > 0) {
-            RemoteBoxDevice targetDevice = recenteddevices.get(0);
-            DevicesUtil.setTarget(targetDevice);
-            mCurrentDevicesList.add(recenteddevices.get(0));
-        } else {
-            DevicesUtil.setTarget(null);
+        int i = 0;
+        while (recentDevices.size() > i && !mIsSuccess) {
+            RemoteBoxDevice device = recentDevices.get(i);
+            i++;
+            if (device != null) {
+                ConnectManager.getInstance().connect(device, new ConnectManager
+                        .ConnetResultCallback() {
+                    @Override
+                    public void onSuccess(RemoteBoxDevice device) {
+                        Log.d(TAG, "onSuccess device=" + device);
+                        DevicesUtil.setTarget(device);
+                        mCurrentDevicesList.add(device);
+                        mIsSuccess = true;
+                        sendMessage();
+                        DevicesUtil.setTarget(device);
+                        DevicesUtil.setCurrentListResult(mCurrentDevicesList);
+                    }
+
+                    @Override
+                    public void onFail(String msg) {
+                        Log.d(TAG, "onFail msg=" + msg);
+                        mIsSuccess = false;
+                        DevicesUtil.setTarget(null);
+                    }
+                });
+            }
         }
-        DevicesUtil.setCurrentListResult(mCurrentDevicesList);
-        return mCurrentDevicesList;
+
     }
+    private void sendMessage(){
+        Message msg = new Message();
+        Bundle data = new Bundle();
+        data.putParcelableArrayList(PhiConstants.SPINNER_DEVICES_LIST, (ArrayList<? extends
+                Parcelable>) mCurrentDevicesList);
+        msg.setData(data);
+        mLoadTargetDevice.sendMessage(msg);
+    }
+
+
+
 
     View.OnClickListener onButtonClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             if (v == mDiscoveryBtn) {
                 Intent intent = new Intent(getContext(), DeviceDiscoveryActivity.class);
-                intent.putExtra(PhiConstants.ACTION_BAR_NAME,mDeviceTv.getText());
+                intent.putExtra(PhiConstants.ACTION_BAR_NAME, mDeviceTv.getText());
                 startActivity(intent);
             } else if (v == mDeviceTv) {
                 mSpinerPopWindow.setWidth(mDeviceTv.getWidth());
@@ -168,10 +194,12 @@ public class SpinnerListFragment extends Fragment {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-            final RemoteBoxDevice remoteDevice = (RemoteBoxDevice) parent.getAdapter().getItem(position);
+            final RemoteBoxDevice remoteDevice = (RemoteBoxDevice) parent.getAdapter().getItem
+                    (position);
             Log.d(TAG, "onItemSelected remoteDevice=" + remoteDevice);
             if (remoteDevice != null) {
-                ConnectManager.getInstance().connect(remoteDevice, new  ConnectManager.ConnetResultCallback(){
+                ConnectManager.getInstance().connect(remoteDevice, new ConnectManager
+                        .ConnetResultCallback() {
 
                     @Override
                     public void onSuccess(RemoteBoxDevice device) {
@@ -185,7 +213,7 @@ public class SpinnerListFragment extends Fragment {
 
                     @Override
                     public void onFail(String msg) {
-                        LogUtil.d("Connect fail:"+ remoteDevice.toString());
+                        LogUtil.d("Connect fail:" + remoteDevice.toString());
                         mCurrentDevicesList.remove(remoteDevice);
                         DevicesUtil.setCurrentListResult(mCurrentDevicesList);
                         mSpinerPopWindow.notifyDataChange(mCurrentDevicesList);
@@ -220,8 +248,10 @@ public class SpinnerListFragment extends Fragment {
                     .SPINNER_DEVICES_LIST);
             Log.d(TAG, " handleMessage deviceList.size()=" + deviceList.size());
             mSpinerPopWindow.notifyDataChange(deviceList);
-            if (deviceList != null && deviceList.size() > 0) {
+            if (deviceList.size() > 0) {
                 mDeviceTv.setText(deviceList.get(0).getName());
+            } else {
+                mDeviceTv.setText(R.string.unable_to_connect_device);
             }
         }
     };
