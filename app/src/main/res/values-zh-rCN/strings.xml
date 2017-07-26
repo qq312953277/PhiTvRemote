@@ -19,6 +19,7 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android" xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
     <string name="app_name">遥控器</string>
+    <string name="app_title">斐讯盒子遥控器</string>
     <string name="unable_to_connect_device">未连接设备</string>
     <string name="devices_list">设备列表</string>
     <string name="manual_ip_label">请输入斐讯盒子的IP</string>
@@ -93,4 +94,6 @@
     <string name="btn_save">Save</string>
 
     <string name="error_no_device">没有指定设备</string>
+    <string name="timeout_msg">该版本不可用，请更新应用！</string>
+    <string name="network_invailable_msg">"无法访问网络"</string>
 </resources>

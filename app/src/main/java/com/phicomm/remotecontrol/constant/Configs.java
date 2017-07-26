@@ -15,4 +15,6 @@ public class Configs {
     public final static String SCRENSHOT_PREFIX = "phibox_";
     public final static String SCRENSHOT_FORMAT = "yyyy-MM-dd-HH-mm-ss";
     public final static String SCRENSHOT_SUFFIX = ".jpg";
+
+    public final static String APP_OUTLINE = "2017-08-02-09-00-00";
 }

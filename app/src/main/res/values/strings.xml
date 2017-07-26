@@ -1,5 +1,6 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="app_name">RemoteControll</string>
+    <string name="app_name">RemoteControl</string>
+    <string name="app_title">PhiBoxRemote</string>
     <string name="devices_list">devices list</string>
     <string name ="unable_to_connect_device">unable to connect</string>
 
@@ -77,4 +78,6 @@
     <string name="btn_save">Save</string>
 
     <string name="error_no_device">no device assigned</string>
+    <string name="timeout_msg">This version is unavailable,Please update your app !</string>
+    <string name="network_invailable_msg">"Can't access network!"</string>
 </resources>
