@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.phicomm.remotecontrol.R;
@@ -26,15 +27,15 @@ public class KeyPanelFregment extends Fragment implements PanelContract.View, an
     private Toast mToast;
 
     @BindView(R.id.btn_right)
-    Button mRightBtn;
+    ImageView mRightBtn;
     @BindView(R.id.btn_left)
-    Button mLeftBtn;
+    ImageView mLeftBtn;
     @BindView(R.id.btn_up)
-    Button mUpBtn;
+    ImageView mUpBtn;
     @BindView(R.id.btn_down)
-    Button mDownBtn;
+    ImageView mDownBtn;
     @BindView(R.id.btn_enter)
-    Button mEnterBtn;
+    ImageView mEnterBtn;
 
     @BindView(R.id.btn_vol_up)
     Button mVolUpBtn;
