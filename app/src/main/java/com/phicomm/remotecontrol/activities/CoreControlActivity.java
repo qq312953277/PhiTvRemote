@@ -39,6 +39,7 @@ public class CoreControlActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        clearRestoreFragment(savedInstanceState);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_core_controler);
         transStatusbar();
@@ -49,6 +50,13 @@ public class CoreControlActivity extends AppCompatActivity {
         PanelContract.Presenter presenter = new PanelPresenter();
         heads.setPresenter(presenter);
 
+    }
+
+    private void clearRestoreFragment(Bundle savedInstanceState) {
+        if (savedInstanceState != null) {
+            String FRAGMENTS_TAG = "android:support:fragments";
+            savedInstanceState.remove(FRAGMENTS_TAG);
+        }
     }
 
     private void initSpinner() {
@@ -82,7 +90,6 @@ public class CoreControlActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-        LogUtil.d("activity onresume");
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                     != PackageManager.PERMISSION_GRANTED) {

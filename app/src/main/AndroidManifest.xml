@@ -24,6 +24,7 @@
 
         <activity
             android:name=".activities.WelcomeActivity"
+            android:screenOrientation="nosensor"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -34,15 +35,18 @@
 
         <activity
             android:name=".activities.CoreControlActivity"
+            android:screenOrientation="nosensor"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
 
         <activity
             android:name=".activities.RecentDevicesActivity"
+            android:screenOrientation="nosensor"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
             android:name=".discovery.DeviceDiscoveryActivity"
+            android:screenOrientation="nosensor"
             android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
