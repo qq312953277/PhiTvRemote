@@ -129,7 +129,7 @@ public class RemoteServiceImpl implements IRemoterService {
             @Override
             public void call(final Subscriber<? super String> subscriber) {
                 try {
-                    String tgtPath = mRootPath + "v1/keyevent";
+                    String tgtPath = mRootPath + "v1/action";
                     JsonObject object = new JsonObject();
                     object.addProperty("action", action);
                     RequestBody requestBody = RequestBody.create(JSON, object.toString());

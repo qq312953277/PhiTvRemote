@@ -6,4 +6,6 @@
     <color name="content_color">#666666</color>
     <color name="white_normal">#ffffffff</color>
     <color name="login_button_background">#71c297</color>
+    <color name="control_panel_background">#039AE5</color>
+    <color name="btn_color_click">#15000000</color>
 </resources>

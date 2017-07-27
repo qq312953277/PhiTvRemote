@@ -12,4 +12,10 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
+
+    <style name="FunctionButtonStyle" parent="@android:style/Widget.ImageButton">
+        <item name="android:background">@drawable/function_button_bg</item>
+        <item name="android:layout_width">54dp</item>
+        <item name="android:layout_height">54dp</item>
+    </style>
 </resources>

@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="#039AE5">
-
+    android:background="@color/control_panel_background"
+    android:clipToPadding="true"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -25,11 +27,35 @@
             android:background="#aa000000" />
     </LinearLayout>
 
+    <LinearLayout
+        android:id = "@+id/header_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:paddingTop="32dp">
+        <ImageButton
+            android:id="@+id/btn_power"
+            style="@style/FunctionButtonStyle"
+            android:src="@drawable/svg_new_close" />
+
+        <ImageButton
+            android:id="@+id/btn_menu"
+            style="@style/FunctionButtonStyle"
+            android:layout_marginLeft="54dp"
+            android:src="@drawable/offered_menu" />
+
+        <ImageButton
+            android:id="@+id/btn_setting"
+            style="@style/FunctionButtonStyle"
+            android:layout_marginLeft="54dp"
+            android:src="@drawable/svg_new_setting" />
+    </LinearLayout>
+
     <android.support.v4.view.ViewPager
         android:id="@+id/viewPageMainContent"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="10dp"
-        android:overScrollMode="never"/>
+        android:overScrollMode="never" />
 
 </LinearLayout>
