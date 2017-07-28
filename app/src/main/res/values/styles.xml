@@ -13,6 +13,12 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="stance_view">
+        <item name="android:layout_width">0.0dip</item>
+        <item name="android:layout_height">0.0dip</item>
+        <item name="android:layout_weight">1.0</item>
+    </style>
+
     <style name="FunctionButtonStyle" parent="@android:style/Widget.ImageButton">
         <item name="android:background">@drawable/function_button_bg</item>
         <item name="android:layout_width">54dp</item>

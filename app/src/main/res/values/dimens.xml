@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="center_control_button_size_206dp">618.0px</dimen>
+    <dimen name="svg_ic_size_24dp">72.0px</dimen>
+    <dimen name="function_button_size_48dp">144.0px</dimen>
+
 </resources>

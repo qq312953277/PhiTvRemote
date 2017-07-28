@@ -9,4 +9,5 @@
     <color name="control_panel_background">#039AE5</color>
     <color name="btn_color_click">#15000000</color>
     <color name="longbutton_stroke">#c6ffffff</color>
+    <color name="common_global_btn_color">#ff1da4e8</color>
 </resources>
