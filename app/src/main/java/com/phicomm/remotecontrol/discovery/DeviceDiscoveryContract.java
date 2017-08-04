@@ -3,8 +3,8 @@ package com.phicomm.remotecontrol.discovery;
 import java.util.List;
 
 import com.phicomm.remotecontrol.RemoteBoxDevice;
-import com.phicomm.remotecontrol.util.BasePresenter;
-import com.phicomm.remotecontrol.util.BaseView;
+import com.phicomm.remotecontrol.base.BasePresenter;
+import com.phicomm.remotecontrol.base.BaseView;
 
 /**
  * Created by chunya02.li on 2017/7/11.

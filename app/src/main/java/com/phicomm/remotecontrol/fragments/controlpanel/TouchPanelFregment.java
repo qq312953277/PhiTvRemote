@@ -10,12 +10,14 @@ import android.widget.Toast;
 
 import com.phicomm.remotecontrol.BuildConfig;
 import com.phicomm.remotecontrol.R;
+import com.phicomm.remotecontrol.base.BaseFragment;
 
 /**
  * Created by xufeng02.zhou on 2017/7/13.
  */
 
-public class TouchPanelFregment extends Fragment implements PanelContract.View {
+public class TouchPanelFregment extends BaseFragment implements PanelContract.View {
+
     PanelContract.Presenter mPresenter;
     private Toast mToast;
 

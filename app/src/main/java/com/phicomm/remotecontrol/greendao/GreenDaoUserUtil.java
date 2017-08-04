@@ -7,6 +7,7 @@ import java.util.List;
 
 import com.phicomm.remotecontrol.MyApplication;
 import com.phicomm.remotecontrol.RemoteBoxDevice;
+import com.phicomm.remotecontrol.base.BaseApplication;
 import com.phicomm.remotecontrol.greendao.Entity.RemoteDevice;
 import com.phicomm.remotecontrol.greendao.gen.RemoteDeviceDao;
 
@@ -19,7 +20,7 @@ public class GreenDaoUserUtil {
     private static RemoteDeviceDao mRemoteDeviceDao;
 
     public GreenDaoUserUtil() {
-        mRemoteDeviceDao = MyApplication.getInstance().getRemoteDeviceDao();
+        mRemoteDeviceDao = BaseApplication.getApplication().getRemoteDeviceDao();
     }
 
     //insert data

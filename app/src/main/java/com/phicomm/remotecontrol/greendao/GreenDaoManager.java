@@ -1,8 +1,7 @@
 package com.phicomm.remotecontrol.greendao;
 
-import android.util.Log;
-
 import com.phicomm.remotecontrol.MyApplication;
+import com.phicomm.remotecontrol.base.BaseApplication;
 import com.phicomm.remotecontrol.greendao.gen.DaoMaster;
 import com.phicomm.remotecontrol.greendao.gen.DaoSession;
 import com.phicomm.remotecontrol.greendao.gen.RemoteDeviceDao;
@@ -19,7 +18,7 @@ public class GreenDaoManager {
     private GreenDaoManager() {
         if (mInstance == null) {
             DaoMaster.DevOpenHelper devOpenHelper = new
-                    DaoMaster.DevOpenHelper(MyApplication.getInstance(), "remote_devices", null);
+                    DaoMaster.DevOpenHelper(BaseApplication.getContext(), "remote_devices", null);
             mDaoMaster = new DaoMaster(devOpenHelper.getWritableDatabase());
             mDaoSession = mDaoMaster.newSession();
             mRemoteDeviceDao = mDaoSession.getRemoteDeviceDao();

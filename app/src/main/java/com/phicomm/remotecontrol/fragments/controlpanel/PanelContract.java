@@ -1,7 +1,7 @@
 package com.phicomm.remotecontrol.fragments.controlpanel;
 
-import com.phicomm.remotecontrol.util.BasePresenter;
-import com.phicomm.remotecontrol.util.BaseView;
+import com.phicomm.remotecontrol.base.BasePresenter;
+import com.phicomm.remotecontrol.base.BaseView;
 
 /**
  * Created by hzn on 17-5-11.

@@ -2,8 +2,8 @@ package com.phicomm.remotecontrol.fragments.screenshot;
 
 import android.graphics.drawable.Drawable;
 
-import com.phicomm.remotecontrol.util.BasePresenter;
-import com.phicomm.remotecontrol.util.BaseView;
+import com.phicomm.remotecontrol.base.BasePresenter;
+import com.phicomm.remotecontrol.base.BaseView;
 
 /**
  * Created by xufeng02.zhou 2017/7/18

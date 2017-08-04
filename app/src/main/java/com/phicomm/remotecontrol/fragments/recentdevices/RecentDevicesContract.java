@@ -2,8 +2,8 @@ package com.phicomm.remotecontrol.fragments.recentdevices;
 
 import java.util.List;
 
-import com.phicomm.remotecontrol.util.BasePresenter;
-import com.phicomm.remotecontrol.util.BaseView;
+import com.phicomm.remotecontrol.base.BasePresenter;
+import com.phicomm.remotecontrol.base.BaseView;
 import com.phicomm.remotecontrol.greendao.Entity.RemoteDevice;
 
 /**
