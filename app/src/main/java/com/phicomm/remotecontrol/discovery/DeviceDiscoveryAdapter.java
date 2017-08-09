@@ -8,12 +8,13 @@ import android.widget.BaseAdapter;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
+import com.phicomm.remotecontrol.R;
+import com.phicomm.remotecontrol.RemoteBoxDevice;
+import com.phicomm.remotecontrol.util.LogUtil;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import com.phicomm.remotecontrol.R;
-import com.phicomm.remotecontrol.RemoteBoxDevice;
 
 
 /**
@@ -103,6 +104,7 @@ public class DeviceDiscoveryAdapter extends BaseAdapter {
     public void notifyDataChange(List<RemoteBoxDevice> deviceList) {
         mDeviceList.clear();
         mDeviceList.addAll(deviceList);
+        LogUtil.d(TAG,"notifyDataChange");
         notifyDataSetChanged();
     }
 

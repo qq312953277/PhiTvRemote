@@ -1,14 +1,11 @@
 package com.phicomm.remotecontrol.fragments.recentdevices;
 
+import com.phicomm.remotecontrol.fragments.recentdevices.RecentDevicesContract.View;
+import com.phicomm.remotecontrol.greendao.Entity.RemoteDevice;
+import com.phicomm.remotecontrol.greendao.GreenDaoUserUtil;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import com.phicomm.remotecontrol.RemoteBoxDevice;
-import com.phicomm.remotecontrol.greendao.Entity.RemoteDevice;
-
-import com.phicomm.remotecontrol.greendao.GreenDaoUserUtil;
-import com.phicomm.remotecontrol.fragments.recentdevices.RecentDevicesContract.View;
-import com.phicomm.remotecontrol.util.DevicesUtil;
 
 /**
  * Created by chunya02.li on 2017/7/10.
@@ -41,10 +38,6 @@ public class RecentDevicesPresenter implements RecentDevicesContract.Presenter {
     @Override
     public List<RemoteDevice> loadRecentDevices() {
         mRecentConnectList = mGreenDaoUserUtil.loadAllRecentByTimeOrder();
-        RemoteBoxDevice target = DevicesUtil.getTarget();
-        if (target != null && mRecentConnectList.size() > 0) {
-            mRecentConnectList.remove(0);
-        }
         mView.showRecentDevices(mRecentConnectList);
         return mRecentConnectList;
     }

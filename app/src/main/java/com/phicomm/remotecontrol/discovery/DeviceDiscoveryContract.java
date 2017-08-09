@@ -1,10 +1,9 @@
 package com.phicomm.remotecontrol.discovery;
 
-import java.util.List;
-
 import com.phicomm.remotecontrol.RemoteBoxDevice;
 import com.phicomm.remotecontrol.base.BasePresenter;
 import com.phicomm.remotecontrol.base.BaseView;
+import java.util.List;
 
 /**
  * Created by chunya02.li on 2017/7/11.
@@ -12,7 +11,10 @@ import com.phicomm.remotecontrol.base.BaseView;
 
 public class DeviceDiscoveryContract {
     interface View extends BaseView<Presenter> {
+
         void refreshListView(List<RemoteBoxDevice> current_list);
+        void setTittle(String str);
+        void showToast(String str);
     }
 
     interface Presenter extends BasePresenter {
@@ -25,5 +27,9 @@ public class DeviceDiscoveryContract {
         void loadRecentList();
 
         void insertOrUpdateRecentDevices(RemoteBoxDevice device);
+
+        void ipConnect(String ip);
+
+
     }
 }

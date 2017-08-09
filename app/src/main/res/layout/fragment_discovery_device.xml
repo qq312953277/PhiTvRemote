@@ -16,7 +16,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="8dp"
-            android:src="@drawable/phi_actionbar_back"/>
+            android:src="@drawable/phi_actionbar_back"
+            android:layout_alignBottom="@+id/title"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
 
         <TextView
             android:id="@id/title"
@@ -134,7 +137,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:text="@string/recent_connect_devices"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:layout_alignParentTop="true" />
     </RelativeLayout>
 
 

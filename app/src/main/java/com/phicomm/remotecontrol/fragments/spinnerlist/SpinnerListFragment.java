@@ -87,7 +87,8 @@ public class SpinnerListFragment extends Fragment {
         List<RemoteBoxDevice> deviceList = DevicesUtil.getCurrentDevicesListResult();
         RemoteBoxDevice target = DevicesUtil.getTarget();
         if (target != null) {
-            mDeviceTv.setText(target.getName());
+            //mDeviceTv.setText(target.getName());
+            mDeviceTv.setText(target.getAddress());
         } else {
             mDeviceTv.setText(getString(R.string.unable_to_connect_device));
         }
@@ -207,7 +208,8 @@ public class SpinnerListFragment extends Fragment {
                         if (target != null && !(target.getBssid().equals(device.getBssid()))) {
                             DevicesUtil.insertOrUpdateRecentDevices(device);
                         }
-                        mDeviceTv.setText(remoteDevice.getName());
+                        //mDeviceTv.setText(remoteDevice.getName());
+                        mDeviceTv.setText(remoteDevice.getAddress());
                         Toast.makeText(getContext(), "connect success", Toast.LENGTH_SHORT).show();
                     }
 
@@ -249,7 +251,8 @@ public class SpinnerListFragment extends Fragment {
             Log.d(TAG, " handleMessage deviceList.size()=" + deviceList.size());
             mSpinerPopWindow.notifyDataChange(deviceList);
             if (deviceList.size() > 0) {
-                mDeviceTv.setText(deviceList.get(0).getName());
+                //mDeviceTv.setText(deviceList.get(0).getName());
+                mDeviceTv.setText(deviceList.get(0).getAddress());
             } else {
                 mDeviceTv.setText(R.string.unable_to_connect_device);
             }

@@ -1,7 +1,5 @@
 package com.phicomm.remotecontrol.constant;
 
-import android.view.KeyEvent;
-
 /**
  * Created by xufeng02.zhou on 2017/7/15.
  */
@@ -9,4 +7,6 @@ import android.view.KeyEvent;
 public class Commands {
 
     public static String OPEN_SETTING = "setting";
+    public static String OPEN_LOCK= "openlock";
+    public static String OPEN_CLEAR = "openclear";
 }

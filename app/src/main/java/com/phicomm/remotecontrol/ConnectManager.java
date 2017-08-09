@@ -1,7 +1,5 @@
 package com.phicomm.remotecontrol;
 
-import android.service.carrier.CarrierMessagingService;
-
 import com.phicomm.remotecontrol.beans.Status;
 import com.phicomm.remotecontrol.httpclient.IRemoterService;
 import com.phicomm.remotecontrol.httpclient.PhiCallBack;
@@ -15,6 +13,7 @@ import java.util.ArrayList;
  */
 
 public class ConnectManager {
+    public static final int PORT = 8080;
     private RemoteBoxDevice mConnectingDevice;
     private ArrayList<ConnectListener> mListeners;
 
@@ -53,9 +52,13 @@ public class ConnectManager {
         return true;
     }
 
+    public void getStatus(String ip, int port, final ConnetResultCallback result) {
+        connect(ip, PORT, result);
+    }
+
     public void connect(final String ipAddress, final int port, final ConnetResultCallback result) {
 
-        LogUtil.d("connect:"+ipAddress +"/"+ port);
+        LogUtil.d("connect:" + ipAddress + "/" + port);
         final IRemoterService service = new RemoteServiceImpl(ipAddress, port);
 
         TaskQuene.getInstance().addSubscription(
@@ -86,7 +89,7 @@ public class ConnectManager {
             result.onSuccess(mConnectingDevice);
         }
 
-        this.connect(dev.getAddress(), dev.getPort(),result );
+        this.connect(dev.getAddress(), dev.getPort(), result);
     }
 
     public void unConnect() {

@@ -2,15 +2,15 @@ package com.phicomm.remotecontrol.util;
 
 import android.util.Log;
 
+import com.phicomm.remotecontrol.RemoteBoxDevice;
+import com.phicomm.remotecontrol.greendao.Entity.RemoteDevice;
+import com.phicomm.remotecontrol.greendao.GreenDaoUserUtil;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import com.phicomm.remotecontrol.RemoteBoxDevice;
-import com.phicomm.remotecontrol.greendao.Entity.RemoteDevice;
-import com.phicomm.remotecontrol.greendao.GreenDaoUserUtil;
 
 
 /**
@@ -38,7 +38,7 @@ public class DevicesUtil {
 
     public static List<RemoteBoxDevice> getCurrentDevicesListResult() {
         if (mCurrentDevicesListResult != null) {
-            Log.d(TAG, "get currentListResult.size=" + mCurrentDevicesListResult.size());
+            LogUtil.d(TAG, "get currentListResult.size=" + mCurrentDevicesListResult.size());
         }
         return mCurrentDevicesListResult;
     }
@@ -55,7 +55,7 @@ public class DevicesUtil {
         Long findId = null;
         for (Long id : ids) {
             String tempBssid = mRecentedConnectedMap.get(id);
-            Log.d(TAG, "tempBssid=" + tempBssid + " remoteDevice.getBssid()=" + remoteDevice.getBssid());
+            LogUtil.d(TAG, "tempBssid=" + tempBssid + " remoteDevice.getBssid()=" + remoteDevice.getBssid());
             if (tempBssid.equals(remoteDevice.getBssid())) {
                 findId = id;
                 break;

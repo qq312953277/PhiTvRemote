@@ -1,21 +1,22 @@
 package com.phicomm.remotecontrol.discovery;
 
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.net.wifi.WifiManager;
 import android.util.Log;
+
+import com.phicomm.remotecontrol.ConnectManager;
+import com.phicomm.remotecontrol.RemoteBoxDevice;
+import com.phicomm.remotecontrol.discovery.DeviceDiscoveryContract.View;
+import com.phicomm.remotecontrol.discovery.JmdnsDiscoveryClient.IDiscoverResultListener;
+import com.phicomm.remotecontrol.util.DevicesUtil;
+import com.phicomm.remotecontrol.util.LogUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
-import com.phicomm.remotecontrol.discovery.DeviceDiscoveryContract.View;
-import com.phicomm.remotecontrol.RemoteBoxDevice;
-import com.phicomm.remotecontrol.util.DevicesUtil;
-import com.phicomm.remotecontrol.discovery.JmdnsDiscoveryClient.IDiscoverResultListener;
 import static android.content.Context.WIFI_SERVICE;
 
 /**
@@ -63,6 +64,45 @@ public class DeviceDiscoveryPresenter implements DeviceDiscoveryContract.Present
 
     }
 
+    public void ipConnect(String ip) {
+        ConnectManager.getInstance().connect(ip, 8080, connetResultCallback);
+
+    }
+
+
+    private ConnectManager.ConnetResultCallback connetResultCallback = new ConnectManager.ConnetResultCallback() {
+        @Override
+        public void onSuccess(RemoteBoxDevice device) {
+            Log.d(TAG, "onSuccess");
+            if (!mCachedRemoteAddress.containsKey(device.getBssid())) {
+                mCachedRemoteAddress.put(device.getBssid(), device);
+                mDiscoveryDeviceList.add(device);
+                DevicesUtil.setTarget(device);
+                mView.setTittle(device.getAddress());
+                setCurrentDeviceList(mDiscoveryDeviceList);
+                mView.refreshListView(mDiscoveryDeviceList);
+            } else {
+
+                RemoteBoxDevice target = DevicesUtil.getTarget();
+                if (!target.getBssid().equals(device.getBssid())) {
+                    DevicesUtil.setTarget(device);
+                    mView.setTittle(device.getAddress());
+                    mView.refreshListView(mDiscoveryDeviceList);
+                } else {
+                }
+            }
+            //ipconnect的连接记录生成
+            DevicesUtil.insertOrUpdateRecentDevices(device);
+            mView.showToast("connect success");
+        }
+
+        @Override
+        public void onFail(String msg) {
+            LogUtil.d(TAG, "onFail");
+            mView.showToast("connect fail");
+        }
+    };
+
     private void stopDiscoveryService() {
         releaseMulticast();
         mJmdnsDiscoveryClient.stopDiscovery();
@@ -70,13 +110,15 @@ public class DeviceDiscoveryPresenter implements DeviceDiscoveryContract.Present
 
     @Override
     public List<RemoteBoxDevice> getCurrentDeviceList() {
-        currentDeviceList= DevicesUtil.getCurrentDevicesListResult();
+        currentDeviceList = DevicesUtil.getCurrentDevicesListResult();
+        LogUtil.d(TAG, "currentDeviceList.size()=" + currentDeviceList.size());
         mView.refreshListView(currentDeviceList);
         return currentDeviceList;
     }
 
     @Override
     public void setCurrentDeviceList(List<RemoteBoxDevice> current_list) {
+        LogUtil.d(TAG, "setCurrentDeviceList.size()=" + current_list.size());
         DevicesUtil.setCurrentListResult(current_list);
     }
 
@@ -103,6 +145,7 @@ public class DeviceDiscoveryPresenter implements DeviceDiscoveryContract.Present
                 mView.refreshListView(mDiscoveryDeviceList);
             }
         }
+
         @Override
         public void onDeviceRemove(RemoteBoxDevice device) {
             String deviceBssid = device.getBssid();
@@ -130,7 +173,7 @@ public class DeviceDiscoveryPresenter implements DeviceDiscoveryContract.Present
         Log.d(TAG, "mMulticastLock.acquire()");
     }
 
-    private void clearListArray(){
+    private void clearListArray() {
         mDiscoveryDeviceList.clear();
         mCachedRemoteAddress.clear();
         currentDeviceList.clear();

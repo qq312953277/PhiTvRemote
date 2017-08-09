@@ -1,7 +1,6 @@
 package com.phicomm.remotecontrol.fragments.screenshot;
 
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;

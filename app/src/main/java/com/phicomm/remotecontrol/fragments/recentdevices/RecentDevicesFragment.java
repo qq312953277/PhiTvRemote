@@ -17,6 +17,10 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.phicomm.remotecontrol.R;
+import com.phicomm.remotecontrol.fragments.recentdevices.RecentDevicesContract.Presenter;
+import com.phicomm.remotecontrol.greendao.Entity.RemoteDevice;
+
 import java.util.ArrayList;
 import java.util.Formatter;
 import java.util.List;
@@ -24,12 +28,6 @@ import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
-import com.phicomm.remotecontrol.R;
-import com.phicomm.remotecontrol.greendao.Entity.RemoteDevice;
-import com.phicomm.remotecontrol.fragments.recentdevices.RecentDevicesContract.Presenter;
-
-import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Created by chunya02.li on 2017/7/10.

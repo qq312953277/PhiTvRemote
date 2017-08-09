@@ -2,7 +2,7 @@
     <string name="app_name">RemoteControl</string>
     <string name="app_title">PhiBoxRemote</string>
     <string name="devices_list">devices list</string>
-    <string name ="unable_to_connect_device">unable to connect</string>
+    <string name="unable_to_connect_device">unable to connect</string>
 
     <string name="manual_ip_label">Add Phicomm BOX</string>
     <string name="manual_ip_entry_label">IP Address</string>
@@ -40,7 +40,7 @@
     <string name="edit_recent_connect_devices">edit</string>
     <string name="cancel_choose_box">cancel</string>
     <string name="delete_choose_box">delete</string>
-    <string name ="no_item">no item</string>
+    <string name="no_item">no item</string>
 
     <string name="device_find_tip">Notice:\n \n
         1:Support Phicomm Box \n
@@ -80,4 +80,7 @@
     <string name="error_no_device">no device assigned</string>
     <string name="timeout_msg">This version is unavailable,Please update your app !</string>
     <string name="network_invailable_msg">"Can't access network!"</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

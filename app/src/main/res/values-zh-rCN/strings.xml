@@ -96,4 +96,12 @@
     <string name="error_no_device">没有指定设备</string>
     <string name="timeout_msg">该版本不可用，请更新应用！</string>
     <string name="network_invailable_msg">"无法访问网络"</string>
+
+    <string name="screeshot">"截图"</string>
+    <string name="screenprojection">"投屏"</string>
+    <string name="childrenlock">"儿童锁"</string>
+    <string name="clear">"一键清理"</string>
+
+
+
 </resources>

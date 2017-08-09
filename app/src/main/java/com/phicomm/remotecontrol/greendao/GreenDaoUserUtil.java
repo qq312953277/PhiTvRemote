@@ -2,14 +2,13 @@ package com.phicomm.remotecontrol.greendao;
 
 import android.util.Log;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.phicomm.remotecontrol.MyApplication;
 import com.phicomm.remotecontrol.RemoteBoxDevice;
 import com.phicomm.remotecontrol.base.BaseApplication;
 import com.phicomm.remotecontrol.greendao.Entity.RemoteDevice;
 import com.phicomm.remotecontrol.greendao.gen.RemoteDeviceDao;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by chunya02.li on 2017/6/30.

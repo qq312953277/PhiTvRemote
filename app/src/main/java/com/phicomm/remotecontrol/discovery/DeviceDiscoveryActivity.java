@@ -17,6 +17,7 @@ public class DeviceDiscoveryActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        clearRestoreFragment(savedInstanceState);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_discovery_device);
         DeviceDiscoveryFragment deviceDiscoveryFragment = (DeviceDiscoveryFragment)
@@ -28,6 +29,13 @@ public class DeviceDiscoveryActivity extends AppCompatActivity {
                     deviceDiscoveryFragment, R.id.layout_single_container);
         }
         mDiscoveryDevicePresenter = new DeviceDiscoveryPresenter(deviceDiscoveryFragment, this);
+    }
+
+    private void clearRestoreFragment(Bundle savedInstanceState) {
+        if (savedInstanceState != null) {
+            String FRAGMENTS_TAG = "android:support:fragments";
+            savedInstanceState.remove(FRAGMENTS_TAG);
+        }
     }
 }
 

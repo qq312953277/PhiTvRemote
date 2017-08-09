@@ -25,23 +25,37 @@ import com.phicomm.remotecontrol.fragments.controlpanel.TouchPanelFregment;
 import com.phicomm.remotecontrol.fragments.controlpanel.ViewPageAdapter;
 import com.phicomm.remotecontrol.fragments.spinnerlist.SpinnerListFragment;
 import com.phicomm.remotecontrol.util.ActivityUtils;
-import com.phicomm.remotecontrol.util.LogUtil;
 
 import java.util.ArrayList;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class CoreControlActivity extends AppCompatActivity {
 
     static final int REQUEST_CODE = 101;
+    @BindView(R.id.remote_bottom1)
+    ImageButton remoteBottom1;
+    @BindView(R.id.remote_bottom2)
+    ImageButton remoteBottom2;
+    @BindView(R.id.remote_bottom3)
+    ImageButton remoteBottom3;
+    @BindView(R.id.remote_bottom4)
+    ImageButton remoteBottom4;
+    @BindView(R.id.remote_bottom5)
+    ImageButton remoteBottom5;
 
     private KeyPanelFregment mKeypanelFragment;
     private TouchPanelFregment mTouchPanelFragment;
     private ArrayList<Fragment> mFragmentList;
-
+    private PanelContract.Presenter mPresenter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         clearRestoreFragment(savedInstanceState);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_core_controler);
+        ButterKnife.bind(this);
         transStatusbar();
         initSpinner();
         initPanel();
@@ -52,6 +66,27 @@ public class CoreControlActivity extends AppCompatActivity {
 
     }
 
+    @OnClick({R.id.remote_bottom1, R.id.remote_bottom2, R.id.remote_bottom3, R.id.remote_bottom4, R.id.remote_bottom5})
+    public void onClick(View view){
+        switch (view.getId()){
+            case R.id.remote_bottom1:
+
+                break;
+            case R.id.remote_bottom2:
+
+                break;
+            case R.id.remote_bottom3:
+
+                break;
+            case R.id.remote_bottom4:
+                mPresenter.sendCommand(Commands.OPEN_LOCK);
+                break;
+            case R.id.remote_bottom5:
+                mPresenter.sendCommand(Commands.OPEN_CLEAR);
+                break;
+
+        }
+    }
     private void clearRestoreFragment(Bundle savedInstanceState) {
         if (savedInstanceState != null) {
             String FRAGMENTS_TAG = "android:support:fragments";
@@ -109,7 +144,7 @@ public class CoreControlActivity extends AppCompatActivity {
 
     class HeaderButtons implements PanelContract.View {
         View mRootView;
-        PanelContract.Presenter mPresenter;
+        //PanelContract.Presenter mPresenter;
         private Toast mToast;
 
         HeaderButtons(View view) {
@@ -165,4 +200,5 @@ public class CoreControlActivity extends AppCompatActivity {
             mToast.show();
         }
     }
+
 }

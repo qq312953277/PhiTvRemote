@@ -30,6 +30,14 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.phicomm.remotecontrol.ConnectManager;
+import com.phicomm.remotecontrol.R;
+import com.phicomm.remotecontrol.RemoteBoxDevice;
+import com.phicomm.remotecontrol.activities.RecentDevicesActivity;
+import com.phicomm.remotecontrol.constant.PhiConstants;
+import com.phicomm.remotecontrol.discovery.DeviceDiscoveryContract.Presenter;
+import com.phicomm.remotecontrol.util.DevicesUtil;
+
 import java.util.Formatter;
 import java.util.List;
 import java.util.Locale;
@@ -37,14 +45,6 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
-import com.phicomm.remotecontrol.ConnectManager;
-import com.phicomm.remotecontrol.discovery.DeviceDiscoveryContract.Presenter;
-import com.phicomm.remotecontrol.constant.PhiConstants;
-import com.phicomm.remotecontrol.R;
-import com.phicomm.remotecontrol.activities.RecentDevicesActivity;
-import com.phicomm.remotecontrol.RemoteBoxDevice;
-import com.phicomm.remotecontrol.util.DevicesUtil;
 
 import static android.content.Context.WIFI_SERVICE;
 import static android.content.DialogInterface.BUTTON_NEGATIVE;
@@ -173,6 +173,7 @@ public class DeviceDiscoveryFragment extends Fragment implements DeviceDiscovery
                             mDiscoveryAdapter.clearStates(pos);
                             mDiscoveryAdapter.notifyDataSetInvalidated();
                             mTitleTv.setText(remoteDevice.getName());
+
                             Toast.makeText(getContext(), "connect success", Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -204,6 +205,17 @@ public class DeviceDiscoveryFragment extends Fragment implements DeviceDiscovery
     @Override
     public void setPresenter(Presenter presenter) {
         mPresenter = presenter;
+    }
+
+
+    @Override
+    public void showToast(String str) {
+        Toast.makeText(getContext(), str, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void setTittle(String str) {
+        mTitleTv.setText(str);
     }
 
     @Override
@@ -339,10 +351,6 @@ public class DeviceDiscoveryFragment extends Fragment implements DeviceDiscovery
         }
     }
 
-    private boolean connectToEntry(String ipAddress) {
-        return true;
-    }
-
 
     private AlertDialog buildManualIpDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
@@ -367,7 +375,7 @@ public class DeviceDiscoveryFragment extends Fragment implements DeviceDiscovery
                     public void onClick(DialogInterface dialog, int which) {
                         String inputStr = ipEditText.getText().toString().trim();
                         if (isValidIpAddress(inputStr)) {
-                            connectToEntry(inputStr);
+                            mPresenter.ipConnect(inputStr);
                         } else {
                             Toast.makeText(getContext(),
                                     getString(R.string.manual_ip_error_address),
@@ -428,5 +436,14 @@ public class DeviceDiscoveryFragment extends Fragment implements DeviceDiscovery
             mDiscoveryDialog = null;
         }
         stopDiscoveryService();
+    }
+
+    private boolean isContains(List<RemoteBoxDevice> deviceList, RemoteBoxDevice remoteBoxDevice) {
+        for (RemoteBoxDevice device : deviceList) {
+            if (device.getAddress().equals(remoteBoxDevice.getAddress())) {
+                return true;
+            }
+        }
+        return false;
     }
 }
