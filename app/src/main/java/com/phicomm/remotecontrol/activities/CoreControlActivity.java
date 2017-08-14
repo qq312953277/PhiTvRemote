@@ -9,30 +9,31 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.phicomm.remotecontrol.R;
+import com.phicomm.remotecontrol.base.BaseActivity;
 import com.phicomm.remotecontrol.constant.Commands;
 import com.phicomm.remotecontrol.constant.KeyCode;
-import com.phicomm.remotecontrol.fragments.controlpanel.KeyPanelFregment;
-import com.phicomm.remotecontrol.fragments.controlpanel.PanelContract;
-import com.phicomm.remotecontrol.fragments.controlpanel.PanelPresenter;
-import com.phicomm.remotecontrol.fragments.controlpanel.TouchPanelFregment;
-import com.phicomm.remotecontrol.fragments.controlpanel.ViewPageAdapter;
-import com.phicomm.remotecontrol.fragments.spinnerlist.SpinnerListFragment;
+import com.phicomm.remotecontrol.modules.main.controlpanel.KeyPanelFragment;
+import com.phicomm.remotecontrol.modules.main.controlpanel.PanelContract;
+import com.phicomm.remotecontrol.modules.main.controlpanel.PanelPresenter;
+import com.phicomm.remotecontrol.modules.main.controlpanel.TouchPanelFragment;
+import com.phicomm.remotecontrol.modules.main.controlpanel.ViewPageAdapter;
+import com.phicomm.remotecontrol.modules.main.screenshot.ScreenshotActivity;
+import com.phicomm.remotecontrol.modules.main.spinnerlist.SpinnerListFragment;
 import com.phicomm.remotecontrol.util.ActivityUtils;
+import com.phicomm.remotecontrol.util.CommonUtils;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class CoreControlActivity extends AppCompatActivity {
+public class CoreControlActivity extends BaseActivity {
 
     static final int REQUEST_CODE = 101;
     @BindView(R.id.remote_bottom1)
@@ -46,16 +47,16 @@ public class CoreControlActivity extends AppCompatActivity {
     @BindView(R.id.remote_bottom5)
     ImageButton remoteBottom5;
 
-    private KeyPanelFregment mKeypanelFragment;
-    private TouchPanelFregment mTouchPanelFragment;
+    private KeyPanelFragment mKeypanelFragment;
+    private TouchPanelFragment mTouchPanelFragment;
     private ArrayList<Fragment> mFragmentList;
     private PanelContract.Presenter mPresenter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         clearRestoreFragment(savedInstanceState);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_core_controler);
-        ButterKnife.bind(this);
         transStatusbar();
         initSpinner();
         initPanel();
@@ -67,10 +68,10 @@ public class CoreControlActivity extends AppCompatActivity {
     }
 
     @OnClick({R.id.remote_bottom1, R.id.remote_bottom2, R.id.remote_bottom3, R.id.remote_bottom4, R.id.remote_bottom5})
-    public void onClick(View view){
-        switch (view.getId()){
+    public void onClick(View view) {
+        switch (view.getId()) {
             case R.id.remote_bottom1:
-
+                CommonUtils.startIntent(this, null, ScreenshotActivity.class);
                 break;
             case R.id.remote_bottom2:
 
@@ -87,6 +88,7 @@ public class CoreControlActivity extends AppCompatActivity {
 
         }
     }
+
     private void clearRestoreFragment(Bundle savedInstanceState) {
         if (savedInstanceState != null) {
             String FRAGMENTS_TAG = "android:support:fragments";
@@ -107,11 +109,11 @@ public class CoreControlActivity extends AppCompatActivity {
 
     private void initPanel() {
         PanelPresenter keyPresenter = new PanelPresenter();
-        mKeypanelFragment = KeyPanelFregment.newInstance();
+        mKeypanelFragment = KeyPanelFragment.newInstance();
         mKeypanelFragment.setPresenter(keyPresenter);
 
         PanelPresenter touchPresenter = new PanelPresenter();
-        mTouchPanelFragment = TouchPanelFregment.newInstance();
+        mTouchPanelFragment = TouchPanelFragment.newInstance();
         mTouchPanelFragment.setPresenter(touchPresenter);
 
         mFragmentList = new ArrayList<Fragment>();

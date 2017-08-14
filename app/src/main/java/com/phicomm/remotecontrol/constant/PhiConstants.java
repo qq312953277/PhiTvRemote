@@ -16,4 +16,8 @@ public class PhiConstants {
     public static final int BROADCAST_TIMEOUT = 1;
 
     public static final String ACTION_BAR_NAME = "action_bar_name";
+    public static final int SLIDE_RIGHT = 0;
+    public static final int SLIDE_LEFT = 1;
+    public static final int SLIDE_DOWN = 2;
+    public static final int SLIDE_UP = 3;
 }

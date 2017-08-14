@@ -36,8 +36,7 @@
         <activity
             android:name=".activities.CoreControlActivity"
             android:screenOrientation="nosensor"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <activity
             android:name=".activities.RecentDevicesActivity"
@@ -48,6 +47,13 @@
             android:name=".discovery.DeviceDiscoveryActivity"
             android:screenOrientation="nosensor"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".modules.devices.searchdevices.DeviceDiscoveryActivity"
+            android:screenOrientation="nosensor"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".modules.main.screenshot.ScreenshotActivity"
+            android:screenOrientation="nosensor" />
     </application>
 
 </manifest>

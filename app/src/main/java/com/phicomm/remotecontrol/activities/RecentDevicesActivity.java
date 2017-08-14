@@ -4,8 +4,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.phicomm.remotecontrol.R;
-import com.phicomm.remotecontrol.fragments.recentdevices.RecentDevicesFragment;
-import com.phicomm.remotecontrol.fragments.recentdevices.RecentDevicesPresenter;
+import com.phicomm.remotecontrol.modules.devices.connectrecords.RecentDevicesFragment;
+import com.phicomm.remotecontrol.modules.devices.connectrecords.RecentDevicesPresenter;
 
 import static com.phicomm.remotecontrol.util.ActivityUtils.addFragmentToActivity;
 

@@ -1,6 +1,5 @@
 package com.phicomm.remotecontrol.greendao;
 
-import com.phicomm.remotecontrol.MyApplication;
 import com.phicomm.remotecontrol.base.BaseApplication;
 import com.phicomm.remotecontrol.greendao.gen.DaoMaster;
 import com.phicomm.remotecontrol.greendao.gen.DaoSession;
