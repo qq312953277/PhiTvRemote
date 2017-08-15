@@ -14,7 +14,7 @@
         android:orientation="vertical">
 
         <ImageButton
-            android:id="@+id/remote_bottom1"
+            android:id="@+id/ib_screenshot"
             style="@style/FunctionButtonStyle"
             android:layout_weight="3"
             android:src="@drawable/svg_new_setting" />
@@ -36,7 +36,7 @@
         android:orientation="vertical">
 
         <ImageButton
-            android:id="@+id/remote_bottom2"
+            android:id="@+id/ib_screenprojection"
             style="@style/FunctionButtonStyle"
             android:layout_weight="3"
             android:src="@drawable/svg_new_setting" />
@@ -58,7 +58,7 @@
         android:orientation="vertical">
 
         <ImageButton
-            android:id="@+id/remote_bottom3"
+            android:id="@+id/ib_voice"
             style="@style/FunctionButtonStyle"
             android:layout_weight="3"
             android:src="@drawable/svg_new_setting" />
@@ -72,7 +72,7 @@
         android:orientation="vertical">
 
         <ImageButton
-            android:id="@+id/remote_bottom4"
+            android:id="@+id/ib_childrenlock"
             style="@style/FunctionButtonStyle"
             android:layout_weight="3"
             android:src="@drawable/svg_new_setting" />
@@ -94,7 +94,7 @@
         android:orientation="vertical">
 
         <ImageButton
-            android:id="@+id/remote_bottom5"
+            android:id="@+id/ib_clear"
             style="@style/FunctionButtonStyle"
             android:layout_weight="3"
             android:src="@drawable/svg_new_setting" />

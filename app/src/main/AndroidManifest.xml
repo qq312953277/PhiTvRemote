@@ -42,11 +42,6 @@
             android:name=".activities.RecentDevicesActivity"
             android:screenOrientation="nosensor"
             android:theme="@style/AppTheme.NoActionBar" />
-
-        <activity
-            android:name=".discovery.DeviceDiscoveryActivity"
-            android:screenOrientation="nosensor"
-            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".modules.devices.searchdevices.DeviceDiscoveryActivity"
             android:screenOrientation="nosensor"

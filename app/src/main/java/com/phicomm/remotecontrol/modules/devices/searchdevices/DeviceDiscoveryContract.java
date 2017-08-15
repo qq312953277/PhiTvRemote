@@ -3,6 +3,7 @@ package com.phicomm.remotecontrol.modules.devices.searchdevices;
 import com.phicomm.remotecontrol.RemoteBoxDevice;
 import com.phicomm.remotecontrol.base.BasePresenter;
 import com.phicomm.remotecontrol.base.BaseView;
+
 import java.util.List;
 
 /**
@@ -13,7 +14,9 @@ public class DeviceDiscoveryContract {
     interface View extends BaseView<Presenter> {
 
         void refreshListView(List<RemoteBoxDevice> current_list);
+
         void setTittle(String str);
+
         void showToast(String str);
     }
 
@@ -30,6 +33,7 @@ public class DeviceDiscoveryContract {
 
         void ipConnect(String ip);
 
+        void removeItemAndRefreshView(RemoteBoxDevice device);
 
     }
 }

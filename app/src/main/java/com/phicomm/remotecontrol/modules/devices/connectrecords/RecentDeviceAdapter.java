@@ -116,9 +116,7 @@ public class RecentDeviceAdapter extends BaseAdapter {
 
         private void bind(RemoteDevice device, int position) {
             if (device != null) {
-                //mBoxName.setText(device.getName());
-                //为了测试改为显示ip
-                mBoxName.setText(device.getAddress());
+                mBoxName.setText(device.getName());
                 mCollectCheckBox.setChecked(mCheckedMap.get(position));
                 mCollectCheckBox.setVisibility((int) mCheckBosVisibleMap.get(position));
             }

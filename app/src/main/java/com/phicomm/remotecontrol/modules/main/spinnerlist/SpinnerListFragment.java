@@ -87,8 +87,7 @@ public class SpinnerListFragment extends Fragment {
         List<RemoteBoxDevice> deviceList = DevicesUtil.getCurrentDevicesListResult();
         RemoteBoxDevice target = DevicesUtil.getTarget();
         if (target != null) {
-            //mDeviceTv.setText(target.getName());
-            mDeviceTv.setText(target.getAddress());
+            mDeviceTv.setText(target.getName());
         } else {
             mDeviceTv.setText(getString(R.string.unable_to_connect_device));
         }

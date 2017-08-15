@@ -49,6 +49,7 @@ public class DevicesUtil {
     }
 
     public static void insertOrUpdateRecentDevices(RemoteBoxDevice remoteDevice) {
+        loadRecentList();
         RemoteDevice device = new RemoteDevice(null, remoteDevice.getName(), remoteDevice.getAddress(), remoteDevice.getPort(), remoteDevice.getBssid(), System.currentTimeMillis());
         Log.d(TAG, "insertOrUpdateRecentDevices remoteDevice=" + remoteDevice + "mRecentedConnectedMap.size()=" + mRecentedConnectedMap.size());
         Set<Long> ids = mRecentedConnectedMap.keySet();

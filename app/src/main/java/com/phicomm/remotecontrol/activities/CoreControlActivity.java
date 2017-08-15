@@ -30,23 +30,11 @@ import com.phicomm.remotecontrol.util.CommonUtils;
 
 import java.util.ArrayList;
 
-import butterknife.BindView;
 import butterknife.OnClick;
 
 public class CoreControlActivity extends BaseActivity {
 
     static final int REQUEST_CODE = 101;
-    @BindView(R.id.remote_bottom1)
-    ImageButton remoteBottom1;
-    @BindView(R.id.remote_bottom2)
-    ImageButton remoteBottom2;
-    @BindView(R.id.remote_bottom3)
-    ImageButton remoteBottom3;
-    @BindView(R.id.remote_bottom4)
-    ImageButton remoteBottom4;
-    @BindView(R.id.remote_bottom5)
-    ImageButton remoteBottom5;
-
     private KeyPanelFragment mKeypanelFragment;
     private TouchPanelFragment mTouchPanelFragment;
     private ArrayList<Fragment> mFragmentList;
@@ -67,22 +55,22 @@ public class CoreControlActivity extends BaseActivity {
 
     }
 
-    @OnClick({R.id.remote_bottom1, R.id.remote_bottom2, R.id.remote_bottom3, R.id.remote_bottom4, R.id.remote_bottom5})
+    @OnClick({R.id.ib_screenshot, R.id.ib_screenprojection, R.id.ib_voice, R.id.ib_childrenlock, R.id.ib_clear})
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.remote_bottom1:
+            case R.id.ib_screenshot:
                 CommonUtils.startIntent(this, null, ScreenshotActivity.class);
                 break;
-            case R.id.remote_bottom2:
+            case R.id.ib_screenprojection:
 
                 break;
-            case R.id.remote_bottom3:
+            case R.id.ib_voice:
 
                 break;
-            case R.id.remote_bottom4:
+            case R.id.ib_childrenlock:
                 mPresenter.sendCommand(Commands.OPEN_LOCK);
                 break;
-            case R.id.remote_bottom5:
+            case R.id.ib_clear:
                 mPresenter.sendCommand(Commands.OPEN_CLEAR);
                 break;
 

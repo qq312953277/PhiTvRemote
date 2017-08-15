@@ -37,6 +37,7 @@ import com.phicomm.remotecontrol.activities.RecentDevicesActivity;
 import com.phicomm.remotecontrol.constant.PhiConstants;
 import com.phicomm.remotecontrol.modules.devices.searchdevices.DeviceDiscoveryContract.Presenter;
 import com.phicomm.remotecontrol.util.DevicesUtil;
+import com.phicomm.remotecontrol.util.LogUtil;
 
 import java.util.Formatter;
 import java.util.List;
@@ -144,8 +145,10 @@ public class DeviceDiscoveryFragment extends Fragment implements DeviceDiscovery
         @Override
         public void onClick(View v) {
             if (v == mDiscoveryBtn) {
+                mNetworkNameTv.setText(getNetworkName());
                 startJmdnsDiscoveryDevice();
             } else if (v == mManualIpBtn) {
+                mNetworkNameTv.setText(getNetworkName());
                 buildManualIpDialog().show();
             } else if (v == mRecentDevicesBtn) {
                 Intent intent = new Intent(getContext(), RecentDevicesActivity.class);
@@ -180,10 +183,9 @@ public class DeviceDiscoveryFragment extends Fragment implements DeviceDiscovery
 
                     @Override
                     public void onFail(String msg) {
-                        mDiscoveryAdapter.getDeviceList().remove(remoteDevice);
-                        mPresenter.setCurrentDeviceList(mDiscoveryAdapter.getDeviceList());
-                        mTitleTv.setText(R.string.unable_to_connect_device);
-                        Toast.makeText(getContext(), "connect fail", Toast.LENGTH_SHORT).show();
+                        mPresenter.removeItemAndRefreshView(remoteDevice);
+                        LogUtil.d(TAG, "remove connect fail device");
+                        Toast.makeText(getContext(), "this device is offline", Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -192,7 +194,10 @@ public class DeviceDiscoveryFragment extends Fragment implements DeviceDiscovery
 
     @Override
     public void onResume() {
+        LogUtil.d(TAG,"onResume() is called");
+        mNetworkNameTv.setText(getNetworkName());
         mPresenter.getCurrentDeviceList();
+        LogUtil.d(TAG, mPresenter.getCurrentDeviceList().toString());
         mPresenter.loadRecentList();
         super.onResume();
     }
@@ -438,12 +443,5 @@ public class DeviceDiscoveryFragment extends Fragment implements DeviceDiscovery
         stopDiscoveryService();
     }
 
-    private boolean isContains(List<RemoteBoxDevice> deviceList, RemoteBoxDevice remoteBoxDevice) {
-        for (RemoteBoxDevice device : deviceList) {
-            if (device.getAddress().equals(remoteBoxDevice.getAddress())) {
-                return true;
-            }
-        }
-        return false;
-    }
 }
+

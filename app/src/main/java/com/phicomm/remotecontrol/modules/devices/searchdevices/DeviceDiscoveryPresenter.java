@@ -91,7 +91,6 @@ public class DeviceDiscoveryPresenter implements DeviceDiscoveryContract.Present
                 } else {
                 }
             }
-            //ipconnect的连接记录生成
             DevicesUtil.insertOrUpdateRecentDevices(device);
             mView.showToast("connect success");
         }
@@ -114,6 +113,16 @@ public class DeviceDiscoveryPresenter implements DeviceDiscoveryContract.Present
         LogUtil.d(TAG, "currentDeviceList.size()=" + currentDeviceList.size());
         mView.refreshListView(currentDeviceList);
         return currentDeviceList;
+    }
+
+
+    @Override
+    public void removeItemAndRefreshView(RemoteBoxDevice device) {
+        String deviceBssid = device.getBssid();
+        mCachedRemoteAddress.remove(deviceBssid);
+        mDiscoveryDeviceList.remove(device);
+        setCurrentDeviceList(mDiscoveryDeviceList);
+        mView.refreshListView(mDiscoveryDeviceList);
     }
 
     @Override
@@ -148,6 +157,7 @@ public class DeviceDiscoveryPresenter implements DeviceDiscoveryContract.Present
 
         @Override
         public void onDeviceRemove(RemoteBoxDevice device) {
+            LogUtil.d(TAG, "remove offline device");
             String deviceBssid = device.getBssid();
             Log.d(TAG, "onDeviceRemove dev.mBssid=" + deviceBssid + "mSearchDeviceList.size()=" +
                     mDiscoveryDeviceList.size());
@@ -187,3 +197,4 @@ public class DeviceDiscoveryPresenter implements DeviceDiscoveryContract.Present
         }
     }
 }
+
