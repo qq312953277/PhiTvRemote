@@ -24,4 +24,9 @@
         <item name="android:layout_width">54dp</item>
         <item name="android:layout_height">54dp</item>
     </style>
+    <style name="FunctionButtonStyle_small" parent="@android:style/Widget.ImageButton">
+        <item name="android:background">@drawable/function_button_bg</item>
+        <item name="android:layout_width">40dp</item>
+        <item name="android:layout_height">40dp</item>
+    </style>
 </resources>

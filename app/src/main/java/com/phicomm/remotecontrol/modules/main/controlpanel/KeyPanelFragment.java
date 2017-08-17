@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -38,21 +39,20 @@ public class KeyPanelFragment extends Fragment implements PanelContract.View, an
     ImageView mEnterBtn;
 
     @BindView(R.id.btn_vol_up)
-    Button mVolUpBtn;
+    ImageButton mVolUpBtn;
     @BindView(R.id.btn_vol_down)
-    Button mVolDownBtn;
+    ImageButton mVolDownBtn;
 
     @BindView(R.id.btn_chanel_up)
-    Button mChanelUpBtn;
+    ImageButton mChanelUpBtn;
     @BindView(R.id.btn_chanel_down)
-    Button mChanelDownBtn;
+    ImageButton mChanelDownBtn;
 
-    @BindView(R.id.btn_menu)
-    Button mMenuBtn;
+
     @BindView(R.id.btn_home)
-    Button mHomeBtn;
+    ImageButton mHomeBtn;
     @BindView(R.id.btn_back)
-    Button mBackBtn;
+    ImageButton mBackBtn;
 
 
     public static KeyPanelFragment newInstance() {
@@ -87,7 +87,7 @@ public class KeyPanelFragment extends Fragment implements PanelContract.View, an
         mChanelDownBtn.setOnClickListener(this);
         mChanelUpBtn.setOnClickListener(this);
 
-        mMenuBtn.setOnClickListener(this);
+
         mHomeBtn.setOnClickListener(this);
         mBackBtn.setOnClickListener(this);
     }
@@ -119,8 +119,6 @@ public class KeyPanelFragment extends Fragment implements PanelContract.View, an
             mPresenter.sendKeyEvent(KeyCode.CHANEL_DOWN);
         } else if (v == mChanelUpBtn) {
             mPresenter.sendKeyEvent(KeyCode.CHANEL_UP);
-        } else if (v == mMenuBtn) {
-            mPresenter.sendKeyEvent(KeyCode.MENU);
         }else if (v == mHomeBtn) {
             mPresenter.sendKeyEvent(KeyCode.HOME);
         } else if (v == mBackBtn) {

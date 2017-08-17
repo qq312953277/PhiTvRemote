@@ -68,11 +68,12 @@
     <string name="key_home">Home</string>
     <string name="key_back">Back</string>
 
-    <string name="tab_screenshot">Screenshot</string>
-    <string name="tab_dlna">DLNA</string>
-    <string name="tab_control">Control</string>
-    <string name="tab_childrenlock">ChildrenLock</string>
-    <string name="tab_clean">Clean</string>
+    <string name="screenshot">Screenshot</string>
+    <string name="dlna">DLNA</string>
+    <string name="control">Control</string>
+    <string name="childlock">ChildLock</string>
+    <string name="clear">Clean</string>
+
 
     <string name="btn_screenshot">Screnshot</string>
     <string name="btn_save">Save</string>
@@ -80,6 +81,9 @@
     <string name="error_no_device">no device assigned</string>
     <string name="timeout_msg">This version is unavailable,Please update your app !</string>
     <string name="network_invailable_msg">"Can't access network!"</string>
+
+    <string name="vol">VOL</string>
+    <string name="chanel">CH</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

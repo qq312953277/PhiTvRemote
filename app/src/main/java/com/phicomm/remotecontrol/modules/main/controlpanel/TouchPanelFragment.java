@@ -2,17 +2,13 @@ package com.phicomm.remotecontrol.modules.main.controlpanel;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-
 import android.view.GestureDetector;
-
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
-
 import android.widget.Toast;
 
 import com.phicomm.remotecontrol.R;
@@ -29,7 +25,7 @@ import butterknife.OnClick;
  * Created by xufeng02.zhou on 2017/7/13.
  */
 
-public class TouchPanelFragment extends BaseFragment implements PanelContract.View, GestureDelectorSimlpeListener.GestureCallBackListener {
+public class TouchPanelFragment extends BaseFragment implements PanelContract.View, GestureDelectorSimlpeListener.GestureCallBackListener, android.view.View.OnClickListener {
     private GestureDetector mGestureDetector;
     PanelContract.Presenter mPresenter;
     private Toast mToast;
@@ -37,6 +33,7 @@ public class TouchPanelFragment extends BaseFragment implements PanelContract.Vi
     LinearLayout mTouchArea;
     @BindView(R.id.scrollView)
     ScrollView mScrollView;
+
 
     public static TouchPanelFragment newInstance() {
         return new TouchPanelFragment();
@@ -94,7 +91,7 @@ public class TouchPanelFragment extends BaseFragment implements PanelContract.Vi
     }
 
 
-    @OnClick({R.id.btn_vol_up, R.id.btn_vol_down, R.id.btn_chanel_up, R.id.btn_chanel_down})
+    @OnClick({R.id.btn_vol_up, R.id.btn_vol_down, R.id.btn_chanel_up, R.id.btn_chanel_down, R.id.btn_home, R.id.btn_back})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_vol_up:
@@ -112,6 +109,14 @@ public class TouchPanelFragment extends BaseFragment implements PanelContract.Vi
             case R.id.btn_chanel_down:
                 CommonUtils.showShortToast("btn_chanel_down");
                 mPresenter.sendKeyEvent(KeyCode.CHANEL_DOWN);
+                break;
+            case R.id.btn_home:
+                CommonUtils.showShortToast("btn_home");
+                mPresenter.sendKeyEvent(KeyCode.HOME);
+                break;
+            case R.id.btn_back:
+                CommonUtils.showShortToast("btn_back");
+                mPresenter.sendKeyEvent(KeyCode.BACK);
                 break;
             default:
                 break;

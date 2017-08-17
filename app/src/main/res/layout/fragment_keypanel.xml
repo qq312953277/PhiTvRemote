@@ -19,6 +19,7 @@
                 android:layout_height="200dp"
                 android:layout_gravity="center"
                 android:background="@drawable/central_control"
+                android:gravity="center"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -68,97 +69,99 @@
                     android:src="@drawable/selector_button_ok" />
             </RelativeLayout>
 
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="15dp"
                 android:orientation="horizontal">
 
+
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="50dp"
+                    android:background="@drawable/around_vol_chanel"
+                    android:gravity="center"
                     android:orientation="vertical">
 
-                    <Button
+                    <ImageButton
                         android:id="@+id/btn_vol_up"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="start"
-                        android:text="@string/key_vol_up" />
+                        style="@style/FunctionButtonStyle"
+                        android:src="@drawable/plus_light" />
 
-                    <Button
-                        android:id="@+id/btn_vol_down"
+
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:text="@string/key_vol_down" />
+                        android:gravity="center"
+                        android:text="@string/vol"
+                        android:textColor="#FFFFFF"
+                        android:textSize="20sp" />
+
+                    <ImageButton
+                        android:id="@+id/btn_vol_down"
+                        style="@style/FunctionButtonStyle"
+                        android:src="@drawable/minus_light" />
+
                 </LinearLayout>
 
-                <View
+
+                <LinearLayout
                     android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_weight="1" />
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageButton
+                        android:id="@+id/btn_home"
+                        style="@style/FunctionButtonStyle_small"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/svg_new_home" />
+
+                    <ImageButton
+                        android:id="@+id/btn_back"
+                        style="@style/FunctionButtonStyle_small"
+                        android:layout_marginTop="30dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/svg_new_back" />
+
+                </LinearLayout>
+
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="right"
+                    android:layout_marginRight="50dp"
+                    android:background="@drawable/around_vol_chanel"
+                    android:gravity="center"
                     android:orientation="vertical">
 
-                    <Button
+                    <ImageButton
                         android:id="@+id/btn_chanel_up"
+                        style="@style/FunctionButtonStyle"
+                        android:src="@drawable/plus_light" />
+
+
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="start"
-                        android:text="@string/key_chanel_up" />
+                        android:gravity="center"
+                        android:text="@string/chanel"
+                        android:textColor="#FFFFFF"
+                        android:textSize="20sp" />
 
-                    <Button
+                    <ImageButton
                         android:id="@+id/btn_chanel_down"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:text="@string/key_chanel_down" />
+                        style="@style/FunctionButtonStyle"
+                        android:src="@drawable/minus_light" />
+
                 </LinearLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:paddingLeft="30dp"
-                android:paddingRight="30dp">
-
-                <Button
-                    android:id="@+id/btn_menu"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="start"
-                    android:text="@string/key_menu" />
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_weight="1" />
-
-                <Button
-                    android:id="@+id/btn_home"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="start"
-                    android:text="@string/key_home" />
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_weight="1" />
-
-                <Button
-                    android:id="@+id/btn_back"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/key_back" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
+
 </LinearLayout>

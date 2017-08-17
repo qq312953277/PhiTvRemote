@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_weight="1"
-            android:text="@string/screeshot" />
+             />
     </LinearLayout>
 
     <LinearLayout
@@ -47,7 +47,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_weight="1"
-            android:text="@string/screenprojection" />
+             />
     </LinearLayout>
 
     <LinearLayout
@@ -83,7 +83,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_weight="1"
-            android:text="@string/childrenlock" />
+             />
     </LinearLayout>
 
     <LinearLayout
@@ -105,6 +105,6 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_weight="1"
-            android:text="@string/clear" />
+             />
     </LinearLayout>
 </LinearLayout>

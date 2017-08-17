@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shape
-  xmlns:android="http://schemas.android.com/apk/res/android">
-    <corners android:topLeftRadius="38.0dip" android:topRightRadius="38.0dip" />
-    <size android:height="69.0dip" android:width="76.0dip" />
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <corners
+        android:topLeftRadius="38.0dp"
+        android:topRightRadius="38.0dp" />
+    <size
+        android:width="76.0dp"
+        android:height="69.0dp" />
     <solid android:color="@color/common_global_btn_color" />
+
+    <stroke
+        android:width="1.0dp"
+        android:color="#000000" />
+
 </shape>
