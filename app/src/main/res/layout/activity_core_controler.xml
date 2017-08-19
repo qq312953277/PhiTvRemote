@@ -52,22 +52,29 @@
             android:src="@drawable/svg_new_setting" />
     </LinearLayout>
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/viewPageMainContent"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="2dp"
-        android:layout_weight="1"
-        android:overScrollMode="never" />
+        android:layout_height="match_parent"
+        android:layout_marginTop="2dp">
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/viewPageMainContent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="48dp"
+            android:overScrollMode="never" />
+
+        <include
+            android:id="@+id/bottom_function"
+            layout="@layout/layout_remote_bottom"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentBottom="true"
+            android:background="@color/common_global_btn_color"
+            android:paddingTop="2dp" />
+
+    </FrameLayout>
 
 
-    <include
-        android:id="@+id/bottom_function"
-        layout="@layout/layout_remote_bottom"
-        android:layout_width="fill_parent"
-        android:layout_height="70dp"
-        android:layout_alignParentBottom="true"
-        android:background="@color/common_global_btn_color"
-        android:paddingTop="2dp" />
 
 </LinearLayout>
