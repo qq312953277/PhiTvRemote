@@ -97,7 +97,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:text="@string/vol"
-                        android:textColor="#FFFFFF"
+                        android:textColor="@color/white_normal"
                         android:textSize="20sp" />
 
                     <ImageButton
@@ -151,7 +151,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:text="@string/chanel"
-                        android:textColor="#FFFFFF"
+                        android:textColor="@color/white_normal"
                         android:textSize="20sp" />
 
                     <ImageButton

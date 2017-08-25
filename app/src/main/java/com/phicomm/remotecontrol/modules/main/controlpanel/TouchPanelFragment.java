@@ -67,7 +67,7 @@ public class TouchPanelFragment extends BaseFragment implements PanelContract.Vi
                     //可以调用requestDisallowInterceptTouchEvent，让Scroll
                     //View不拦截MOVE事件
                     case MotionEvent.ACTION_DOWN:
-                        mScrollView.requestDisallowInterceptTouchEvent(true);
+                        mScrollView.requestDisallowInterceptTouchEvent(true);//子View告诉父容器不要拦截
                         break;
                     case MotionEvent.ACTION_MOVE:
 

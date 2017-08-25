@@ -69,6 +69,7 @@ public class CoreControlActivity extends BaseActivity {
                 break;
             case R.id.ib_childrenlock:
                 mPresenter.sendCommand(Commands.OPEN_LOCK);
+
                 break;
             case R.id.ib_clear:
                 mPresenter.sendCommand(Commands.OPEN_CLEAR);

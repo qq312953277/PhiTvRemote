@@ -1,24 +1,27 @@
 package com.phicomm.remotecontrol.modules.devices.searchdevices;
 
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.NetworkInfo;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.InputFilter;
 import android.text.InputType;
-import android.text.TextUtils;
 import android.text.method.NumberKeyListener;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,13 +45,13 @@ import com.phicomm.remotecontrol.util.LogUtil;
 import java.util.Formatter;
 import java.util.List;
 import java.util.Locale;
+import java.util.Random;
 import java.util.concurrent.atomic.AtomicReference;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static android.content.Context.WIFI_SERVICE;
-import static android.content.DialogInterface.BUTTON_NEGATIVE;
 
 
 /**
@@ -77,12 +80,16 @@ public class DeviceDiscoveryFragment extends Fragment implements DeviceDiscovery
     public ImageView mBackIv;
     @BindView(R.id.title)
     public TextView mTitleTv;
+    @BindView(R.id.roundProgressBar)
+    public RoundProgressBar mProgressBar;
 
     private Presenter mPresenter;
     private DeviceDiscoveryAdapter mDiscoveryAdapter;
     private DiscoveryHandler mBroadcastHandler;
     private WifiManager mWifiManager;
-    private ProgressDialog mDiscoveryDialog;
+    private WifiChangeReceiver mWifiChangeReceiver;
+    private ProgressBarTask mTask;
+    private boolean mProgressBar_flag;
 
     public DeviceDiscoveryFragment() {
 
@@ -114,8 +121,8 @@ public class DeviceDiscoveryFragment extends Fragment implements DeviceDiscovery
         initActionBar();
         setOnClickListener();
         mBroadcastHandler = new DiscoveryHandler();
-        mWifiManager = (WifiManager) getContext().getApplicationContext().getSystemService(WIFI_SERVICE);
-        mNetworkNameTv.setText(getNetworkName());
+
+
     }
 
     private void initActionBar() {
@@ -124,6 +131,7 @@ public class DeviceDiscoveryFragment extends Fragment implements DeviceDiscovery
         String title = bundle.getString(PhiConstants.ACTION_BAR_NAME);
         mTitleTv.setText(title);
     }
+
 
     private void initAdapter() {
         mDiscoveryListDevices.setEmptyView(mEmptyTv);
@@ -145,10 +153,13 @@ public class DeviceDiscoveryFragment extends Fragment implements DeviceDiscovery
         @Override
         public void onClick(View v) {
             if (v == mDiscoveryBtn) {
-                mNetworkNameTv.setText(getNetworkName());
-                startJmdnsDiscoveryDevice();
+                if (isWifiAvailable()) {
+                    startJmdnsDiscoveryDevice();
+                } else {
+                    Toast.makeText(getContext(), R.string.finder_wifi_not_available, Toast.LENGTH_SHORT).show();
+                }
+
             } else if (v == mManualIpBtn) {
-                mNetworkNameTv.setText(getNetworkName());
                 buildManualIpDialog().show();
             } else if (v == mRecentDevicesBtn) {
                 Intent intent = new Intent(getContext(), RecentDevicesActivity.class);
@@ -192,19 +203,37 @@ public class DeviceDiscoveryFragment extends Fragment implements DeviceDiscovery
         }
     };
 
+
     @Override
     public void onResume() {
-        LogUtil.d(TAG,"onResume() is called");
-        mNetworkNameTv.setText(getNetworkName());
+        LogUtil.d(TAG, "onResume() is called");
         mPresenter.getCurrentDeviceList();
         LogUtil.d(TAG, mPresenter.getCurrentDeviceList().toString());
         mPresenter.loadRecentList();
+
+        mWifiManager = (WifiManager) getContext().getApplicationContext().getSystemService(WIFI_SERVICE);
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(WifiManager.WIFI_STATE_CHANGED_ACTION);
+        filter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
+        mWifiChangeReceiver = new WifiChangeReceiver();
+        getActivity().registerReceiver(mWifiChangeReceiver, filter);
+
         super.onResume();
     }
 
     @Override
     public void onPause() {
+        //按下返回键时强制终止ProgressBarTask
+        if (mTask != null && mTask.getStatus() == AsyncTask.Status.RUNNING) {
+            mProgressBar_flag = true;
+        }
         super.onPause();
+    }
+
+    @Override
+    public void onStop() {
+        getActivity().unregisterReceiver(mWifiChangeReceiver);
+        super.onStop();
     }
 
     @Override
@@ -245,16 +274,19 @@ public class DeviceDiscoveryFragment extends Fragment implements DeviceDiscovery
             Log.d(TAG, "timeout it is need dismiss mDiscoveryDialog and begin TimeoutDialog");
             switch (msg.what) {
                 case PhiConstants.BROADCAST_TIMEOUT:
-                    dismissDialog();
+                    stopProgressBar();
+                    stopDiscoveryService();
                     break;
             }
         }
+
     }
 
     private void startJmdnsDiscoveryDevice() {
         mPresenter.start();
         mBroadcastHandler.removeMessages(PhiConstants.BROADCAST_TIMEOUT);
-        showProgressDialog(buildDiscoveryProgressDialog());
+        mTask = new ProgressBarTask(this.getContext());
+        mTask.execute();
         mBroadcastHandler.sendEmptyMessageDelayed(PhiConstants.BROADCAST_TIMEOUT,
                 PhiConstants.DISCOVERY_TIMEOUT);
     }
@@ -271,74 +303,6 @@ public class DeviceDiscoveryFragment extends Fragment implements DeviceDiscovery
         mPresenter.stop();
     }
 
-    private void showProgressDialog(ProgressDialog newDialog) {
-        if ((mDiscoveryDialog != null) && mDiscoveryDialog.isShowing()) {
-            mDiscoveryDialog.dismiss();
-        }
-        mDiscoveryDialog = newDialog;
-        newDialog.show();
-        mTitleTv.setText(R.string.searching);
-    }
-
-    private ProgressDialog buildDiscoveryProgressDialog() {
-        String message;
-        String networkName = getNetworkName();
-        if (!TextUtils.isEmpty(networkName)) {
-            message = getString(R.string.finder_searching_with_ssid, networkName);
-        } else {
-            message = getString(R.string.finder_searching);
-        }
-
-        return buildProgressDialog(message,
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialogInterface, int which) {
-                        mBroadcastHandler.sendEmptyMessage(PhiConstants.BROADCAST_TIMEOUT);
-                    }
-                });
-    }
-
-    private boolean isWifiAvailable() {
-        if (!mWifiManager.isWifiEnabled()) {
-            return false;
-        }
-        WifiInfo info = mWifiManager.getConnectionInfo();
-        return info != null && info.getIpAddress() != 0;
-    }
-
-    private String getNetworkName() {
-        if (!isWifiAvailable()) {
-            return null;
-        }
-        WifiInfo info = mWifiManager.getConnectionInfo();
-        String ssid = null;
-        if (info != null && isWifiAvailable()) {
-            int len = info.getSSID().length();
-            if (info.getSSID().startsWith("\"")
-                    && info.getSSID().endsWith("\"")) {
-                ssid = info.getSSID().substring(1, len - 1);
-            } else {
-                ssid = info.getSSID();
-            }
-        }
-        return ssid;
-    }
-
-    private ProgressDialog buildProgressDialog(String message,
-                                               DialogInterface.OnClickListener cancelListener) {
-        ProgressDialog dialog = new ProgressDialog(getContext());
-        dialog.setMessage(message);
-        dialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
-            public boolean onKey(DialogInterface dialogInterface, int which, KeyEvent event) {
-                if (event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
-                    dismissDialog();
-                    return true;
-                }
-                return false;
-            }
-        });
-        dialog.setButton(BUTTON_NEGATIVE, getString(R.string.finder_cancel), cancelListener);
-        return dialog;
-    }
 
     public String makeDeviceCountLabel(int count) {
         StringBuilder deviceCount = new StringBuilder();
@@ -435,13 +399,141 @@ public class DeviceDiscoveryFragment extends Fragment implements DeviceDiscovery
         return -1;
     }
 
-    private void dismissDialog() {
-        if ((mDiscoveryDialog != null) && mDiscoveryDialog.isShowing()) {
-            mDiscoveryDialog.dismiss();
-            mDiscoveryDialog = null;
+    private void stopProgressBar() {
+        mProgressBar.setVisibility(View.GONE);
+        mDiscoveryBtn.setVisibility(View.VISIBLE);
+        mManualIpBtn.setVisibility(View.VISIBLE);
+        mDiscoveryBtn.setEnabled(true);
+        mManualIpBtn.setEnabled(true);
+        mRecentDevicesBtn.setEnabled(true);
+        mDiscoveryListDevices.setEnabled(true);
+    }
+
+    private void startProgressBar() {
+        mProgressBar.setVisibility(View.VISIBLE);
+        mDiscoveryBtn.setVisibility(View.GONE);
+        mManualIpBtn.setVisibility(View.GONE);
+        mDiscoveryBtn.setEnabled(false);
+        mManualIpBtn.setEnabled(false);
+        mRecentDevicesBtn.setEnabled(false);
+        mDiscoveryListDevices.setEnabled(false);
+    }
+
+    class ProgressBarTask extends AsyncTask<Void, Integer, Void> {
+        Context mContext;
+        int mCurrentProgress = 0;
+
+        public ProgressBarTask(Context ctx) {
+            mContext = ctx;
         }
-        stopDiscoveryService();
+
+        @Override
+        protected void onPreExecute() {
+            startProgressBar();
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            while (mCurrentProgress < 100) {
+                if (mProgressBar_flag || !isWifiAvailable()) {
+                    mBroadcastHandler.sendEmptyMessage(PhiConstants.BROADCAST_TIMEOUT);
+                    break;
+                }
+                mCurrentProgress += new Random().nextInt(15);
+                publishProgress(mCurrentProgress);
+                try {
+                    Thread.sleep(600);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            return null;
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            mProgressBar.setProgress(values[0]);
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            stopProgressBar();
+        }
+
+
+        @Override
+        protected void onCancelled() {
+            super.onCancelled();
+        }
+
+    }
+
+    private boolean isWifiAvailable() {
+        if (!mWifiManager.isWifiEnabled()) {
+            return false;
+        }
+        WifiInfo info = mWifiManager.getConnectionInfo();
+        return info != null && info.getIpAddress() != 0;
+    }
+
+    private String getNetworkName() {
+        if (!isWifiAvailable()) {
+            return null;
+        }
+        WifiInfo info = mWifiManager.getConnectionInfo();
+        String ssid = null;
+        if (info != null && isWifiAvailable()) {
+            int len = info.getSSID().length();
+            if (info.getSSID().startsWith("\"")
+                    && info.getSSID().endsWith("\"")) {
+                ssid = info.getSSID().substring(1, len - 1);
+            } else {
+                ssid = info.getSSID();
+            }
+        }
+        return ssid;
+    }
+
+    class WifiChangeReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+
+            if (WifiManager.WIFI_STATE_CHANGED_ACTION.equals(action)) {
+                int wifiState = intent.getIntExtra(WifiManager.EXTRA_WIFI_STATE, -1);
+                switch (wifiState) {
+                    case WifiManager.WIFI_STATE_ENABLING: {
+                        mNetworkNameTv.setText(R.string.wifi_connecting);
+                        break;
+                    }
+                    case WifiManager.WIFI_STATE_DISABLING: {
+                        mNetworkNameTv.setText(R.string.wifi_disconnecting);
+                        break;
+                    }
+                    case WifiManager.WIFI_STATE_DISABLED: {
+                        mNetworkNameTv.setText(R.string.wifi_not_connected);
+                        break;
+                    }
+                    default:
+                        break;
+                }
+            }
+
+            if (WifiManager.NETWORK_STATE_CHANGED_ACTION.equals(action)) {
+                Parcelable parcelableExtra = intent.getParcelableExtra(WifiManager.EXTRA_NETWORK_INFO);
+                if (null != parcelableExtra) {
+                    NetworkInfo networkInfo = (NetworkInfo) parcelableExtra;
+                    NetworkInfo.State state = networkInfo.getState();
+                    if (state == NetworkInfo.State.CONNECTED) {
+                        mNetworkNameTv.setText(getNetworkName());
+                    }
+                }
+            }
+
+        }
     }
 
 }
+
+
 

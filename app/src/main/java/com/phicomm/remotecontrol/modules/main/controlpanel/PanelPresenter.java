@@ -32,14 +32,13 @@ public class PanelPresenter implements PanelContract.Presenter {
         TaskQuene.getInstance().sendKeyEvent(keyCode, new PhiCallBack() {
             @Override
             public void onSuccess(Object model) {
-                LogUtil.d("keyevent "+keyCode+" : success");
-
+                LogUtil.d("keyevent " + keyCode + " : success");
                 mView.toastMessage("success");
             }
 
             @Override
             public void onFailure(String msg) {
-                LogUtil.d("keyevent "+keyCode+" : fail");
+                LogUtil.d("keyevent " + keyCode + " : fail");
                 mView.toastMessage("fail");
             }
 
@@ -55,7 +54,7 @@ public class PanelPresenter implements PanelContract.Presenter {
         TaskQuene.getInstance().sendKeyLonClickEvent(keyCode, new PhiCallBack() {
             @Override
             public void onSuccess(Object model) {
-                LogUtil.d("keyevent "+ keyCode +" : success");
+                LogUtil.d("keyevent " + keyCode + " : success");
                 mView.toastMessage("success");
             }
 
@@ -76,13 +75,13 @@ public class PanelPresenter implements PanelContract.Presenter {
         TaskQuene.getInstance().sendCommand(cmd, new PhiCallBack() {
             @Override
             public void onSuccess(Object model) {
-                LogUtil.d("sendCommand "+ cmd +" : success");
+                LogUtil.d("sendCommand " + cmd + " : success");
                 mView.toastMessage("success");
             }
 
             @Override
             public void onFailure(String msg) {
-                LogUtil.d("sendCommand "+ cmd +" : fail");
+                LogUtil.d("sendCommand " + cmd + " : fail");
                 mView.toastMessage("fail");
             }
 

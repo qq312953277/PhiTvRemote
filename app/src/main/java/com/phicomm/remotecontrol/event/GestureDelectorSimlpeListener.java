@@ -4,7 +4,6 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 
 import com.phicomm.remotecontrol.constant.PhiConstants;
-import com.phicomm.remotecontrol.util.CommonUtils;
 
 /**
  * Created by hao04.wu on 2017/8/8.
@@ -14,6 +13,7 @@ public class GestureDelectorSimlpeListener extends GestureDetector.SimpleOnGestu
 
     private GestureCallBackListener mGestureCallBackListener;
     private final int mSlideDistance = 200;
+
     @Override
     public boolean onDown(MotionEvent e) {
         return true;

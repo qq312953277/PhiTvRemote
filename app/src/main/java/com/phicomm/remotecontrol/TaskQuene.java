@@ -1,11 +1,11 @@
 package com.phicomm.remotecontrol;
 
-import com.phicomm.remotecontrol.util.LogUtil;
 import com.phicomm.remotecontrol.beans.KeyEvent;
 import com.phicomm.remotecontrol.beans.Status;
 import com.phicomm.remotecontrol.httpclient.IRemoterService;
 import com.phicomm.remotecontrol.httpclient.IdleRemoterService;
 import com.phicomm.remotecontrol.httpclient.PhiCallBack;
+import com.phicomm.remotecontrol.util.LogUtil;
 
 import rx.Observable;
 import rx.Subscriber;
@@ -74,7 +74,7 @@ public class TaskQuene {
 
     public void sendKeyEvent(int keycode, PhiCallBack callback) {
         LogUtil.d("TaskQuene sendKeyEvent");
-       KeyEvent event = new KeyEvent(keycode, false);
+        KeyEvent event = new KeyEvent(keycode, false);
         addSubscription(
                 mService.sendKeyEvent(event), callback
         );

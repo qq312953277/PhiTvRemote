@@ -85,6 +85,10 @@
     <string name="vol">VOL</string>
     <string name="chanel">CH</string>
 
+    <string name="wifi_connecting">Wifi connecting...</string>
+    <string name="wifi_disconnecting">Wifi disconnecting...</string>
+    <string name="wifi_not_connected">Wifi disconnected...</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

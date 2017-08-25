@@ -17,11 +17,10 @@
 
             <LinearLayout
                 android:id="@+id/ll_touch_area"
-                android:layout_width="match_parent"
+                android:layout_width="300dp"
                 android:layout_height="300dp"
+                android:layout_gravity="center"
                 android:layout_marginBottom="10dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
                 android:layout_marginTop="10dp"
                 android:background="#ffaaaaaa"
                 android:orientation="horizontal">
@@ -32,8 +31,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:gravity="center"
                 android:layout_marginTop="25dp"
+                android:gravity="center"
                 android:orientation="horizontal">
 
                 <LinearLayout
@@ -55,7 +54,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:text="@string/vol"
-                        android:textColor="#FFFFFF"
+                        android:textColor="@color/white_normal"
                         android:textSize="20sp" />
 
                     <ImageButton
@@ -90,7 +89,6 @@
                 </LinearLayout>
 
 
-
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -110,19 +108,16 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:text="@string/chanel"
-                        android:textColor="#FFFFFF"
+                        android:textColor="@color/white_normal"
                         android:textSize="20sp" />
 
                     <ImageButton
                         android:id="@+id/btn_chanel_down"
                         style="@style/FunctionButtonStyle"
                         android:src="@drawable/minus_light" />
-
                 </LinearLayout>
 
-
             </LinearLayout>
-
 
         </LinearLayout>
     </ScrollView>
