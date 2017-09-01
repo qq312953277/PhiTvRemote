@@ -287,8 +287,6 @@ public class DeviceDiscoveryFragment extends Fragment implements DeviceDiscovery
         mBroadcastHandler.removeMessages(PhiConstants.BROADCAST_TIMEOUT);
         mTask = new ProgressBarTask(this.getContext());
         mTask.execute();
-        mBroadcastHandler.sendEmptyMessageDelayed(PhiConstants.BROADCAST_TIMEOUT,
-                PhiConstants.DISCOVERY_TIMEOUT);
     }
 
 
@@ -435,14 +433,15 @@ public class DeviceDiscoveryFragment extends Fragment implements DeviceDiscovery
         @Override
         protected Void doInBackground(Void... params) {
             while (mCurrentProgress < 100) {
-                if (mProgressBar_flag || !isWifiAvailable()) {
+                //搜索进行中按下返回键时中断搜索设备
+                if (mCurrentProgress < 100 && (mProgressBar_flag || !isWifiAvailable())) {
                     mBroadcastHandler.sendEmptyMessage(PhiConstants.BROADCAST_TIMEOUT);
                     break;
                 }
-                mCurrentProgress += new Random().nextInt(15);
+                mCurrentProgress += new Random().nextInt(20);
                 publishProgress(mCurrentProgress);
                 try {
-                    Thread.sleep(600);
+                    Thread.sleep(500);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -456,8 +455,10 @@ public class DeviceDiscoveryFragment extends Fragment implements DeviceDiscovery
         }
 
         @Override
-        protected void onPostExecute(Void result) {
-            stopProgressBar();
+        protected void onPostExecute(Void result) {//搜索进度条完成后中断搜索设备
+            if (mCurrentProgress >= 100) {
+                mBroadcastHandler.sendEmptyMessage(PhiConstants.BROADCAST_TIMEOUT);
+            }
         }
 
 
