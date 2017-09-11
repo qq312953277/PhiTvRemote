@@ -9,7 +9,7 @@ android {
     buildToolsVersion "25.0.2"
     defaultConfig {
         applicationId "com.phicomm.remotecontrol"
-        minSdkVersion 15
+        minSdkVersion 19
         targetSdkVersion 25
         versionCode 5
         versionName "1.0.0.2005"
@@ -69,5 +69,13 @@ dependencies {
     compile 'com.google.code.gson:gson:2.8.0'
     compile 'com.squareup.okhttp3:okhttp:3.8.1'
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
+    //retrofit
+    compile 'com.squareup.retrofit:retrofit:2.0.0-beta2'
 
+    compile 'com.squareup.retrofit:adapter-rxjava:2.0.0-beta2'
+
+    compile 'com.squareup.retrofit:converter-gson:2.0.0-beta2'
+    // leak canary
+    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
+    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
 }

@@ -7,6 +7,7 @@ import android.content.Context;
 import com.phicomm.remotecontrol.exception.CrashHandler;
 import com.phicomm.remotecontrol.greendao.GreenDaoManager;
 import com.phicomm.remotecontrol.greendao.gen.RemoteDeviceDao;
+import com.squareup.leakcanary.LeakCanary;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,12 +31,22 @@ public class BaseApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        CrashHandler.getInstance().init(this);
+       // CrashHandler.getInstance().init(this);
+        analyseLeak();
         mContext = this;
         manager = this;
         mGreenDaoManager = GreenDaoManager.getInstance();
         mRemoteDevcieDao = mGreenDaoManager.getSession().getRemoteDeviceDao();
 
+    }
+
+    private void analyseLeak() {
+        if (LeakCanary.isInAnalyzerProcess(this)) {
+            // This process is dedicated to LeakCanary for heap analysis.
+            // You should not init your app in this process.
+            return;
+        }
+        LeakCanary.install(this);
     }
 
     public static Context getContext() {

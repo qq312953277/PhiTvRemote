@@ -115,4 +115,18 @@
     <string name="wifi_disconnecting">正在断开Wifi...</string>
     <string name="wifi_not_connected">未连接Wifi...</string>
 
+    <!--Personal-->
+    <string name="personal_title">我的</string>
+    <string name="personal_appliction">应用</string>
+    <string name="personal_setting">设置</string>
+    <string name="personal_about">关于</string>
+    <string name="personal_version">版本</string>请点击登录您的斐讯账号
+    <string name="personal_login">请点击登录您的斐讯账号</string>
+    <!--about-->
+    <string name="about_project_name">斐讯遥控器</string>
+    <string name="website">官方网站</string>
+    <string name="hotline">客服热线</string>
+    <string name="phicomm_website">www.phicomm.com</string>
+    <string name="phicomm_hotline">4007-567-567</string>
+    <string name="copyright_info">©2017上海斐讯数据通信技术有限公司</string>
 </resources>

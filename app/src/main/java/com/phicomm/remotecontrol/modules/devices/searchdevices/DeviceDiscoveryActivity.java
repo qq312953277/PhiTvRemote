@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.phicomm.remotecontrol.R;
+import com.phicomm.remotecontrol.base.BaseActivity;
 
 import static com.phicomm.remotecontrol.util.ActivityUtils.*;
 
@@ -12,7 +13,7 @@ import static com.phicomm.remotecontrol.util.ActivityUtils.*;
  * Created by chunya02.li on 2017/7/11.
  */
 
-public class DeviceDiscoveryActivity extends AppCompatActivity {
+public class DeviceDiscoveryActivity extends BaseActivity {
     private DeviceDiscoveryPresenter mDiscoveryDevicePresenter;
 
     @Override

@@ -24,6 +24,8 @@ import com.phicomm.remotecontrol.modules.devices.searchdevices.DeviceDiscoveryAc
 import com.phicomm.remotecontrol.constant.PhiConstants;
 import com.phicomm.remotecontrol.R;
 import com.phicomm.remotecontrol.RemoteBoxDevice;
+import com.phicomm.remotecontrol.modules.personal.PersonalActivity;
+import com.phicomm.remotecontrol.util.CommonUtils;
 import com.phicomm.remotecontrol.util.DevicesUtil;
 import com.phicomm.remotecontrol.greendao.GreenDaoUserUtil;
 import com.phicomm.remotecontrol.util.LogUtil;
@@ -33,6 +35,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by chunya02.li on 2017/7/13.
@@ -47,8 +50,10 @@ public class SpinnerListFragment extends Fragment {
 
     @BindView(R.id.connected_device)
     public TextView mDeviceTv;
+
     @BindView(R.id.scan)
     public Button mDiscoveryBtn;
+
     @BindView(R.id.login)
     public ImageButton mLoginIBtn;
 
@@ -78,7 +83,6 @@ public class SpinnerListFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
         initAdapter();
-        setonClickListener();
     }
 
     @Override
@@ -105,12 +109,6 @@ public class SpinnerListFragment extends Fragment {
         if (deviceList != null) {
             mSpinerPopWindow.notifyDataChange(deviceList);
         }
-    }
-
-    private void setonClickListener() {
-        mDeviceTv.setOnClickListener(onButtonClick);
-        mDiscoveryBtn.setOnClickListener(onButtonClick);
-        mLoginIBtn.setOnClickListener(onButtonClick);
     }
 
     private void initAdapter() {
@@ -162,7 +160,8 @@ public class SpinnerListFragment extends Fragment {
         }
 
     }
-    private void sendMessage(){
+
+    private void sendMessage() {
         Message msg = new Message();
         Bundle data = new Bundle();
         data.putParcelableArrayList(PhiConstants.SPINNER_DEVICES_LIST, (ArrayList<? extends
@@ -171,23 +170,6 @@ public class SpinnerListFragment extends Fragment {
         mLoadTargetDevice.sendMessage(msg);
     }
 
-
-
-
-    View.OnClickListener onButtonClick = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            if (v == mDiscoveryBtn) {
-                Intent intent = new Intent(getContext(), DeviceDiscoveryActivity.class);
-                intent.putExtra(PhiConstants.ACTION_BAR_NAME, mDeviceTv.getText());
-                startActivity(intent);
-            } else if (v == mDeviceTv) {
-                mSpinerPopWindow.setWidth(mDeviceTv.getWidth());
-                mSpinerPopWindow.showAsDropDown(mDeviceTv);
-                setTextImage(R.drawable.icon_up);
-            }
-        }
-    };
 
     private AdapterView.OnItemClickListener itemClickListener = new AdapterView
             .OnItemClickListener() {
@@ -258,4 +240,22 @@ public class SpinnerListFragment extends Fragment {
         }
     };
 
+    @OnClick({R.id.login, R.id.scan, R.id.connected_device})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.login:
+                CommonUtils.startIntent(getActivity(),null, PersonalActivity.class);
+                break;
+            case R.id.scan:
+                Intent intent = new Intent(getContext(), DeviceDiscoveryActivity.class);
+                intent.putExtra(PhiConstants.ACTION_BAR_NAME, mDeviceTv.getText());
+                startActivity(intent);
+                break;
+            case R.id.connected_device:
+                mSpinerPopWindow.setWidth(mDeviceTv.getWidth());
+                mSpinerPopWindow.showAsDropDown(mDeviceTv);
+                setTextImage(R.drawable.icon_up);
+                break;
+        }
+    }
 }

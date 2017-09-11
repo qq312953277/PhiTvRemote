@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimary">#2a8cff</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="content_color">#666666</color>
@@ -11,4 +11,6 @@
     <color name="longbutton_stroke">#c6ffffff</color>
     <color name="common_global_btn_color">#ff1da4e8</color>
     <color name="black_normal">#ff000000</color>
+    <color name="transparent">#00000000</color>
+    <color name="default_item_hint_color">#915C5C5C</color>
 </resources>
