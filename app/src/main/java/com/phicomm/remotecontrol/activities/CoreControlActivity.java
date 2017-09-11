@@ -27,6 +27,7 @@ import com.phicomm.remotecontrol.modules.main.screenshot.ScreenshotActivity;
 import com.phicomm.remotecontrol.modules.main.spinnerlist.SpinnerListFragment;
 import com.phicomm.remotecontrol.util.ActivityUtils;
 import com.phicomm.remotecontrol.util.CommonUtils;
+import com.phicomm.remotecontrol.util.SettingUtil;
 
 import java.util.ArrayList;
 
@@ -57,19 +58,20 @@ public class CoreControlActivity extends BaseActivity {
 
     @OnClick({R.id.ib_screenshot, R.id.ib_screenprojection, R.id.ib_voice, R.id.ib_childrenlock, R.id.ib_clear})
     public void onClick(View view) {
+        if (SettingUtil.isVibrateOn()){
+            SettingUtil.doVibrate();
+        }
+
         switch (view.getId()) {
             case R.id.ib_screenshot:
                 CommonUtils.startIntent(this, null, ScreenshotActivity.class);
                 break;
             case R.id.ib_screenprojection:
-
                 break;
             case R.id.ib_voice:
-
                 break;
             case R.id.ib_childrenlock:
                 mPresenter.sendCommand(Commands.OPEN_LOCK);
-
                 break;
             case R.id.ib_clear:
                 mPresenter.sendCommand(Commands.OPEN_CLEAR);
@@ -150,6 +152,10 @@ public class CoreControlActivity extends BaseActivity {
             powerBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    if (SettingUtil.isVibrateOn()){
+                        SettingUtil.doVibrate();
+                    }
+
                     mPresenter.sendKeyEvent(KeyCode.POWER);
                 }
             });
@@ -160,6 +166,10 @@ public class CoreControlActivity extends BaseActivity {
             menuBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    if (SettingUtil.isVibrateOn()){
+                        SettingUtil.doVibrate();
+                    }
+
                     mPresenter.sendKeyEvent(KeyCode.MENU);
                 }
             });
@@ -170,6 +180,10 @@ public class CoreControlActivity extends BaseActivity {
             settingBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    if (SettingUtil.isVibrateOn()){
+                        SettingUtil.doVibrate();
+                    }
+
                     mPresenter.sendCommand(Commands.OPEN_SETTING);
                 }
             });

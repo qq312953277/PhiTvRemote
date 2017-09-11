@@ -18,8 +18,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.phicomm.remotecontrol.R;
-import com.phicomm.remotecontrol.modules.devices.connectrecords.RecentDevicesContract.Presenter;
 import com.phicomm.remotecontrol.greendao.Entity.RemoteDevice;
+import com.phicomm.remotecontrol.modules.devices.connectrecords.RecentDevicesContract.Presenter;
+import com.phicomm.remotecontrol.util.SettingUtil;
 
 import java.util.ArrayList;
 import java.util.Formatter;
@@ -149,6 +150,10 @@ public class RecentDevicesFragment extends Fragment implements RecentDevicesCont
     AdapterView.OnItemClickListener onItemClick = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            if (SettingUtil.isVibrateOn()) {
+                SettingUtil.doVibrate();
+            }
+
             RemoteDevice device = (RemoteDevice) parent.getAdapter().getItem(position);
             RecentDeviceAdapter.DeviceViewHolder holder = (RecentDeviceAdapter.DeviceViewHolder)
                     view.getTag();
@@ -169,6 +174,10 @@ public class RecentDevicesFragment extends Fragment implements RecentDevicesCont
     View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+            if (SettingUtil.isVibrateOn()) {
+                SettingUtil.doVibrate();
+            }
+
             if (v == mEditBtn && mRecentDeviceAdapter.getRecentDeviceList().size() > 0) {
                 mIsMultiSelect = true;
                 updateView();

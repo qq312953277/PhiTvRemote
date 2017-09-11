@@ -20,15 +20,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.phicomm.remotecontrol.ConnectManager;
-import com.phicomm.remotecontrol.modules.devices.searchdevices.DeviceDiscoveryActivity;
-import com.phicomm.remotecontrol.constant.PhiConstants;
 import com.phicomm.remotecontrol.R;
 import com.phicomm.remotecontrol.RemoteBoxDevice;
+import com.phicomm.remotecontrol.constant.PhiConstants;
+import com.phicomm.remotecontrol.greendao.GreenDaoUserUtil;
+import com.phicomm.remotecontrol.modules.devices.searchdevices.DeviceDiscoveryActivity;
 import com.phicomm.remotecontrol.modules.personal.PersonalActivity;
 import com.phicomm.remotecontrol.util.CommonUtils;
 import com.phicomm.remotecontrol.util.DevicesUtil;
-import com.phicomm.remotecontrol.greendao.GreenDaoUserUtil;
 import com.phicomm.remotecontrol.util.LogUtil;
+import com.phicomm.remotecontrol.util.SettingUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -175,6 +176,9 @@ public class SpinnerListFragment extends Fragment {
             .OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            if (SettingUtil.isVibrateOn()){
+                SettingUtil.doVibrate();
+            }
 
             final RemoteBoxDevice remoteDevice = (RemoteBoxDevice) parent.getAdapter().getItem
                     (position);
@@ -242,9 +246,13 @@ public class SpinnerListFragment extends Fragment {
 
     @OnClick({R.id.login, R.id.scan, R.id.connected_device})
     public void onClick(View view) {
+        if (SettingUtil.isVibrateOn()){
+            SettingUtil.doVibrate();
+        }
+
         switch (view.getId()) {
             case R.id.login:
-                CommonUtils.startIntent(getActivity(),null, PersonalActivity.class);
+                CommonUtils.startIntent(getActivity(), null, PersonalActivity.class);
                 break;
             case R.id.scan:
                 Intent intent = new Intent(getContext(), DeviceDiscoveryActivity.class);

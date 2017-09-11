@@ -5,14 +5,14 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.phicomm.remotecontrol.R;
-import com.phicomm.remotecontrol.util.LogUtil;
 import com.phicomm.remotecontrol.constant.KeyCode;
+import com.phicomm.remotecontrol.util.LogUtil;
+import com.phicomm.remotecontrol.util.SettingUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -100,6 +100,10 @@ public class KeyPanelFragment extends Fragment implements PanelContract.View, an
 
     @Override
     public void onClick(android.view.View v) {
+        if (SettingUtil.isVibrateOn()){
+            SettingUtil.doVibrate();
+        }
+
         LogUtil.d(TAG, "onClick");
         if (v == mRightBtn) {
             mPresenter.sendKeyEvent(KeyCode.RIGHT);
@@ -119,7 +123,7 @@ public class KeyPanelFragment extends Fragment implements PanelContract.View, an
             mPresenter.sendKeyEvent(KeyCode.CHANEL_DOWN);
         } else if (v == mChanelUpBtn) {
             mPresenter.sendKeyEvent(KeyCode.CHANEL_UP);
-        }else if (v == mHomeBtn) {
+        } else if (v == mHomeBtn) {
             mPresenter.sendKeyEvent(KeyCode.HOME);
         } else if (v == mBackBtn) {
             mPresenter.sendKeyEvent(KeyCode.BACK);

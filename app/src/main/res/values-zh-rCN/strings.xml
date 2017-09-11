@@ -129,4 +129,13 @@
     <string name="phicomm_website">www.phicomm.com</string>
     <string name="phicomm_hotline">4007-567-567</string>
     <string name="copyright_info">©2017上海斐讯数据通信技术有限公司</string>
+
+    <!--setting-->
+    <string name="setting_title">遥控器设置</string>
+    <string name="setting_vibrate_title">按键震动</string>
+    <string name="setting_vibrate_context">点击遥控器有震动感</string>
+    <string name="setting_voice_title">音量键控制</string>
+    <string name="setting_voice_context">手机音量键控制盒子音量</string>
+
+
 </resources>

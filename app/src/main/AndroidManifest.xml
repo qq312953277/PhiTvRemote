@@ -10,6 +10,7 @@
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.VIBRATE"/>
 
     <application
         android:name=".base.BaseApplication"
@@ -43,10 +44,11 @@
             android:screenOrientation="nosensor" />
         <activity
             android:name=".modules.personal.PersonalActivity"
-            android:screenOrientation="nosensor"/>
+            android:screenOrientation="nosensor" />
         <activity
             android:name=".modules.personal.about.AboutActivity"
-            android:screenOrientation="nosensor"/>
+            android:screenOrientation="nosensor" />
+        <activity android:name=".modules.personal.setting.SettingActivity"/>
     </application>
 
 </manifest>

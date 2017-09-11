@@ -4,9 +4,9 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 
-import com.phicomm.remotecontrol.exception.CrashHandler;
 import com.phicomm.remotecontrol.greendao.GreenDaoManager;
 import com.phicomm.remotecontrol.greendao.gen.RemoteDeviceDao;
+import com.phicomm.remotecontrol.preference.PreferenceRepository;
 import com.squareup.leakcanary.LeakCanary;
 
 import java.util.ArrayList;
@@ -28,15 +28,21 @@ public class BaseApplication extends Application {
     private GreenDaoManager mGreenDaoManager;
     private RemoteDeviceDao mRemoteDevcieDao;
 
+    private PreferenceRepository mPreferenceRepository;
+
+
     @Override
     public void onCreate() {
         super.onCreate();
-       // CrashHandler.getInstance().init(this);
+        // CrashHandler.getInstance().init(this);
         analyseLeak();
         mContext = this;
         manager = this;
         mGreenDaoManager = GreenDaoManager.getInstance();
         mRemoteDevcieDao = mGreenDaoManager.getSession().getRemoteDeviceDao();
+
+        //应用打开时获得震动、音量的设置状态
+        mPreferenceRepository = new PreferenceRepository(this);
 
     }
 
@@ -54,9 +60,9 @@ public class BaseApplication extends Application {
     }
 
     public static BaseApplication getApplication() {
-//        if (manager == null) {
-//            manager = new BaseApplication();
-//        }
+        if (manager == null) {
+            manager = new BaseApplication();
+        }
         return manager;
     }
 
@@ -138,6 +144,10 @@ public class BaseApplication extends Application {
 
     public void setActiviyList(List<Activity> activiyList) {
         mActiviyList = activiyList;
+    }
+
+    public PreferenceRepository getmPreferenceRepository() {
+        return mPreferenceRepository;
     }
 
 }

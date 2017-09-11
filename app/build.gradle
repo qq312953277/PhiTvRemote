@@ -55,26 +55,43 @@ greendao {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:25.3.1'
+
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
+
+    // butterknife
     compile 'com.jakewharton:butterknife:8.5.1'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
+
+    // android support
+    compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support:support-v4:25.3.1'
     compile 'com.android.support:recyclerview-v7:25.3.1'
+
+    // greendao
     compile 'org.greenrobot:greendao:3.0.1'
     compile 'org.greenrobot:greendao-generator:3.0.0'
+
+    // guava
     compile 'com.google.guava:guava:20.0'
+
+    // rxjava
     compile 'io.reactivex:rxandroid:1.1.0'
     compile 'io.reactivex:rxjava:1.1.0'
+
+    // gson
     compile 'com.google.code.gson:gson:2.8.0'
+
+    // okhttp
     compile 'com.squareup.okhttp3:okhttp:3.8.1'
+
+    // universalimageloader
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
+
     //retrofit
     compile 'com.squareup.retrofit:retrofit:2.0.0-beta2'
-
     compile 'com.squareup.retrofit:adapter-rxjava:2.0.0-beta2'
-
     compile 'com.squareup.retrofit:converter-gson:2.0.0-beta2'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
+
     // leak canary
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'

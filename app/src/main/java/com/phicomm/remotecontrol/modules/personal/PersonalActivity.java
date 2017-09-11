@@ -1,18 +1,17 @@
 package com.phicomm.remotecontrol.modules.personal;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.phicomm.remotecontrol.R;
 import com.phicomm.remotecontrol.base.BaseActivity;
 import com.phicomm.remotecontrol.modules.personal.about.AboutActivity;
+import com.phicomm.remotecontrol.modules.personal.setting.SettingActivity;
 import com.phicomm.remotecontrol.util.CommonUtils;
+import com.phicomm.remotecontrol.util.SettingUtil;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -29,6 +28,7 @@ public class PersonalActivity extends BaseActivity {
     TextView mTvTitle;
     @BindView(R.id.ll_parent)
     LinearLayout llParent;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,10 +42,15 @@ public class PersonalActivity extends BaseActivity {
 
     @OnClick({R.id.rl_about, R.id.rl_appilcation, R.id.rl_setting, R.id.rl_version, R.id.iv_header_picture, R.id.iv_back})
     public void onClick(View view) {
+        if (SettingUtil.isVibrateOn()){
+            SettingUtil.doVibrate();
+        }
+
         switch (view.getId()) {
             case R.id.rl_appilcation:
                 break;
             case R.id.rl_setting:
+                CommonUtils.startIntent(PersonalActivity.this, null, SettingActivity.class);
                 break;
             case R.id.rl_about:
                 CommonUtils.startIntent(PersonalActivity.this, null, AboutActivity.class);

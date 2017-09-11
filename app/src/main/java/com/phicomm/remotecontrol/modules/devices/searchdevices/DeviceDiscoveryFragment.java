@@ -41,6 +41,7 @@ import com.phicomm.remotecontrol.constant.PhiConstants;
 import com.phicomm.remotecontrol.modules.devices.searchdevices.DeviceDiscoveryContract.Presenter;
 import com.phicomm.remotecontrol.util.DevicesUtil;
 import com.phicomm.remotecontrol.util.LogUtil;
+import com.phicomm.remotecontrol.util.SettingUtil;
 
 import java.util.Formatter;
 import java.util.List;
@@ -152,13 +153,16 @@ public class DeviceDiscoveryFragment extends Fragment implements DeviceDiscovery
     View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+            if (SettingUtil.isVibrateOn()){
+                SettingUtil.doVibrate();
+            }
+
             if (v == mDiscoveryBtn) {
                 if (isWifiAvailable()) {
                     startJmdnsDiscoveryDevice();
                 } else {
                     Toast.makeText(getContext(), R.string.finder_wifi_not_available, Toast.LENGTH_SHORT).show();
                 }
-
             } else if (v == mManualIpBtn) {
                 buildManualIpDialog().show();
             } else if (v == mRecentDevicesBtn) {
@@ -173,6 +177,10 @@ public class DeviceDiscoveryFragment extends Fragment implements DeviceDiscovery
     private AdapterView.OnItemClickListener selectHandler = new AdapterView.OnItemClickListener() {
         public void onItemClick(AdapterView<?> parent, View v, int position,
                                 long id) {
+            if (SettingUtil.isVibrateOn()){
+                SettingUtil.doVibrate();
+            }
+
             final int pos = position;
             final RemoteBoxDevice remoteDevice = (RemoteBoxDevice) parent.getItemAtPosition(
                     position);

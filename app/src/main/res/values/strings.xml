@@ -91,4 +91,11 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!--setting-->
+    <string name="setting_title">Remote control setting</string>
+    <string name="setting_vibrate_title">Touch vibrating</string>
+    <string name="setting_vibrate_context">Vibrating while click the remote control</string>
+    <string name="setting_voice_title">Volume button control</string>
+    <string name="setting_voice_context">Control the volume of the box by volume button</string>
 </resources>
