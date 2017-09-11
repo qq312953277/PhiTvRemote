@@ -45,6 +45,7 @@ public class ImageFactory {
     public static DisplayImageOptions getDefaultImageOptions(int imageRes) {
         return getImageOptions(imageRes, imageRes, imageRes);
     }
+
     public static DisplayImageOptions getImageOptions(int stubImageRes, int imageRes, int failImageRes) {
         return new DisplayImageOptions.Builder()
                 .showImageOnLoading(stubImageRes)//有可能引起图片加载闪烁

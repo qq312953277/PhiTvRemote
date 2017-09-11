@@ -4,10 +4,17 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 
+import com.phicomm.remotecontrol.exception.CrashHandler;
 import com.phicomm.remotecontrol.greendao.GreenDaoManager;
 import com.phicomm.remotecontrol.greendao.gen.RemoteDeviceDao;
 import com.phicomm.remotecontrol.preference.PreferenceRepository;
+import com.phicomm.remotecontrol.modules.main.screenprojection.entity.DeviceDisplay;
+import com.phicomm.remotecontrol.modules.main.screenprojection.model.UpnpServiceBiz;
 import com.squareup.leakcanary.LeakCanary;
+
+import org.fourthline.cling.android.FixedAndroidLogHandler;
+import org.fourthline.cling.support.model.item.Item;
+import org.seamless.util.logging.LoggingUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,21 +36,47 @@ public class BaseApplication extends Application {
     private RemoteDeviceDao mRemoteDevcieDao;
 
     private PreferenceRepository mPreferenceRepository;
+    private DeviceDisplay device;
+    private Item item;
+    private static Object lock = new Object();
 
 
     @Override
     public void onCreate() {
         super.onCreate();
-        // CrashHandler.getInstance().init(this);
+        CrashHandler.getInstance().init(this);
         analyseLeak();
         mContext = this;
         manager = this;
         mGreenDaoManager = GreenDaoManager.getInstance();
         mRemoteDevcieDao = mGreenDaoManager.getSession().getRemoteDeviceDao();
+        LoggingUtil.resetRootHandler(new FixedAndroidLogHandler());
 
         //应用打开时获得震动、音量的设置状态
         mPreferenceRepository = new PreferenceRepository(this);
 
+    }
+
+    public void setDeviceDisplay(DeviceDisplay device) {
+        this.device = device;
+    }
+
+    public DeviceDisplay getDeviceDisplay() {
+        return device;
+    }
+
+    public void setItem(Item item) {
+        this.item = item;
+    }
+
+    public Item getItem() {
+        return item;
+    }
+
+    @Override
+    public void onTerminate() {
+        super.onTerminate();
+        UpnpServiceBiz.newInstance().closeUpnpService(this);
     }
 
     private void analyseLeak() {
@@ -76,7 +109,6 @@ public class BaseApplication extends Application {
      *
      * @param activity
      */
-
     public void addDestoryActivity(Activity activity, String key) {
         if (!mDestoryMap.containsKey(key))
             mDestoryMap.put(key, activity);
@@ -104,7 +136,6 @@ public class BaseApplication extends Application {
                 }
             }
         }
-
     }
 
     /**

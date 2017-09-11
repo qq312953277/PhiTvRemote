@@ -104,7 +104,7 @@ public class DeviceDiscoveryAdapter extends BaseAdapter {
     public void notifyDataChange(List<RemoteBoxDevice> deviceList) {
         mDeviceList.clear();
         mDeviceList.addAll(deviceList);
-        LogUtil.d(TAG,"notifyDataChange");
+        LogUtil.d(TAG, "notifyDataChange");
         notifyDataSetChanged();
     }
 

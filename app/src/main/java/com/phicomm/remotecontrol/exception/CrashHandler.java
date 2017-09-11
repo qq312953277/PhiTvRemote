@@ -11,7 +11,6 @@ import android.os.SystemClock;
 import android.util.Log;
 import android.widget.Toast;
 
-
 import com.phicomm.remotecontrol.activities.WelcomeActivity;
 import com.phicomm.remotecontrol.base.BaseApplication;
 import com.phicomm.remotecontrol.util.DateUtil;
@@ -87,7 +86,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
             SystemClock.sleep(300);
             restartApp();
 //            restartAppAnotherWay();
-           // 退出当前程序，结束当前进程，进程中的所有线程停止运行
+            // 退出当前程序，结束当前进程，进程中的所有线程停止运行
             android.os.Process.killProcess(android.os.Process.myPid());
             // 退出当前程序
             //System.exit(1);
@@ -112,10 +111,10 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
                     Looper.prepare();
                     //关闭所有activity
                     BaseApplication.getApplication().destoryAllActivity();
-                    Toast.makeText(mContext,"对不起，程序出现异常！",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, "对不起，程序出现异常！", Toast.LENGTH_SHORT).show();
                     // 收集设备参数信息
                     collectDeviceInfo(mContext);
-                   // 保存日志文件
+                    // 保存日志文件
                     try {
                         saveCrashInfoFile(ex);
                     } catch (Exception e) {

@@ -1,9 +1,10 @@
 package com.phicomm.remotecontrol.modules.devices.connectrecords;
 
-import java.util.List;
 import com.phicomm.remotecontrol.base.BasePresenter;
 import com.phicomm.remotecontrol.base.BaseView;
 import com.phicomm.remotecontrol.greendao.Entity.RemoteDevice;
+
+import java.util.List;
 
 /**
  * Created by chunya02.li on 2017/7/10.

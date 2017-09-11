@@ -3,9 +3,6 @@ package com.phicomm.remotecontrol.util;
 import android.annotation.SuppressLint;
 import android.text.TextUtils;
 
-import java.math.BigDecimal;
-import java.net.URI;
-import java.net.URLEncoder;
 import java.security.MessageDigest;
 import java.text.SimpleDateFormat;
 import java.util.Date;

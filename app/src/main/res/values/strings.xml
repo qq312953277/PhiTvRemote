@@ -73,6 +73,8 @@
     <string name="control">Control</string>
     <string name="childlock">ChildLock</string>
     <string name="clear">Clean</string>
+    <string name="init_time">0:00:00</string>
+    <string name="separate"> / </string>
 
 
     <string name="btn_screenshot">Screnshot</string>

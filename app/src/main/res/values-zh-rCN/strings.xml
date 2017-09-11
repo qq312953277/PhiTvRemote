@@ -101,6 +101,9 @@
     <string name="dlna">投屏</string>
     <string name="childlock">儿童锁</string>
     <string name="clear">一键清理</string>
+    <string name="init_time">0:00:00</string>
+    <string name="separate"> / </string>
+
 
     <string name="success_screenshot">"截屏成功"</string>
     <string name="fail_screenshot">"截屏失败"</string>

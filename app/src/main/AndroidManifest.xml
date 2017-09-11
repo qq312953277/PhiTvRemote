@@ -32,7 +32,8 @@
         </activity>
         <activity
             android:name=".activities.CoreControlActivity"
-            android:screenOrientation="nosensor" />
+            android:screenOrientation="nosensor"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activities.RecentDevicesActivity"
             android:screenOrientation="nosensor" />
@@ -43,12 +44,22 @@
             android:name=".modules.main.screenshot.ScreenshotActivity"
             android:screenOrientation="nosensor" />
         <activity
+            android:name=".modules.main.screenprojection.activities.LocalMediaItemActivity"
+            android:screenOrientation="nosensor" />
+        <activity
+            android:name=".modules.main.screenprojection.activities.VideoControlActivity"
+            android:screenOrientation="nosensor" />
+        <activity
+            android:name=".modules.main.screenprojection.activities.PictureControlActivity"
+            android:screenOrientation="nosensor" />
+        <activity
             android:name=".modules.personal.PersonalActivity"
             android:screenOrientation="nosensor" />
         <activity
             android:name=".modules.personal.about.AboutActivity"
             android:screenOrientation="nosensor" />
         <activity android:name=".modules.personal.setting.SettingActivity"/>
-    </application>
 
+        <service android:name=".modules.main.screenprojection.service.UpnpDeviceService" />
+    </application>
 </manifest>

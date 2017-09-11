@@ -1,5 +1,4 @@
 package com.phicomm.remotecontrol.httpclient;
-;
 
 import com.phicomm.remotecontrol.beans.KeyEvent;
 import com.phicomm.remotecontrol.beans.Status;

@@ -41,7 +41,6 @@ import butterknife.OnClick;
 /**
  * Created by chunya02.li on 2017/7/13.
  */
-
 public class SpinnerListFragment extends Fragment {
     private static String TAG = "SpinnerListFragment";
     private SpinnerWindowView mSpinerPopWindow;
@@ -120,7 +119,6 @@ public class SpinnerListFragment extends Fragment {
         DevicesUtil.setGreenDaoUserUtil(mGreenDaoUserUtil);
     }
 
-
     Runnable mLoadConnectedTask = new Runnable() {
         @Override
         public void run() {
@@ -159,7 +157,6 @@ public class SpinnerListFragment extends Fragment {
                 });
             }
         }
-
     }
 
     private void sendMessage() {
@@ -170,7 +167,6 @@ public class SpinnerListFragment extends Fragment {
         msg.setData(data);
         mLoadTargetDevice.sendMessage(msg);
     }
-
 
     private AdapterView.OnItemClickListener itemClickListener = new AdapterView
             .OnItemClickListener() {
@@ -193,8 +189,7 @@ public class SpinnerListFragment extends Fragment {
                         if (target != null && !(target.getBssid().equals(device.getBssid()))) {
                             DevicesUtil.insertOrUpdateRecentDevices(device);
                         }
-                        //mDeviceTv.setText(remoteDevice.getName());
-                        mDeviceTv.setText(remoteDevice.getAddress());
+                        mDeviceTv.setText(remoteDevice.getName());
                         Toast.makeText(getContext(), "connect success", Toast.LENGTH_SHORT).show();
                     }
 

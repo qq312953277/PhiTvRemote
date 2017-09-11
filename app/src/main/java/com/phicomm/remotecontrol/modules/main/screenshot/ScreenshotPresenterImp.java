@@ -88,7 +88,7 @@ public class ScreenshotPresenterImp implements ScreenshotPresenter {
                     }
                 }
             }
-        }else {
+        } else {
             mView.showMessage(mContext.getString(R.string.fail_save));
         }
     }

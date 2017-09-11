@@ -61,6 +61,17 @@ import static android.content.Context.WIFI_SERVICE;
 
 public class DeviceDiscoveryFragment extends Fragment implements DeviceDiscoveryContract.View {
     private static String TAG = "DeviceDiscoveryFragment";
+    private Presenter mPresenter;
+    private DeviceDiscoveryAdapter mDiscoveryAdapter;
+    private DiscoveryHandler mBroadcastHandler;
+    private WifiManager mWifiManager;
+    private WifiChangeReceiver mWifiChangeReceiver;
+    private ProgressBarTask mTask;
+    private boolean mProgressBar_flag;
+
+    public static final int GROUTH_RATE = 15;
+    public static final int SLEEP_TIME = 600;
+
     @BindView(R.id.discovery_devices_list)
     public ListView mDiscoveryListDevices;
     @BindView(R.id.start_discovery)
@@ -83,14 +94,6 @@ public class DeviceDiscoveryFragment extends Fragment implements DeviceDiscovery
     public TextView mTitleTv;
     @BindView(R.id.roundProgressBar)
     public RoundProgressBar mProgressBar;
-
-    private Presenter mPresenter;
-    private DeviceDiscoveryAdapter mDiscoveryAdapter;
-    private DiscoveryHandler mBroadcastHandler;
-    private WifiManager mWifiManager;
-    private WifiChangeReceiver mWifiChangeReceiver;
-    private ProgressBarTask mTask;
-    private boolean mProgressBar_flag;
 
     public DeviceDiscoveryFragment() {
 
@@ -122,8 +125,6 @@ public class DeviceDiscoveryFragment extends Fragment implements DeviceDiscovery
         initActionBar();
         setOnClickListener();
         mBroadcastHandler = new DiscoveryHandler();
-
-
     }
 
     private void initActionBar() {
@@ -132,7 +133,6 @@ public class DeviceDiscoveryFragment extends Fragment implements DeviceDiscovery
         String title = bundle.getString(PhiConstants.ACTION_BAR_NAME);
         mTitleTv.setText(title);
     }
-
 
     private void initAdapter() {
         mDiscoveryListDevices.setEmptyView(mEmptyTv);
@@ -186,7 +186,6 @@ public class DeviceDiscoveryFragment extends Fragment implements DeviceDiscovery
                     position);
             if (remoteDevice != null) {
                 ConnectManager.getInstance().connect(remoteDevice, new ConnectManager.ConnetResultCallback() {
-
                     @Override
                     public void onSuccess(RemoteBoxDevice device) {
                         RemoteBoxDevice target = mPresenter.getTarget();
@@ -211,7 +210,6 @@ public class DeviceDiscoveryFragment extends Fragment implements DeviceDiscovery
         }
     };
 
-
     @Override
     public void onResume() {
         LogUtil.d(TAG, "onResume() is called");
@@ -225,7 +223,6 @@ public class DeviceDiscoveryFragment extends Fragment implements DeviceDiscovery
         filter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
         mWifiChangeReceiver = new WifiChangeReceiver();
         getActivity().registerReceiver(mWifiChangeReceiver, filter);
-
         super.onResume();
     }
 
@@ -248,7 +245,6 @@ public class DeviceDiscoveryFragment extends Fragment implements DeviceDiscovery
     public void setPresenter(Presenter presenter) {
         mPresenter = presenter;
     }
-
 
     @Override
     public void showToast(String str) {
@@ -275,7 +271,6 @@ public class DeviceDiscoveryFragment extends Fragment implements DeviceDiscovery
         mDiscoveryAdapter.notifyDataChange(currentlist);
     }
 
-
     private class DiscoveryHandler extends Handler {
         @Override
         public void handleMessage(Message msg) {
@@ -287,7 +282,6 @@ public class DeviceDiscoveryFragment extends Fragment implements DeviceDiscovery
                     break;
             }
         }
-
     }
 
     private void startJmdnsDiscoveryDevice() {
@@ -295,8 +289,9 @@ public class DeviceDiscoveryFragment extends Fragment implements DeviceDiscovery
         mBroadcastHandler.removeMessages(PhiConstants.BROADCAST_TIMEOUT);
         mTask = new ProgressBarTask(this.getContext());
         mTask.execute();
+        mBroadcastHandler.sendEmptyMessageDelayed(PhiConstants.BROADCAST_TIMEOUT,
+                PhiConstants.DISCOVERY_TIMEOUT);
     }
-
 
     private void stopDiscoveryService() {
         mBroadcastHandler.removeMessages(PhiConstants.BROADCAST_TIMEOUT);
@@ -308,7 +303,6 @@ public class DeviceDiscoveryFragment extends Fragment implements DeviceDiscovery
         }
         mPresenter.stop();
     }
-
 
     public String makeDeviceCountLabel(int count) {
         StringBuilder deviceCount = new StringBuilder();
@@ -325,7 +319,6 @@ public class DeviceDiscoveryFragment extends Fragment implements DeviceDiscovery
             return String.valueOf(count);
         }
     }
-
 
     private AlertDialog buildManualIpDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
@@ -446,10 +439,10 @@ public class DeviceDiscoveryFragment extends Fragment implements DeviceDiscovery
                     mBroadcastHandler.sendEmptyMessage(PhiConstants.BROADCAST_TIMEOUT);
                     break;
                 }
-                mCurrentProgress += new Random().nextInt(20);
+                mCurrentProgress += new Random().nextInt(GROUTH_RATE);
                 publishProgress(mCurrentProgress);
                 try {
-                    Thread.sleep(500);
+                    Thread.sleep(SLEEP_TIME);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -469,12 +462,10 @@ public class DeviceDiscoveryFragment extends Fragment implements DeviceDiscovery
             }
         }
 
-
         @Override
         protected void onCancelled() {
             super.onCancelled();
         }
-
     }
 
     private boolean isWifiAvailable() {
@@ -538,10 +529,8 @@ public class DeviceDiscoveryFragment extends Fragment implements DeviceDiscovery
                     }
                 }
             }
-
         }
     }
-
 }
 
 

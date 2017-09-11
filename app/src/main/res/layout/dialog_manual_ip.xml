@@ -8,12 +8,14 @@
     android:minWidth="280dip"
     android:padding="10dip">
 
-    <EditText android:id="@+id/manual_ip_entry"
+    <EditText
+        android:id="@+id/manual_ip_entry"
         android:hint="@string/manual_ip_hint"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" />
 
-    <TextView android:id="@+id/manual_ip_help"
+    <TextView
+        android:id="@+id/manual_ip_help"
         android:text="@string/manual_ip_message"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" />

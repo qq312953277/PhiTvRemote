@@ -10,12 +10,12 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.phicomm.remotecontrol.R;
+import com.phicomm.remotecontrol.greendao.Entity.RemoteDevice;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import com.phicomm.remotecontrol.R;
-import com.phicomm.remotecontrol.greendao.Entity.RemoteDevice;
 
 /**
  * Created by chunya02.li on 2017/7/11.

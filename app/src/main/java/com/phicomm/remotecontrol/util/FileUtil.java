@@ -2,7 +2,6 @@ package com.phicomm.remotecontrol.util;
 
 import android.os.Environment;
 
-
 import com.phicomm.remotecontrol.base.BaseApplication;
 
 import java.io.File;

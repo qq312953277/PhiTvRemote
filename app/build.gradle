@@ -3,10 +3,10 @@ import java.text.SimpleDateFormat
 apply plugin: 'com.android.application'
 apply plugin: 'org.greenrobot.greendao'
 
-
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
+
     defaultConfig {
         applicationId "com.phicomm.remotecontrol"
         minSdkVersion 19
@@ -14,18 +14,28 @@ android {
         versionCode 5
         versionName "1.0.0.2005"
         buildConfigField "String", "LOG_TAG", "\"phicomm\""
-
+        multiDexEnabled true
     }
+
     buildTypes {
         release {
             buildConfigField "boolean", "LOG_DEBUG", "false"
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
         }
+
         debug {
             buildConfigField "boolean", "LOG_DEBUG", "true"
             minifyEnabled false
         }
+    }
+
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
     }
 
     lintOptions {
@@ -54,12 +64,11 @@ greendao {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
 
     // butterknife
     compile 'com.jakewharton:butterknife:8.5.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
 
     // android support
     compile 'com.android.support:appcompat-v7:25.3.1'
@@ -90,7 +99,14 @@ dependencies {
     compile 'com.squareup.retrofit:retrofit:2.0.0-beta2'
     compile 'com.squareup.retrofit:adapter-rxjava:2.0.0-beta2'
     compile 'com.squareup.retrofit:converter-gson:2.0.0-beta2'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
+
+    testCompile 'junit:junit:4.12'
+
+    //Cling
+    compile files('libs/Cling-2.0.1.jar')
+
+    //fileTree
+    compile fileTree(dir: 'libs', include: ['*.jar'])
 
     // leak canary
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'

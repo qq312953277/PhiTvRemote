@@ -2,8 +2,8 @@ package com.phicomm.remotecontrol.greendao.Entity;
 
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;
-import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Keep;
+import org.greenrobot.greendao.annotation.Generated;
 
 /**
  * Created by chunya02.li on 2017/6/30.

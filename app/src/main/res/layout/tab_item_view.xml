@@ -11,13 +11,13 @@
         android:layout_height="wrap_content"
         android:focusable="false"
         android:padding="3dp"
-        android:src="@drawable/tab_home_btn"/>
+        android:src="@drawable/tab_home_btn" />
 
     <TextView
         android:id="@+id/textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="#ffffff"
-        android:textSize="10sp"/>
+        android:textSize="10sp" />
 
 </LinearLayout>

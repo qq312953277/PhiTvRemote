@@ -1,5 +1,8 @@
 package com.phicomm.remotecontrol.modules.main.controlpanel;
 
+import android.content.Context;
+import android.widget.Toast;
+
 import com.phicomm.remotecontrol.TaskQuene;
 import com.phicomm.remotecontrol.httpclient.PhiCallBack;
 import com.phicomm.remotecontrol.util.LogUtil;
@@ -11,6 +14,14 @@ import com.phicomm.remotecontrol.util.LogUtil;
 public class PanelPresenter implements PanelContract.Presenter {
 
     PanelContract.View mView;
+    private Context mContext;
+
+    public PanelPresenter() {
+    }
+
+    public PanelPresenter(Context mContext) {
+        this.mContext = mContext;
+    }
 
     @Override
     public void start() {

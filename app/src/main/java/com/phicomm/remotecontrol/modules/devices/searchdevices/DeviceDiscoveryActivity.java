@@ -1,7 +1,6 @@
 package com.phicomm.remotecontrol.modules.devices.searchdevices;
 
 import android.os.Bundle;
-
 import android.support.v7.app.AppCompatActivity;
 
 import com.phicomm.remotecontrol.R;

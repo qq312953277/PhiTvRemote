@@ -46,7 +46,7 @@
         android:id="@+id/recent_devices_list"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"/>
+        android:layout_weight="1" />
 
     <TextView
         android:id="@android:id/empty"
@@ -62,7 +62,7 @@
         android:orientation="horizontal"
         android:layout_marginRight="10dp"
         android:layout_marginBottom="5dp"
-        android:visibility="gone" >
+        android:visibility="gone">
 
         <Button
             android:id="@+id/bt_cancel"

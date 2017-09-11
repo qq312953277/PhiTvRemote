@@ -2,10 +2,10 @@ package com.phicomm.remotecontrol.httpclient;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.phicomm.remotecontrol.util.LogUtil;
 import com.phicomm.remotecontrol.beans.KeyEvent;
 import com.phicomm.remotecontrol.beans.Status;
 import com.phicomm.remotecontrol.constant.ErrorCode;
+import com.phicomm.remotecontrol.util.LogUtil;
 
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;

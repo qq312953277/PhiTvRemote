@@ -7,6 +7,6 @@ package com.phicomm.remotecontrol.constant;
 public class Commands {
 
     public static String OPEN_SETTING = "setting";
-    public static String OPEN_LOCK= "openlock";
+    public static String OPEN_LOCK = "openlock";
     public static String OPEN_CLEAR = "openclear";
 }

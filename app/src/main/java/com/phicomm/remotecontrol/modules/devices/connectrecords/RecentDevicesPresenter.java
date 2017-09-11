@@ -1,8 +1,8 @@
 package com.phicomm.remotecontrol.modules.devices.connectrecords;
 
-import com.phicomm.remotecontrol.modules.devices.connectrecords.RecentDevicesContract.View;
 import com.phicomm.remotecontrol.greendao.Entity.RemoteDevice;
 import com.phicomm.remotecontrol.greendao.GreenDaoUserUtil;
+import com.phicomm.remotecontrol.modules.devices.connectrecords.RecentDevicesContract.View;
 
 import java.util.ArrayList;
 import java.util.List;
