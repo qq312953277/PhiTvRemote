@@ -44,13 +44,21 @@ public class PanelPresenter implements PanelContract.Presenter {
             @Override
             public void onSuccess(Object model) {
                 LogUtil.d("keyevent " + keyCode + " : success");
-                mView.toastMessage("success");
+                if (mView != null) {
+                    mView.toastMessage("success");
+                } else {
+                    Toast.makeText(mContext, "success", Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override
             public void onFailure(String msg) {
                 LogUtil.d("keyevent " + keyCode + " : fail");
-                mView.toastMessage("fail");
+                if (mView != null) {
+                    mView.toastMessage("fail");
+                } else {
+                    Toast.makeText(mContext, "fail", Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override
