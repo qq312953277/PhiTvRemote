@@ -2,13 +2,42 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:gravity="center_vertical">
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:layout_width="41dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="50dp">
+
+        <ImageView
+            android:id="@+id/imageViewTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/phi_pic_tv_p" />
+    </LinearLayout>
 
     <TextView
         android:id="@+id/tv_device_name"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/content_color"
+        android:layout_gravity="center_vertical"
         android:padding="10dp"
-        android:textSize="20dp" />
+        android:textColor="@color/content_color"
+        android:textSize="20sp" />
+
+    <LinearLayout
+        android:layout_width="41dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="50dp">
+
+        <ImageView
+            android:id="@+id/imageViewSelectede"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/voice_halo_01"
+            android:visibility="gone" />
+    </LinearLayout>
 </LinearLayout>

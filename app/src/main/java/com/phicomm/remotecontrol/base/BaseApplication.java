@@ -7,9 +7,9 @@ import android.content.Context;
 import com.phicomm.remotecontrol.exception.CrashHandler;
 import com.phicomm.remotecontrol.greendao.GreenDaoManager;
 import com.phicomm.remotecontrol.greendao.gen.RemoteDeviceDao;
-import com.phicomm.remotecontrol.preference.PreferenceRepository;
 import com.phicomm.remotecontrol.modules.main.screenprojection.entity.DeviceDisplay;
 import com.phicomm.remotecontrol.modules.main.screenprojection.model.UpnpServiceBiz;
+import com.phicomm.remotecontrol.preference.PreferenceRepository;
 import com.squareup.leakcanary.LeakCanary;
 
 import org.fourthline.cling.android.FixedAndroidLogHandler;
