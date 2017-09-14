@@ -58,6 +58,7 @@ public class SpinnerListAdapter extends BaseAdapter {
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
+
         }
         //只显示前10个字符，多余的用省略号表示
         String mDeviceName = mSpinnerDeviceList.get(position).getName();
@@ -69,6 +70,8 @@ public class SpinnerListAdapter extends BaseAdapter {
         }
         if (position == 0) {
             holder.mImageViewSelected.setVisibility(View.VISIBLE);
+        } else {
+            holder.mImageViewSelected.setVisibility(View.INVISIBLE);
         }
         return convertView;
     }

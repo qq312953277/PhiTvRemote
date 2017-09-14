@@ -223,8 +223,6 @@ public class SpinnerListFragment extends Fragment {
                         LogUtil.d("Connect fail:" + remoteDevice.toString());
                         mCurrentDevicesList.remove(remoteDevice);
                         DevicesUtil.setCurrentListResult(mCurrentDevicesList);
-                        mSpinerPopWindow.notifyDataChange(mCurrentDevicesList);
-                        mDeviceTv.setText(getString(R.string.unable_to_connect_device));
                         Toast.makeText(getContext(), "connect fail", Toast.LENGTH_SHORT).show();
                     }
                 });
