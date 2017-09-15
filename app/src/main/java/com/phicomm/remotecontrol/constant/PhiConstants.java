@@ -20,4 +20,8 @@ public class PhiConstants {
     public static final int SLIDE_LEFT = 1;
     public static final int SLIDE_DOWN = 2;
     public static final int SLIDE_UP = 3;
+    // ota
+    public static String APP_NAME = "PhiTvRemote";
+    public static final String APP_ID = "2017060031";
+
 }

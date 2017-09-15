@@ -20,6 +20,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <meta-data
+            android:name="APP_CHANNEL"
+            android:value="${APP_CHANNEL_VALUE}" />
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_provider_paths" />
+        </provider>
         <activity
             android:name=".activities.WelcomeActivity"
             android:screenOrientation="nosensor"
@@ -32,33 +44,47 @@
         </activity>
         <activity
             android:name=".activities.CoreControlActivity"
-            android:screenOrientation="nosensor"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:screenOrientation="nosensor" />
+
         <activity
             android:name=".activities.RecentDevicesActivity"
             android:screenOrientation="nosensor" />
+
         <activity
             android:name=".modules.devices.searchdevices.DeviceDiscoveryActivity"
             android:screenOrientation="nosensor" />
+
         <activity
             android:name=".modules.main.screenshot.ScreenshotActivity"
             android:screenOrientation="nosensor" />
+
+        <activity
+            android:name=".modules.personal.personaldetail.PersonalActivity"
+            android:screenOrientation="nosensor" />
+
         <activity
             android:name=".modules.main.screenprojection.activities.LocalMediaItemActivity"
             android:screenOrientation="nosensor" />
+
         <activity
             android:name=".modules.main.screenprojection.activities.VideoControlActivity"
             android:screenOrientation="nosensor" />
+
         <activity
             android:name=".modules.main.screenprojection.activities.PictureControlActivity"
             android:screenOrientation="nosensor" />
-        <activity
-            android:name=".modules.personal.PersonalActivity"
-            android:screenOrientation="nosensor" />
+
         <activity
             android:name=".modules.personal.about.AboutActivity"
             android:screenOrientation="nosensor" />
-        <activity android:name=".modules.personal.setting.SettingActivity"/>
+
+        <service
+            android:name=".modules.personal.upgrade.UpdateService"
+            android:enabled="true" />
+
+        <activity
+            android:name=".modules.personal.setting.SettingActivity"
+            android:screenOrientation="nosensor" />
 
         <service android:name=".modules.main.screenprojection.service.UpnpDeviceService" />
     </application>

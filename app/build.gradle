@@ -11,7 +11,7 @@ android {
         applicationId "com.phicomm.remotecontrol"
         minSdkVersion 19
         targetSdkVersion 25
-        versionCode 5
+        versionCode 1
         versionName "1.0.0.2005"
         buildConfigField "String", "LOG_TAG", "\"phicomm\""
         multiDexEnabled true
@@ -42,15 +42,32 @@ android {
         abortOnError false
     }
 
-    // rename output file
-    applicationVariants.all { variant ->
-        variant.outputs.each { output ->
-            def oldOutputApkFile = output.outputFile
-            def newOutputApkName = oldOutputApkFile.name.replace("app", "PhiBoxRemote_" + defaultConfig.versionName + "_${releaseTime()}")
-            def newOutputApkFile = new File(rootProject.projectDir.absolutePath + "/PhiBoxRemote_${android.defaultConfig.versionName}" + "/", newOutputApkName)
-            output.outputFile = newOutputApkFile
+    repositories {
+        flatDir {
+            dirs 'libs'
         }
     }
+
+    productFlavors {
+        // qa channel
+        qa {
+            manifestPlaceholders = [APP_CHANNEL_VALUE: "qa"]
+        }
+
+        // for QR code download channel
+        "1PTR" {
+            manifestPlaceholders = [APP_CHANNEL_VALUE: "1PTR"]
+        }
+    }
+    // rename output file
+//    applicationVariants.all { variant ->
+//        variant.outputs.each { output ->
+//            def oldOutputApkFile = output.outputFile
+//            def newOutputApkName = oldOutputApkFile.name.replace("app", "PhiBoxRemote_" + defaultConfig.versionName + "_${releaseTime()}")
+//            def newOutputApkFile = new File(rootProject.projectDir.absolutePath + "/PhiBoxRemote_${android.defaultConfig.versionName}" + "/", newOutputApkName)
+//            output.outputFile = newOutputApkFile
+//        }
+//    }
 }
 
 def releaseTime() {
@@ -64,6 +81,9 @@ greendao {
 }
 
 dependencies {
+     //fileTree
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
 
     // butterknife
@@ -96,19 +116,29 @@ dependencies {
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
 
     //retrofit
-    compile 'com.squareup.retrofit:retrofit:2.0.0-beta2'
-    compile 'com.squareup.retrofit:adapter-rxjava:2.0.0-beta2'
-    compile 'com.squareup.retrofit:converter-gson:2.0.0-beta2'
+
+    compile 'com.squareup.retrofit2:retrofit:2.1.0'
+
+    //gson converter for retrofit
+    compile 'com.squareup.retrofit2:converter-gson:2.1.0'
+
+    //rxjava converter for retrofit
+    compile 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
 
     testCompile 'junit:junit:4.12'
 
     //Cling
     compile files('libs/Cling-2.0.1.jar')
 
-    //fileTree
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-
     // leak canary
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
+
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
+
+    //phicomm
+    compile 'com.phicomm.region:region:1.2'
+
+    compile(name: 'PhiWidgets-1.0', ext: 'aar')
+
+    compile 'joda-time:joda-time:2.8.1'
 }

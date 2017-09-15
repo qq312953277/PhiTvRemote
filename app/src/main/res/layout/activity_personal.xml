@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_parent"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#F5F5F6"
-    android:orientation="vertical"
-    android:id="@+id/ll_parent">
+    android:orientation="vertical">
 
     <include layout="@layout/title_bar" />
 
@@ -186,14 +186,24 @@
                 android:text="@string/personal_version"
                 android:textColor="@color/black_normal"
                 android:textSize="16sp" />
+
+            <ImageView
+                android:id="@+id/new_version_indicator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:src="@drawable/new_version_indicator"
+                android:visibility="gone" />
         </LinearLayout>
 
-        <ImageView
-            android:layout_width="20sp"
-            android:layout_height="20sp"
+        <TextView
+            android:id="@+id/tv_version"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_gravity="center"
-            android:src="@drawable/right_arrow_blue" />
+            android:textSize="14sp" />
     </RelativeLayout>
 </LinearLayout>

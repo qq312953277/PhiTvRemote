@@ -28,7 +28,7 @@ import com.phicomm.remotecontrol.constant.PhiConstants;
 import com.phicomm.remotecontrol.greendao.Entity.RemoteDevice;
 import com.phicomm.remotecontrol.greendao.GreenDaoUserUtil;
 import com.phicomm.remotecontrol.modules.devices.searchdevices.DeviceDiscoveryActivity;
-import com.phicomm.remotecontrol.modules.personal.PersonalActivity;
+import com.phicomm.remotecontrol.modules.personal.personaldetail.PersonalActivity;
 import com.phicomm.remotecontrol.util.CommonUtils;
 import com.phicomm.remotecontrol.util.DevicesUtil;
 import com.phicomm.remotecontrol.util.LogUtil;
@@ -272,7 +272,7 @@ public class SpinnerListFragment extends Fragment {
 
         switch (view.getId()) {
             case R.id.login:
-                CommonUtils.startIntent(getActivity(), null, PersonalActivity.class);
+                CommonUtils.startIntent(getActivity(),PersonalActivity.class);
                 break;
             case R.id.scan:
                 Intent intent = new Intent(getContext(), DeviceDiscoveryActivity.class);

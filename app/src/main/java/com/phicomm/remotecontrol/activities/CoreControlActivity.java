@@ -13,11 +13,15 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.phicomm.remotecontrol.BuildConfig;
 import com.phicomm.remotecontrol.R;
 import com.phicomm.remotecontrol.RemoteBoxDevice;
 import com.phicomm.remotecontrol.base.BaseActivity;
@@ -38,18 +42,27 @@ import com.phicomm.remotecontrol.modules.main.screenprojection.presenter.LocalMe
 import com.phicomm.remotecontrol.modules.main.screenprojection.presenter.LocalMediaItemPresenterImpl;
 import com.phicomm.remotecontrol.modules.main.screenshot.ScreenshotActivity;
 import com.phicomm.remotecontrol.modules.main.spinnerlist.SpinnerListFragment;
+import com.phicomm.remotecontrol.modules.personal.upgrade.UpdateInfoResponseBean;
+import com.phicomm.remotecontrol.modules.personal.upgrade.UpdatePresenter;
+import com.phicomm.remotecontrol.modules.personal.upgrade.UpdatePresenterImpl;
+import com.phicomm.remotecontrol.modules.personal.upgrade.UpdateView;
+import com.phicomm.remotecontrol.preference.PreferenceDef;
+import com.phicomm.remotecontrol.preference.PreferenceRepository;
 import com.phicomm.remotecontrol.util.ActivityUtils;
 import com.phicomm.remotecontrol.util.CommonUtils;
 import com.phicomm.remotecontrol.util.DevicesUtil;
 import com.phicomm.remotecontrol.util.LogUtil;
 import com.phicomm.remotecontrol.util.SettingUtil;
+import com.phicomm.widgets.alertdialog.PhiGuideDialog;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.OnClick;
 
-public class CoreControlActivity extends BaseActivity {
+public class CoreControlActivity extends BaseActivity implements UpdateView {
     private final static String TAG = "CoreControlActivity";
     static final int REQUEST_CODE = 101;
     private RemoteBoxDevice mRemoteBoxDevice;
@@ -62,6 +75,8 @@ public class CoreControlActivity extends BaseActivity {
     private ArrayList<Fragment> mFragmentList;
     private PanelContract.Presenter mPresenter;
     private LocalMediaItemPresenter mLocalMediaItemPresenter;
+    private UpdatePresenter mUpdatePresenter;
+    private PreferenceRepository mPreference;
 
     public class DLNAHandler extends Handler {
         @Override
@@ -112,6 +127,9 @@ public class CoreControlActivity extends BaseActivity {
         PanelContract.Presenter presenter = new PanelPresenter();
         heads.setPresenter(presenter);
         mLocalMediaItemPresenter = new LocalMediaItemPresenterImpl();
+
+        mPreference = new PreferenceRepository(this);
+        checkNewVersion();
     }
 
     @OnClick({R.id.ib_screenshot, R.id.ib_screenprojection, R.id.ib_voice, R.id.ib_childrenlock, R.id.ib_clear})
@@ -298,5 +316,86 @@ public class CoreControlActivity extends BaseActivity {
             }
         }
         return true;
+    }
+
+    private void checkNewVersion() {
+        mUpdatePresenter = new UpdatePresenterImpl(this, this);
+        Map<String, String> options = new HashMap<>();
+        options.put("appid", PhiConstants.APP_ID);
+        options.put("channel", CommonUtils.getAppChannel());
+        options.put("vercode", BuildConfig.VERSION_CODE + "");
+        mUpdatePresenter.checkVersion(options);
+    }
+
+    @Override
+    public void checkVersion(UpdateInfoResponseBean bean) {
+        if (bean == null) {
+            return;
+        }
+        String ret = bean.getRet();
+        String updateType = bean.getVerType();
+        boolean isForceUpdate = false;
+        if (!TextUtils.isEmpty(updateType) && updateType.equals("1")) {
+            isForceUpdate = true;
+        }
+
+        if (!TextUtils.isEmpty(ret)) {
+            if (ret.equals("0")) {
+                mPreference.put(PreferenceDef.APP_VERSION, PreferenceDef.IS_HAVE_NEW_VERSIOM, true);
+                showUpdateInfoDialog(isForceUpdate, bean.getVerName(), bean.getVerInfos(), bean.getVerDown());
+
+            } else {
+                mPreference.put(PreferenceDef.APP_VERSION, PreferenceDef.IS_HAVE_NEW_VERSIOM, false);
+                CommonUtils.showShortToast(getString(R.string.current_version_newest));
+            }
+        }
+    }
+
+    private void showUpdateInfoDialog(final boolean isForceUpdate, final String versionName, String versionInfo, final String url) {
+        View view = LayoutInflater.from(this).inflate(R.layout.dialog_content_for_update_info, null);
+        TextView title = (TextView) view.findViewById(R.id.update_title);
+        TextView message = (TextView) view.findViewById(R.id.update_message);
+        title.setText(String.format(getString(R.string.version_update_title), versionName));
+        message.setText(versionInfo);
+        final PhiGuideDialog dialog = new PhiGuideDialog(this);
+        dialog.setContentPanel(view);
+        dialog.setLeftGuideOnclickListener(getResources().getString(R.string.update_later), R.color.syn_text_color, new PhiGuideDialog.onLeftGuideOnclickListener() {
+            @Override
+            public void onLeftGuideClick() {
+                if (!isForceUpdate) {
+                    dialog.dismiss();
+                }
+            }
+
+        });
+        dialog.setRightGuideOnclickListener(getResources().getString(R.string.update_now), R.color.weight_line_color, new PhiGuideDialog.onRightGuideOnclickListener() {
+            @Override
+            public void onRightGuideClick() {
+                if (!isForceUpdate) {
+                    dialog.dismiss();
+                }
+                mUpdatePresenter.downloadFile(url, versionName);
+            }
+        });
+        if (isForceUpdate) {
+            dialog.setCancelable(false);
+            dialog.setCanceledOnTouchOutside(false);
+        }
+        dialog.show();
+    }
+
+    @Override
+    public void showMessage(Object message) {
+
+    }
+
+    @Override
+    public void onSuccess(Object message) {
+
+    }
+
+    @Override
+    public void onFailure(Object message) {
+
     }
 }

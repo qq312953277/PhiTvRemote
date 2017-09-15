@@ -126,12 +126,26 @@
     <string name="personal_version">版本</string>请点击登录您的斐讯账号
     <string name="personal_login">请点击登录您的斐讯账号</string>
     <!--about-->
-    <string name="about_project_name">斐讯遥控器</string>
+    <string name="about_project_name">斐讯遥控器V<xliff:g id="version">%1$s</xliff:g></string>
     <string name="website">官方网站</string>
     <string name="hotline">客服热线</string>
     <string name="phicomm_website">www.phicomm.com</string>
     <string name="phicomm_hotline">4007-567-567</string>
     <string name="copyright_info">©2017上海斐讯数据通信技术有限公司</string>
+    <string name="dailnumber">呼叫</string>
+    <!--update-->
+    <string name="update_description">新版本更新</string>
+    <string name="version_info_tips">最新版本更新内容:</string>
+    <string name="version_update_title">发现新版本(%s)</string>
+    <string name="update_current_version">当前版本</string>
+    <string name="update_latest_version">最新版本</string>
+    <string name="update_version">更新版本</string>
+    <string name="current_version_newest">当前已是最新版本</string>
+    <string name="download_wait">正在下载，请稍后...</string>
+    <string name="download_failure">下载失败</string>
+    <string name="file_not_exist">安装文件不存在</string>
+    <string name="update_later">以后再说</string>
+    <string name="update_now">立即更新</string>
 
     <!--setting-->
     <string name="setting_title">遥控器设置</string>

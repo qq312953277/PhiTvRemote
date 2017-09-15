@@ -43,7 +43,7 @@
         android:paddingRight="10dp">
         <!-- website -->
         <LinearLayout
-            android:id="@+id/visit_website"
+            android:id="@+id/ll_visit_website"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="@color/white_normal"
@@ -84,7 +84,7 @@
         <!-- phone -->
         <LinearLayout
             android:layout_marginTop="1dp"
-            android:id="@+id/dial_phone"
+            android:id="@+id/ll_dial_phone"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="@color/white_normal"

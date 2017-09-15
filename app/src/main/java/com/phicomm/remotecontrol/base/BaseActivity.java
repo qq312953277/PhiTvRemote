@@ -2,9 +2,11 @@ package com.phicomm.remotecontrol.base;
 
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
+import android.view.View;
 
 import com.phicomm.remotecontrol.RemoteBoxDevice;
 import com.phicomm.remotecontrol.util.DevicesUtil;
+import com.phicomm.remotecontrol.util.DialogUtils;
 import com.phicomm.remotecontrol.util.SettingUtil;
 
 import butterknife.ButterKnife;
@@ -27,6 +29,13 @@ public class BaseActivity extends AppCompatActivity {
         ButterKnife.bind(this);
     }
 
+    public void showLoadingDialog(Integer stringRes) {
+        if (stringRes == null) {
+            DialogUtils.showLoadingDialog(this);
+        } else {
+            DialogUtils.showLoadingDialog(this, stringRes);
+        }
+    }
 
     //监听音量按键，它的子Activity都能监听到
     @Override
@@ -44,5 +53,4 @@ public class BaseActivity extends AppCompatActivity {
         }
         return super.onKeyDown(keyCode, event);
     }
-
 }

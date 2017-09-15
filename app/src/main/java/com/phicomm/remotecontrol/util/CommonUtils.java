@@ -5,6 +5,8 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
 import android.media.ExifInterface;
@@ -62,7 +64,7 @@ public class CommonUtils {
     public static void startIntent(Activity activity, Class clazz) {
         BaseApplication.getApplication().remove(activity);
         activity.startActivity(new Intent(activity, clazz));
-        activity.finish();
+        //activity.finish();
         //实现淡入浅出的效果
         activity.overridePendingTransition(R.animator.alpha_anim_in, R.animator.alpha_anim_out);
     }
@@ -226,4 +228,19 @@ public class CommonUtils {
         return 0;
     }
 
+    public static String getAppChannel() {
+        Context context = BaseApplication.getContext();
+        String value = null;
+        ApplicationInfo appInfo = null;
+        try {
+            appInfo = context.getPackageManager().getApplicationInfo(
+                    context.getPackageName(), PackageManager.GET_META_DATA);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        if (appInfo != null) {
+            value = appInfo.metaData.getString("APP_CHANNEL");
+        }
+        return value;
+    }
 }
