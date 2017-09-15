@@ -50,6 +50,7 @@ public class ScreenshotPresenterImp implements ScreenshotPresenter {
                         "screenshot");
                 mView.showPicture(drawable);
                 mView.showMessage(mContext.getString(R.string.success_screenshot));
+                savePicture();
             }
 
             @Override
@@ -73,7 +74,6 @@ public class ScreenshotPresenterImp implements ScreenshotPresenter {
                 out = new FileOutputStream(file);
                 out.write(mPicByte);
                 out.close();
-                mView.showMessage(mContext.getString(R.string.success_save));
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             } catch (IOException e) {

@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/login_bg"
+    android:orientation="vertical">
+
+    <include layout="@layout/title_bar" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@drawable/login_register_bg"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="10dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_centerVertical="true"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="30dp"
+                    android:layout_height="match_parent"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="35dp"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:text="@string/phone_prefix"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_14sp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    android:layout_marginLeft="5dp"
+                    android:src="@drawable/register_forgetpassword_divider" />
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/phonenumber"
+                style="@style/loginregister_phonenumber_edittext_style"
+                android:background="@null"
+                android:drawablePadding="50dp" />
+        </RelativeLayout>
+
+        <View style="@style/registerforgetpassword_diriver_view_style" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="5dp">
+
+            <EditText
+                android:id="@+id/captcha"
+                style="@style/captcha_edittext_style"
+                android:layout_toLeftOf="@+id/captcha_code" />
+
+            <ImageView
+                android:id="@+id/captcha_code"
+                style="@style/captcha_imageview_style" />
+        </RelativeLayout>
+
+        <View style="@style/registerforgetpassword_diriver_view_style" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="5dp">
+
+            <EditText
+                android:id="@+id/code"
+                style="@style/verifycode_edittext_style"
+                android:layout_toLeftOf="@+id/btn_code" />
+
+            <Button
+                android:id="@+id/btn_code"
+                style="@style/getverifycode_btn_style" />
+        </RelativeLayout>
+
+        <View style="@style/registerforgetpassword_diriver_view_style" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="5dp">
+
+            <EditText
+                android:id="@+id/password"
+                style="@style/loginregister_passwrod_edittext_style" />
+
+            <ImageView
+                android:id="@+id/password_display_imageview"
+                style="@style/password_showhide_imageview_style_white" />
+        </RelativeLayout>
+
+        <View style="@style/registerforgetpassword_diriver_view_style" />
+
+        <!-- password strengh -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="30dp"
+            android:gravity="right|center_vertical"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/password_strength"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:src="@drawable/password_weak"
+                android:visibility="gone" />
+        </LinearLayout>
+
+        <!-- Protocal -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="35dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="15dp"
+            android:gravity="left|center_vertical"
+            android:orientation="horizontal"
+            android:visibility="visible">
+
+            <CheckBox
+                android:id="@+id/protocal_checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@drawable/protocal_rules_checkbox_selector"
+                android:paddingLeft="5dp"
+                android:text="@string/read_and_agree_protocal"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_14sp" />
+
+
+            <TextView
+                android:id="@+id/protocal_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="@string/protocal_name"
+                android:textColor="@drawable/button_colour_text_selector"
+                android:textSize="@dimen/text_size_14sp" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/bt_register"
+            style="@style/ButtonColour"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="15dp"
+            android:text="@string/register_divide" />
+    </LinearLayout>
+
+</LinearLayout>

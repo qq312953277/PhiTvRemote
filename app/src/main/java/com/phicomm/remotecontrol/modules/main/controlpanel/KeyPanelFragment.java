@@ -29,31 +29,36 @@ public class KeyPanelFragment extends Fragment implements PanelContract.View, an
 
     @BindView(R.id.btn_right)
     ImageView mRightBtn;
+
     @BindView(R.id.btn_left)
     ImageView mLeftBtn;
+
     @BindView(R.id.btn_up)
     ImageView mUpBtn;
+
     @BindView(R.id.btn_down)
     ImageView mDownBtn;
+
     @BindView(R.id.btn_enter)
     ImageView mEnterBtn;
 
     @BindView(R.id.btn_vol_up)
     ImageButton mVolUpBtn;
+
     @BindView(R.id.btn_vol_down)
     ImageButton mVolDownBtn;
 
     @BindView(R.id.btn_chanel_up)
     ImageButton mChanelUpBtn;
+
     @BindView(R.id.btn_chanel_down)
     ImageButton mChanelDownBtn;
 
-
     @BindView(R.id.btn_home)
     ImageButton mHomeBtn;
+
     @BindView(R.id.btn_back)
     ImageButton mBackBtn;
-
 
     public static KeyPanelFragment newInstance() {
         return new KeyPanelFragment();
@@ -87,7 +92,6 @@ public class KeyPanelFragment extends Fragment implements PanelContract.View, an
         mChanelDownBtn.setOnClickListener(this);
         mChanelUpBtn.setOnClickListener(this);
 
-
         mHomeBtn.setOnClickListener(this);
         mBackBtn.setOnClickListener(this);
     }
@@ -100,9 +104,7 @@ public class KeyPanelFragment extends Fragment implements PanelContract.View, an
 
     @Override
     public void onClick(android.view.View v) {
-        if (SettingUtil.isVibrateOn()){
-            SettingUtil.doVibrate();
-        }
+        SettingUtil.isVibrate();
 
         LogUtil.d(TAG, "onClick");
         if (v == mRightBtn) {

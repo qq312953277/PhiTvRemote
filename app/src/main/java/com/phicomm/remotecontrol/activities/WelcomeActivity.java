@@ -8,6 +8,9 @@ import android.widget.TextView;
 import com.phicomm.remotecontrol.BuildConfig;
 import com.phicomm.remotecontrol.R;
 import com.phicomm.remotecontrol.base.BaseActivity;
+import com.phicomm.remotecontrol.base.BaseApplication;
+import com.phicomm.remotecontrol.modules.personal.account.local.LocalDataRepository;
+import com.phicomm.remotecontrol.modules.personal.account.token.TokenManager;
 import com.phicomm.remotecontrol.util.CommonUtils;
 import com.phicomm.remotecontrol.util.LogUtil;
 import com.phicomm.remotecontrol.util.StatusBarUtils;
@@ -51,11 +54,41 @@ public class WelcomeActivity extends BaseActivity {
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
+                checkLoginStatus();
                 CommonUtils.startIntent(WelcomeActivity.this, CoreControlActivity.class);
                 finish();
             }
         };
 
         return runnable;
+    }
+
+    private void checkLoginStatus() {
+        //是否登录过
+        if (LocalDataRepository.getInstance(BaseApplication.getContext()).isCloudLogined()) {
+            if (checkAccessToken()) {
+                BaseApplication.getApplication().isLogined = true;////登录过设置全局变量true,PersonalActivity判断该状态
+            } else {
+                BaseApplication.getApplication().isLogined = false;
+            }
+        } else {
+            BaseApplication.getApplication().isLogined = false;
+        }
+    }
+
+    public boolean checkAccessToken() {
+        boolean mLoginOK = false;
+        switch (TokenManager.checkAccessTokenAvailable()) {
+            case TokenManager.LOGIN:
+                mLoginOK = true;
+                break;
+            case TokenManager.LOGOUT:
+                mLoginOK = false;
+                break;
+            default:
+                mLoginOK = false;
+                break;
+        }
+        return mLoginOK;
     }
 }

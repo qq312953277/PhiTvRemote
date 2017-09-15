@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/login_bg"
+    android:orientation="vertical">
+
+    <include layout="@layout/title_bar" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="160dp"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <com.phicomm.widgets.PhiRoundImageView
+            android:id="@+id/iv_header_picture"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_margin="4dp"
+            android:background="@color/transparent"
+            android:src="@drawable/default_avatar" />
+
+        <TextView
+            android:id="@+id/tv_user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:gravity="center"
+            android:text="@string/personal_login"
+            android:textColor="@color/white_normal"
+            android:textSize="@dimen/text_size_14sp" />
+
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/bt_loginout"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/btn_bg_selector"
+        android:text="@string/exit"
+        android:textAllCaps="false"
+        android:textColor="@drawable/button_colour_text_selector"
+        android:textSize="15sp" />
+
+</LinearLayout>

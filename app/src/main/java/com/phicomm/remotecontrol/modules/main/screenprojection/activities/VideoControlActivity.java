@@ -84,7 +84,7 @@ public class VideoControlActivity extends BaseActivity implements VideoControlCo
 
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                LogUtil.d(TAG,"移动seekbar之前先让其暂停");
+                LogUtil.d(TAG, "移动seekbar之前先让其暂停");
             }
         });
     }
@@ -94,13 +94,13 @@ public class VideoControlActivity extends BaseActivity implements VideoControlCo
         switch (v.getId()) {
             case R.id.ib_play:
                 canSeeking = true;
-                LogUtil.d(TAG,"播放按钮被点击，canSeeking");
+                LogUtil.d(TAG, "播放按钮被点击，canSeeking");
                 mVideoControlPresenter.updatePlayingState(true);
                 mPresenter.sendKeyEvent(KeyCode.CENTER);
                 break;
             case R.id.ib_pause:
                 canSeeking = false;
-                LogUtil.d(TAG,"暂停按钮被点击，notCanSeeking");
+                LogUtil.d(TAG, "暂停按钮被点击，notCanSeeking");
                 mVideoControlPresenter.updatePlayingState(false);
                 mPresenter.sendKeyEvent(KeyCode.CENTER);
                 break;

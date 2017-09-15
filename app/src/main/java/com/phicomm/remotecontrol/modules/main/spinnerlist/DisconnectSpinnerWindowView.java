@@ -17,11 +17,13 @@ import com.phicomm.remotecontrol.R;
 public class DisconnectSpinnerWindowView extends PopupWindow {
     private LayoutInflater mInflater;
     private ImageView mImageView;
+
     public DisconnectSpinnerWindowView(Context context) {
         super(context);
         mInflater = LayoutInflater.from(context);
         init();
     }
+
     private void init() {
         View view = mInflater.inflate(R.layout.disconnect_spinner_window, null);
         setContentView(view);

@@ -3,7 +3,7 @@
     android:id="@+id/head_layout"
     android:layout_width="match_parent"
     android:layout_height="50dp"
-    android:background="@color/colorPrimary">
+    android:background="@drawable/title_bar_bg">
 
 
     <ImageView
@@ -13,7 +13,7 @@
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
         android:layout_marginLeft="8dp"
-        android:src="@drawable/back" />
+        android:src="@drawable/button_back" />
 
     <TextView
         android:id="@+id/tv_title"

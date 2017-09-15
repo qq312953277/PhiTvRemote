@@ -5,7 +5,6 @@ import com.phicomm.remotecontrol.modules.personal.upgrade.UpdateInfoResponseBean
 
 import java.util.Map;
 
-
 import retrofit2.http.GET;
 import retrofit2.http.QueryMap;
 import rx.Observable;

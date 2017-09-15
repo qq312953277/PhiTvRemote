@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 
-import com.phicomm.remotecontrol.exception.CrashHandler;
 import com.phicomm.remotecontrol.greendao.GreenDaoManager;
 import com.phicomm.remotecontrol.greendao.gen.RemoteDeviceDao;
 import com.phicomm.remotecontrol.modules.main.screenprojection.entity.DeviceDisplay;
@@ -40,6 +39,7 @@ public class BaseApplication extends Application {
     private Item item;
     private static Object lock = new Object();
 
+    public boolean isLogined = false;
 
     @Override
     public void onCreate() {

@@ -174,9 +174,8 @@ public class RecentDevicesFragment extends Fragment implements RecentDevicesCont
     View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            if (SettingUtil.isVibrateOn()) {
-                SettingUtil.doVibrate();
-            }
+
+            SettingUtil.isVibrate();
 
             if (v == mEditBtn && mRecentDeviceAdapter.getRecentDeviceList().size() > 0) {
                 mIsMultiSelect = true;

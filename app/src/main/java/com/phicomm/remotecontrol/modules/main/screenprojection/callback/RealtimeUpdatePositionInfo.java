@@ -17,7 +17,7 @@ import org.fourthline.cling.model.message.UpnpResponse;
  */
 public class RealtimeUpdatePositionInfo extends AsyncTask<Void, PositionInfo, PositionInfo> {
     public static final int SEEKBARMAX = 100;
-    public static final int  RESPONDRATE= 250;
+    public static final int RESPONDRATE = 250;
     private static String TAG = RealtimeUpdatePositionInfo.class.getSimpleName();
     private boolean isPlaying; // 是否正在播放
     private SeekBar sbPlayback;
@@ -49,7 +49,7 @@ public class RealtimeUpdatePositionInfo extends AsyncTask<Void, PositionInfo, Po
                         @Override
                         public void onSuccess(PositionInfo positionInfo) {
                             publishProgress(positionInfo);
-                            LogUtil.d(TAG,"!!!!被投屏设备返回的tvCurTime信息是：" + positionInfo.getRelTime());
+                            LogUtil.d(TAG, "!!!!被投屏设备返回的tvCurTime信息是：" + positionInfo.getRelTime());
                         }
 
                         @Override
@@ -72,7 +72,7 @@ public class RealtimeUpdatePositionInfo extends AsyncTask<Void, PositionInfo, Po
         sbPlayback.setProgress(info.getElapsedPercent());
         tvCurTime.setText(info.getRelTime());
         tvTotalTime.setText(info.getTrackDuration());
-        LogUtil.d(TAG,"开始设置tvCurTime：" + info.getRelTime() + ",tvTotalTime:" + info.getTrackDuration());
+        LogUtil.d(TAG, "开始设置tvCurTime：" + info.getRelTime() + ",tvTotalTime:" + info.getTrackDuration());
 //        if(isPlayingOver(info.getRelTime(),info.getTrackDuration())){
 //            isPlaying = false;
 //            onCancelled();
@@ -82,10 +82,10 @@ public class RealtimeUpdatePositionInfo extends AsyncTask<Void, PositionInfo, Po
     private boolean isPlayingOver(String relTime, String trackDuration) {
         String[] relTimeArr = relTime.split(":");
         String[] tolTimeArr = trackDuration.split(":");
-        LogUtil.d(TAG,"relTimeArr" + Integer.parseInt(relTimeArr[2]));
-        LogUtil.d(TAG,"tolTimeArr" + Integer.parseInt(tolTimeArr[2]));
+        LogUtil.d(TAG, "relTimeArr" + Integer.parseInt(relTimeArr[2]));
+        LogUtil.d(TAG, "tolTimeArr" + Integer.parseInt(tolTimeArr[2]));
         if ((relTimeArr[0].equals(tolTimeArr[0])) && (relTimeArr[1].equals(tolTimeArr[1])) && (Integer.parseInt(tolTimeArr[2]) - Integer.parseInt(relTimeArr[2]) < 4)) {
-            LogUtil.d(TAG,"还有4秒");
+            LogUtil.d(TAG, "还有4秒");
             return true;
         }
         return false;

@@ -92,7 +92,7 @@ public class DeviceDiscoveryPresenter implements DeviceDiscoveryContract.Present
                 }
             }
             DevicesUtil.insertOrUpdateRecentDevices(device);
-            mView.showToast("connect success");
+            mView.showToast("connect SUCCESS");
         }
 
         @Override

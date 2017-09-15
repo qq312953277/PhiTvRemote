@@ -6,5 +6,6 @@ package com.phicomm.remotecontrol.base;
 
 public interface BasePresenter {
     void start();
+
     void stop();
 }

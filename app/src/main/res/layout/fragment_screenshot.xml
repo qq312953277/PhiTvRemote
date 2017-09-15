@@ -4,31 +4,22 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <include layout="@layout/title_bar" />
+
     <ImageView
         android:id="@+id/iv_show"
-        android:layout_width="wrap_content"
-        android:layout_height="300dp"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
         android:layout_gravity="center"
-        android:src="@mipmap/ic_launcher_round" />
+        android:src="@drawable/tv_not_connected" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/btn_screenshot"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/btn_screenshot" />
-
-        <Button
-            android:id="@+id/btn_save"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/btn_save" />
-    </LinearLayout>
+    <ImageButton
+        android:id="@+id/btn_screenshot"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_gravity="center"
+        android:scaleType="fitXY"
+        android:src="@drawable/takephoto_on" />
 
 </LinearLayout>

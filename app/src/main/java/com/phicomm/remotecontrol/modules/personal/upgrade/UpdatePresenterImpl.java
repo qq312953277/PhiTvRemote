@@ -15,7 +15,7 @@ public class UpdatePresenterImpl implements UpdatePresenter {
     private Context mContext;
     private UpdateView mView;
 
-    public UpdatePresenterImpl(Context mContext,UpdateView mView) {
+    public UpdatePresenterImpl(Context mContext, UpdateView mView) {
         this.mContext = mContext;
         this.mView = mView;
 
@@ -40,7 +40,7 @@ public class UpdatePresenterImpl implements UpdatePresenter {
     }
 
     @Override
-    public void downloadFile(String url,String versionName) {
+    public void downloadFile(String url, String versionName) {
         Intent intent = new Intent();
         intent.setClass(mContext, UpdateService.class);
         intent.putExtra(UpdateService.DOWNLOAD_URL, url);

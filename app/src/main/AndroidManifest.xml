@@ -10,7 +10,7 @@
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:name=".base.BaseApplication"
@@ -32,6 +32,7 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_provider_paths" />
         </provider>
+
         <activity
             android:name=".activities.WelcomeActivity"
             android:screenOrientation="nosensor"
@@ -84,6 +85,19 @@
 
         <activity
             android:name=".modules.personal.setting.SettingActivity"
+            android:screenOrientation="nosensor" />
+
+        <activity
+            android:name=".modules.personal.account.registerlogin.login.LoginActivity"
+            android:screenOrientation="nosensor" />
+        <activity
+            android:name=".modules.personal.account.registerlogin.register.RegisterActivity"
+            android:screenOrientation="nosensor" />
+        <activity
+            android:name=".modules.personal.account.registerlogin.forgetpassword.ForgetPasswordActivity"
+            android:screenOrientation="nosensor" />
+        <activity
+            android:name=".modules.personal.account.registerlogin.login.LoginoutActivity"
             android:screenOrientation="nosensor" />
 
         <service android:name=".modules.main.screenprojection.service.UpnpDeviceService" />

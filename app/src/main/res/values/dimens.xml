@@ -14,4 +14,8 @@
     <dimen name="text_size_12sp">12sp</dimen>
     <dimen name="text_size_11sp">11sp</dimen>
     <dimen name="text_size_10sp">10sp</dimen>
+    <dimen name="title_bar_height">44dp</dimen>
+    <dimen name="button_margin">30dp</dimen>
+    <dimen name="button_colour_height">45dp</dimen>
+    <dimen name="button_text">15sp</dimen>
 </resources>

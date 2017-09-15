@@ -14,7 +14,8 @@ import com.phicomm.remotecontrol.R;
 
 public class ImageFactory {
     public static final String CACHE_DIR = ".phicommm_home_cahce";
-//    public static int maxImageWidthForMemoryCache = 1000;
+
+    //    public static int maxImageWidthForMemoryCache = 1000;
 //    public static int maxImageHeightForMemoryCache = 1000;
 //    public static ImageLoaderConfiguration getConfiguration(Context context) {
 //        String cache_dir = context.getExternalFilesDir(CACHE_DIR).getAbsolutePath();

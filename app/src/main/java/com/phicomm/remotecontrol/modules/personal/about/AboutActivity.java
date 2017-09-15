@@ -25,6 +25,7 @@ public class AboutActivity extends BaseActivity {
         setContentView(R.layout.activity_about);
         init();
     }
+
     private void init() {
         mTvTitle.setText(getString(R.string.personal_about));
     }

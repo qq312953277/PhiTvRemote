@@ -148,7 +148,7 @@ public class MediaControlBiz {
             public void failure(ActionInvocation invocation,
                                 UpnpResponse operation, String defaultMsg) {
                 LogUtil.d(TAG, "Play failure:" + defaultMsg);
-                LogUtil.d(TAG,"Play failure!!!!!,具体信息是：" + defaultMsg);
+                LogUtil.d(TAG, "Play failure!!!!!,具体信息是：" + defaultMsg);
             }
 
             @Override
@@ -158,7 +158,7 @@ public class MediaControlBiz {
                 msg.what = MediaControlOperation.PLAY;
                 msg.arg1 = SUCCESS;
                 msg.sendToTarget();
-                LogUtil.d(TAG,"Play SUCCESS!!!!!,具体信息是：" + defaultMsg);
+                LogUtil.d(TAG, "Play SUCCESS!!!!!,具体信息是：" + defaultMsg);
             }
         });
     }
@@ -172,7 +172,7 @@ public class MediaControlBiz {
             public void failure(ActionInvocation invocation,
                                 UpnpResponse operation, String defaultMsg) {
                 LogUtil.d(TAG, "Pause failure:" + defaultMsg);
-                LogUtil.d(TAG,"Pause failure!!!!!,具体信息是：" + defaultMsg);
+                LogUtil.d(TAG, "Pause failure!!!!!,具体信息是：" + defaultMsg);
             }
 
             @Override
@@ -182,7 +182,7 @@ public class MediaControlBiz {
                 msg.what = MediaControlOperation.PAUSE;
                 msg.arg1 = SUCCESS;
                 msg.sendToTarget();
-                LogUtil.d(TAG,"Pause SUCCESS!!!!!,具体信息是：" + defaultMsg);
+                LogUtil.d(TAG, "Pause SUCCESS!!!!!,具体信息是：" + defaultMsg);
             }
         });
     }
@@ -194,14 +194,14 @@ public class MediaControlBiz {
         long duration = ModelUtil.fromTimeString(totalTime);
         long seekTime = percent * duration / 100;
         String seekTo = ModelUtil.toTimeString(seekTime);
-        LogUtil.d(TAG,"seek时pro是：" + percent + ",视频时间是：" + duration + "，seekTime是：" + seekTime);
+        LogUtil.d(TAG, "seek时pro是：" + percent + ",视频时间是：" + duration + "，seekTime是：" + seekTime);
 
         upnpBiz.execute(new Seek(instanceId, serviceAVT, seekTo) {
             @Override
             public void failure(ActionInvocation invocation,
                                 UpnpResponse operation, String defaultMsg) {
                 LogUtil.d(TAG, "Seek failure:" + defaultMsg);
-                LogUtil.d(TAG,"Seek failure!!!!!,具体信息是：" + defaultMsg);
+                LogUtil.d(TAG, "Seek failure!!!!!,具体信息是：" + defaultMsg);
             }
 
             @Override
@@ -211,7 +211,7 @@ public class MediaControlBiz {
                 msg.what = MediaControlOperation.SEEK;
                 msg.arg1 = SUCCESS;
                 msg.sendToTarget();
-                LogUtil.d(TAG,"Seek SUCCESS!!!!!,具体信息是：" + defaultMsg);
+                LogUtil.d(TAG, "Seek SUCCESS!!!!!,具体信息是：" + defaultMsg);
             }
         });
     }

@@ -8,7 +8,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,6 +23,7 @@ import android.widget.Toast;
 import com.phicomm.remotecontrol.ConnectManager;
 import com.phicomm.remotecontrol.R;
 import com.phicomm.remotecontrol.RemoteBoxDevice;
+import com.phicomm.remotecontrol.base.BaseFragment;
 import com.phicomm.remotecontrol.constant.PhiConstants;
 import com.phicomm.remotecontrol.greendao.Entity.RemoteDevice;
 import com.phicomm.remotecontrol.greendao.GreenDaoUserUtil;
@@ -44,7 +44,7 @@ import butterknife.OnClick;
 /**
  * Created by chunya02.li on 2017/7/13.
  */
-public class SpinnerListFragment extends Fragment {
+public class SpinnerListFragment extends BaseFragment {
     private static String TAG = "SpinnerListFragment";
     private SpinnerWindowView mSpinerPopWindow;
     private GreenDaoUserUtil mGreenDaoUserUtil;
@@ -193,9 +193,7 @@ public class SpinnerListFragment extends Fragment {
             .OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            if (SettingUtil.isVibrateOn()) {
-                SettingUtil.doVibrate();
-            }
+            SettingUtil.isVibrate();
 
             final RemoteBoxDevice remoteDevice = (RemoteBoxDevice) parent.getAdapter().getItem
                     (position);
@@ -215,7 +213,7 @@ public class SpinnerListFragment extends Fragment {
                         List<RemoteDevice> deviceList = mGreenDaoUserUtil.loadAllRecentByTimeOrder();
                         List<RemoteBoxDevice> remoteBoxDeviceList = parseToRemoteBoxDevice(deviceList);
                         refreshSpinnerListView(remoteBoxDeviceList);
-                        Toast.makeText(getContext(), "connect success", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "connect SUCCESS", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
@@ -264,15 +262,14 @@ public class SpinnerListFragment extends Fragment {
         }
     };
 
+    @Override
     @OnClick({R.id.login, R.id.scan, R.id.connected_device})
-    public void onClick(View view) {
-        if (SettingUtil.isVibrateOn()) {
-            SettingUtil.doVibrate();
-        }
+    public void onClick(View view) { //继承BaseFragment震动事件
+        super.onClick(view);
 
         switch (view.getId()) {
             case R.id.login:
-                CommonUtils.startIntent(getActivity(),PersonalActivity.class);
+                CommonUtils.startIntent(getActivity(), PersonalActivity.class);
                 break;
             case R.id.scan:
                 Intent intent = new Intent(getContext(), DeviceDiscoveryActivity.class);

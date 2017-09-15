@@ -1,12 +1,11 @@
 package com.phicomm.remotecontrol.modules.devices.searchdevices;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 
 import com.phicomm.remotecontrol.R;
 import com.phicomm.remotecontrol.base.BaseActivity;
 
-import static com.phicomm.remotecontrol.util.ActivityUtils.*;
+import static com.phicomm.remotecontrol.util.ActivityUtils.addFragmentToActivity;
 
 /**
  * Created by chunya02.li on 2017/7/11.

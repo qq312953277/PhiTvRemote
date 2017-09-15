@@ -1,5 +1,6 @@
 package com.phicomm.remotecontrol.modules.personal.personaldetail;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -10,19 +11,28 @@ import android.widget.TextView;
 import com.phicomm.remotecontrol.BuildConfig;
 import com.phicomm.remotecontrol.R;
 import com.phicomm.remotecontrol.base.BaseActivity;
+import com.phicomm.remotecontrol.base.BaseApplication;
 import com.phicomm.remotecontrol.constant.PhiConstants;
 import com.phicomm.remotecontrol.modules.personal.about.AboutActivity;
+import com.phicomm.remotecontrol.modules.personal.account.event.OffLineEvent;
+import com.phicomm.remotecontrol.modules.personal.account.http.HttpErrorCode;
+import com.phicomm.remotecontrol.modules.personal.account.registerlogin.login.LoginActivity;
+import com.phicomm.remotecontrol.modules.personal.account.registerlogin.login.LoginoutActivity;
+import com.phicomm.remotecontrol.modules.personal.account.resultbean.AccountDetailBean;
+import com.phicomm.remotecontrol.modules.personal.account.resultbean.BaseResponseBean;
 import com.phicomm.remotecontrol.modules.personal.setting.SettingActivity;
-import com.phicomm.remotecontrol.modules.personal.upgrade.UpdateView;
 import com.phicomm.remotecontrol.modules.personal.upgrade.UpdateInfoResponseBean;
 import com.phicomm.remotecontrol.modules.personal.upgrade.UpdatePresenter;
 import com.phicomm.remotecontrol.modules.personal.upgrade.UpdatePresenterImpl;
+import com.phicomm.remotecontrol.modules.personal.upgrade.UpdateView;
 import com.phicomm.remotecontrol.preference.PreferenceDef;
 import com.phicomm.remotecontrol.preference.PreferenceRepository;
 import com.phicomm.remotecontrol.util.CommonUtils;
 import com.phicomm.remotecontrol.util.DialogUtils;
-import com.phicomm.remotecontrol.util.SettingUtil;
 import com.phicomm.widgets.alertdialog.PhiGuideDialog;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -30,7 +40,7 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class PersonalActivity extends BaseActivity implements UpdateView {
+public class PersonalActivity extends BaseActivity implements UpdateView, PersonalContract.View {
 
     @BindView(R.id.iv_header_picture)
     ImageView mHeaderPicture;
@@ -50,11 +60,16 @@ public class PersonalActivity extends BaseActivity implements UpdateView {
     private UpdatePresenter mUpdatePresenter;
     private PreferenceRepository mPreference;
 
+    private PersonalContract.Presenter myPresenter;
+    private PersonalInforManager personalInforManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_personal);
         init();
+
+        myPresenter = new PersonalPresenter(this);
     }
 
     private void init() {
@@ -68,12 +83,36 @@ public class PersonalActivity extends BaseActivity implements UpdateView {
         } else {
             mIvVersionIndicator.setVisibility(View.GONE);
         }
+
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (BaseApplication.getApplication().isLogined) {
+            myPresenter.getPersonInfoFromServer();
+            refreshDataInUI();
+        } else {
+            mHeaderPicture.setImageResource(R.drawable.default_avatar);
+            mUserName.setText("请点击登录您的斐讯账号");
+        }
+    }
 
+    /**
+     * OffLineEvent EventBus
+     *
+     * @param msg
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventOffLineEvent(OffLineEvent msg) {  //用户下线处理
+        mHeaderPicture.setImageResource(R.drawable.default_avatar);
+        mUserName.setText("请点击登录您的斐讯账号");
+    }
 
+    @Override
     @OnClick({R.id.rl_about, R.id.rl_appilcation, R.id.rl_setting, R.id.rl_version, R.id.iv_header_picture, R.id.iv_back})
-    public void onMyClick(View view) {
+    public void onClick(View view) {
+        super.onClick(view);
         switch (view.getId()) {
             case R.id.rl_appilcation:
                 break;
@@ -87,6 +126,7 @@ public class PersonalActivity extends BaseActivity implements UpdateView {
                 checkNewVersion();
                 break;
             case R.id.iv_header_picture:
+                toLoginOrloginoutActivity();
                 break;
             case R.id.iv_back:
                 finish();
@@ -158,6 +198,55 @@ public class PersonalActivity extends BaseActivity implements UpdateView {
             }
         }
 
+    }
+
+    private void toLoginOrloginoutActivity() {
+        if (BaseApplication.getApplication().isLogined) {
+            personalInforManager = PersonalInforManager.getInstance();
+            AccountDetailBean mAccount = personalInforManager.getAccountDetailBean();
+            Intent intent = new Intent(this, LoginoutActivity.class);
+            intent.putExtra("img", mAccount.data.img);
+            intent.putExtra("userName", mAccount.data.phonenumber);
+            startActivity(intent);
+        } else {
+            CommonUtils.startIntent(this, null, LoginActivity.class);//没有finish自己
+        }
+
+    }
+
+    @Override
+    public void analysisResponseBean(BaseResponseBean t) {
+        if (t instanceof AccountDetailBean) {
+            AccountDetailBean bean = (AccountDetailBean) t;
+            if (bean.error.equals(HttpErrorCode.SUCCESS)) {
+                personalInforManager = PersonalInforManager.getInstance();
+                personalInforManager.setAccountAndSave(bean);
+                refreshDataInUI();//登录成功跳过来时刷新，不能少
+            }
+        }
+    }
+
+    @Override
+    public void refreshDataInUI() {
+        personalInforManager = PersonalInforManager.getInstance();
+        AccountDetailBean mAccount = personalInforManager.getAccountDetailBean();
+        if (mAccount == null) {
+            return;
+        }
+        //头像
+        String img = mAccount.data.img;
+        if (!TextUtils.isEmpty(img)) {
+            myPresenter.setImageAvatarByUrl(img, mHeaderPicture);
+        } else {
+            mHeaderPicture.setImageResource(R.drawable.default_avatar);
+        }
+        //用户名
+        String userName = mAccount.data.phonenumber;
+        if (!TextUtils.isEmpty(userName)) {
+            mUserName.setText("斐讯账户" + userName);
+        } else {
+            mUserName.setText("斐讯账户" + mAccount.data.uid);
+        }
     }
 
     @Override

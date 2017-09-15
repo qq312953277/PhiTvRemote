@@ -5,6 +5,8 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.View;
 
+import com.phicomm.remotecontrol.util.SettingUtil;
+
 import butterknife.ButterKnife;
 
 /**
@@ -18,4 +20,7 @@ public class BaseFragment extends Fragment {
         ButterKnife.bind(this, view);
     }
 
+    public void onClick(View view) {
+        SettingUtil.isVibrate();//震动事件，子类继承
+    }
 }

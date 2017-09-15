@@ -60,15 +60,15 @@ public class VideoControlPresenterImpl implements VideoControlContract.VideoCont
             public void handleMessage(Message msg) {
                 switch (msg.what) {
                     case MediaControlOperation.PLAY:
-                        LogUtil.d(TAG,"被投屏设备已经PLAY，seekbar状态开始滚动");
+                        LogUtil.d(TAG, "被投屏设备已经PLAY，seekbar状态开始滚动");
                         updatePlayingState(true);
                         break;
                     case MediaControlOperation.PAUSE:
-                        LogUtil.d(TAG,"被投屏设备已经PAUSE，seekbar状态停止滚动");
+                        LogUtil.d(TAG, "被投屏设备已经PAUSE，seekbar状态停止滚动");
                         updatePlayingState(false);
                         break;
                     case MediaControlOperation.SEEK:
-                        LogUtil.d(TAG,"SEEK成功后，seekbar状态开始滚动");
+                        LogUtil.d(TAG, "SEEK成功后，seekbar状态开始滚动");
                         try {
                             Thread.sleep(DELAY_TIME);
                         } catch (InterruptedException e) {
@@ -86,10 +86,10 @@ public class VideoControlPresenterImpl implements VideoControlContract.VideoCont
                         if (currStates.get(AVTransportInfo.TRANSPORT_STATE)) {
                             String currState = avtInfo.getTransportState();
                             if (TransportState.PLAYING.equals(currState)) {
-                                LogUtil.d(TAG,"当前是播放状态，使seekbar滚动");
+                                LogUtil.d(TAG, "当前是播放状态，使seekbar滚动");
                                 updatePlayingState(true);
                             } else {
-                                LogUtil.d(TAG,"当前是暂停状态，使seekbar静止");
+                                LogUtil.d(TAG, "当前是暂停状态，使seekbar静止");
                             }
                         }
                         break;

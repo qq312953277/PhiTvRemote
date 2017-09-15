@@ -8,23 +8,19 @@ import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.Matrix;
-import android.media.ExifInterface;
+import android.graphics.BitmapFactory;
 import android.os.Environment;
+import android.util.Base64;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
-
 import com.phicomm.remotecontrol.R;
 import com.phicomm.remotecontrol.base.BaseApplication;
 
 import java.io.File;
-import java.io.IOException;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class CommonUtils {
     private static Toast toast;
@@ -242,5 +238,44 @@ public class CommonUtils {
             value = appInfo.metaData.getString("APP_CHANNEL");
         }
         return value;
+    }
+
+
+    /**
+     * 获取密码强度
+     *
+     * @param pwd
+     * @return
+     */
+    public static int getPasswordStrength(String pwd) {
+        String fuhao = "\\W";
+        if (pwd.matches("^\\d+$") || pwd.matches("^[a-zA-Z]+$") || pwd.matches("^[" + fuhao + "]+$")) {
+            return 1;
+        } else if (pwd.matches("^[0-9A-Za-z]+$") || pwd.matches("^[0-9" + fuhao + "]+$") || pwd.matches("^[A-Za-z" + fuhao + "]+$")) {
+            return 2;
+        } else if (pwd.matches("^[0-9A-Za-z" + fuhao + "]+$")) {
+            return 3;
+        } else {
+            return -1;
+        }
+    }
+
+    /**
+     * base64ToBitmap
+     *
+     * @param base64String
+     * @return
+     */
+    public static Bitmap base64ToBitmap(String base64String) {
+        if (StringUtils.isNull(base64String)) {
+            return null;
+        }
+        try {
+            byte[] bytes = Base64.decode((String) base64String, 0);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+            return bitmap;
+        } catch (Exception ex) {
+            return null;
+        }
     }
 }

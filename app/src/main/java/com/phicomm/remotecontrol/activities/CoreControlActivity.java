@@ -111,6 +111,7 @@ public class CoreControlActivity extends BaseActivity implements UpdateView {
             }
         }
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         clearRestoreFragment(savedInstanceState);
@@ -132,12 +133,10 @@ public class CoreControlActivity extends BaseActivity implements UpdateView {
         checkNewVersion();
     }
 
+    @Override
     @OnClick({R.id.ib_screenshot, R.id.ib_screenprojection, R.id.ib_voice, R.id.ib_childrenlock, R.id.ib_clear})
     public void onClick(View view) {
-        if (SettingUtil.isVibrateOn()){
-            SettingUtil.doVibrate();
-        }
-
+        super.onClick(view);
         switch (view.getId()) {
             case R.id.ib_screenshot:
                 CommonUtils.startIntent(this, null, ScreenshotActivity.class);
@@ -249,7 +248,7 @@ public class CoreControlActivity extends BaseActivity implements UpdateView {
             powerBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (SettingUtil.isVibrateOn()){
+                    if (SettingUtil.isVibrateOn()) {
                         SettingUtil.doVibrate();
                     }
 
@@ -263,7 +262,7 @@ public class CoreControlActivity extends BaseActivity implements UpdateView {
             menuBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (SettingUtil.isVibrateOn()){
+                    if (SettingUtil.isVibrateOn()) {
                         SettingUtil.doVibrate();
                     }
 
@@ -277,7 +276,7 @@ public class CoreControlActivity extends BaseActivity implements UpdateView {
             settingBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (SettingUtil.isVibrateOn()){
+                    if (SettingUtil.isVibrateOn()) {
                         SettingUtil.doVibrate();
                     }
 

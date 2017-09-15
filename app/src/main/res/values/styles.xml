@@ -5,6 +5,12 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:editTextStyle">@style/EditTextStyle</item>
+    </style>
+
+    <style name="EditTextStyle" parent="android:Widget.EditText">
+        <item name="android:textCursorDrawable">@drawable/edittext_cursor_drawable</item>
     </style>
 
     <style name="AppTheme.NoActionBar" parent="AppTheme">
@@ -33,5 +39,148 @@
 
     <style name="MyToggleButton" parent="@android:style/Widget.CompoundButton">
         <item name="android:button">@drawable/setting_checkbox_button</item>
+    </style>
+
+    <style name="dialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <!--�߿�-->
+        <item name="android:windowIsFloating">true</item>
+        <!--�Ƿ�����activity֮��-->
+        <item name="android:windowIsTranslucent">false</item>
+        <!--��͸��-->
+        <item name="android:windowNoTitle">true</item>
+        <!--�ޱ���-->
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <!--����͸��-->
+        <item name="android:backgroundDimEnabled">true</item>
+        <!--ģ��-->
+    </style>
+
+    <style name="loginregister_phonenumber_edittext_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">45dp</item>
+        <item name="android:background">@drawable/input_edittext_bg</item>
+        <item name="android:drawableLeft">@drawable/icon_login_user</item>
+        <item name="android:drawablePadding">10dp</item>
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:maxLength">11</item>
+        <item name="android:inputType">phone</item>
+        <item name="android:hint">@string/phonenum_hint</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/text_size_14sp</item>
+        <item name="android:textColorHint">@color/textHint</item>
+    </style>
+
+    <style name="verifycode_edittext_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">45dp</item>
+        <item name="android:layout_alignParentLeft">true</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:background">@null</item>
+        <item name="android:drawableLeft">@drawable/icon_message</item>
+        <item name="android:drawablePadding">10dp</item>
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:maxLength">6</item>
+        <item name="android:inputType">number</item>
+        <item name="android:hint">@string/verifycode_hint</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/text_size_14sp</item>
+        <item name="android:textColorHint">@color/textHint</item>
+    </style>
+
+    <style name="loginregister_passwrod_edittext_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">45dp</item>
+        <item name="android:background">@null</item>
+        <item name="android:drawableLeft">@drawable/icon_login_pwd</item>
+        <item name="android:drawablePadding">10dp</item>
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:paddingRight">45dp</item>
+        <item name="android:inputType">textPassword</item>
+        <item name="android:hint">@string/password_tips</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/text_size_14sp</item>
+        <item name="android:textColorHint">@color/textHint</item>
+        <item name="android:maxLength">18</item>
+    </style>
+
+    <style name="password_showhide_imageview_style_white">
+        <item name="android:layout_width">45dp</item>
+        <item name="android:layout_height">45dp</item>
+        <item name="android:scaleType">centerInside</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:src">@drawable/icon_eye_close_white</item>
+    </style>
+
+    <style name="password_showhide_imageview_style_black">
+        <item name="android:layout_width">45dp</item>
+        <item name="android:layout_height">45dp</item>
+        <item name="android:scaleType">centerInside</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:src">@drawable/icon_eye_close</item>
+    </style>
+
+    <style name="registerforgetpassword_diriver_view_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:layout_marginLeft">60dp</item>
+        <item name="android:layout_marginRight">30dp</item>
+        <item name="android:layout_marginTop">-5dp</item>
+        <item name="android:background">@drawable/edittext_bottom</item>
+    </style>
+
+    <style name="captcha_edittext_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">45dp</item>
+        <item name="android:layout_alignParentLeft">true</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:background">@null</item>
+        <item name="android:drawableLeft">@drawable/icon_register_avadar</item>
+        <item name="android:drawablePadding">10dp</item>
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:paddingRight">5dp</item>
+        <item name="android:inputType">text</item>
+        <item name="android:hint">@string/captcha_hint</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/text_size_14sp</item>
+        <item name="android:textColorHint">@color/textHint</item>
+    </style>
+
+    <style name="captcha_imageview_style">
+        <item name="android:layout_width">80dp</item>
+        <item name="android:layout_height">30dp</item>
+        <item name="android:layout_marginRight">10dp</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:enabled">true</item>
+        <item name="android:scaleType">fitXY</item>
+        <item name="android:src">@drawable/captcha_no_internet</item>
+    </style>
+
+    <style name="getverifycode_btn_style">
+        <item name="android:layout_width">100dp</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:background">@null</item>
+        <item name="android:enabled">true</item>
+        <item name="android:textColor">@drawable/button_colour_text_selector</item>
+        <item name="android:textSize">@dimen/text_size_15sp</item>
+        <item name="android:text">@string/get_verification_code</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
+
+    <!-- login register forgetpassword -->
+    <style name="ButtonColour" parent="Widget.AppCompat.Button.Borderless">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/button_colour_height</item>
+        <item name="android:layout_marginLeft">@dimen/button_margin</item>
+        <item name="android:layout_marginRight">@dimen/button_margin</item>
+        <item name="android:background">@drawable/btn_bg_selector</item>
+        <item name="android:textColor">@drawable/button_colour_text_selector</item>
+        <item name="android:textSize">@dimen/button_text</item>
+        <item name="android:textAllCaps">false</item>
     </style>
 </resources>

@@ -17,7 +17,6 @@ import com.phicomm.remotecontrol.constant.KeyCode;
 import com.phicomm.remotecontrol.constant.PhiConstants;
 import com.phicomm.remotecontrol.event.GestureDelectorSimlpeListener;
 import com.phicomm.remotecontrol.util.CommonUtils;
-import com.phicomm.remotecontrol.util.SettingUtil;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -92,11 +91,10 @@ public class TouchPanelFragment extends BaseFragment implements PanelContract.Vi
     }
 
 
+    @Override
     @OnClick({R.id.btn_vol_up, R.id.btn_vol_down, R.id.btn_chanel_up, R.id.btn_chanel_down, R.id.btn_home, R.id.btn_back})
     public void onClick(View view) {
-        if (SettingUtil.isVibrateOn()){
-            SettingUtil.doVibrate();
-        }
+        super.onClick(view);
 
         switch (view.getId()) {
             case R.id.btn_vol_up:

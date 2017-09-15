@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/login_bg"
+    android:orientation="vertical">
+
+    <include layout="@layout/title_bar" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@drawable/login_register_bg"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="20dp">
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_centerVertical="true"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="30dp"
+                    android:layout_height="match_parent"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="35dp"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:text="@string/phone_prefix"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_14sp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    android:layout_marginLeft="5dp"
+                    android:src="@drawable/register_forgetpassword_divider" />
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/phoneNumber"
+                style="@style/loginregister_phonenumber_edittext_style"
+                android:drawablePadding="50dp" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="20dp">
+
+            <EditText
+                android:id="@+id/password"
+                style="@style/loginregister_passwrod_edittext_style"
+                android:background="@drawable/input_edittext_bg"
+                android:hint="@string/password_hint" />
+
+            <ImageView
+                android:id="@+id/password_display_imageview"
+                style="@style/password_showhide_imageview_style_white" />
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/bt_login"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/btn_bg_selector"
+            android:textSize="15sp"
+            android:textColor="@drawable/button_colour_text_selector"
+            android:text="@string/login_divide"
+            android:textAllCaps="false" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="10dp">
+
+            <CheckBox
+                android:id="@+id/rememberme_checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:button="@drawable/protocal_rules_checkbox_selector"
+                android:paddingLeft="5dp"
+                android:text="@string/remember_me"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_14sp" />
+
+
+            <TextView
+                android:id="@+id/tv_register"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:layout_toLeftOf="@+id/tv_forget_password"
+                android:text="@string/register"
+                android:textColor="@drawable/textview_entrance_selector"
+                android:textSize="@dimen/text_size_14sp"
+                android:visibility="visible" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_centerInParent="true"
+                android:layout_toRightOf="@id/tv_register"
+                android:src="@drawable/register_forgetpassword_divider" />
+
+            <TextView
+                android:id="@+id/tv_forget_password"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:text="@string/forget_password"
+                android:textColor="@drawable/textview_entrance_selector"
+                android:textSize="@dimen/text_size_14sp" />
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

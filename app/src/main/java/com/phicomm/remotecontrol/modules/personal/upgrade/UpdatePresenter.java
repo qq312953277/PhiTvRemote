@@ -7,5 +7,6 @@ import java.util.Map;
  */
 public interface UpdatePresenter {
     void checkVersion(Map<String, String> options);
-    void downloadFile(String url,String versionName);
+
+    void downloadFile(String url, String versionName);
 }

@@ -6,6 +6,8 @@ package com.phicomm.remotecontrol.base;
 
 public interface BasicView<T> {
     void showMessage(T message);
+
     void onSuccess(T message);
+
     void onFailure(T message);
 }

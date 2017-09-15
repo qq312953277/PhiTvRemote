@@ -153,7 +153,7 @@ public class DeviceDiscoveryFragment extends Fragment implements DeviceDiscovery
     View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            if (SettingUtil.isVibrateOn()){
+            if (SettingUtil.isVibrateOn()) {
                 SettingUtil.doVibrate();
             }
 
@@ -177,7 +177,7 @@ public class DeviceDiscoveryFragment extends Fragment implements DeviceDiscovery
     private AdapterView.OnItemClickListener selectHandler = new AdapterView.OnItemClickListener() {
         public void onItemClick(AdapterView<?> parent, View v, int position,
                                 long id) {
-            if (SettingUtil.isVibrateOn()){
+            if (SettingUtil.isVibrateOn()) {
                 SettingUtil.doVibrate();
             }
 
@@ -195,7 +195,7 @@ public class DeviceDiscoveryFragment extends Fragment implements DeviceDiscovery
                             mDiscoveryAdapter.notifyDataSetInvalidated();
                             mTitleTv.setText(remoteDevice.getName());
 
-                            Toast.makeText(getContext(), "connect success", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), "connect SUCCESS", Toast.LENGTH_SHORT).show();
                         }
                     }
 
