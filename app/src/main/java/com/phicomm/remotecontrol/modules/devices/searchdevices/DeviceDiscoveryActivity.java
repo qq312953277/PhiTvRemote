@@ -1,6 +1,7 @@
 package com.phicomm.remotecontrol.modules.devices.searchdevices;
 
 import android.os.Bundle;
+import android.view.KeyEvent;
 
 import com.phicomm.remotecontrol.R;
 import com.phicomm.remotecontrol.base.BaseActivity;
@@ -27,6 +28,16 @@ public class DeviceDiscoveryActivity extends BaseActivity {
                     deviceDiscoveryFragment, R.id.layout_single_container);
         }
         mDiscoveryDevicePresenter = new DeviceDiscoveryPresenter(deviceDiscoveryFragment, this);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (!DeviceDiscoveryFragment.canGoBack) {
+                return true;
+            }
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }
 

@@ -66,15 +66,49 @@ import static com.phicomm.remotecontrol.R.id.ipConnectProgressBar;
 
 public class DeviceDiscoveryFragment extends Fragment implements DeviceDiscoveryContract.View {
     private static String TAG = "DeviceDiscoveryFragment";
+
     @BindView(ipConnectProgressBar)
     ProgressBar mConnectProgressBar;
+
+    @BindView(R.id.discovery_devices_list)
+    public ListView mDiscoveryListDevices;
+
+    @BindView(R.id.start_discovery)
+    public Button mDiscoveryBtn;
+
+    @BindView(R.id.manual_ip)
+    public Button mManualIpBtn;
+
+    @BindView(R.id.reccent_devices)
+    public Button mRecentDevicesBtn;
+
+    @BindView(R.id.local_networkname)
+    public TextView mNetworkNameTv;
+
+    @BindView(R.id.choose_text)
+    public TextView mChooseTv;
+
+    @BindView(R.id.device_count)
+    public TextView mCountTv;
+
+    @BindView(android.R.id.empty)
+    public TextView mEmptyTv;
+
+    @BindView(R.id.back)
+    public ImageView mBackIv;
+
+    @BindView(R.id.title)
+    public TextView mTitleTv;
+
+    @BindView(R.id.roundProgressBar)
+    public RoundProgressBar mProgressBar;
+
     private Presenter mPresenter;
     private DeviceDiscoveryAdapter mDiscoveryAdapter;
     private DiscoveryHandler mBroadcastHandler;
     private WifiManager mWifiManager;
     private WifiChangeReceiver mWifiChangeReceiver;
     private ProgressBarTask mTask;
-    private boolean mProgressBar_flag;
     private BottomView mBottomView;
     private GridView mIPGridView;
     private ArrayAdapter mIPAdapter;
@@ -89,28 +123,7 @@ public class DeviceDiscoveryFragment extends Fragment implements DeviceDiscovery
             "7", "8", "9",
             ".", "0", "←",
     };
-    @BindView(R.id.discovery_devices_list)
-    public ListView mDiscoveryListDevices;
-    @BindView(R.id.start_discovery)
-    public Button mDiscoveryBtn;
-    @BindView(R.id.manual_ip)
-    public Button mManualIpBtn;
-    @BindView(R.id.reccent_devices)
-    public Button mRecentDevicesBtn;
-    @BindView(R.id.local_networkname)
-    public TextView mNetworkNameTv;
-    @BindView(R.id.choose_text)
-    public TextView mChooseTv;
-    @BindView(R.id.device_count)
-    public TextView mCountTv;
-    @BindView(android.R.id.empty)
-    public TextView mEmptyTv;
-    @BindView(R.id.back)
-    public ImageView mBackIv;
-    @BindView(R.id.title)
-    public TextView mTitleTv;
-    @BindView(R.id.roundProgressBar)
-    public RoundProgressBar mProgressBar;
+    public static boolean canGoBack = true;
 
     public DeviceDiscoveryFragment() {
     }
@@ -185,7 +198,9 @@ public class DeviceDiscoveryFragment extends Fragment implements DeviceDiscovery
                 Intent intent = new Intent(getContext(), RecentDevicesActivity.class);
                 startActivity(intent);
             } else if (v == mBackIv) {
-                getActivity().onBackPressed();
+                if (canGoBack) {
+                    getActivity().onBackPressed();
+                }
             } else if (v == mIPCancleBt) {
                 mBottomView.dismissBottomView();
             } else if (v == mIPConfirmBt) {
@@ -317,10 +332,6 @@ public class DeviceDiscoveryFragment extends Fragment implements DeviceDiscovery
 
     @Override
     public void onPause() {
-        //按下返回键时强制终止ProgressBarTask
-        if (mTask != null && mTask.getStatus() == AsyncTask.Status.RUNNING) {
-            mProgressBar_flag = true;
-        }
         super.onPause();
     }
 
@@ -493,6 +504,8 @@ public class DeviceDiscoveryFragment extends Fragment implements DeviceDiscovery
         mManualIpBtn.setEnabled(false);
         mRecentDevicesBtn.setEnabled(false);
         mDiscoveryListDevices.setEnabled(false);
+
+        canGoBack = false;
     }
 
     class ProgressBarTask extends AsyncTask<Void, Integer, Void> {
@@ -511,11 +524,6 @@ public class DeviceDiscoveryFragment extends Fragment implements DeviceDiscovery
         @Override
         protected Void doInBackground(Void... params) {
             while (mCurrentProgress < 100) {
-                //搜索进行中按下返回键时中断搜索设备
-                if (mCurrentProgress < 100 && (mProgressBar_flag || !isWifiAvailable())) {
-                    mBroadcastHandler.sendEmptyMessage(PhiConstants.BROADCAST_TIMEOUT);
-                    break;
-                }
                 mCurrentProgress += new Random().nextInt(GROUTH_RATE);
                 publishProgress(mCurrentProgress);
                 try {
@@ -535,6 +543,7 @@ public class DeviceDiscoveryFragment extends Fragment implements DeviceDiscovery
         @Override
         protected void onPostExecute(Void result) {//搜索进度条完成后中断搜索设备
             if (mCurrentProgress >= 100) {
+                canGoBack = true;
                 mBroadcastHandler.sendEmptyMessage(PhiConstants.BROADCAST_TIMEOUT);
             }
         }
