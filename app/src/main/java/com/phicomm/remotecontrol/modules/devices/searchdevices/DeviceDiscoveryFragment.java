@@ -18,18 +18,19 @@ import android.os.Message;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.text.InputFilter;
 import android.text.InputType;
-import android.text.method.NumberKeyListener;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,6 +43,7 @@ import com.phicomm.remotecontrol.modules.devices.searchdevices.DeviceDiscoveryCo
 import com.phicomm.remotecontrol.util.DevicesUtil;
 import com.phicomm.remotecontrol.util.LogUtil;
 import com.phicomm.remotecontrol.util.SettingUtil;
+import com.tandong.bottomview.view.BottomView;
 
 import java.util.Formatter;
 import java.util.List;
@@ -53,6 +55,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static android.content.Context.WIFI_SERVICE;
+import static com.phicomm.remotecontrol.R.id.bt_cancelinput;
+import static com.phicomm.remotecontrol.R.id.bt_confirminput;
+import static com.phicomm.remotecontrol.R.id.ipConnectProgressBar;
 
 
 /**
@@ -61,6 +66,8 @@ import static android.content.Context.WIFI_SERVICE;
 
 public class DeviceDiscoveryFragment extends Fragment implements DeviceDiscoveryContract.View {
     private static String TAG = "DeviceDiscoveryFragment";
+    @BindView(ipConnectProgressBar)
+    ProgressBar mConnectProgressBar;
     private Presenter mPresenter;
     private DeviceDiscoveryAdapter mDiscoveryAdapter;
     private DiscoveryHandler mBroadcastHandler;
@@ -68,10 +75,20 @@ public class DeviceDiscoveryFragment extends Fragment implements DeviceDiscovery
     private WifiChangeReceiver mWifiChangeReceiver;
     private ProgressBarTask mTask;
     private boolean mProgressBar_flag;
-
+    private BottomView mBottomView;
+    private GridView mIPGridView;
+    private ArrayAdapter mIPAdapter;
+    private EditText mIPInputEditText;
+    private Button mIPConfirmBt;
+    private Button mIPCancleBt;
     public static final int GROUTH_RATE = 15;
     public static final int SLEEP_TIME = 600;
-
+    private final String[] mIPBtns = new String[]{
+            "1", "2", "3",
+            "4", "5", "6",
+            "7", "8", "9",
+            ".", "0", "←",
+    };
     @BindView(R.id.discovery_devices_list)
     public ListView mDiscoveryListDevices;
     @BindView(R.id.start_discovery)
@@ -96,7 +113,6 @@ public class DeviceDiscoveryFragment extends Fragment implements DeviceDiscovery
     public RoundProgressBar mProgressBar;
 
     public DeviceDiscoveryFragment() {
-
     }
 
     public static DeviceDiscoveryFragment newInstance() {
@@ -114,7 +130,8 @@ public class DeviceDiscoveryFragment extends Fragment implements DeviceDiscovery
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_discovery_device, container, false);
+        View view = inflater.inflate(R.layout.fragment_discovery_device, container, false);
+        return view;
     }
 
     @Override
@@ -156,7 +173,6 @@ public class DeviceDiscoveryFragment extends Fragment implements DeviceDiscovery
             if (SettingUtil.isVibrateOn()) {
                 SettingUtil.doVibrate();
             }
-
             if (v == mDiscoveryBtn) {
                 if (isWifiAvailable()) {
                     startJmdnsDiscoveryDevice();
@@ -164,15 +180,91 @@ public class DeviceDiscoveryFragment extends Fragment implements DeviceDiscovery
                     Toast.makeText(getContext(), R.string.finder_wifi_not_available, Toast.LENGTH_SHORT).show();
                 }
             } else if (v == mManualIpBtn) {
-                buildManualIpDialog().show();
+                manualConnectDevice();
             } else if (v == mRecentDevicesBtn) {
                 Intent intent = new Intent(getContext(), RecentDevicesActivity.class);
                 startActivity(intent);
             } else if (v == mBackIv) {
                 getActivity().onBackPressed();
+            } else if (v == mIPCancleBt) {
+                mBottomView.dismissBottomView();
+            } else if (v == mIPConfirmBt) {
+                String inputStr = mIPInputEditText.getText().toString().trim();
+                if (isValidIpAddress(inputStr)) {
+                    mBottomView.dismissBottomView();
+                    startIPConnectProgressBar();
+                    mPresenter.ipConnect(inputStr);
+                } else {
+                    mBottomView.dismissBottomView();
+                    illegalIPDialog().show();
+                }
             }
         }
     };
+
+    public void startIPConnectProgressBar() {
+        mConnectProgressBar.setVisibility(View.VISIBLE);
+        mDiscoveryBtn.setVisibility(View.GONE);
+        mManualIpBtn.setVisibility(View.GONE);
+        mDiscoveryBtn.setEnabled(false);
+        mManualIpBtn.setEnabled(false);
+        mRecentDevicesBtn.setEnabled(false);
+        mDiscoveryListDevices.setEnabled(false);
+    }
+
+    public void stopIPConnectProgressBar() {
+        mConnectProgressBar.setVisibility(View.GONE);
+        mDiscoveryBtn.setVisibility(View.VISIBLE);
+        mManualIpBtn.setVisibility(View.VISIBLE);
+        mDiscoveryBtn.setEnabled(true);
+        mManualIpBtn.setEnabled(true);
+        mRecentDevicesBtn.setEnabled(true);
+        mDiscoveryListDevices.setEnabled(true);
+    }
+
+    @Override
+    public void showConnectFailDialog() {
+        ipConnectFailDialog().show();
+    }
+
+    private AdapterView.OnItemClickListener manualConnectDevice = new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+            String str = mIPInputEditText.getText().toString();
+            String text = (String) adapterView.getAdapter().getItem(position);
+            if (text.equals("←")) {
+                // 执行backspace
+                if (str.length() > 0) {
+                    str = str.substring(0, str.length() - 1);
+                }
+                mIPInputEditText.setText(str);
+            } else {
+                str += text;
+                mIPInputEditText.setText(str);
+            }
+        }
+    };
+
+    private void manualConnectDevice() {
+        mBottomView = new BottomView(getContext(), R.style.BottomViewTheme_Defalut, R.layout.bottom_view);
+        mBottomView.setAnimation(R.style.BottomToTopAnim);
+        mBottomView.showBottomView(false);
+        mIPGridView = (GridView) mBottomView.getView().findViewById(
+                R.id.grid_buttons);
+        mIPAdapter = new ManualIPAdapter(getContext(), R.id.ip_button, mIPBtns);
+        mIPGridView.setAdapter(mIPAdapter);
+        mIPInputEditText = (EditText) mBottomView.getView().findViewById(
+                R.id.edittext_ipinput);
+        //获取焦点时，禁止弹出软键盘
+        mIPInputEditText.setInputType(InputType.TYPE_NULL);
+        mIPGridView.setOnItemClickListener(manualConnectDevice);
+        mIPCancleBt = (Button) mBottomView.getView().findViewById(
+                bt_cancelinput);
+        mIPConfirmBt = (Button) mBottomView.getView().findViewById(
+                bt_confirminput);
+        mIPCancleBt.setOnClickListener(onClickListener);
+        mIPConfirmBt.setOnClickListener(onClickListener);
+    }
 
     private AdapterView.OnItemClickListener selectHandler = new AdapterView.OnItemClickListener() {
         public void onItemClick(AdapterView<?> parent, View v, int position,
@@ -180,7 +272,6 @@ public class DeviceDiscoveryFragment extends Fragment implements DeviceDiscovery
             if (SettingUtil.isVibrateOn()) {
                 SettingUtil.doVibrate();
             }
-
             final int pos = position;
             final RemoteBoxDevice remoteDevice = (RemoteBoxDevice) parent.getItemAtPosition(
                     position);
@@ -194,7 +285,6 @@ public class DeviceDiscoveryFragment extends Fragment implements DeviceDiscovery
                             mDiscoveryAdapter.clearStates(pos);
                             mDiscoveryAdapter.notifyDataSetInvalidated();
                             mTitleTv.setText(remoteDevice.getName());
-
                             Toast.makeText(getContext(), "connect SUCCESS", Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -216,7 +306,6 @@ public class DeviceDiscoveryFragment extends Fragment implements DeviceDiscovery
         mPresenter.getCurrentDeviceList();
         LogUtil.d(TAG, mPresenter.getCurrentDeviceList().toString());
         mPresenter.loadRecentList();
-
         mWifiManager = (WifiManager) getContext().getApplicationContext().getSystemService(WIFI_SERVICE);
         IntentFilter filter = new IntentFilter();
         filter.addAction(WifiManager.WIFI_STATE_CHANGED_ACTION);
@@ -271,6 +360,11 @@ public class DeviceDiscoveryFragment extends Fragment implements DeviceDiscovery
         mDiscoveryAdapter.notifyDataChange(currentlist);
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+    }
+
     private class DiscoveryHandler extends Handler {
         @Override
         public void handleMessage(Message msg) {
@@ -320,46 +414,29 @@ public class DeviceDiscoveryFragment extends Fragment implements DeviceDiscovery
         }
     }
 
-    private AlertDialog buildManualIpDialog() {
+    private AlertDialog illegalIPDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        View view = LayoutInflater.from(getContext()).inflate(R.layout.dialog_manual_ip, null);
-        final EditText ipEditText =
-                (EditText) view.findViewById(R.id.manual_ip_entry);
-        ipEditText.setFilters(new InputFilter[]{
-                new NumberKeyListener() {
-                    @Override
-                    protected char[] getAcceptedChars() {
-                        return "0123456789.:".toCharArray();
-                    }
-
-                    public int getInputType() {
-                        return InputType.TYPE_CLASS_NUMBER;
-                    }
-                }
-        });
-
+        View view = LayoutInflater.from(getContext()).inflate(R.layout.dialog_illegal_ip, null);
         builder.setPositiveButton(
-                R.string.manual_ip_connect, new DialogInterface.OnClickListener() {
+                R.string.confirm, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        String inputStr = ipEditText.getText().toString().trim();
-                        if (isValidIpAddress(inputStr)) {
-                            mPresenter.ipConnect(inputStr);
-                        } else {
-                            Toast.makeText(getContext(),
-                                    getString(R.string.manual_ip_error_address),
-                                    Toast.LENGTH_LONG).show();
-                        }
+                        manualConnectDevice();
                     }
                 })
-                .setNegativeButton(
-                        R.string.manual_ip_cancel, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                // do nothing
-                            }
-                        })
                 .setCancelable(true)
-                .setTitle(R.string.manual_ip_label)
-                .setMessage(R.string.manual_ip_entry_label)
+                .setView(view);
+        return builder.create();
+    }
+
+    private AlertDialog ipConnectFailDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        View view = LayoutInflater.from(getContext()).inflate(R.layout.dialog_ip_connect_fail, null);
+        builder.setPositiveButton(
+                R.string.confirm, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                })
+                .setCancelable(true)
                 .setView(view);
         return builder.create();
     }
@@ -498,7 +575,6 @@ public class DeviceDiscoveryFragment extends Fragment implements DeviceDiscovery
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
-
             if (WifiManager.WIFI_STATE_CHANGED_ACTION.equals(action)) {
                 int wifiState = intent.getIntExtra(WifiManager.EXTRA_WIFI_STATE, -1);
                 switch (wifiState) {
@@ -518,7 +594,6 @@ public class DeviceDiscoveryFragment extends Fragment implements DeviceDiscovery
                         break;
                 }
             }
-
             if (WifiManager.NETWORK_STATE_CHANGED_ACTION.equals(action)) {
                 Parcelable parcelableExtra = intent.getParcelableExtra(WifiManager.EXTRA_NETWORK_INFO);
                 if (null != parcelableExtra) {

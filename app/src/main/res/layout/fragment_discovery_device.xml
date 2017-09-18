@@ -18,7 +18,7 @@
             android:layout_alignBottom="@+id/title"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:padding="8dp"
+            android:padding="4dp"
             android:src="@drawable/phi_actionbar_back" />
 
         <TextView
@@ -28,6 +28,15 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="15dp"
             android:textSize="20dp" />
+
+        <Button
+            android:id="@+id/reccent_devices"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:text="@string/recent_connect_devices"
+            android:textSize="14sp" />
     </RelativeLayout>
 
     <View
@@ -66,6 +75,15 @@
             android_custom:textColor="@color/black_normal"
             android_custom:textSize="18sp" />
 
+        <ProgressBar
+            android:id="@+id/ipConnectProgressBar"
+            style="?android:attr/progressBarStyleSmall"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:gravity="center"
+            android:indeterminateDrawable="@drawable/imofan_round_progress_bar_1"
+            android:visibility="gone" />
+
         <Button
             android:id="@+id/manual_ip"
             android:layout_width="80dp"
@@ -75,7 +93,6 @@
             android:gravity="center"
             android:text="@string/manual_ip_input" />
     </LinearLayout>
-
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -107,9 +124,7 @@
             android:layout_marginRight="20dp"
             android:layout_marginTop="10dp"
             android:text="@plurals/NdeviceCount" />
-
     </RelativeLayout>
-
 
     <View
         android:layout_width="fill_parent"
@@ -126,29 +141,18 @@
 
         <TextView
             android:id="@+id/choose_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
+            android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            android:layout_toLeftOf="@+id/reccent_devices"
             android:text="@string/choose_box_controll"
             android:textAlignment="center"
             android:textSize="16sp" />
-
-        <Button
-            android:id="@+id/reccent_devices"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:text="@string/recent_connect_devices"
-            android:textSize="14sp" />
     </RelativeLayout>
-
 
     <ListView
         android:id="@+id/discovery_devices_list"

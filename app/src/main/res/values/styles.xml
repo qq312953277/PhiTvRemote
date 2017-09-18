@@ -43,17 +43,11 @@
 
     <style name="dialog" parent="@android:style/Theme.Dialog">
         <item name="android:windowFrame">@null</item>
-        <!--�߿�-->
         <item name="android:windowIsFloating">true</item>
-        <!--�Ƿ�����activity֮��-->
         <item name="android:windowIsTranslucent">false</item>
-        <!--��͸��-->
         <item name="android:windowNoTitle">true</item>
-        <!--�ޱ���-->
         <item name="android:windowBackground">@android:color/transparent</item>
-        <!--����͸��-->
         <item name="android:backgroundDimEnabled">true</item>
-        <!--ģ��-->
     </style>
 
     <style name="loginregister_phonenumber_edittext_style">
@@ -171,7 +165,6 @@
         <item name="android:text">@string/get_verification_code</item>
         <item name="android:textAllCaps">false</item>
     </style>
-
     <!-- login register forgetpassword -->
     <style name="ButtonColour" parent="Widget.AppCompat.Button.Borderless">
         <item name="android:layout_width">match_parent</item>
@@ -182,5 +175,21 @@
         <item name="android:textColor">@drawable/button_colour_text_selector</item>
         <item name="android:textSize">@dimen/button_text</item>
         <item name="android:textAllCaps">false</item>
+    </style>
+
+    <style name="BottomViewTheme_Defalut">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@color/white_normal</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
+    <style name="BottomToTopAnim" parent="android:Animation">
+        <item name="@android:windowEnterAnimation">@animator/bottomview_anim_enter</item>
+        <item name="@android:windowExitAnimation">@animator/bottomview_anim_exit</item>
     </style>
 </resources>

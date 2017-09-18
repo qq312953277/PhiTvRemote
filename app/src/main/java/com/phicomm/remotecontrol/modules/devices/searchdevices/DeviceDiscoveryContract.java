@@ -18,6 +18,10 @@ public class DeviceDiscoveryContract {
         void setTittle(String str);
 
         void showToast(String str);
+
+        void stopIPConnectProgressBar();
+
+        void showConnectFailDialog();
     }
 
     interface Presenter extends BasePresenter {

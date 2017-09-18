@@ -25,7 +25,6 @@ import static android.content.Context.WIFI_SERVICE;
 
 public class DeviceDiscoveryPresenter implements DeviceDiscoveryContract.Presenter {
     private static String TAG = "DiscoveryPresenter";
-
     private View mView;
     private List<RemoteBoxDevice> mDiscoveryDeviceList;
     private Map<String, RemoteBoxDevice> mCachedRemoteAddress;
@@ -34,7 +33,6 @@ public class DeviceDiscoveryPresenter implements DeviceDiscoveryContract.Present
     private JmdnsDiscoveryClient mJmdnsDiscoveryClient;
     private List<RemoteBoxDevice> currentDeviceList;
     private Thread mJmdnsClientThread;
-
 
     public DeviceDiscoveryPresenter(View view, Context context) {
         mView = view;
@@ -61,44 +59,33 @@ public class DeviceDiscoveryPresenter implements DeviceDiscoveryContract.Present
         mJmdnsDiscoveryClient = new JmdnsDiscoveryClient(mDiscoverResultListener);
         mJmdnsClientThread = new Thread(mJmdnsDiscoveryClient);
         mJmdnsClientThread.start();
-
     }
 
     public void ipConnect(String ip) {
         ConnectManager.getInstance().connect(ip, 8080, connetResultCallback);
-
     }
-
 
     private ConnectManager.ConnetResultCallback connetResultCallback = new ConnectManager.ConnetResultCallback() {
         @Override
         public void onSuccess(RemoteBoxDevice device) {
             Log.d(TAG, "onSuccess");
-            if (!mCachedRemoteAddress.containsKey(device.getBssid())) {
-                mCachedRemoteAddress.put(device.getBssid(), device);
-                mDiscoveryDeviceList.add(device);
-                DevicesUtil.setTarget(device);
-                mView.setTittle(device.getAddress());
-                setCurrentDeviceList(mDiscoveryDeviceList);
-                mView.refreshListView(mDiscoveryDeviceList);
-            } else {
-
-                RemoteBoxDevice target = DevicesUtil.getTarget();
-                if (!target.getBssid().equals(device.getBssid())) {
-                    DevicesUtil.setTarget(device);
-                    mView.setTittle(device.getAddress());
-                    mView.refreshListView(mDiscoveryDeviceList);
-                } else {
-                }
-            }
+            clearListArray();
+            mCachedRemoteAddress.put(device.getBssid(), device);
+            mDiscoveryDeviceList.add(device);
+            DevicesUtil.setTarget(device);
+            mView.setTittle(device.getName());
+            setCurrentDeviceList(mDiscoveryDeviceList);
+            mView.refreshListView(mDiscoveryDeviceList);
             DevicesUtil.insertOrUpdateRecentDevices(device);
-            mView.showToast("connect SUCCESS");
+            mView.stopIPConnectProgressBar();
+            mView.showToast("connect success");
         }
 
         @Override
         public void onFail(String msg) {
             LogUtil.d(TAG, "onFail");
-            mView.showToast("connect fail");
+            mView.stopIPConnectProgressBar();
+            mView.showConnectFailDialog();
         }
     };
 
@@ -114,7 +101,6 @@ public class DeviceDiscoveryPresenter implements DeviceDiscoveryContract.Present
         mView.refreshListView(currentDeviceList);
         return currentDeviceList;
     }
-
 
     @Override
     public void removeItemAndRefreshView(RemoteBoxDevice device) {
@@ -169,7 +155,6 @@ public class DeviceDiscoveryPresenter implements DeviceDiscoveryContract.Present
             }
         }
     };
-
 
     @Override
     public RemoteBoxDevice getTarget() {

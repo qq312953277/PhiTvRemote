@@ -152,8 +152,8 @@
     <string name="login_success">Login success</string>
     <string name="reset_success">Modify success</string>
     <string name="read_and_agree_protocal">Read and agree</string>
-    <string name="protocal_name">¡¶User protocal¡·</string>
-    <string name="not_read_protocal">Pls read and agree ¡¶User protocal¡·</string>
+    <string name="protocal_name">ã€ŠUser protocalã€‹</string>
+    <string name="not_read_protocal">Pls read and agreeã€ŠUser protocalã€‹</string>
     <string name="remember_me">Remember me</string>
     <string name="phone_prefix">+86</string>
     <string name="please_login">login</string>
@@ -206,4 +206,11 @@
     <string name="mail_format_error">mail format error</string>
     <string name="username_format_error">username format error</string>
     <string name="phonenumber_not_register_account">phonenumber not register account</string>
+    <string name="input_phicomm_device_ip">Input the PHICOMM device ip</string>
+    <string name="check_ip_address_setting">Check IP address setting</string>
+    <string name="confirm">confirm</string>
+    <string name="error_tips">please input the correct IP address</string>
+    <string name="ip_connect_fail_tips">Please make sure that the message boxand mobile   \n
+        phone are in the same LAN,and check the WIFI settings \n
+        - Advanced settings ,-AP isolation, shutdown.</string>
 </resources>
