@@ -21,6 +21,7 @@ import com.phicomm.remotecontrol.R;
 import com.phicomm.remotecontrol.base.BaseApplication;
 
 import java.io.File;
+import java.util.Locale;
 
 public class CommonUtils {
     private static Toast toast;
@@ -277,5 +278,11 @@ public class CommonUtils {
         } catch (Exception ex) {
             return null;
         }
+    }
+
+    public static String getSystemLanguage() {
+        Locale locale = BaseApplication.getContext().getResources().getConfiguration().locale;
+        String language = locale.getLanguage();
+        return language;
     }
 }

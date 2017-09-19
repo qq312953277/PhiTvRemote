@@ -161,6 +161,10 @@
     <string name="exit">exit</string>
     <string name="kick_tips">Your account has been logged on to another device. Please login again and change the password.</string>
 
+
+    <string name="no_network_layout">no network</string>
+    <string name="no_network_reload">reload</string>
+
     <!-- error code -->
     <string name="common_error">request error</string>
     <string name="connect_timeout">connect timeout</string>

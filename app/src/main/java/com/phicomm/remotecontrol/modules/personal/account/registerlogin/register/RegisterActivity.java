@@ -4,6 +4,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -29,6 +31,7 @@ import com.phicomm.remotecontrol.modules.personal.account.resultbean.LoginRespon
 import com.phicomm.remotecontrol.modules.personal.account.resultbean.RegisterResponseBean;
 import com.phicomm.remotecontrol.modules.personal.account.resultbean.VerifycodeResponseBean;
 import com.phicomm.remotecontrol.modules.personal.account.token.TokenManager;
+import com.phicomm.remotecontrol.modules.personal.account.webh5.WebViewActivity;
 import com.phicomm.remotecontrol.modules.personal.personaldetail.PersonalActivity;
 import com.phicomm.remotecontrol.util.CommonUtils;
 import com.phicomm.remotecontrol.util.DialogUtils;
@@ -79,7 +82,6 @@ public class RegisterActivity extends BaseActivity implements RegisterContract.V
     @BindView(R.id.password)
     EditText mPasswordEdit;
 
-    private boolean isPasswordDisplay = true;
     @BindView(R.id.password_display_imageview)
     ImageView password_display_imageview;
 
@@ -92,6 +94,7 @@ public class RegisterActivity extends BaseActivity implements RegisterContract.V
     @BindView(R.id.protocal_checkbox)
     CheckBox mProtocalCheckbox;
 
+    private boolean mIsPasswordDisplay = true;
     private boolean isProtocalChecked = false;
     private String mPhoneNo = "";
     private String mVerifyCode = "";
@@ -295,6 +298,22 @@ public class RegisterActivity extends BaseActivity implements RegisterContract.V
         }
     }
 
+    @OnClick(R.id.password_display_imageview)
+    public void clickDisplayPassword() {
+        if (mIsPasswordDisplay) {
+            mIsPasswordDisplay = false;
+            password_display_imageview.setImageResource(R.drawable.icon_eye_open_white);
+            //显示密码
+            mPasswordEdit.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+        } else {
+            mIsPasswordDisplay = true;
+            password_display_imageview.setImageResource(R.drawable.icon_eye_close_white);
+            //隐藏密码
+            mPasswordEdit.setTransformationMethod(PasswordTransformationMethod.getInstance());
+        }
+        mPasswordEdit.setSelection(mPasswordEdit.getText().toString().length());
+    }
+
     @OnCheckedChanged(R.id.protocal_checkbox)
     public void protocalChecked() {
         if (mProtocalCheckbox.isChecked()) {
@@ -316,7 +335,12 @@ public class RegisterActivity extends BaseActivity implements RegisterContract.V
 
     @OnClick(R.id.protocal_textview)
     public void clickProtocal() {
-
+        Intent intent = new Intent(this, WebViewActivity.class);
+        intent.putExtra(WebViewActivity.WEB_KEY_STATUS, getString(R.string.protocal_name));
+        intent.putExtra(WebViewActivity.WEB_VALUE_URL,
+                PhiConstants.APP_USER_REGISTER_PROTOCAL_BASE_URL
+                        + CommonUtils.getSystemLanguage());
+        startActivity(intent);
     }
 
     /**

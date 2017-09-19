@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:gravity="center_horizontal">
+
+    <ImageView
+        android:layout_width="66dp"
+        android:layout_height="51dp"
+        android:layout_marginTop="217dp"
+        android:src="@drawable/no_network" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="17dp"
+        android:text="@string/no_network_layout"
+        android:textColor="#999999"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/tv_no_network"
+        android:layout_width="96dp"
+        android:layout_height="39dp"
+        android:layout_marginTop="17dp"
+        android:background="@drawable/btn_no_network"
+        android:text="@string/no_network_reload"
+        android:textSize="16sp"
+        android:textColor="#999999"
+        android:gravity="center" />
+
+</LinearLayout>

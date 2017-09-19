@@ -67,7 +67,7 @@ public class WelcomeActivity extends BaseActivity {
         //是否登录过
         if (LocalDataRepository.getInstance(BaseApplication.getContext()).isCloudLogined()) {
             if (checkAccessToken()) {
-                BaseApplication.getApplication().isLogined = true;////登录过设置全局变量true,PersonalActivity判断该状态
+                BaseApplication.getApplication().isLogined = true;//登录过设置全局变量true,PersonalActivity判断该状态
             } else {
                 BaseApplication.getApplication().isLogined = false;
             }

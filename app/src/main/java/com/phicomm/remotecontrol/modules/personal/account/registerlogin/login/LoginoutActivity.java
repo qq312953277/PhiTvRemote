@@ -80,7 +80,9 @@ public class LoginoutActivity extends BaseActivity {
                 deleteDialog.dismiss();
                 //send logout event
                 EventBus.getDefault().post(new LogoutEvent());//BaseActivity接收该事件
+
                 CommonUtils.startIntent(LoginoutActivity.this, null, PersonalActivity.class);
+                finish();
             }
         });
         deleteDialog.show();

@@ -45,8 +45,8 @@ public class PictureControlPresenterImpl implements PictureControlPresenter {
 
     @Override
     public void showPicture() {
-        controlBiz.setPlayUri(item);
-        new LoadImageAsyncTask().execute(imageurl);
+        controlBiz.setPlayUri(item);//投屏
+        new LoadImageAsyncTask().execute(imageurl);//本地展示
     }
 
     @Override

@@ -31,4 +31,7 @@ public class PhiConstants {
     public static final String SCOPE = "write";
     public static final String CLIENT_SECRET = "AC08CBDA7AD99831A16C8BA9353854E7";
     public static final String SMS_VERIFICATION = "0";//短信接收
+
+    //H5
+    public static final String APP_USER_REGISTER_PROTOCAL_BASE_URL = "http://ihome.phicomm.com:10011/balance-app/h5/user/register/protocol/v1/";
 }

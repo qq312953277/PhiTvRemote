@@ -56,10 +56,10 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
     @BindView(R.id.iv_back)
     ImageView mBack;
 
-    private boolean isPasswordDisplay = true;
     @BindView(R.id.password_display_imageview)
     ImageView password_display_imageview;
 
+    private boolean mIsPasswordDisplay = true;
     private String mPhoneNo = "";
     private String mPassword = "";
     private String mAuthorizationCode = "";
@@ -169,14 +169,14 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
 
     @OnClick(R.id.password_display_imageview)
     public void clickDisplayPassword() {
-        if (isPasswordDisplay) {
-            isPasswordDisplay = false;
+        if (mIsPasswordDisplay) {
+            mIsPasswordDisplay = false;
             password_display_imageview.setImageResource(R.drawable.icon_eye_open_white);
             //显示密码
             mPasswordEdit.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
 
         } else {
-            isPasswordDisplay = true;
+            mIsPasswordDisplay = true;
             password_display_imageview.setImageResource(R.drawable.icon_eye_close_white);
             //隐藏密码
             mPasswordEdit.setTransformationMethod(PasswordTransformationMethod.getInstance());

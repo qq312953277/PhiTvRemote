@@ -110,7 +110,7 @@
     <string name="success_save">"保存成功"</string>
     <string name="fail_save">"保存失败"</string>
     <string name="screenshot_title_not_connnect">电视截图</string>
-    <string name="photo_help_tips">请前往&#060;本地存储&#062;-&#060;Pictures&#062;-&#060;PhiboxScreenshot&#062;查找截图</string>
+    <string name="photo_help_tips">请前往&#060;本地存储&#062;-&#060;Pictures&#062;-&#060;Phibox&#x000A;Screenshot&#062;查找截图</string>
     <string name="confirm">确定</string>
 
 
@@ -217,6 +217,9 @@
     <string name="kick_tips">你的账号已在其他设备上登录。如非本人操作，请重新登录后修改密码。</string>
     <string name="account_exit">确定退出当前账号？</string>
     <string name="account_exit_msg">退出账号后将无法同步数据</string>
+
+    <string name="no_network_layout">无网络</string>
+    <string name="no_network_reload">重新加载</string>
 
     <!-- error code -->
     <string name="common_error">请求错误</string>

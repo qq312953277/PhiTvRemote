@@ -1,10 +1,11 @@
 package com.phicomm.remotecontrol.modules.main.screenshot;
 
-import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -19,6 +20,7 @@ import com.phicomm.remotecontrol.modules.devices.searchdevices.DeviceDiscoveryAc
 import com.phicomm.remotecontrol.util.CommonUtils;
 import com.phicomm.remotecontrol.util.DevicesUtil;
 import com.phicomm.remotecontrol.util.NetworkManagerUtils;
+import com.phicomm.widgets.alertdialog.PhiAlertDialog;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -28,6 +30,9 @@ import butterknife.OnClick;
  */
 
 public class ScreenshotActivity extends BaseActivity implements ScreenshotView {
+
+    public static final int DELAY_HIDEN_TIME = 5000;
+    public static final int DELAY_MSG = 100;
 
 
     private final static String TAG = "ScreenshotActivity";
@@ -69,6 +74,21 @@ public class ScreenshotActivity extends BaseActivity implements ScreenshotView {
         }
     }
 
+    private Handler defaultPicHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case DELAY_MSG:
+                    mImageShow.setImageResource(R.drawable.tv_connected);
+                    mScreenshot.setImageResource(R.drawable.takephoto_on);
+                    mScreenshot.setEnabled(true);//可点击
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
+
     @Override
     @OnClick({R.id.btn_screenshot, R.id.iv_show, R.id.iv_right, R.id.iv_back})
     public void onClick(View view) {
@@ -79,6 +99,7 @@ public class ScreenshotActivity extends BaseActivity implements ScreenshotView {
                     toSearchActivity();
                 } else {
                     mScreenshot.setImageResource(R.drawable.takephoto_off);
+                    mScreenshot.setEnabled(false);//不可点击
                     mScreenshotPresenter.doScreenshot();
                 }
                 break;
@@ -88,7 +109,7 @@ public class ScreenshotActivity extends BaseActivity implements ScreenshotView {
                 }
                 break;
             case R.id.iv_right:
-                showHelpDialog().show();
+                showHelpDialog();
                 break;
             case R.id.iv_back:
                 finish();
@@ -103,21 +124,25 @@ public class ScreenshotActivity extends BaseActivity implements ScreenshotView {
         finish();
     }
 
-    private AlertDialog showHelpDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.dialog);
-        builder.setPositiveButton(getString(R.string.confirm), new DialogInterface.OnClickListener() {
+    private void showHelpDialog() {
+        PhiAlertDialog.Builder builder = new PhiAlertDialog.Builder(this);
+        builder.setMessage(R.string.photo_help_tips);
+        builder.setCancelable(false);//点击框外不取消
+        builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+            @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
             }
-        }).setMessage(R.string.photo_help_tips)
-                .setCancelable(false); //点击框外不取消
-        return builder.create();
+        });
+        builder.show();
     }
 
     @Override
     public void showPicture(Drawable drawable) {
         mImageShow.setImageDrawable(drawable);
+        mScreenshot.setEnabled(true);//可点击
         mScreenshot.setImageResource(R.drawable.takephoto_on);
+        defaultPicHandler.sendEmptyMessageDelayed(DELAY_MSG, DELAY_HIDEN_TIME);//5s后截图图片替换成默认的
     }
 
     @Override
