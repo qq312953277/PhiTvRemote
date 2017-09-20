@@ -11,7 +11,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -19,7 +18,6 @@ import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.InputType;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +25,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -48,7 +47,6 @@ import com.tandong.bottomview.view.BottomView;
 import java.util.Formatter;
 import java.util.List;
 import java.util.Locale;
-import java.util.Random;
 import java.util.concurrent.atomic.AtomicReference;
 
 import butterknife.BindView;
@@ -100,23 +98,29 @@ public class DeviceDiscoveryFragment extends Fragment implements DeviceDiscovery
     @BindView(R.id.title)
     public TextView mTitleTv;
 
-    @BindView(R.id.roundProgressBar)
-    public RoundProgressBar mProgressBar;
+    @BindView(R.id.discovery_progressbar)
+    DiscoveryProgressbar mDiscoveryProgressbar;
+
+    @BindView(R.id.discovery_progress_tv)
+    TextView mDiscoveryProgressTv;
+
+    @BindView(R.id.discovery_progress_view)
+    FrameLayout mDiscoveryProgressView;
+
 
     private Presenter mPresenter;
     private DeviceDiscoveryAdapter mDiscoveryAdapter;
-    private DiscoveryHandler mBroadcastHandler;
+
     private WifiManager mWifiManager;
     private WifiChangeReceiver mWifiChangeReceiver;
-    private ProgressBarTask mTask;
     private BottomView mBottomView;
     private GridView mIPGridView;
     private ArrayAdapter mIPAdapter;
     private EditText mIPInputEditText;
     private Button mIPConfirmBt;
     private Button mIPCancleBt;
-    public static final int GROUTH_RATE = 15;
-    public static final int SLEEP_TIME = 600;
+    public static final int COMPLETE_PROCESS = 100;
+    public static final int SLEEP_TIME = 100;
     private final String[] mIPBtns = new String[]{
             "1", "2", "3",
             "4", "5", "6",
@@ -124,6 +128,20 @@ public class DeviceDiscoveryFragment extends Fragment implements DeviceDiscovery
             ".", "0", "←",
     };
     public static boolean canGoBack = true;
+    private boolean mIsRunning;
+    private int mProcess ;
+    private Handler mHandler = new Handler() {
+        public void handleMessage(Message msg) {
+            mDiscoveryProgressTv.setText(msg.what + "%");
+            if(msg.what == COMPLETE_PROCESS){
+                mProcess = 0;
+                canGoBack = true;
+                mDiscoveryProgressView.setVisibility(View.GONE);
+                stopProgressBar();
+                stopDiscoveryService();
+            }
+        }
+    };
 
     public DeviceDiscoveryFragment() {
     }
@@ -154,7 +172,6 @@ public class DeviceDiscoveryFragment extends Fragment implements DeviceDiscovery
         initAdapter();
         initActionBar();
         setOnClickListener();
-        mBroadcastHandler = new DiscoveryHandler();
     }
 
     private void initActionBar() {
@@ -376,30 +393,34 @@ public class DeviceDiscoveryFragment extends Fragment implements DeviceDiscovery
         super.onDestroyView();
     }
 
-    private class DiscoveryHandler extends Handler {
-        @Override
-        public void handleMessage(Message msg) {
-            Log.d(TAG, "timeout it is need dismiss mDiscoveryDialog and begin TimeoutDialog");
-            switch (msg.what) {
-                case PhiConstants.BROADCAST_TIMEOUT:
-                    stopProgressBar();
-                    stopDiscoveryService();
-                    break;
-            }
-        }
-    }
 
     private void startJmdnsDiscoveryDevice() {
         mPresenter.start();
-        mBroadcastHandler.removeMessages(PhiConstants.BROADCAST_TIMEOUT);
-        mTask = new ProgressBarTask(this.getContext());
-        mTask.execute();
-        mBroadcastHandler.sendEmptyMessageDelayed(PhiConstants.BROADCAST_TIMEOUT,
-                PhiConstants.DISCOVERY_TIMEOUT);
+        startProgressBar();
+        mDiscoveryProgressView.setVisibility(View.VISIBLE);
+        mDiscoveryProgressbar.start();
+        mIsRunning = true;
+        new Thread() {
+            public void run() {
+                while (mIsRunning) {
+                    mProcess++;
+                    Message message = new Message();
+                    message.what = mProcess;
+                    mHandler.sendMessage(message);
+                    try {
+                        if (mProcess == COMPLETE_PROCESS) {
+                            mIsRunning = false;
+                        }
+                        Thread.sleep(SLEEP_TIME);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }.start();
     }
 
     private void stopDiscoveryService() {
-        mBroadcastHandler.removeMessages(PhiConstants.BROADCAST_TIMEOUT);
         RemoteBoxDevice target = mPresenter.getTarget();
         if (target == null) {
             mTitleTv.setText(R.string.unable_to_connect_device);
@@ -487,7 +508,6 @@ public class DeviceDiscoveryFragment extends Fragment implements DeviceDiscovery
     }
 
     private void stopProgressBar() {
-        mProgressBar.setVisibility(View.GONE);
         mDiscoveryBtn.setVisibility(View.VISIBLE);
         mManualIpBtn.setVisibility(View.VISIBLE);
         mDiscoveryBtn.setEnabled(true);
@@ -497,7 +517,6 @@ public class DeviceDiscoveryFragment extends Fragment implements DeviceDiscovery
     }
 
     private void startProgressBar() {
-        mProgressBar.setVisibility(View.VISIBLE);
         mDiscoveryBtn.setVisibility(View.GONE);
         mManualIpBtn.setVisibility(View.GONE);
         mDiscoveryBtn.setEnabled(false);
@@ -506,52 +525,6 @@ public class DeviceDiscoveryFragment extends Fragment implements DeviceDiscovery
         mDiscoveryListDevices.setEnabled(false);
 
         canGoBack = false;
-    }
-
-    class ProgressBarTask extends AsyncTask<Void, Integer, Void> {
-        Context mContext;
-        int mCurrentProgress = 0;
-
-        public ProgressBarTask(Context ctx) {
-            mContext = ctx;
-        }
-
-        @Override
-        protected void onPreExecute() {
-            startProgressBar();
-        }
-
-        @Override
-        protected Void doInBackground(Void... params) {
-            while (mCurrentProgress < 100) {
-                mCurrentProgress += new Random().nextInt(GROUTH_RATE);
-                publishProgress(mCurrentProgress);
-                try {
-                    Thread.sleep(SLEEP_TIME);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-            return null;
-        }
-
-        @Override
-        protected void onProgressUpdate(Integer... values) {
-            mProgressBar.setProgress(values[0]);
-        }
-
-        @Override
-        protected void onPostExecute(Void result) {//搜索进度条完成后中断搜索设备
-            if (mCurrentProgress >= 100) {
-                canGoBack = true;
-                mBroadcastHandler.sendEmptyMessage(PhiConstants.BROADCAST_TIMEOUT);
-            }
-        }
-
-        @Override
-        protected void onCancelled() {
-            super.onCancelled();
-        }
     }
 
     private boolean isWifiAvailable() {
