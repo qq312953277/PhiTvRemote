@@ -266,6 +266,11 @@
     <string name="mail_format_error">邮箱格式错误</string>
     <string name="username_format_error">用户名格式错误</string>
     <string name="phonenumber_not_register_account">该手机号未注册云账户</string>
+    <!--apply-->
+    <string name="refershlayout_is_loading">刷新中</string>
+    <string name="installed_app">已安装应用</string>
+    <string name="apply_title">应用</string>
+    <!--IP-->
     <string name="input_phicomm_device_ip">请输入斐讯盒子的IP</string>
     <string name="check_ip_address_setting">IP地址在斐讯盒子设置-关于-网络信息中查看</string>
     <string name="error_tips">请输入正确的IP地址</string>

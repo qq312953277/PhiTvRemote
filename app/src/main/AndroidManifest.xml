@@ -105,5 +105,8 @@
             android:screenOrientation="nosensor" />
 
         <service android:name=".modules.main.screenprojection.service.UpnpDeviceService" />
+        <activity
+            android:name=".modules.personal.apply.ApplyActivity"
+            android:screenOrientation="nosensor" />
     </application>
 </manifest>

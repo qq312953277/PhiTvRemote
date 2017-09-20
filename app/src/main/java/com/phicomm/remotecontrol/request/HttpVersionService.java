@@ -1,6 +1,7 @@
 package com.phicomm.remotecontrol.request;
 
 
+import com.phicomm.remotecontrol.modules.personal.apply.ApplyInfosBean;
 import com.phicomm.remotecontrol.modules.personal.upgrade.UpdateInfoResponseBean;
 
 import java.util.Map;
@@ -13,10 +14,8 @@ import rx.Observable;
  * Created by hao04.wu on 2017/7/4.
  */
 
-public interface RequestService {
-
+public interface HttpVersionService {
 
     @GET("Service/App/checkupdate")
     Observable<UpdateInfoResponseBean> checkVersion(@QueryMap Map<String, String> options);
-
 }

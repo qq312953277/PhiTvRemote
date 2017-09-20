@@ -20,6 +20,7 @@ import com.phicomm.remotecontrol.modules.personal.account.registerlogin.login.Lo
 import com.phicomm.remotecontrol.modules.personal.account.registerlogin.login.LoginoutActivity;
 import com.phicomm.remotecontrol.modules.personal.account.resultbean.AccountDetailBean;
 import com.phicomm.remotecontrol.modules.personal.account.resultbean.BaseResponseBean;
+import com.phicomm.remotecontrol.modules.personal.apply.ApplyActivity;
 import com.phicomm.remotecontrol.modules.personal.setting.SettingActivity;
 import com.phicomm.remotecontrol.modules.personal.upgrade.UpdateInfoResponseBean;
 import com.phicomm.remotecontrol.modules.personal.upgrade.UpdatePresenter;
@@ -115,6 +116,7 @@ public class PersonalActivity extends BaseActivity implements UpdateView, Person
         super.onClick(view);
         switch (view.getId()) {
             case R.id.rl_appilcation:
+                CommonUtils.startIntent(this, null, ApplyActivity.class);
                 break;
             case R.id.rl_setting:
                 CommonUtils.startIntent(this, null, SettingActivity.class);

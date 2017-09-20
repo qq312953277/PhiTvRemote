@@ -17,11 +17,16 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
+import com.phicomm.remotecontrol.ConnectManager;
 import com.phicomm.remotecontrol.R;
+import com.phicomm.remotecontrol.RemoteBoxDevice;
 import com.phicomm.remotecontrol.base.BaseApplication;
+import com.phicomm.remotecontrol.request.HttpAppInfosService;
 
 import java.io.File;
 import java.util.Locale;
+
+import retrofit2.Retrofit;
 
 public class CommonUtils {
     private static Toast toast;
@@ -278,6 +283,15 @@ public class CommonUtils {
         } catch (Exception ex) {
             return null;
         }
+    }
+
+    public static String getCurrentUrl() {
+        String url = null;
+        RemoteBoxDevice CurrentDevice = ConnectManager.getInstance().getConnectingDevice();
+        if (CurrentDevice != null) {
+            url = "http://" + CurrentDevice.getAddress() + ":" + CurrentDevice.getPort() + "/v1/";
+        }
+        return url;
     }
 
     public static String getSystemLanguage() {

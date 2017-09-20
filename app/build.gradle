@@ -139,6 +139,11 @@ dependencies {
     compile(name: 'PhiWidgets-1.0', ext: 'aar')
     compile 'joda-time:joda-time:2.8.1'
 
+    //ptr
+    compile 'in.srain.cube:ultra-ptr:1.0.11'
+
+    //imageloader
+    compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
     //bottomView
     compile files('libs/bottomView.jar')
 }

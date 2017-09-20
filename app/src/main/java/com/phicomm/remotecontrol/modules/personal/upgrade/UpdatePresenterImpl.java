@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.phicomm.remotecontrol.beans.BaseResponseBean;
-import com.phicomm.remotecontrol.request.RequestManager;
+import com.phicomm.remotecontrol.request.HttpRequestManager;
 
 import java.util.Map;
 
@@ -23,7 +23,7 @@ public class UpdatePresenterImpl implements UpdatePresenter {
 
     @Override
     public void checkVersion(Map<String, String> options) {
-        RequestManager.getInstance().checkVersion(options, new RequestManager.OnCallListener() {
+        HttpRequestManager.getInstance().checkVersion(options, new HttpRequestManager.OnCallListener() {
             @Override
             public void onSuccess(BaseResponseBean responseBean) {
                 UpdateInfoResponseBean bean = (UpdateInfoResponseBean) responseBean;

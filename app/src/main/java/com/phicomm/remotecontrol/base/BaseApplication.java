@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.phicomm.remotecontrol.greendao.GreenDaoManager;
 import com.phicomm.remotecontrol.greendao.gen.RemoteDeviceDao;
 import com.phicomm.remotecontrol.modules.main.screenprojection.entity.DeviceDisplay;
@@ -54,6 +56,9 @@ public class BaseApplication extends Application {
 
         //应用打开时获得震动、音量的设置状态
         mPreferenceRepository = new PreferenceRepository(this);
+
+        //ImageLoader初始化
+        ImageLoader.getInstance().init(ImageLoaderConfiguration.createDefault(getContext()));
 
     }
 
