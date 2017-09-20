@@ -15,4 +15,5 @@
     <color name="default_item_hint_color">#915C5C5C</color>
     <color name="textHint">#4CFFFFFF</color>
     <color name="discovery_circle">#0059ccf5</color>
+    <color name="color_b3bece">#b3bece</color>
 </resources>
