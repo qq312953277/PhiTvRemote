@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jakewharton.rxbinding.view.RxView;
@@ -44,6 +45,8 @@ import rx.functions.Action1;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
+import static com.phicomm.remotecontrol.constant.PhiConstants.TITLE_BAR_HEIGHT_DP;
+
 public class ForgetPasswordActivity extends BaseActivity implements ForgetPasswordContract.View {
 
     @BindView(R.id.phonenumber)
@@ -72,6 +75,9 @@ public class ForgetPasswordActivity extends BaseActivity implements ForgetPasswo
 
     @BindView(R.id.bt_submit)
     Button mSubmitBtn;
+
+    @BindView(R.id.rl_title)
+    RelativeLayout mRlTitle;
 
     @BindView(R.id.tv_title)
     TextView mTvTitle;
@@ -107,6 +113,7 @@ public class ForgetPasswordActivity extends BaseActivity implements ForgetPasswo
     }
 
     private void initTitleView() {
+        setMarginForStatusBar(mRlTitle, TITLE_BAR_HEIGHT_DP);
         mTvTitle.setText(getString(R.string.login));
         mBack.setOnClickListener(new View.OnClickListener() {
             @Override

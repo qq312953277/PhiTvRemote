@@ -3,7 +3,9 @@ package com.phicomm.remotecontrol.modules.personal.account.registerlogin.login;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -21,6 +23,8 @@ import org.greenrobot.eventbus.EventBus;
 import butterknife.BindView;
 import butterknife.OnClick;
 
+import static com.phicomm.remotecontrol.constant.PhiConstants.TITLE_BAR_HEIGHT_DP;
+
 /**
  * Created by yong04.zhou on 2017/9/14.
  */
@@ -33,8 +37,14 @@ public class LoginoutActivity extends BaseActivity {
     @BindView(R.id.tv_user_name)
     TextView mUserName;
 
+    @BindView(R.id.rl_title)
+    RelativeLayout mRlTitle;
+
     @BindView(R.id.tv_title)
     TextView mTvTitle;
+
+    @BindView(R.id.iv_back)
+    ImageView mBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +56,13 @@ public class LoginoutActivity extends BaseActivity {
 
     private void initViews() {
         mTvTitle.setText(getString(R.string.exit));
+        setMarginForStatusBar(mRlTitle, TITLE_BAR_HEIGHT_DP);
+        mBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         Intent intent = getIntent();
         String img = intent.getStringExtra("img");

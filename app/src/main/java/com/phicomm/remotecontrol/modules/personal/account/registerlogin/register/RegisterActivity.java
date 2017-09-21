@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jakewharton.rxbinding.view.RxView;
@@ -52,11 +53,16 @@ import rx.functions.Action1;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
+import static com.phicomm.remotecontrol.constant.PhiConstants.TITLE_BAR_HEIGHT_DP;
+
 /**
  * Created by yong04.zhou on 2017/9/14.
  */
 
 public class RegisterActivity extends BaseActivity implements RegisterContract.View {
+
+    @BindView(R.id.rl_title)
+    RelativeLayout mRlTitle;
 
     @BindView(R.id.tv_title)
     TextView mTvTitle;
@@ -124,6 +130,7 @@ public class RegisterActivity extends BaseActivity implements RegisterContract.V
     }
 
     private void initTitleView() {
+        setMarginForStatusBar(mRlTitle, TITLE_BAR_HEIGHT_DP);
         mTvTitle.setText(getString(R.string.new_user_register));
         mBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -131,7 +138,6 @@ public class RegisterActivity extends BaseActivity implements RegisterContract.V
                 finish();
             }
         });
-
     }
 
     private void initViews() {
