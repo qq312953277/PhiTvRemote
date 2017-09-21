@@ -16,7 +16,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,16 +26,17 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.GridView;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.phicomm.remotecontrol.ConnectManager;
 import com.phicomm.remotecontrol.R;
 import com.phicomm.remotecontrol.RemoteBoxDevice;
-import com.phicomm.remotecontrol.activities.RecentDevicesActivity;
+import com.phicomm.remotecontrol.modules.devices.connectrecords.RecentDevicesActivity;
+import com.phicomm.remotecontrol.base.BaseFragment;
 import com.phicomm.remotecontrol.constant.PhiConstants;
 import com.phicomm.remotecontrol.modules.devices.searchdevices.DeviceDiscoveryContract.Presenter;
 import com.phicomm.remotecontrol.util.DevicesUtil;
@@ -51,18 +51,21 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 import static android.content.Context.WIFI_SERVICE;
 import static com.phicomm.remotecontrol.R.id.bt_cancelinput;
 import static com.phicomm.remotecontrol.R.id.bt_confirminput;
 import static com.phicomm.remotecontrol.R.id.ipConnectProgressBar;
+import static com.phicomm.remotecontrol.R.id.v1;
+import static com.phicomm.remotecontrol.constant.PhiConstants.TITLE_BAR_HEIGHT_DP;
 
 
 /**
  * Created by chunya02.li on 2017/7/11.
  */
 
-public class DeviceDiscoveryFragment extends Fragment implements DeviceDiscoveryContract.View {
+public class DeviceDiscoveryFragment extends BaseFragment implements DeviceDiscoveryContract.View {
     private static String TAG = "DeviceDiscoveryFragment";
 
     @BindView(ipConnectProgressBar)
@@ -77,8 +80,8 @@ public class DeviceDiscoveryFragment extends Fragment implements DeviceDiscovery
     @BindView(R.id.manual_ip)
     public Button mManualIpBtn;
 
-    @BindView(R.id.reccent_devices)
-    public Button mRecentDevicesBtn;
+    @BindView(R.id.tv_right)
+    public TextView mTvRecords;
 
     @BindView(R.id.local_networkname)
     public TextView mNetworkNameTv;
@@ -92,12 +95,6 @@ public class DeviceDiscoveryFragment extends Fragment implements DeviceDiscovery
     @BindView(android.R.id.empty)
     public TextView mEmptyTv;
 
-    @BindView(R.id.back)
-    public ImageView mBackIv;
-
-    @BindView(R.id.title)
-    public TextView mTitleTv;
-
     @BindView(R.id.discovery_progressbar)
     DiscoveryProgressbar mDiscoveryProgressbar;
 
@@ -107,6 +104,11 @@ public class DeviceDiscoveryFragment extends Fragment implements DeviceDiscovery
     @BindView(R.id.discovery_progress_view)
     FrameLayout mDiscoveryProgressView;
 
+    @BindView(R.id.tv_title)
+    TextView mTvTitle;
+
+    @BindView(R.id.rl_title)
+    RelativeLayout mRlTitle;
 
     private Presenter mPresenter;
     private DeviceDiscoveryAdapter mDiscoveryAdapter;
@@ -129,11 +131,11 @@ public class DeviceDiscoveryFragment extends Fragment implements DeviceDiscovery
     };
     public static boolean canGoBack = true;
     private boolean mIsRunning;
-    private int mProcess ;
+    private int mProcess;
     private Handler mHandler = new Handler() {
         public void handleMessage(Message msg) {
             mDiscoveryProgressTv.setText(msg.what + "%");
-            if(msg.what == COMPLETE_PROCESS){
+            if (msg.what == COMPLETE_PROCESS) {
                 mProcess = 0;
                 canGoBack = true;
                 mDiscoveryProgressView.setVisibility(View.GONE);
@@ -172,13 +174,16 @@ public class DeviceDiscoveryFragment extends Fragment implements DeviceDiscovery
         initAdapter();
         initActionBar();
         setOnClickListener();
+        setMarginForStatusBar(mRlTitle, TITLE_BAR_HEIGHT_DP);
     }
 
     private void initActionBar() {
         Intent intent = getActivity().getIntent();
         Bundle bundle = intent.getExtras();
         String title = bundle.getString(PhiConstants.ACTION_BAR_NAME);
-        mTitleTv.setText(title);
+        mTvTitle.setText(title);
+        mTvRecords.setVisibility(View.VISIBLE);
+        mTvRecords.setText(getString(R.string.recent_connect_devices));
     }
 
     private void initAdapter() {
@@ -191,34 +196,41 @@ public class DeviceDiscoveryFragment extends Fragment implements DeviceDiscovery
 
     private void setOnClickListener() {
         mDiscoveryListDevices.setOnItemClickListener(selectHandler);
-        mDiscoveryBtn.setOnClickListener(onClickListener);
-        mManualIpBtn.setOnClickListener(onClickListener);
-        mRecentDevicesBtn.setOnClickListener(onClickListener);
-        mBackIv.setOnClickListener(onClickListener);
     }
 
-    View.OnClickListener onClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            if (SettingUtil.isVibrateOn()) {
-                SettingUtil.doVibrate();
-            }
-            if (v == mDiscoveryBtn) {
+    @Override
+    @OnClick({R.id.iv_back, R.id.tv_right, R.id.start_discovery, R.id.manual_ip})
+    public void onClick(View view) {
+        super.onClick(view);
+        switch (view.getId()) {
+            case R.id.start_discovery:
                 if (isWifiAvailable()) {
                     startJmdnsDiscoveryDevice();
                 } else {
                     Toast.makeText(getContext(), R.string.finder_wifi_not_available, Toast.LENGTH_SHORT).show();
                 }
-            } else if (v == mManualIpBtn) {
+                break;
+            case R.id.manual_ip:
                 manualConnectDevice();
-            } else if (v == mRecentDevicesBtn) {
+                break;
+            case R.id.tv_right:
                 Intent intent = new Intent(getContext(), RecentDevicesActivity.class);
                 startActivity(intent);
-            } else if (v == mBackIv) {
+                break;
+            case R.id.iv_back:
                 if (canGoBack) {
                     getActivity().onBackPressed();
                 }
-            } else if (v == mIPCancleBt) {
+                break;
+            default:
+                break;
+        }
+    }
+
+    View.OnClickListener onClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            if (v == mIPCancleBt) {
                 mBottomView.dismissBottomView();
             } else if (v == mIPConfirmBt) {
                 String inputStr = mIPInputEditText.getText().toString().trim();
@@ -240,7 +252,7 @@ public class DeviceDiscoveryFragment extends Fragment implements DeviceDiscovery
         mManualIpBtn.setVisibility(View.GONE);
         mDiscoveryBtn.setEnabled(false);
         mManualIpBtn.setEnabled(false);
-        mRecentDevicesBtn.setEnabled(false);
+        mTvRecords.setEnabled(false);
         mDiscoveryListDevices.setEnabled(false);
     }
 
@@ -250,7 +262,7 @@ public class DeviceDiscoveryFragment extends Fragment implements DeviceDiscovery
         mManualIpBtn.setVisibility(View.VISIBLE);
         mDiscoveryBtn.setEnabled(true);
         mManualIpBtn.setEnabled(true);
-        mRecentDevicesBtn.setEnabled(true);
+        mTvRecords.setEnabled(true);
         mDiscoveryListDevices.setEnabled(true);
     }
 
@@ -316,7 +328,7 @@ public class DeviceDiscoveryFragment extends Fragment implements DeviceDiscovery
                             mPresenter.insertOrUpdateRecentDevices(remoteDevice);
                             mDiscoveryAdapter.clearStates(pos);
                             mDiscoveryAdapter.notifyDataSetInvalidated();
-                            mTitleTv.setText(remoteDevice.getName());
+                            mTvTitle.setText(remoteDevice.getName());
                             Toast.makeText(getContext(), "connect SUCCESS", Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -370,7 +382,7 @@ public class DeviceDiscoveryFragment extends Fragment implements DeviceDiscovery
 
     @Override
     public void setTittle(String str) {
-        mTitleTv.setText(str);
+        mTvTitle.setText(str);
     }
 
     @Override
@@ -423,9 +435,9 @@ public class DeviceDiscoveryFragment extends Fragment implements DeviceDiscovery
     private void stopDiscoveryService() {
         RemoteBoxDevice target = mPresenter.getTarget();
         if (target == null) {
-            mTitleTv.setText(R.string.unable_to_connect_device);
+            mTvTitle.setText(R.string.unable_to_connect_device);
         } else {
-            mTitleTv.setText(target.getName());
+            mTvTitle.setText(target.getName());
         }
         mPresenter.stop();
     }
@@ -512,7 +524,7 @@ public class DeviceDiscoveryFragment extends Fragment implements DeviceDiscovery
         mManualIpBtn.setVisibility(View.VISIBLE);
         mDiscoveryBtn.setEnabled(true);
         mManualIpBtn.setEnabled(true);
-        mRecentDevicesBtn.setEnabled(true);
+        mTvRecords.setEnabled(true);
         mDiscoveryListDevices.setEnabled(true);
     }
 
@@ -521,7 +533,7 @@ public class DeviceDiscoveryFragment extends Fragment implements DeviceDiscovery
         mManualIpBtn.setVisibility(View.GONE);
         mDiscoveryBtn.setEnabled(false);
         mManualIpBtn.setEnabled(false);
-        mRecentDevicesBtn.setEnabled(false);
+        mTvRecords.setEnabled(false);
         mDiscoveryListDevices.setEnabled(false);
 
         canGoBack = false;

@@ -6,6 +6,8 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.phicomm.remotecontrol.BuildConfig;
@@ -30,6 +32,7 @@ import com.phicomm.remotecontrol.preference.PreferenceDef;
 import com.phicomm.remotecontrol.preference.PreferenceRepository;
 import com.phicomm.remotecontrol.util.CommonUtils;
 import com.phicomm.remotecontrol.util.DialogUtils;
+import com.phicomm.remotecontrol.util.ScreenUtils;
 import com.phicomm.widgets.alertdialog.PhiGuideDialog;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -40,6 +43,8 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+
+import static com.phicomm.remotecontrol.constant.PhiConstants.TITLE_BAR_HEIGHT_DP;
 
 public class PersonalActivity extends BaseActivity implements UpdateView, PersonalContract.View {
 
@@ -58,6 +63,9 @@ public class PersonalActivity extends BaseActivity implements UpdateView, Person
     @BindView(R.id.new_version_indicator)
     ImageView mIvVersionIndicator;
 
+    @BindView(R.id.rl_title)
+    RelativeLayout mRlTitle;
+
     private UpdatePresenter mUpdatePresenter;
     private PreferenceRepository mPreference;
 
@@ -69,11 +77,11 @@ public class PersonalActivity extends BaseActivity implements UpdateView, Person
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_personal);
         init();
-
         myPresenter = new PersonalPresenter(this);
     }
 
     private void init() {
+        setMarginForStatusBar(mRlTitle, TITLE_BAR_HEIGHT_DP);
         mPreference = new PreferenceRepository(this);
         boolean isHasNewVersion = (boolean) mPreference.get(PreferenceDef.APP_VERSION, PreferenceDef.IS_HAVE_NEW_VERSIOM, false);
         mTvTitle.setText(getString(R.string.personal_title));

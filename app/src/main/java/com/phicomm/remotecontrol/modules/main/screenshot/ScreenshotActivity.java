@@ -9,6 +9,7 @@ import android.os.Message;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.phicomm.remotecontrol.R;
@@ -24,6 +25,8 @@ import com.phicomm.widgets.alertdialog.PhiAlertDialog;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+
+import static com.phicomm.remotecontrol.constant.PhiConstants.TITLE_BAR_HEIGHT_DP;
 
 /**
  * Created by hao04.wu on 2017/8/9.
@@ -47,6 +50,9 @@ public class ScreenshotActivity extends BaseActivity implements ScreenshotView {
     @BindView(R.id.iv_right)
     ImageView mHelper;
 
+    @BindView(R.id.rl_title)
+    RelativeLayout mRlTitle;
+
     private RemoteBoxDevice mTarget;
     private ScreenshotPresenter mScreenshotPresenter;
 
@@ -55,16 +61,17 @@ public class ScreenshotActivity extends BaseActivity implements ScreenshotView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_screenshot);
         init();
+
     }
 
     private void init() {
+        setMarginForStatusBar(mRlTitle, TITLE_BAR_HEIGHT_DP);
         mScreenshotPresenter = new ScreenshotPresenterImp(this, this);
         mHelper.setVisibility(View.VISIBLE);
         mHelper.setImageResource(R.drawable.help_icon);
         mHelper.setClickable(true);
 
         mTarget = DevicesUtil.getTarget();
-
         if (mTarget == null || !NetworkManagerUtils.isCurrWifiAvailable(BaseApplication.getContext())) {
             mImageShow.setImageResource(R.drawable.tv_not_connected);
             mTvTitle.setText(getString(R.string.screenshot_title_not_connnect));

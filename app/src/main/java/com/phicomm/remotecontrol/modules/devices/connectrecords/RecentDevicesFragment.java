@@ -15,9 +15,11 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.phicomm.remotecontrol.R;
+import com.phicomm.remotecontrol.base.BaseFragment;
 import com.phicomm.remotecontrol.greendao.Entity.RemoteDevice;
 import com.phicomm.remotecontrol.modules.devices.connectrecords.RecentDevicesContract.Presenter;
 import com.phicomm.remotecontrol.util.SettingUtil;
@@ -29,32 +31,49 @@ import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.OnItemClick;
+
+import static com.phicomm.remotecontrol.constant.PhiConstants.TITLE_BAR_HEIGHT_DP;
 
 /**
  * Created by chunya02.li on 2017/7/10.
  */
 
-public class RecentDevicesFragment extends Fragment implements RecentDevicesContract.View {
+public class RecentDevicesFragment extends BaseFragment implements RecentDevicesContract.View {
 
     private static String TAG = "RecentDevicesFragment";
 
     private Presenter mPresenter;
     @BindView(R.id.recent_devices_list)
     public ListView mRecentDeivesList;
+
     @BindView(R.id.bt_cancel)
     public Button mCancelBtn;
+
     @BindView(R.id.bt_delete)
     public Button mDeleteBtn;
+
     @BindView(R.id.tv_sum)
     public TextView mCountTv;
+
     @BindView(R.id.linearLayout)
     public LinearLayout mActionBarLl;
-    @BindView(R.id.recent_edit)
-    public Button mEditBtn;
+
     @BindView(android.R.id.empty)
     public TextView mEmptyTv;
-    @BindView(R.id.back)
-    public ImageView mBackIv;
+
+    @BindView(R.id.iv_back)
+    ImageView mIvBack;
+
+    @BindView(R.id.tv_title)
+    TextView mTvTitle;
+
+    @BindView(R.id.rl_title)
+    RelativeLayout mRlTitle;
+
+    @BindView(R.id.tv_right)
+    TextView mTvEdit;
 
     private RecentDeviceAdapter mRecentDeviceAdapter;
     private List<RemoteDevice> mDeleteList = new ArrayList<>();
@@ -86,8 +105,17 @@ public class RecentDevicesFragment extends Fragment implements RecentDevicesCont
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
+        init();
         initAdapter();
         setonClickListener();
+
+    }
+
+    private void init() {
+        mTvTitle.setText(getString(R.string.recent_connect_devices));
+        mTvEdit.setVisibility(View.VISIBLE);
+        mTvEdit.setText(getString(R.string.edit_recent_connect_devices));
+        setMarginForStatusBar(mRlTitle, TITLE_BAR_HEIGHT_DP);
     }
 
     @Override
@@ -108,14 +136,14 @@ public class RecentDevicesFragment extends Fragment implements RecentDevicesCont
                 mRecentDeviceAdapter.getCheckBoxVisible().put(i, View.VISIBLE);
                 mRecentDeviceAdapter.getChecked().put(i, false);
             }
-            mEditBtn.setVisibility(View.INVISIBLE);
+            mTvEdit.setVisibility(View.INVISIBLE);
             mActionBarLl.setVisibility(View.VISIBLE);
         } else {
             for (int i = 0; i < listCount; i++) {
                 mRecentDeviceAdapter.getCheckBoxVisible().put(i, View.INVISIBLE);
                 mRecentDeviceAdapter.getChecked().put(i, true);
             }
-            mEditBtn.setVisibility(View.VISIBLE);
+            mTvEdit.setVisibility(View.VISIBLE);
             mActionBarLl.setVisibility(View.GONE);
         }
     }
@@ -140,11 +168,37 @@ public class RecentDevicesFragment extends Fragment implements RecentDevicesCont
     }
 
     private void setonClickListener() {
-        mEditBtn.setOnClickListener(onClickListener);
-        mCancelBtn.setOnClickListener(onClickListener);
-        mDeleteBtn.setOnClickListener(onClickListener);
-        mBackIv.setOnClickListener(onClickListener);
         mRecentDeivesList.setOnItemClickListener(onItemClick);
+    }
+
+    @Override
+    @OnClick({R.id.iv_back, R.id.tv_right, R.id.bt_cancel})
+    public void onClick(View view) {
+        super.onClick(view);
+        switch (view.getId()) {
+            case R.id.iv_back:
+                getActivity().onBackPressed();
+                break;
+            case R.id.tv_right:
+                List<RemoteDevice> list = mRecentDeviceAdapter.getRecentDeviceList();
+                if (list != null && list.size() > 0) {
+                    mIsMultiSelect = true;
+                    updateView();
+                    clearListDelete();
+                }
+                break;
+            case R.id.bt_cancel:
+                mIsMultiSelect = false;
+                updateView();
+                break;
+            case R.id.bt_delete:
+                mIsMultiSelect = false;
+                deleteChooseBox();
+                updateView();
+                break;
+            default:
+                break;
+        }
     }
 
     AdapterView.OnItemClickListener onItemClick = new AdapterView.OnItemClickListener() {
@@ -167,29 +221,6 @@ public class RecentDevicesFragment extends Fragment implements RecentDevicesCont
                     mDeleteList.add(device);
                 }
                 mCountTv.setText(makeDeviceCountLabel(mDeleteList.size()));
-            }
-        }
-    };
-
-    View.OnClickListener onClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-
-            SettingUtil.isVibrate();
-
-            if (v == mEditBtn && mRecentDeviceAdapter.getRecentDeviceList().size() > 0) {
-                mIsMultiSelect = true;
-                updateView();
-                clearListDelete();
-            } else if (v == mCancelBtn) {
-                mIsMultiSelect = false;
-                updateView();
-            } else if (v == mDeleteBtn) {
-                mIsMultiSelect = false;
-                deleteChooseBox();
-                updateView();
-            } else if (v == mBackIv) {
-                getActivity().onBackPressed();
             }
         }
     };

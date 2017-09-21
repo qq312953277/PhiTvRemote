@@ -1,4 +1,4 @@
-package com.phicomm.remotecontrol.activities;
+package com.phicomm.remotecontrol.modules.splash;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.phicomm.remotecontrol.BuildConfig;
 import com.phicomm.remotecontrol.R;
+import com.phicomm.remotecontrol.modules.main.controlpanel.CoreControlActivity;
 import com.phicomm.remotecontrol.base.BaseActivity;
 import com.phicomm.remotecontrol.base.BaseApplication;
 import com.phicomm.remotecontrol.modules.personal.account.local.LocalDataRepository;

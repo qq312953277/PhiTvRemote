@@ -1,5 +1,6 @@
 package com.phicomm.remotecontrol.util;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
@@ -178,5 +179,39 @@ public class StatusBarUtils {
      */
     public static void setFullScreen(Activity activity) {
         activity.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+    }
+
+    public static void transStatusbar(Activity activity) {
+        activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+    }
+
+    /**
+     * 沉浸式状态栏
+     */
+    public static void setImmersionStatusBar(Activity activity) {
+        if (Build.VERSION.SDK_INT >= 21) {
+            View decorView = activity.getWindow().getDecorView();
+            int option = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
+            decorView.setSystemUiVisibility(option);
+            activity.getWindow().setStatusBarColor(Color.TRANSPARENT);
+            activity.setImmersive(true);
+        } else {
+            activity.setImmersive(false);
+        }
+        ActionBar actionBar = activity.getActionBar();
+        if (actionBar != null) {
+            actionBar.hide();
+        }
+    }
+
+    /**
+     * 距离顶部状态栏距离
+     */
+    public void initSystemBar(View view) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            int top = ScreenUtils.getSystemBarHeight();
+            view.setPadding(0, top, 0, 0);
+        }
     }
 }

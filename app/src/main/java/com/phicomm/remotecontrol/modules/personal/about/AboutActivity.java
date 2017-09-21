@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.phicomm.remotecontrol.BuildConfig;
@@ -16,6 +17,8 @@ import com.phicomm.widgets.alertdialog.PhiGuideDialog;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+
+import static com.phicomm.remotecontrol.constant.PhiConstants.TITLE_BAR_HEIGHT_DP;
 
 public class AboutActivity extends BaseActivity {
 
@@ -28,6 +31,9 @@ public class AboutActivity extends BaseActivity {
     @BindView(R.id.about_version)
     TextView mTvVersion;
 
+    @BindView(R.id.rl_title)
+    RelativeLayout mRlTitle;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,10 +44,12 @@ public class AboutActivity extends BaseActivity {
     private void init() {
         mTvTitle.setText(getString(R.string.personal_about));
         mTvVersion.setText(getString(R.string.about_project_name, BuildConfig.VERSION_NAME));
+        setMarginForStatusBar(mRlTitle,TITLE_BAR_HEIGHT_DP);
     }
 
     @OnClick({R.id.iv_back, R.id.ll_visit_website, R.id.ll_dial_phone})
     public void onClick(View view) {
+        super.onClick(view);
         switch (view.getId()) {
             case R.id.iv_back:
                 finish();

@@ -1,4 +1,4 @@
-package com.phicomm.remotecontrol.activities;
+package com.phicomm.remotecontrol.modules.main.controlpanel;
 
 import android.Manifest;
 import android.app.ProgressDialog;
@@ -29,11 +29,6 @@ import com.phicomm.remotecontrol.base.BaseApplication;
 import com.phicomm.remotecontrol.constant.Commands;
 import com.phicomm.remotecontrol.constant.KeyCode;
 import com.phicomm.remotecontrol.constant.PhiConstants;
-import com.phicomm.remotecontrol.modules.main.controlpanel.KeyPanelFragment;
-import com.phicomm.remotecontrol.modules.main.controlpanel.PanelContract;
-import com.phicomm.remotecontrol.modules.main.controlpanel.PanelPresenter;
-import com.phicomm.remotecontrol.modules.main.controlpanel.TouchPanelFragment;
-import com.phicomm.remotecontrol.modules.main.controlpanel.ViewPageAdapter;
 import com.phicomm.remotecontrol.modules.main.screenprojection.activities.LocalMediaItemActivity;
 import com.phicomm.remotecontrol.modules.main.screenprojection.constants.DeviceDisplayListOperation;
 import com.phicomm.remotecontrol.modules.main.screenprojection.entity.DeviceDisplay;
@@ -120,7 +115,7 @@ public class CoreControlActivity extends BaseActivity implements UpdateView {
         mDisplayDeviceList = DisplayDeviceList.getInstance();
         mContext = this;
         mDLNAHandler = new DLNAHandler();
-        transStatusbar();
+//        transStatusbar();
         initSpinner();
         initPanel();
 
@@ -345,7 +340,7 @@ public class CoreControlActivity extends BaseActivity implements UpdateView {
 
             } else {
                 mPreference.put(PreferenceDef.APP_VERSION, PreferenceDef.IS_HAVE_NEW_VERSIOM, false);
-                CommonUtils.showShortToast(getString(R.string.current_version_newest));
+               // CommonUtils.showShortToast(getString(R.string.current_version_newest));
             }
         }
     }

@@ -1,9 +1,14 @@
 package com.phicomm.remotecontrol.base;
 
 import android.content.DialogInterface;
+import android.os.Build;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.phicomm.remotecontrol.R;
 import com.phicomm.remotecontrol.RemoteBoxDevice;
@@ -14,13 +19,16 @@ import com.phicomm.remotecontrol.modules.personal.account.local.LocalDataReposit
 import com.phicomm.remotecontrol.preference.PreferenceDef;
 import com.phicomm.remotecontrol.util.DevicesUtil;
 import com.phicomm.remotecontrol.util.DialogUtils;
+import com.phicomm.remotecontrol.util.ScreenUtils;
 import com.phicomm.remotecontrol.util.SettingUtil;
+import com.phicomm.remotecontrol.util.StatusBarUtils;
 import com.phicomm.widgets.alertdialog.PhiAlertDialog;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -36,6 +44,7 @@ public class BaseActivity extends AppCompatActivity {
         super.setContentView(layoutResID);
         injectViews();
         BaseApplication.getApplication().add(this);
+        StatusBarUtils.setImmersionStatusBar(this);
     }
 
     private void injectViews() {
@@ -148,4 +157,16 @@ public class BaseActivity extends AppCompatActivity {
         SettingUtil.isVibrate();//震动事件，子类继承
     }
 
+    /**
+     * 沉浸式状态栏 ，为了避免状态栏覆盖到titlebar，需要重新计算titlebar高度，将状态栏高度算进去
+     * ScreenUtils.getSystemBarHeight()状态栏高度
+     *
+     * @param view
+     * @param titleBarHeightDp
+     */
+    public void setMarginForStatusBar(View view, int titleBarHeightDp) {
+        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) view.getLayoutParams();
+        params.height = ScreenUtils.getSystemBarHeight() + ScreenUtils.dp2px(titleBarHeightDp);
+        view.setLayoutParams(params);
+    }
 }

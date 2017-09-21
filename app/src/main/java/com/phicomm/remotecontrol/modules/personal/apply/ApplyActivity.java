@@ -7,6 +7,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -29,6 +30,8 @@ import in.srain.cube.views.ptr.PtrDefaultHandler;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 import in.srain.cube.views.ptr.PtrHandler;
 
+import static com.phicomm.remotecontrol.constant.PhiConstants.TITLE_BAR_HEIGHT_DP;
+
 /**
  * Created by hao04.wu on 2017/9/18.
  */
@@ -44,6 +47,9 @@ public class ApplyActivity extends BaseActivity implements ApplyView, BaseRecycl
     @BindView(R.id.fl_app_infos)
     CustomPtrFrameLayoutRefreshHeader mRefresh;
 
+    @BindView(R.id.rl_title)
+    RelativeLayout mRlTitle;
+
     private ApplyAdapter mApplyAdapter;
     private ApplyPresenter mPresenter;
 
@@ -55,6 +61,7 @@ public class ApplyActivity extends BaseActivity implements ApplyView, BaseRecycl
     }
 
     private void init() {
+        setMarginForStatusBar(mRlTitle, TITLE_BAR_HEIGHT_DP);
         mTvTitle.setText(getString(R.string.apply_title));
         mApplyAdapter = new ApplyAdapter(this);
         mApplyAdapter.setOnItemViewClickListener(this);

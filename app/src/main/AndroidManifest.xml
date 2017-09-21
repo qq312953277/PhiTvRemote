@@ -34,7 +34,7 @@
         </provider>
 
         <activity
-            android:name=".activities.WelcomeActivity"
+            android:name=".modules.splash.WelcomeActivity"
             android:screenOrientation="nosensor"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -44,11 +44,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.CoreControlActivity"
+            android:name=".modules.main.controlpanel.CoreControlActivity"
             android:screenOrientation="nosensor" />
 
         <activity
-            android:name=".activities.RecentDevicesActivity"
+            android:name=".modules.devices.connectrecords.RecentDevicesActivity"
             android:screenOrientation="nosensor" />
 
         <activity
