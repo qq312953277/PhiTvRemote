@@ -11,6 +11,7 @@ import com.phicomm.remotecontrol.greendao.gen.RemoteDeviceDao;
 import com.phicomm.remotecontrol.modules.main.screenprojection.entity.DeviceDisplay;
 import com.phicomm.remotecontrol.modules.main.screenprojection.model.UpnpServiceBiz;
 import com.phicomm.remotecontrol.preference.PreferenceRepository;
+import com.phicomm.remotecontrol.util.ScreenUtils;
 import com.squareup.leakcanary.LeakCanary;
 
 import org.fourthline.cling.android.FixedAndroidLogHandler;
@@ -59,6 +60,8 @@ public class BaseApplication extends Application {
 
         //ImageLoader初始化
         ImageLoader.getInstance().init(ImageLoaderConfiguration.createDefault(getContext()));
+
+        ScreenUtils.init(this);
 
     }
 
