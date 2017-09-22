@@ -35,9 +35,9 @@ import android.widget.Toast;
 import com.phicomm.remotecontrol.ConnectManager;
 import com.phicomm.remotecontrol.R;
 import com.phicomm.remotecontrol.RemoteBoxDevice;
-import com.phicomm.remotecontrol.modules.devices.connectrecords.RecentDevicesActivity;
 import com.phicomm.remotecontrol.base.BaseFragment;
 import com.phicomm.remotecontrol.constant.PhiConstants;
+import com.phicomm.remotecontrol.modules.devices.connectrecords.RecentDevicesActivity;
 import com.phicomm.remotecontrol.modules.devices.searchdevices.DeviceDiscoveryContract.Presenter;
 import com.phicomm.remotecontrol.util.DevicesUtil;
 import com.phicomm.remotecontrol.util.LogUtil;
@@ -57,7 +57,6 @@ import static android.content.Context.WIFI_SERVICE;
 import static com.phicomm.remotecontrol.R.id.bt_cancelinput;
 import static com.phicomm.remotecontrol.R.id.bt_confirminput;
 import static com.phicomm.remotecontrol.R.id.ipConnectProgressBar;
-import static com.phicomm.remotecontrol.R.id.v1;
 import static com.phicomm.remotecontrol.constant.PhiConstants.TITLE_BAR_HEIGHT_DP;
 
 
@@ -67,52 +66,36 @@ import static com.phicomm.remotecontrol.constant.PhiConstants.TITLE_BAR_HEIGHT_D
 
 public class DeviceDiscoveryFragment extends BaseFragment implements DeviceDiscoveryContract.View {
     private static String TAG = "DeviceDiscoveryFragment";
-
     @BindView(ipConnectProgressBar)
     ProgressBar mConnectProgressBar;
-
     @BindView(R.id.discovery_devices_list)
     public ListView mDiscoveryListDevices;
-
     @BindView(R.id.start_discovery)
     public Button mDiscoveryBtn;
-
     @BindView(R.id.manual_ip)
     public Button mManualIpBtn;
-
     @BindView(R.id.tv_right)
     public TextView mTvRecords;
-
     @BindView(R.id.local_networkname)
     public TextView mNetworkNameTv;
-
     @BindView(R.id.choose_text)
     public TextView mChooseTv;
-
     @BindView(R.id.device_count)
     public TextView mCountTv;
-
     @BindView(android.R.id.empty)
     public TextView mEmptyTv;
-
     @BindView(R.id.discovery_progressbar)
     DiscoveryProgressbar mDiscoveryProgressbar;
-
     @BindView(R.id.discovery_progress_tv)
     TextView mDiscoveryProgressTv;
-
     @BindView(R.id.discovery_progress_view)
     FrameLayout mDiscoveryProgressView;
-
     @BindView(R.id.tv_title)
     TextView mTvTitle;
-
     @BindView(R.id.rl_title)
     RelativeLayout mRlTitle;
-
     private Presenter mPresenter;
     private DeviceDiscoveryAdapter mDiscoveryAdapter;
-
     private WifiManager mWifiManager;
     private WifiChangeReceiver mWifiChangeReceiver;
     private BottomView mBottomView;
@@ -129,6 +112,7 @@ public class DeviceDiscoveryFragment extends BaseFragment implements DeviceDisco
             "7", "8", "9",
             ".", "0", "←",
     };
+    private int mFindIndex = -1;
     public static boolean canGoBack = true;
     private boolean mIsRunning;
     private int mProcess;
@@ -141,6 +125,13 @@ public class DeviceDiscoveryFragment extends BaseFragment implements DeviceDisco
                 mDiscoveryProgressView.setVisibility(View.GONE);
                 stopProgressBar();
                 stopDiscoveryService();
+                if (mFindIndex == -1) {
+                    if (DevicesUtil.getTarget() != null) {
+                        mDiscoveryAdapter.noClearStates(mFindIndex);
+                        String mIp = DevicesUtil.getTarget().getAddress();
+                        mPresenter.ipConnectAgain(mIp);
+                    }
+                }
             }
         }
     };
@@ -205,6 +196,9 @@ public class DeviceDiscoveryFragment extends BaseFragment implements DeviceDisco
         switch (view.getId()) {
             case R.id.start_discovery:
                 if (isWifiAvailable()) {
+                    if (mFindIndex != -1) {
+                        mDiscoveryAdapter.noClearStates(mFindIndex);
+                    }
                     startJmdnsDiscoveryDevice();
                 } else {
                     Toast.makeText(getContext(), R.string.finder_wifi_not_available, Toast.LENGTH_SHORT).show();
@@ -317,6 +311,7 @@ public class DeviceDiscoveryFragment extends BaseFragment implements DeviceDisco
                 SettingUtil.doVibrate();
             }
             final int pos = position;
+            mFindIndex = position;
             final RemoteBoxDevice remoteDevice = (RemoteBoxDevice) parent.getItemAtPosition(
                     position);
             if (remoteDevice != null) {
@@ -386,6 +381,11 @@ public class DeviceDiscoveryFragment extends BaseFragment implements DeviceDisco
     }
 
     @Override
+    public void setTittle(int intId) {
+        mTvTitle.setText(intId);
+    }
+
+    @Override
     public void refreshListView(List<RemoteBoxDevice> currentlist) {
         if (currentlist.size() > 0) {
             mChooseTv.setVisibility(View.VISIBLE);
@@ -393,9 +393,9 @@ public class DeviceDiscoveryFragment extends BaseFragment implements DeviceDisco
             mChooseTv.setVisibility(View.INVISIBLE);
         }
         mCountTv.setText(makeDeviceCountLabel(currentlist.size()));
-        int findIndex = findTargetPos(currentlist);
-        if (findIndex != -1) {
-            mDiscoveryAdapter.clearStates(findIndex);
+        mFindIndex = findTargetPos(currentlist);
+        if (mFindIndex != -1) {
+            mDiscoveryAdapter.clearStates(mFindIndex);
         }
         mDiscoveryAdapter.notifyDataChange(currentlist);
     }
@@ -404,7 +404,6 @@ public class DeviceDiscoveryFragment extends BaseFragment implements DeviceDisco
     public void onDestroyView() {
         super.onDestroyView();
     }
-
 
     private void startJmdnsDiscoveryDevice() {
         mPresenter.start();
@@ -535,7 +534,6 @@ public class DeviceDiscoveryFragment extends BaseFragment implements DeviceDisco
         mManualIpBtn.setEnabled(false);
         mTvRecords.setEnabled(false);
         mDiscoveryListDevices.setEnabled(false);
-
         canGoBack = false;
     }
 

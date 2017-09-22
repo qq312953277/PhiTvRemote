@@ -17,6 +17,8 @@ public class DeviceDiscoveryContract {
 
         void setTittle(String str);
 
+        void setTittle(int intId);
+
         void showToast(String str);
 
         void stopIPConnectProgressBar();
@@ -36,6 +38,8 @@ public class DeviceDiscoveryContract {
         void insertOrUpdateRecentDevices(RemoteBoxDevice device);
 
         void ipConnect(String ip);
+
+        void ipConnectAgain(String ip);
 
         void removeItemAndRefreshView(RemoteBoxDevice device);
 

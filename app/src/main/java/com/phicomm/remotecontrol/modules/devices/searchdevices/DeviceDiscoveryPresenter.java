@@ -6,6 +6,7 @@ import android.net.wifi.WifiManager;
 import android.util.Log;
 
 import com.phicomm.remotecontrol.ConnectManager;
+import com.phicomm.remotecontrol.R;
 import com.phicomm.remotecontrol.RemoteBoxDevice;
 import com.phicomm.remotecontrol.modules.devices.searchdevices.DeviceDiscoveryContract.View;
 import com.phicomm.remotecontrol.modules.devices.searchdevices.JmdnsDiscoveryClient.IDiscoverResultListener;
@@ -65,6 +66,30 @@ public class DeviceDiscoveryPresenter implements DeviceDiscoveryContract.Present
         ConnectManager.getInstance().connect(ip, 8080, connetResultCallback);
     }
 
+    public void ipConnectAgain(String ip) {
+        ConnectManager.getInstance().connect(ip, 8080, connetAgainResultCallback);
+    }
+
+    private ConnectManager.ConnetResultCallback connetAgainResultCallback = new ConnectManager.ConnetResultCallback() {
+        @Override
+        public void onSuccess(RemoteBoxDevice device) {
+            Log.d(TAG, "onSuccess");
+            mCachedRemoteAddress.put(device.getBssid(), device);
+            mDiscoveryDeviceList.add(device);
+            DevicesUtil.setTarget(device);
+            mView.setTittle(device.getName());
+            setCurrentDeviceList(mDiscoveryDeviceList);
+            mView.refreshListView(mDiscoveryDeviceList);
+        }
+
+        @Override
+        public void onFail(String msg) {
+            LogUtil.d(TAG, "onFail");
+            DevicesUtil.setTarget(null);
+            mView.setTittle(R.string.unable_to_connect_device);
+            mView.showToast("device is offline");
+        }
+    };
     private ConnectManager.ConnetResultCallback connetResultCallback = new ConnectManager.ConnetResultCallback() {
         @Override
         public void onSuccess(RemoteBoxDevice device) {

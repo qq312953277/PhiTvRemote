@@ -16,11 +16,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-
 /**
  * Created by chunya02.li on 2017/7/11.
  */
-
 public class DeviceDiscoveryAdapter extends BaseAdapter {
     private static String TAG = "DeviceDiscoveryAdapter";
     private List<RemoteBoxDevice> mDeviceList;
@@ -85,12 +83,18 @@ public class DeviceDiscoveryAdapter extends BaseAdapter {
         return convertView;
     }
 
-
     public void clearStates(int position) {
         for (String key : mStatus.keySet()) {
             mStatus.put(key, false);
         }
         mStatus.put(String.valueOf(position), true);
+    }
+
+    public void noClearStates(int position) {
+        for (String key : mStatus.keySet()) {
+            mStatus.put(key, false);
+        }
+        mStatus.put(String.valueOf(position), false);
     }
 
     private Boolean getStates(int position) {
