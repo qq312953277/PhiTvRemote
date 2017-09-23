@@ -114,6 +114,18 @@ public class DeviceDiscoveryPresenter implements DeviceDiscoveryContract.Present
         }
     };
 
+    @Override
+    //首页下拉列表异常
+    public void addDeviceItem(List<RemoteBoxDevice> mOnResumeRemoteBoxDevice, RemoteBoxDevice device) {
+        if (!mCachedRemoteAddress.containsKey(device.getBssid())) {
+            mCachedRemoteAddress.put(device.getBssid(), device);
+            mDiscoveryDeviceList.add(device);
+            mOnResumeRemoteBoxDevice.add(device);
+            setCurrentDeviceList(mOnResumeRemoteBoxDevice);
+            mView.refreshListView(mOnResumeRemoteBoxDevice);
+        }
+    }
+
     private void stopDiscoveryService() {
         releaseMulticast();
         mJmdnsDiscoveryClient.stopDiscovery();
@@ -205,6 +217,16 @@ public class DeviceDiscoveryPresenter implements DeviceDiscoveryContract.Present
             mMulticastLock.release();
             mMulticastLock = null;
         }
+    }
+
+    @Override
+    public boolean isContains(List<RemoteBoxDevice> mOnResumeRemoteBoxDevice, RemoteBoxDevice mTarget) {
+        for (int i = 0; i < mOnResumeRemoteBoxDevice.size(); i++) {
+            if (mTarget.getBssid().equals(mOnResumeRemoteBoxDevice.get(i).getBssid())) {
+                return true;
+            }
+        }
+        return false;
     }
 }
 

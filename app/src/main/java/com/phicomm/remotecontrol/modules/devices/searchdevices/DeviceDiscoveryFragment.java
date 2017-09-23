@@ -342,7 +342,7 @@ public class DeviceDiscoveryFragment extends BaseFragment implements DeviceDisco
     @Override
     public void onResume() {
         LogUtil.d(TAG, "onResume() is called");
-        mPresenter.getCurrentDeviceList();
+        List<RemoteBoxDevice> mOnResumeRemoteBoxDevice = mPresenter.getCurrentDeviceList();
         LogUtil.d(TAG, mPresenter.getCurrentDeviceList().toString());
         mPresenter.loadRecentList();
         mWifiManager = (WifiManager) getContext().getApplicationContext().getSystemService(WIFI_SERVICE);
@@ -351,6 +351,10 @@ public class DeviceDiscoveryFragment extends BaseFragment implements DeviceDisco
         filter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
         mWifiChangeReceiver = new WifiChangeReceiver();
         getActivity().registerReceiver(mWifiChangeReceiver, filter);
+        //修复首页下拉列表异常
+        if ((!mPresenter.isContains(mOnResumeRemoteBoxDevice, DevicesUtil.getTarget())) && (DevicesUtil.getTarget() != null)) {
+            mPresenter.addDeviceItem(mOnResumeRemoteBoxDevice, DevicesUtil.getTarget());
+        }
         super.onResume();
     }
 

@@ -43,5 +43,8 @@ public class DeviceDiscoveryContract {
 
         void removeItemAndRefreshView(RemoteBoxDevice device);
 
+        void addDeviceItem(List<RemoteBoxDevice> mOnResumeRemoteBoxDevice, RemoteBoxDevice mDevice);
+
+        boolean isContains(List<RemoteBoxDevice> mOnResumeRemoteBoxDevice, RemoteBoxDevice mDevice);
     }
 }
