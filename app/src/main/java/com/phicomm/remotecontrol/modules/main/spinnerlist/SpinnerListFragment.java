@@ -269,7 +269,7 @@ public class SpinnerListFragment extends BaseFragment {
 
         switch (view.getId()) {
             case R.id.login:
-                CommonUtils.startIntent(getActivity(), PersonalActivity.class);
+                CommonUtils.startIntent(getActivity(), null,PersonalActivity.class);
                 break;
             case R.id.scan:
                 Intent intent = new Intent(getContext(), DeviceDiscoveryActivity.class);

@@ -157,6 +157,7 @@ public class CustomPtrHeader extends FrameLayout implements PtrUIHandler {
         mReverseFlipAnimation.setFillAfter(true);
     }
 
+    @SuppressWarnings("ResourceType")
     private void buildLoadingAnimation() {
         mLoadingAnimation = AnimationUtils.loadAnimation(getContext(), R.animator.rotate__refresh_anim);
         mLoadingAnimation.setInterpolator(new LinearInterpolator());

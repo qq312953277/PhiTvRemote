@@ -7,6 +7,7 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowNoTitle">true</item>
         <item name="android:editTextStyle">@style/EditTextStyle</item>
+        <item name="android:windowAnimationStyle">@style/activityAnimation</item>
     </style>
 
     <style name="EditTextStyle" parent="android:Widget.EditText">
@@ -191,5 +192,13 @@
     <style name="BottomToTopAnim" parent="android:Animation">
         <item name="@android:windowEnterAnimation">@animator/bottomview_anim_enter</item>
         <item name="@android:windowExitAnimation">@animator/bottomview_anim_exit</item>
+    </style>
+
+    <!--activity 弹出效果-->
+    <style name="activityAnimation" parent="@android:style/Animation">
+        <item name="android:activityOpenEnterAnimation">@animator/slide_right_in</item>
+        <item name="android:activityOpenExitAnimation">@animator/slide_left_out</item>
+        <item name="android:activityCloseEnterAnimation">@animator/slide_left_in</item>
+        <item name="android:activityCloseExitAnimation">@animator/slide_right_out</item>
     </style>
 </resources>

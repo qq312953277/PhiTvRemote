@@ -3,6 +3,7 @@ package com.phicomm.remotecontrol.base;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
+import android.support.multidex.MultiDex;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -49,6 +50,7 @@ public class BaseApplication extends Application {
         super.onCreate();
         //CrashHandler.getInstance().init(this);
         analyseLeak();
+        initMultiDex();
         mContext = this;
         manager = this;
         mGreenDaoManager = GreenDaoManager.getInstance();
@@ -79,6 +81,13 @@ public class BaseApplication extends Application {
 
     public Item getItem() {
         return item;
+    }
+
+    /**
+     * init MultiDex
+     */
+    private void initMultiDex() {
+        MultiDex.install(this);
     }
 
     @Override
