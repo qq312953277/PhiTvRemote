@@ -31,6 +31,7 @@ import com.phicomm.remotecontrol.preference.PreferenceDef;
 import com.phicomm.remotecontrol.preference.PreferenceRepository;
 import com.phicomm.remotecontrol.util.CommonUtils;
 import com.phicomm.remotecontrol.util.DialogUtils;
+import com.phicomm.remotecontrol.util.NetworkManagerUtils;
 import com.phicomm.widgets.alertdialog.PhiGuideDialog;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -145,12 +146,16 @@ public class PersonalActivity extends BaseActivity implements UpdateView, Person
     }
 
     private void checkNewVersion() {
-        showLoadingDialog(null);
-        Map<String, String> options = new HashMap<>();
-        options.put("appid", PhiConstants.APP_ID);
-        options.put("channel", CommonUtils.getAppChannel());
-        options.put("vercode", BuildConfig.VERSION_CODE + "");
-        mUpdatePresenter.checkVersion(options);
+        if (NetworkManagerUtils.instance().isDataUp()) {
+            showLoadingDialog(null);
+            Map<String, String> options = new HashMap<>();
+            options.put("appid", PhiConstants.APP_ID);
+            options.put("channel", CommonUtils.getAppChannel());
+            options.put("vercode", BuildConfig.VERSION_CODE + "");
+            mUpdatePresenter.checkVersion(options);
+        } else {
+            CommonUtils.showShortToast(getString(R.string.net_connect_fail));
+        }
     }
 
     private void showUpdateInfoDialog(final boolean isForceUpdate, final String versionName, String versionInfo, final String url) {
@@ -176,7 +181,11 @@ public class PersonalActivity extends BaseActivity implements UpdateView, Person
                 if (!isForceUpdate) {
                     dialog.dismiss();
                 }
-                mUpdatePresenter.downloadFile(url, versionName);
+                if (NetworkManagerUtils.instance().isDataUp()) {
+                    mUpdatePresenter.downloadFile(url, versionName);
+                } else {
+                    CommonUtils.showShortToast(getString(R.string.net_connect_fail));
+                }
             }
         });
         if (isForceUpdate) {
@@ -260,6 +269,7 @@ public class PersonalActivity extends BaseActivity implements UpdateView, Person
     @Override
     public void showMessage(Object message) {
         CommonUtils.showShortToast((String) message);
+        DialogUtils.cancelLoadingDialog();
     }
 
     @Override
@@ -269,6 +279,6 @@ public class PersonalActivity extends BaseActivity implements UpdateView, Person
 
     @Override
     public void onFailure(Object message) {
-
+        DialogUtils.cancelLoadingDialog();
     }
 }

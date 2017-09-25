@@ -13,6 +13,7 @@ import com.phicomm.remotecontrol.base.BaseActivity;
 import com.phicomm.remotecontrol.base.BaseRecycleAdapter;
 import com.phicomm.remotecontrol.util.CommonUtils;
 import com.phicomm.remotecontrol.util.DialogUtils;
+import com.phicomm.remotecontrol.util.NetworkManagerUtils;
 import com.phicomm.remotecontrol.widget.refreshlayout.CustomPtrFrameLayoutRefreshHeader;
 
 import java.util.HashMap;
@@ -62,9 +63,17 @@ public class ApplyActivity extends BaseActivity implements ApplyView, BaseRecycl
         mRecyclerView.setLayoutManager(new GridLayoutManager(this, 3));
         mRecyclerView.setAdapter(mApplyAdapter);
         mPresenter = new ApplyPresenterImpl(this, this);
-        showLoadingDialog(null);
-        mPresenter.getAppInfo();
+        checkNet();
         setRefresh();
+    }
+
+    private void checkNet() {
+        if (NetworkManagerUtils.instance().isDataUp()) {
+            showLoadingDialog(null);
+            mPresenter.getAppInfo();
+        } else {
+            CommonUtils.showShortToast(getString(R.string.net_connect_fail));
+        }
     }
 
     @OnClick({R.id.iv_back})
@@ -133,5 +142,4 @@ public class ApplyActivity extends BaseActivity implements ApplyView, BaseRecycl
         options.put("package", info.appid);
         mPresenter.openApplication(options);
     }
-
 }
