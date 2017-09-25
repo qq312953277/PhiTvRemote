@@ -340,7 +340,7 @@ public class CoreControlActivity extends BaseActivity implements UpdateView {
 
             } else {
                 mPreference.put(PreferenceDef.APP_VERSION, PreferenceDef.IS_HAVE_NEW_VERSIOM, false);
-               // CommonUtils.showShortToast(getString(R.string.current_version_newest));
+                // CommonUtils.showShortToast(getString(R.string.current_version_newest));
             }
         }
     }

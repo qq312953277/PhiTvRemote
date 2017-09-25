@@ -1,6 +1,5 @@
 package com.phicomm.remotecontrol.modules.personal.apply;
 
-import com.phicomm.remotecontrol.base.BaseView;
 import com.phicomm.remotecontrol.base.BasicView;
 
 /**

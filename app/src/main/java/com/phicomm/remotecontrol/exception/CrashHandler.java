@@ -11,8 +11,8 @@ import android.os.SystemClock;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.phicomm.remotecontrol.modules.splash.WelcomeActivity;
 import com.phicomm.remotecontrol.base.BaseApplication;
+import com.phicomm.remotecontrol.modules.splash.WelcomeActivity;
 import com.phicomm.remotecontrol.util.DateUtil;
 import com.phicomm.remotecontrol.util.FileUtil;
 

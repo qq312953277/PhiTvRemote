@@ -358,7 +358,7 @@ public class DeviceDiscoveryFragment extends BaseFragment implements DeviceDisco
     private void addSelectedItem() {
         List<RemoteBoxDevice> mOnResumeRemoteBoxDevice = mPresenter.getCurrentDeviceList();
         if ((DevicesUtil.getTarget() != null) && (mOnResumeRemoteBoxDevice != null)) {
-            if ((!mPresenter.isContains(mOnResumeRemoteBoxDevice, DevicesUtil.getTarget()))){
+            if ((!mPresenter.isContains(mOnResumeRemoteBoxDevice, DevicesUtil.getTarget()))) {
                 mPresenter.addDeviceItem(mOnResumeRemoteBoxDevice, DevicesUtil.getTarget());
             }
         }

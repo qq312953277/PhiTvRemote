@@ -2,8 +2,6 @@ package com.phicomm.remotecontrol.request;
 
 
 import com.google.gson.Gson;
-import com.phicomm.remotecontrol.ConnectManager;
-import com.phicomm.remotecontrol.RemoteBoxDevice;
 import com.phicomm.remotecontrol.beans.BaseResponseBean;
 import com.phicomm.remotecontrol.constant.HttpConfig;
 import com.phicomm.remotecontrol.modules.personal.apply.ApplyInfosBean;
@@ -174,7 +172,6 @@ public class HttpRequestManager {
                     });
         }
     }
-
 
 
     /**

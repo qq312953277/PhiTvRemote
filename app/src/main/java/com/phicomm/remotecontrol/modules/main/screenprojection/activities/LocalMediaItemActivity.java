@@ -1,71 +1,128 @@
 package com.phicomm.remotecontrol.modules.main.screenprojection.activities;
 
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
-import android.widget.ListView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.view.ViewPager;
+import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.phicomm.remotecontrol.R;
 import com.phicomm.remotecontrol.base.BaseActivity;
-import com.phicomm.remotecontrol.base.BaseApplication;
-import com.phicomm.remotecontrol.modules.main.screenprojection.adapter.GeneralAdapter;
-import com.phicomm.remotecontrol.modules.main.screenprojection.entity.ContentItem;
-import com.phicomm.remotecontrol.modules.main.screenprojection.presenter.LocalMediaItemPresenter;
-import com.phicomm.remotecontrol.modules.main.screenprojection.presenter.LocalMediaItemPresenterImpl;
+import com.phicomm.remotecontrol.modules.main.screenprojection.adapter.MyFragmentAdapter;
+import com.phicomm.remotecontrol.modules.main.screenprojection.fragments.MainFragmentTab;
+
+import java.util.List;
 
 import butterknife.BindView;
-import butterknife.OnItemClick;
 
 /**
  * Created by kang.sun on 2017/8/31.
  */
-public class LocalMediaItemActivity extends BaseActivity implements LocalMediaItemView {
-    private final static String TAG = "LocalMediaItemActivity";
-    private LocalMediaItemPresenter mLocalMediaItemPresenter;
-    @BindView(R.id.tb_title)
-    Toolbar mToolbar;
-    @BindView(R.id.lv_devices)
-    ListView mListViewContents;
+public class LocalMediaItemActivity extends BaseActivity implements MyFragmentAdapter.GetFragmentCallback {
+    @BindView(R.id.view_pager)
+    ViewPager mViewPage;
+
+    @BindView(R.id.radio_group)
+    RadioGroup mRadioGroup;
+
+    @BindView(R.id.picture)
+    RadioButton mPic;
+
+    @BindView(R.id.video)
+    RadioButton mVid;
+
+    @BindView(R.id.rl_title)
+    RelativeLayout mRlTitle;
+
+    @BindView(R.id.tv_title)
+    TextView mTvTitle;
+
+    @BindView(R.id.iv_back)
+    ImageView mBack;
+
+    private MyFragmentAdapter mPageAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_screenprojection);
-        init();
-        setToolBar();
-        mLocalMediaItemPresenter.showItems();
+
+        initView();
     }
 
-    private void setToolBar() {
-        // 设置显示ToolBar
-        setSupportActionBar(mToolbar);
+
+    private void initView() {
+        mPageAdapter = new MyFragmentAdapter(getSupportFragmentManager(), this);
+        mViewPage.setAdapter(mPageAdapter);
+        mViewPage.setOffscreenPageLimit(mPageAdapter.getCount());//表示两个界面之间来回切换都不会重新加载
+        mViewPage.setOnPageChangeListener(new ViewPager.OnPageChangeListener() { //导航条同步
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                if (position == 0) {
+                    mPic.setChecked(true);
+                    mVid.setChecked(false);
+                } else {
+                    mVid.setChecked(true);
+                    mPic.setChecked(false);
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
+        mRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch (checkedId) {
+                    case R.id.picture:
+                        mViewPage.setCurrentItem(0, false);//切换效果
+                        break;
+                    case R.id.video:
+                        mViewPage.setCurrentItem(1, false);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
     }
 
-    private void init() {
-        mLocalMediaItemPresenter = new LocalMediaItemPresenterImpl(this, this, (BaseApplication) getApplication());
-    }
-
-    @OnItemClick(R.id.lv_devices)
-    public void onItemClick(int position) {
-        mLocalMediaItemPresenter.browserItems(position, LocalMediaItemActivity.this);
-    }
-
-    /**
-     * 显示本地视频和照片
-     */
     @Override
-    public void showItems(GeneralAdapter<ContentItem> mContentAdapter) {
-        mListViewContents.setAdapter(mContentAdapter);
+    public void initFragmentList(FragmentManager fm, List<Fragment> fragmentList) {
+        for (MainFragmentTab tab : MainFragmentTab.values()) {
+            try {
+                Fragment fragment = null;
+                List<Fragment> fs = fm.getFragments();
+                if (fs != null) {
+                    for (Fragment f : fs) {
+                        if (f.getClass() == tab.clazz) {
+                            fragment = f;
+                            break;
+                        }
+                    }
+                }
+                if (fragment == null) {
+                    fragment = tab.clazz.newInstance();
+                }
+                fragmentList.add(fragment);
+            } catch (InstantiationException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
-    @Override
-    public void showMessage(Object message) {
-    }
-
-    @Override
-    public void onSuccess(Object message) {
-    }
-
-    @Override
-    public void onFailure(Object message) {
-    }
 }

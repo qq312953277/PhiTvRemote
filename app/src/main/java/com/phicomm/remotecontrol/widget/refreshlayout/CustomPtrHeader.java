@@ -156,8 +156,9 @@ public class CustomPtrHeader extends FrameLayout implements PtrUIHandler {
         mReverseFlipAnimation.setDuration(mRotateAniTime);
         mReverseFlipAnimation.setFillAfter(true);
     }
-    private void buildLoadingAnimation(){
-        mLoadingAnimation = AnimationUtils.loadAnimation(getContext(),R.animator.rotate__refresh_anim);
+
+    private void buildLoadingAnimation() {
+        mLoadingAnimation = AnimationUtils.loadAnimation(getContext(), R.animator.rotate__refresh_anim);
         mLoadingAnimation.setInterpolator(new LinearInterpolator());
     }
 
@@ -171,10 +172,11 @@ public class CustomPtrHeader extends FrameLayout implements PtrUIHandler {
         mArrowView.setVisibility(GONE);
     }
 
-    private void hideLoadingView(){
+    private void hideLoadingView() {
         mProgressView.clearAnimation();
         mProgressView.setVisibility(GONE);
     }
+
     /**
      * 重置，回到顶部的
      */
@@ -327,7 +329,7 @@ public class CustomPtrHeader extends FrameLayout implements PtrUIHandler {
                 mLastUpdateTextView.setVisibility(GONE);
             } else {
                 mLastUpdateTextView.setVisibility(GONE);
-               // mLastUpdateTextView.setVisibility(VISIBLE);
+                // mLastUpdateTextView.setVisibility(VISIBLE);
                 mLastUpdateTextView.setText(time);
             }
         }

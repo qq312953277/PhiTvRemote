@@ -1,20 +1,14 @@
 package com.phicomm.remotecontrol.modules.personal.apply;
 
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.phicomm.remotecontrol.ConnectManager;
 import com.phicomm.remotecontrol.R;
-import com.phicomm.remotecontrol.RemoteBoxDevice;
 import com.phicomm.remotecontrol.base.BaseActivity;
 import com.phicomm.remotecontrol.base.BaseRecycleAdapter;
 import com.phicomm.remotecontrol.util.CommonUtils;

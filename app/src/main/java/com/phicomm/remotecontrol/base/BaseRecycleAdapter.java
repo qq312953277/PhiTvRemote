@@ -54,12 +54,12 @@ public abstract class BaseRecycleAdapter<T> extends RecyclerView.Adapter<BaseRec
      * @param view
      * @return
      */
-    public abstract BaseViewHolder getViewHolder(int viewType,View view);
+    public abstract BaseViewHolder getViewHolder(int viewType, View view);
 
     @Override
     public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(mContext).inflate(getItemLayoutResId(viewType), parent, false);
-        return getViewHolder(viewType,view);
+        return getViewHolder(viewType, view);
     }
 
     @Override
@@ -106,7 +106,7 @@ public abstract class BaseRecycleAdapter<T> extends RecyclerView.Adapter<BaseRec
      * Item View点击事件监听器
      */
     public interface OnItemViewClickListener<T> {
-        void onItemViewClick(T object,int position);
+        void onItemViewClick(T object, int position);
     }
 
     /**

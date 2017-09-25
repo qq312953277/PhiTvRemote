@@ -117,6 +117,9 @@
     <string name="vol">音量</string>
     <string name="chanel">频道</string>
 
+    <string name="photo">照片</string>
+    <string name="video">视频</string>
+
     <string name="wifi_connecting">正在连接Wifi...</string>
     <string name="wifi_disconnecting">正在断开Wifi...</string>
     <string name="wifi_not_connected">未连接Wifi...</string>

@@ -1,7 +1,6 @@
 package com.phicomm.remotecontrol.request;
 
 
-import com.phicomm.remotecontrol.modules.personal.apply.ApplyInfosBean;
 import com.phicomm.remotecontrol.modules.personal.upgrade.UpdateInfoResponseBean;
 
 import java.util.Map;
