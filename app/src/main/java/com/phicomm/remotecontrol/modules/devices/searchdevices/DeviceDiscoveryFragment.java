@@ -342,7 +342,6 @@ public class DeviceDiscoveryFragment extends BaseFragment implements DeviceDisco
     @Override
     public void onResume() {
         LogUtil.d(TAG, "onResume() is called");
-        List<RemoteBoxDevice> mOnResumeRemoteBoxDevice = mPresenter.getCurrentDeviceList();
         LogUtil.d(TAG, mPresenter.getCurrentDeviceList().toString());
         mPresenter.loadRecentList();
         mWifiManager = (WifiManager) getContext().getApplicationContext().getSystemService(WIFI_SERVICE);
@@ -352,10 +351,17 @@ public class DeviceDiscoveryFragment extends BaseFragment implements DeviceDisco
         mWifiChangeReceiver = new WifiChangeReceiver();
         getActivity().registerReceiver(mWifiChangeReceiver, filter);
         //修复首页下拉列表异常
-        if ((!mPresenter.isContains(mOnResumeRemoteBoxDevice, DevicesUtil.getTarget())) && (DevicesUtil.getTarget() != null)) {
-            mPresenter.addDeviceItem(mOnResumeRemoteBoxDevice, DevicesUtil.getTarget());
-        }
+        addSelectedItem();
         super.onResume();
+    }
+
+    private void addSelectedItem() {
+        List<RemoteBoxDevice> mOnResumeRemoteBoxDevice = mPresenter.getCurrentDeviceList();
+        if ((DevicesUtil.getTarget() != null) && (mOnResumeRemoteBoxDevice != null)) {
+            if ((!mPresenter.isContains(mOnResumeRemoteBoxDevice, DevicesUtil.getTarget()))){
+                mPresenter.addDeviceItem(mOnResumeRemoteBoxDevice, DevicesUtil.getTarget());
+            }
+        }
     }
 
     @Override
