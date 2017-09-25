@@ -137,14 +137,14 @@ public class PhotoUpAlbumUtil extends AsyncTask<Object, Object, Object> {
                             if (bucket == null) {
                                 bucket = new PhotoUpImageBucket();
                                 mBucketList.put(bucketId, bucket);
-                                bucket.imageList = new ArrayList<>();
+                                bucket.mImageList = new ArrayList<>();
                                 bucket.mBucketName = bucketName;
                             }
                             bucket.mCount++;
                             PhotoUpImageItem imageItem = new PhotoUpImageItem();
                             imageItem.setmImageId(_id);
                             imageItem.setmImagePath(path);
-                            bucket.imageList.add(imageItem);
+                            bucket.mImageList.add(imageItem);
                             Log.i(TAG, "PhotoUpAlbumHelper类中 的——》path=" + mThumbnailList.get(_id));
                         }
                     } while (cursor.moveToNext());

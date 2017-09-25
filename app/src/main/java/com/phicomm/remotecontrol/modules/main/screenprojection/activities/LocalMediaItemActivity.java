@@ -107,14 +107,14 @@ public class LocalMediaItemActivity extends BaseActivity implements MyFragmentAd
                 List<Fragment> fs = fm.getFragments();
                 if (fs != null) {
                     for (Fragment f : fs) {
-                        if (f.getClass() == tab.clazz) {
+                        if (f.getClass() == tab.mClazz) {
                             fragment = f;
                             break;
                         }
                     }
                 }
                 if (fragment == null) {
-                    fragment = tab.clazz.newInstance();
+                    fragment = tab.mClazz.newInstance();
                 }
                 fragmentList.add(fragment);
             } catch (InstantiationException e) {
