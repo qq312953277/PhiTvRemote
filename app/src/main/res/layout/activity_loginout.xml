@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@drawable/login_bg"
     android:orientation="vertical">
 
@@ -46,8 +46,5 @@
         android:textAllCaps="false"
         android:textColor="@drawable/button_colour_text_selector"
         android:textSize="15sp" />
-
-
-    <include layout="@layout/bottom_copyright" />
 
 </LinearLayout>

@@ -25,11 +25,11 @@ public class PhiConstants {
     public static final String APP_ID = "2017060031";
 
     //login constant
-    public static final String CLIENT_ID = "3899291";
+    public static final String CLIENT_ID = "5937751";
     public static final String RESPONSE_TYPE = "code"; //固定
-    public static final String REQUEST_SOURCE = "3899291";
+    public static final String REQUEST_SOURCE = "5937751";
     public static final String SCOPE = "write";
-    public static final String CLIENT_SECRET = "6DFF6BD0C8436AF96F2C70F75A212147";
+    public static final String CLIENT_SECRET = "AC08CBDA7AD99831A16C8BA9353854E7";
     public static final String SMS_VERIFICATION = "0";//短信接收
 
     //H5

@@ -615,11 +615,8 @@ public class RegisterActivity extends BaseActivity implements RegisterContract.V
             LocalDataRepository.getInstance(BaseApplication.getContext()).setPassword("");
             LocalDataRepository.getInstance(BaseApplication.getContext()).setRememberMe(false);
 
-            //跳转到用户界面，需要刷新界面
-            Intent intent = new Intent(this, PersonalActivity.class);
-            intent.putExtra("refreshUI_flag", true);
-            startActivity(intent);
-            finish();
+            //跳转到用户界面
+            CommonUtils.startIntent(this, null, PersonalActivity.class);
 
         }
     }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@drawable/login_bg"
     android:orientation="vertical">
 
@@ -80,10 +80,10 @@
             android:layout_marginRight="30dp"
             android:layout_marginTop="20dp"
             android:background="@drawable/btn_bg_selector"
-            android:text="@string/login_divide"
-            android:textAllCaps="false"
+            android:textSize="15sp"
             android:textColor="@drawable/button_colour_text_selector"
-            android:textSize="15sp" />
+            android:text="@string/login_divide"
+            android:textAllCaps="false" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -137,9 +137,8 @@
 
         </RelativeLayout>
 
-    </LinearLayout>
 
-    <include layout="@layout/bottom_copyright" />
+    </LinearLayout>
 
 
 </LinearLayout>

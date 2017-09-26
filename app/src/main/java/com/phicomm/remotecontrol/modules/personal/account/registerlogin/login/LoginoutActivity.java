@@ -14,6 +14,8 @@ import com.phicomm.remotecontrol.R;
 import com.phicomm.remotecontrol.base.BaseActivity;
 import com.phicomm.remotecontrol.base.BaseApplication;
 import com.phicomm.remotecontrol.modules.personal.account.event.LogoutEvent;
+import com.phicomm.remotecontrol.modules.personal.personaldetail.PersonalActivity;
+import com.phicomm.remotecontrol.util.CommonUtils;
 import com.phicomm.widgets.alertdialog.PhiGuideDialog;
 
 import org.greenrobot.eventbus.EventBus;
@@ -22,7 +24,6 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 import static com.phicomm.remotecontrol.constant.PhiConstants.TITLE_BAR_HEIGHT_DP;
-import static com.phicomm.remotecontrol.modules.personal.personaldetail.PersonalActivity.LOGINOUT_RESULT_CODE;
 
 /**
  * Created by yong04.zhou on 2017/9/14.
@@ -97,7 +98,7 @@ public class LoginoutActivity extends BaseActivity {
                 //send logout event
                 EventBus.getDefault().post(new LogoutEvent());//BaseActivity接收该事件
 
-                setResult(LOGINOUT_RESULT_CODE);//返回个人中心 resultcode
+                CommonUtils.startIntent(LoginoutActivity.this, null, PersonalActivity.class);
                 finish();
             }
         });

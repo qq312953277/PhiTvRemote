@@ -14,7 +14,6 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.phicomm.remotecontrol.R;
@@ -23,8 +22,6 @@ import com.phicomm.remotecontrol.util.NetworkManagerUtils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-
-import static com.phicomm.remotecontrol.constant.PhiConstants.TITLE_BAR_HEIGHT_DP;
 
 /**
  * Created by yong04.zhou on 2017/9/18.
@@ -43,11 +40,8 @@ public class WebViewActivity extends BaseActivity {
     @BindView(R.id.no_network_ll)
     View mNoNetWorkLayout;
 
-    @BindView(R.id.rl_title)
-    RelativeLayout mRlTitle;
-
     @BindView(R.id.tv_title)
-    TextView mTvTitle;
+    TextView mTitle;
 
     @BindView(R.id.iv_back)
     ImageView mBack;
@@ -89,8 +83,7 @@ public class WebViewActivity extends BaseActivity {
         mWebKey = intent.getStringExtra(WEB_KEY_STATUS);
         mWebUrl = intent.getStringExtra(WEB_VALUE_URL);
 
-        setMarginForStatusBar(mRlTitle, TITLE_BAR_HEIGHT_DP);
-        mTvTitle.setText(mWebKey);
+        mTitle.setText(mWebKey);
         mBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
