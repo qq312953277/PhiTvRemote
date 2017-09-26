@@ -54,7 +54,6 @@ public class LocalMediaItemActivity extends BaseActivity implements MyFragmentAd
         initView();
     }
 
-
     private void initView() {
         mPageAdapter = new MyFragmentAdapter(getSupportFragmentManager(), this);
         mViewPage.setAdapter(mPageAdapter);

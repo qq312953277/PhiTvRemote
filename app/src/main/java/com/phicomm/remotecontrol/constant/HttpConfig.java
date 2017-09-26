@@ -7,4 +7,7 @@ package com.phicomm.remotecontrol.constant;
 public class HttpConfig {
     //ota base url
     public static final String PHICOMM_OTA_BASE_URL = "https://phiclouds.phicomm.com/ota/";
+
+    // HTTP Base Url
+    public static final String PHICOMM_CLOUD_BASE_URL = "https://accountsym.phicomm.com/v1/";
 }
