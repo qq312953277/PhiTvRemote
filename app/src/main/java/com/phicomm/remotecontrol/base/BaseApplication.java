@@ -14,6 +14,7 @@ import com.phicomm.remotecontrol.modules.main.screenprojection.model.UpnpService
 import com.phicomm.remotecontrol.preference.PreferenceRepository;
 import com.phicomm.remotecontrol.util.ScreenUtils;
 import com.squareup.leakcanary.LeakCanary;
+import com.umeng.analytics.MobclickAgent;
 
 import org.fourthline.cling.android.FixedAndroidLogHandler;
 import org.fourthline.cling.support.model.item.Item;
@@ -65,6 +66,9 @@ public class BaseApplication extends Application {
 
         ScreenUtils.init(this);
 
+        //友盟
+        initMobclickAgent(this);
+
     }
 
     public void setDeviceDisplay(DeviceDisplay device) {
@@ -88,6 +92,13 @@ public class BaseApplication extends Application {
      */
     private void initMultiDex() {
         MultiDex.install(this);
+    }
+
+    private void initMobclickAgent(Context context) {
+        MobclickAgent.setScenarioType(context, MobclickAgent.EScenarioType.E_UM_NORMAL);
+
+        //程序崩溃日志捕获
+        MobclickAgent.setCatchUncaughtExceptions(true);
     }
 
     @Override

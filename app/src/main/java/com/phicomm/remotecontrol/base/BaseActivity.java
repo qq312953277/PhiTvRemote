@@ -19,6 +19,7 @@ import com.phicomm.remotecontrol.util.ScreenUtils;
 import com.phicomm.remotecontrol.util.SettingUtil;
 import com.phicomm.remotecontrol.util.StatusBarUtils;
 import com.phicomm.widgets.alertdialog.PhiAlertDialog;
+import com.umeng.analytics.MobclickAgent;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -49,6 +50,7 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        MobclickAgent.onResume(this);
         //init eventbus
         EventBus.getDefault().register(this);
 
@@ -65,6 +67,7 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
+        MobclickAgent.onPause(this);
         try {
             EventBus.getDefault().unregister(this);
         } catch (Exception ex) {
