@@ -478,14 +478,14 @@ public class RegisterActivity extends BaseActivity implements RegisterContract.V
                         super.onStart();
                         mGetCodeBtn.setEnabled(false);
                         String showText = String.format("%s s", count);
-                        mGetCodeBtn.setText(showText + "重发");
+                        mGetCodeBtn.setText(showText + getString(R.string.verifycode_resend));
                         mTimerRunning = true;
                     }
 
                     @Override
                     public void onCompleted() {
                         mGetCodeBtn.setEnabled(true);
-                        mGetCodeBtn.setText("重新发送");
+                        mGetCodeBtn.setText(getString(R.string.send_again));
                         mTimerRunning = false;
                     }
 
@@ -497,7 +497,7 @@ public class RegisterActivity extends BaseActivity implements RegisterContract.V
                     @Override
                     public void onNext(Long aLong) {
                         String showText = String.format("%s s", aLong);
-                        mGetCodeBtn.setText(showText + "重发");
+                        mGetCodeBtn.setText(showText +  getString(R.string.verifycode_resend));
                     }
                 });
 
@@ -616,7 +616,10 @@ public class RegisterActivity extends BaseActivity implements RegisterContract.V
             LocalDataRepository.getInstance(BaseApplication.getContext()).setRememberMe(false);
 
             //跳转到用户界面
-            CommonUtils.startIntent(this, null, PersonalActivity.class);
+            Intent intent = new Intent(this, PersonalActivity.class);
+            intent.putExtra("refreshUI_flag", true);
+            startActivity(intent);
+            finish();
 
         }
     }

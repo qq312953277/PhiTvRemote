@@ -46,7 +46,7 @@ public class ImagebucketActivity extends BaseActivity implements LocalMediaItemV
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_image_bucket);
         init();
-        //initTitleView();
+        initTitleView();
         setListener();
     }
 

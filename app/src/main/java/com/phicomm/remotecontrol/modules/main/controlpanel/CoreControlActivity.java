@@ -166,7 +166,7 @@ public class CoreControlActivity extends BaseActivity implements UpdateView {
     }
 
     private void showProgressDialog() {
-        mProgressDialog = ProgressDialog.show(this, "提示", "正在初始化投屏设备，请等待");
+        mProgressDialog = ProgressDialog.show(this, getString(R.string.tips), getString(R.string.tips_content));
         mDLNAHandler.sendEmptyMessageDelayed(PhiConstants.BROADCAST_TIMEOUT,
                 PhiConstants.DISCOVERY_TIMEOUT);
     }

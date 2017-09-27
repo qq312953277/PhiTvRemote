@@ -1,5 +1,8 @@
 package com.phicomm.remotecontrol.modules.main.screenprojection.entity;
 
+import com.phicomm.remotecontrol.R;
+import com.phicomm.remotecontrol.base.BaseApplication;
+
 import org.fourthline.cling.model.meta.Device;
 import org.fourthline.cling.model.meta.Service;
 
@@ -50,7 +53,7 @@ public class DeviceDisplay {
                 sb.append(srv.getServiceType()).append("\n");
             }
         } else {
-            sb.append("正在查找设备详情,请稍后.");
+            sb.append(BaseApplication.getContext().getString(R.string.device_search));
         }
         return sb.toString();
     }

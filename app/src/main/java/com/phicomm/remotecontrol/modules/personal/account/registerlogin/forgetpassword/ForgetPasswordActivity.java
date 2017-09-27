@@ -114,7 +114,7 @@ public class ForgetPasswordActivity extends BaseActivity implements ForgetPasswo
 
     private void initTitleView() {
         setMarginForStatusBar(mRlTitle, TITLE_BAR_HEIGHT_DP);
-        mTvTitle.setText(getString(R.string.login));
+        mTvTitle.setText(getString(R.string.forget_password));
         mBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -375,14 +375,14 @@ public class ForgetPasswordActivity extends BaseActivity implements ForgetPasswo
                         super.onStart();
                         mGetCodeBtn.setEnabled(false);
                         String showText = String.format("%s s", count);
-                        mGetCodeBtn.setText(showText + "重发");
+                        mGetCodeBtn.setText(showText + R.string.verifycode_resend);
                         mTimerRunning = true;
                     }
 
                     @Override
                     public void onCompleted() {
                         mGetCodeBtn.setEnabled(true);
-                        mGetCodeBtn.setText("重新发送");
+                        mGetCodeBtn.setText(R.string.send_again);
                         mTimerRunning = false;
                     }
 
@@ -394,7 +394,7 @@ public class ForgetPasswordActivity extends BaseActivity implements ForgetPasswo
                     @Override
                     public void onNext(Long aLong) {
                         String showText = String.format("%s s", aLong);
-                        mGetCodeBtn.setText(showText + "重发");
+                        mGetCodeBtn.setText(showText + R.string.verifycode_resend);
                     }
                 });
 

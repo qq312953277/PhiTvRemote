@@ -2,6 +2,8 @@ package com.phicomm.remotecontrol.modules.personal.account.http;
 
 import android.util.Log;
 
+import com.phicomm.remotecontrol.constant.HttpConfig;
+
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -81,14 +83,6 @@ public class HttpDataRepository {
 
     }
 
-    public Subscription expressLogin(Observer subscriber, RequestBody body) {
-        return mHttpCloudInterface.expressLogin(body)
-                .subscribeOn(Schedulers.io())
-                .unsubscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(subscriber);
-
-    }
 
     public Subscription captcha(Observer subscriber, Map<String, String> map) {
         return mHttpCloudInterface.captcha(map)
@@ -109,14 +103,6 @@ public class HttpDataRepository {
 
     public Subscription verifyCode(Observer subscriber, Map<String, String> map) {
         return mHttpCloudInterface.verifyCodeCaptcha(map)
-                .subscribeOn(Schedulers.io())
-                .unsubscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(subscriber);
-    }
-
-    public Subscription verifyCodeWithNoCaptcha(Observer subscriber, Map<String, String> map) {
-        return mHttpCloudInterface.verifyCodeWithNoCaptcha(map)
                 .subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -18,6 +19,8 @@ import com.phicomm.remotecontrol.modules.main.screenprojection.fragments.MainFra
 import java.util.List;
 
 import butterknife.BindView;
+
+import static com.phicomm.remotecontrol.constant.PhiConstants.TITLE_BAR_HEIGHT_DP;
 
 /**
  * Created by kang.sun on 2017/8/31.
@@ -50,8 +53,19 @@ public class LocalMediaItemActivity extends BaseActivity implements MyFragmentAd
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_screenprojection);
-
+        initTitleView();
         initView();
+    }
+
+    private void initTitleView() {
+        setMarginForStatusBar(mRlTitle, TITLE_BAR_HEIGHT_DP);
+        mTvTitle.setText(getString(R.string.local_screenprojection));
+        mBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
 

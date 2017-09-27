@@ -16,4 +16,5 @@
     <color name="textHint">#4CFFFFFF</color>
     <color name="discovery_circle">#0059ccf5</color>
     <color name="color_b3bece">#b3bece</color>
+    <color name="copyright_text_color">#FF1C76F3</color>
 </resources>

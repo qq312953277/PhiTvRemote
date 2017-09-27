@@ -71,12 +71,55 @@ public class PersonalActivity extends BaseActivity implements UpdateView, Person
     private PersonalContract.Presenter myPresenter;
     private PersonalInforManager personalInforManager;
 
+    public static final int REQUEST_CODE = 1;
+    public static final int LOGIN_RESULT_CODE = 100;
+    public static final int LOGINOUT_RESULT_CODE = 200;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_personal);
         init();
         myPresenter = new PersonalPresenter(this);
+        if (BaseApplication.getApplication().isLogined) {
+            refreshDataInUI(); //先从本地取
+            myPresenter.getPersonInfoFromServer();//analysisResponseBean调用过refreshDataInUI
+        } else {
+            mHeaderPicture.setImageResource(R.drawable.default_avatar);
+            mUserName.setText(R.string.personal_login);
+        }
+    }
+
+    //onActivityResult、onNewIntent都是在onResume之前调用
+    //从LoginActivity、LoginoutActivity跳转过来刷新界面
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_CODE) {
+            switch (resultCode) {
+                case LOGIN_RESULT_CODE:
+                    refreshDataInUI(); //先从本地取
+                    myPresenter.getPersonInfoFromServer();
+                    break;
+                case LOGINOUT_RESULT_CODE:
+                    mHeaderPicture.setImageResource(R.drawable.default_avatar);
+                    mUserName.setText(R.string.personal_login);
+                    break;
+                default:
+                    break;
+
+            }
+        }
+    }
+
+    //从RegisterActivity注册成功直接登录跳转过来刷新界面
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        boolean refreshUI_flag = intent.getBooleanExtra("refreshUI_flag", false);
+        if (refreshUI_flag) {
+            refreshDataInUI(); //先从本地取
+            myPresenter.getPersonInfoFromServer();
+        }
     }
 
     private void init() {
@@ -94,17 +137,6 @@ public class PersonalActivity extends BaseActivity implements UpdateView, Person
 
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (BaseApplication.getApplication().isLogined) {
-            myPresenter.getPersonInfoFromServer();
-            refreshDataInUI();
-        } else {
-            mHeaderPicture.setImageResource(R.drawable.default_avatar);
-            mUserName.setText("请点击登录您的斐讯账号");
-        }
-    }
 
     /**
      * OffLineEvent EventBus
@@ -114,7 +146,7 @@ public class PersonalActivity extends BaseActivity implements UpdateView, Person
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventOffLineEvent(OffLineEvent msg) {  //用户下线处理
         mHeaderPicture.setImageResource(R.drawable.default_avatar);
-        mUserName.setText("请点击登录您的斐讯账号");
+        mUserName.setText(R.string.personal_login);
     }
 
     @Override
@@ -144,6 +176,21 @@ public class PersonalActivity extends BaseActivity implements UpdateView, Person
                 break;
         }
     }
+
+    private void toLoginOrloginoutActivity() {
+        if (BaseApplication.getApplication().isLogined) {
+            personalInforManager = PersonalInforManager.getInstance();
+            AccountDetailBean mAccount = personalInforManager.getAccountDetailBean();
+            Intent intent = new Intent(this, LoginoutActivity.class);
+            intent.putExtra("img", mAccount.data.img);
+            intent.putExtra("userName", mAccount.data.phonenumber);
+            startActivityForResult(intent, REQUEST_CODE);
+        } else {
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivityForResult(intent, REQUEST_CODE);//没有finish自己
+        }
+    }
+
 
     private void checkNewVersion() {
         if (NetworkManagerUtils.instance().isDataUp()) {
@@ -217,19 +264,6 @@ public class PersonalActivity extends BaseActivity implements UpdateView, Person
 
     }
 
-    private void toLoginOrloginoutActivity() {
-        if (BaseApplication.getApplication().isLogined) {
-            personalInforManager = PersonalInforManager.getInstance();
-            AccountDetailBean mAccount = personalInforManager.getAccountDetailBean();
-            Intent intent = new Intent(this, LoginoutActivity.class);
-            intent.putExtra("img", mAccount.data.img);
-            intent.putExtra("userName", mAccount.data.phonenumber);
-            startActivity(intent);
-        } else {
-            CommonUtils.startIntent(this, null, LoginActivity.class);//没有finish自己
-        }
-
-    }
 
     @Override
     public void analysisResponseBean(BaseResponseBean t) {
@@ -260,9 +294,9 @@ public class PersonalActivity extends BaseActivity implements UpdateView, Person
         //用户名
         String userName = mAccount.data.phonenumber;
         if (!TextUtils.isEmpty(userName)) {
-            mUserName.setText("斐讯账户" + userName);
+            mUserName.setText(getString(R.string.phicomm_account) + userName);
         } else {
-            mUserName.setText("斐讯账户" + mAccount.data.uid);
+            mUserName.setText(getString(R.string.phicomm_account) + mAccount.data.uid);
         }
     }
 

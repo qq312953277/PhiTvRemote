@@ -25,7 +25,6 @@ import com.phicomm.remotecontrol.modules.personal.account.resultbean.Authorizati
 import com.phicomm.remotecontrol.modules.personal.account.resultbean.BaseResponseBean;
 import com.phicomm.remotecontrol.modules.personal.account.resultbean.LoginResponseBean;
 import com.phicomm.remotecontrol.modules.personal.account.token.TokenManager;
-import com.phicomm.remotecontrol.modules.personal.personaldetail.PersonalActivity;
 import com.phicomm.remotecontrol.util.CommonUtils;
 import com.phicomm.remotecontrol.util.DialogUtils;
 import com.phicomm.remotecontrol.util.MD5Utils;
@@ -37,6 +36,7 @@ import butterknife.OnClick;
 import rx.functions.Action1;
 
 import static com.phicomm.remotecontrol.constant.PhiConstants.TITLE_BAR_HEIGHT_DP;
+import static com.phicomm.remotecontrol.modules.personal.personaldetail.PersonalActivity.LOGIN_RESULT_CODE;
 
 public class LoginActivity extends BaseActivity implements LoginContract.View {
 
@@ -280,7 +280,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
                 LocalDataRepository.getInstance(BaseApplication.getContext()).setRememberMe(false);
             }
 
-            CommonUtils.startIntent(this, null, PersonalActivity.class);
+            setResult(LOGIN_RESULT_CODE); //返回个人中心 resultcode
             finish();
 
         }

@@ -2,11 +2,13 @@ package com.phicomm.remotecontrol.modules.main.screenprojection.adapter;
 
 
 import android.content.Context;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -64,15 +66,31 @@ public class AlbumsAdapter extends BaseAdapter {
         holder.count.setText("" + mList.get(position).getCount());
         holder.name.setText(mList.get(position).getBucketName());
 
-        Glide.with(BaseApplication.getContext()).load("file://" + mList.get(position).getImageList().get(0).getmImagePath())
-                .error(R.drawable.album_default_loading_pic).centerCrop().placeholder(R.drawable.album_default_loading_pic).priority(Priority.HIGH).into(holder.image1);
+        int imageCount = mList.get(position).getCount();
 
-        if (mList.get(position).getImageList().size() > 1) {
+        if (imageCount == 1) {
+            RelativeLayout rl = (RelativeLayout) view.findViewById(R.id.rl_bottom_photo);
+            rl.setVisibility(View.GONE);
+
+            ViewGroup.LayoutParams params = holder.image1.getLayoutParams();
+            params.width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 160, BaseApplication.getContext().getResources().getDisplayMetrics());
+            params.height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 140, BaseApplication.getContext().getResources().getDisplayMetrics());
+            holder.image1.setLayoutParams(params);
+
+            Glide.with(BaseApplication.getContext()).load("file://" + mList.get(position).getImageList().get(0).getmImagePath())
+                    .error(R.drawable.album_default_loading_pic).centerCrop().placeholder(R.drawable.album_default_loading_pic).priority(Priority.HIGH).into(holder.image1);
+        } else if (imageCount == 2) {
+            holder.image3.setVisibility(View.GONE);
+
+            Glide.with(BaseApplication.getContext()).load("file://" + mList.get(position).getImageList().get(0).getmImagePath())
+                    .error(R.drawable.album_default_loading_pic).centerCrop().placeholder(R.drawable.album_default_loading_pic).priority(Priority.HIGH).into(holder.image1);
             Glide.with(BaseApplication.getContext()).load("file://" + mList.get(position).getImageList().get(1).getmImagePath())
                     .error(R.drawable.album_default_loading_pic).centerCrop().placeholder(R.drawable.album_default_loading_pic).priority(Priority.HIGH).into(holder.image2);
-        }
-
-        if (mList.get(position).getImageList().size() > 2) {
+        } else if (imageCount > 2) {
+            Glide.with(BaseApplication.getContext()).load("file://" + mList.get(position).getImageList().get(0).getmImagePath())
+                    .error(R.drawable.album_default_loading_pic).centerCrop().placeholder(R.drawable.album_default_loading_pic).priority(Priority.HIGH).into(holder.image1);
+            Glide.with(BaseApplication.getContext()).load("file://" + mList.get(position).getImageList().get(1).getmImagePath())
+                    .error(R.drawable.album_default_loading_pic).centerCrop().placeholder(R.drawable.album_default_loading_pic).priority(Priority.HIGH).into(holder.image2);
             Glide.with(BaseApplication.getContext()).load("file://" + mList.get(position).getImageList().get(2).getmImagePath())
                     .error(R.drawable.album_default_loading_pic).centerCrop().placeholder(R.drawable.album_default_loading_pic).priority(Priority.HIGH).into(holder.image3);
         }

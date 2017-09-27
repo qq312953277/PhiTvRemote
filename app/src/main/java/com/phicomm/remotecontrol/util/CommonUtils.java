@@ -122,7 +122,7 @@ public class CommonUtils {
     public static void showDialog(Context context, String str, final DialogClickListener listener) {
         AlertDialog dialog = new AlertDialog.Builder(context).create();
         dialog.setMessage(str);
-        dialog.setButton("确定", new DialogInterface.OnClickListener() {
+        dialog.setButton(BaseApplication.getContext().getString(R.string.confirm), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface arg0, int arg1) {
                 arg0.dismiss();
@@ -136,7 +136,7 @@ public class CommonUtils {
     public static void showDialog(Context context, String str) {
         AlertDialog dialog = new AlertDialog.Builder(context).create();
         dialog.setMessage(str);
-        dialog.setButton("确定", new DialogInterface.OnClickListener() {
+        dialog.setButton(BaseApplication.getContext().getString(R.string.confirm), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface arg0, int arg1) {
                 arg0.dismiss();

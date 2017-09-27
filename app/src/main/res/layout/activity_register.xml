@@ -169,4 +169,6 @@
             android:text="@string/register_divide" />
     </LinearLayout>
 
+    <include layout="@layout/bottom_copyright" />
+
 </LinearLayout>

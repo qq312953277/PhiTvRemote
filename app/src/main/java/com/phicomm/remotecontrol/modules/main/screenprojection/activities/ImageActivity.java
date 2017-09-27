@@ -54,11 +54,27 @@ public class ImageActivity extends BaseActivity {
         mImageList = (ArrayList<PhotoUpImageItem>) intent.getSerializableExtra("imageList");
         mCurrentPosition = intent.getIntExtra("currentPosition", 0);
 
-        //initTitleView();
+        initTitleView();
 
         mImagePagerAdapter = new ImagePagerAdapter(mImageList, this);
         mViewPager.setAdapter(mImagePagerAdapter);
         mViewPager.setCurrentItem(mCurrentPosition);
+        mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                mTvTitle.setText(mImageList.get(position).getmImageId());
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
     private void initTitleView() {

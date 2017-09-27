@@ -120,6 +120,10 @@
     <string name="photo">照片</string>
     <string name="video">视频</string>
 
+    <string name="tips">提示</string>
+    <string name="tips_content">正在初始化投屏设备，请等待</string>
+    <string name="device_search">正在查找设备详情,请稍后.</string>
+    <string name="local_screenprojection">本地投影</string>
     <string name="wifi_connecting">正在连接Wifi...</string>
     <string name="wifi_disconnecting">正在断开Wifi...</string>
     <string name="wifi_not_connected">未连接Wifi...</string>
@@ -129,7 +133,7 @@
     <string name="personal_appliction">应用</string>
     <string name="personal_setting">设置</string>
     <string name="personal_about">关于</string>
-    <string name="personal_version">版本</string>请点击登录您的斐讯账号
+    <string name="personal_version">版本</string>
     <string name="personal_login">请点击登录您的斐讯账号</string>
     <!--about-->
     <string name="about_project_name">斐讯遥控器V<xliff:g id="version">%1$s</xliff:g></string>
@@ -220,6 +224,8 @@
     <string name="kick_tips">你的账号已在其他设备上登录。如非本人操作，请重新登录后修改密码。</string>
     <string name="account_exit">确定退出当前账号？</string>
     <string name="account_exit_msg">退出账号后将无法同步数据</string>
+
+    <string name="phicomm_account">斐讯账户</string>
 
     <string name="no_network_layout">无网络</string>
     <string name="no_network_reload">重新加载</string>
