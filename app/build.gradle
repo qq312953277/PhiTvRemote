@@ -75,8 +75,8 @@ android {
     applicationVariants.all { variant ->
         variant.outputs.each { output ->
             def oldOutputApkFile = output.outputFile
-            def newOutputApkName = oldOutputApkFile.name.replace("app", "PhiTvRemote_" + defaultConfig.versionName + "_${releaseTime()}")
-            def newOutputApkFile = new File(rootProject.projectDir.absolutePath + "/PhiTvRemote_${android.defaultConfig.versionName}" + "/", newOutputApkName)
+            def newOutputApkName = oldOutputApkFile.name.replace("app", "PhiTvRemote-" + defaultConfig.versionName + "-${releaseTime()}")
+            def newOutputApkFile = new File(rootProject.projectDir.absolutePath + "/PhiTvRemote-${android.defaultConfig.versionName}" + "/", newOutputApkName)
             output.outputFile = newOutputApkFile
         }
     }
