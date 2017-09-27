@@ -5,6 +5,7 @@ import com.phicomm.remotecontrol.modules.personal.account.http.HttpDataRepositor
 import com.phicomm.remotecontrol.modules.personal.account.resultbean.AuthorizationResponseBean;
 import com.phicomm.remotecontrol.modules.personal.account.resultbean.CaptchaResponseBean;
 import com.phicomm.remotecontrol.modules.personal.account.resultbean.CheckphonenumberResponseBean;
+import com.phicomm.remotecontrol.modules.personal.account.resultbean.LoginResponseBean;
 import com.phicomm.remotecontrol.modules.personal.account.resultbean.RegisterResponseBean;
 import com.phicomm.remotecontrol.modules.personal.account.resultbean.VerifycodeResponseBean;
 
@@ -104,6 +105,17 @@ public class RegisterPresenter implements RegisterContract.Presenter {
 
     @Override
     public void doPhoneLogin(String authorizationcode, String phonenumber, String password) {
-
+        RequestBody formBody = new FormBody.Builder()
+                .add("authorizationcode", authorizationcode)
+                .add("phonenumber", phonenumber)
+                .add("password", password)
+                .build();
+        HttpDataRepository.getInstance().login(
+                new CustomSubscriber<LoginResponseBean>() {
+                    @Override
+                    public void onCustomNext(LoginResponseBean loginResponseBean) {
+                        mRegisterView.analysisResponseBean(loginResponseBean);
+                    }
+                }, formBody);
     }
 }

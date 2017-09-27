@@ -1,6 +1,7 @@
 package com.phicomm.remotecontrol.base;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.View;
@@ -20,6 +21,7 @@ import com.phicomm.remotecontrol.util.SettingUtil;
 import com.phicomm.remotecontrol.util.StatusBarUtils;
 import com.phicomm.widgets.alertdialog.PhiAlertDialog;
 import com.umeng.analytics.MobclickAgent;
+import com.phicomm.remotecontrol.modules.personal.personaldetail.PersonalActivity;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -32,6 +34,8 @@ import butterknife.ButterKnife;
  */
 
 public class BaseActivity extends AppCompatActivity {
+
+    public final String TAG = BaseActivity.this.getClass().getSimpleName();
 
     private static boolean mIsMultiLoginDialogShowing = false;
 
@@ -114,12 +118,19 @@ public class BaseActivity extends AppCompatActivity {
 
         EventBus.getDefault().post(new OffLineEvent());//使用户中心下线，在PersonalActivity接收
 
-        //clear user data
+        //clear user data 仅清楚云端登录状态，不能把所有sp清空，登录界面“记住我”还需从本地获取登录信息
         LocalDataRepository.getInstance(BaseApplication.getContext()).setCloudLoginStatus(false);
         BaseApplication.getApplication().isLogined = false;
-        //用户信息清空
-        LocalDataRepository.getInstance(BaseApplication.getContext()).clearSPByName(PreferenceDef.SP_NAME_USER_COOKIE);
-        LocalDataRepository.getInstance(BaseApplication.getContext()).clearSPByName(PreferenceDef.SP_NAME_TOKEN);
+
+        //判断当前activity不是PersonalActivity则跳转过来
+        if (TAG.equalsIgnoreCase(PersonalActivity.class.getSimpleName())) {
+
+        } else {
+            Intent extras = new Intent();
+            extras.putExtra("offline_flag", true);
+            startActivityClearTopAndFinishSelf(extras, PersonalActivity.class);
+        }
+
     }
 
     /**
@@ -167,4 +178,18 @@ public class BaseActivity extends AppCompatActivity {
         params.height = ScreenUtils.getSystemBarHeight() + ScreenUtils.dp2px(titleBarHeightDp);
         view.setLayoutParams(params);
     }
+
+    private void startActivityClearTopAndFinishSelf(Intent extras, Class<?> cls) {
+        Intent intent = new Intent();
+        intent.setClass(this, cls);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        if (extras != null) {
+            intent.putExtras(extras);
+        }
+        this.startActivity(intent);
+        if (!this.isFinishing()) {
+            this.finish();
+        }
+    }
+
 }

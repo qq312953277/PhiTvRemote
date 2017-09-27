@@ -90,8 +90,10 @@ public class PersonalActivity extends BaseActivity implements UpdateView, Person
         }
     }
 
-    //onActivityResult、onNewIntent都是在onResume之前调用
-    //从LoginActivity、LoginoutActivity跳转过来刷新界面
+    /**
+     * onActivityResult、onNewIntent都是在onResume之前调用
+     * 从LoginActivity、LoginoutActivity跳转过来刷新界面
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_CODE) {
@@ -111,14 +113,20 @@ public class PersonalActivity extends BaseActivity implements UpdateView, Person
         }
     }
 
-    //从RegisterActivity注册成功直接登录跳转过来刷新界面
+
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        boolean refreshUI_flag = intent.getBooleanExtra("refreshUI_flag", false);
+        boolean refreshUI_flag = intent.getBooleanExtra("refreshUI_flag", false);//从RegisterActivity注册成功直接登录跳转过来刷新界面
         if (refreshUI_flag) {
             refreshDataInUI(); //先从本地取
             myPresenter.getPersonInfoFromServer();
+        }
+
+        boolean offline_flag = intent.getBooleanExtra("offline_flag", false);//onEventLogout传过来
+        if (offline_flag) {
+            mHeaderPicture.setImageResource(R.drawable.default_avatar);
+            mUserName.setText(R.string.personal_login);
         }
     }
 
@@ -134,7 +142,6 @@ public class PersonalActivity extends BaseActivity implements UpdateView, Person
         } else {
             mIvVersionIndicator.setVisibility(View.GONE);
         }
-
     }
 
 
@@ -181,9 +188,15 @@ public class PersonalActivity extends BaseActivity implements UpdateView, Person
         if (BaseApplication.getApplication().isLogined) {
             personalInforManager = PersonalInforManager.getInstance();
             AccountDetailBean mAccount = personalInforManager.getAccountDetailBean();
+            String img = null;
+            String phonenumber = null;
+            if (mAccount != null) {
+                img = mAccount.data.img;
+                phonenumber = mAccount.data.phonenumber;
+            }
             Intent intent = new Intent(this, LoginoutActivity.class);
-            intent.putExtra("img", mAccount.data.img);
-            intent.putExtra("userName", mAccount.data.phonenumber);
+            intent.putExtra("img", img);
+            intent.putExtra("userName", phonenumber);
             startActivityForResult(intent, REQUEST_CODE);
         } else {
             Intent intent = new Intent(this, LoginActivity.class);

@@ -14,6 +14,10 @@ import com.phicomm.remotecontrol.R;
 import com.phicomm.remotecontrol.base.BaseActivity;
 import com.phicomm.remotecontrol.base.BaseApplication;
 import com.phicomm.remotecontrol.modules.personal.account.event.LogoutEvent;
+import com.phicomm.remotecontrol.modules.personal.account.http.CustomSubscriber;
+import com.phicomm.remotecontrol.modules.personal.account.http.HttpDataRepository;
+import com.phicomm.remotecontrol.modules.personal.account.local.LocalDataRepository;
+import com.phicomm.remotecontrol.modules.personal.account.resultbean.AccountDetailBean;
 import com.phicomm.widgets.alertdialog.PhiGuideDialog;
 
 import org.greenrobot.eventbus.EventBus;
@@ -51,6 +55,8 @@ public class LoginoutActivity extends BaseActivity {
         setContentView(R.layout.activity_loginout);
 
         initViews();
+
+        checkMultiLoginedRequest();
     }
 
     private void initViews() {
@@ -76,6 +82,16 @@ public class LoginoutActivity extends BaseActivity {
             mHeaderPicture.setImageResource(R.drawable.default_avatar);
         }
 
+    }
+
+    private void checkMultiLoginedRequest() {
+        String access_token = LocalDataRepository.getInstance(BaseApplication.getContext()).getAccessToken();
+        HttpDataRepository.getInstance().accountDetail(new CustomSubscriber<AccountDetailBean>() {
+            @Override
+            public void onCustomNext(AccountDetailBean accountDetailBean) {
+
+            }
+        }, access_token);
     }
 
     @OnClick(R.id.bt_loginout)
