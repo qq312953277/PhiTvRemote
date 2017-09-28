@@ -22,13 +22,21 @@
         android:text="@string/check_ip_address_setting"
         android:textSize="16sp" />
 
-    <com.phicomm.remotecontrol.modules.devices.searchdevices.EditTextWithDel
-        android:id="@+id/edittext_ipinput"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="0dp" />
+        android:layout_height="wrap_content">
+
+        <com.phicomm.remotecontrol.modules.devices.searchdevices.EditTextWithDel
+            android:id="@+id/edittext_ipinput"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginLeft="24dp"
+            android:layout_marginRight="24dp"
+            android:layout_marginTop="5dp"
+            android:drawableRight="@drawable/delete"
+            android:background="@drawable/around_ip_input" />
+    </LinearLayout>
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -63,5 +71,5 @@
         android:gravity="center"
         android:horizontalSpacing="0dp"
         android:numColumns="3"
-        android:verticalSpacing="0dp"></GridView>
+        android:verticalSpacing="0dp" />
 </LinearLayout>

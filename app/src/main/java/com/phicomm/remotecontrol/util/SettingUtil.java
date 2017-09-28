@@ -56,7 +56,7 @@ public class SettingUtil {
     }
 
     public static void voiceDown() {
-        TaskQuene.getInstance().sendKeyEvent(KeyCode.VOL_UP, new PhiCallBack() {
+        TaskQuene.getInstance().sendKeyEvent(KeyCode.VOL_DOWN, new PhiCallBack() {
             @Override
             public void onSuccess(Object model) {
                 Toast.makeText(BaseApplication.getContext(), "SUCCESS", Toast.LENGTH_SHORT).show();

@@ -294,6 +294,7 @@ public class DeviceDiscoveryFragment extends BaseFragment implements DeviceDisco
         mIPInputEditText = (EditText) mBottomView.getView().findViewById(
                 R.id.edittext_ipinput);
         //获取焦点时，禁止弹出软键盘
+        mIPInputEditText.requestFocus();//获取焦点，"X"图片有效弹出
         mIPInputEditText.setInputType(InputType.TYPE_NULL);
         mIPGridView.setOnItemClickListener(manualConnectDevice);
         mIPCancleBt = (Button) mBottomView.getView().findViewById(
