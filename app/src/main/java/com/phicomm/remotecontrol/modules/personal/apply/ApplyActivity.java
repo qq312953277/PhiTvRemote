@@ -69,8 +69,12 @@ public class ApplyActivity extends BaseActivity implements ApplyView, BaseRecycl
 
     private void checkNet() {
         if (NetworkManagerUtils.instance().isDataUp()) {
-            showLoadingDialog(null);
-            mPresenter.getAppInfo();
+            if (CommonUtils.getCurrentUrl() != null) {
+                showLoadingDialog(null);
+                mPresenter.getAppInfo();
+            } else {
+                CommonUtils.showShortToast(getString(R.string.unable_to_connect_device));
+            }
         } else {
             CommonUtils.showShortToast(getString(R.string.net_connect_fail));
         }
