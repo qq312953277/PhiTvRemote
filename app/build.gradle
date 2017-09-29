@@ -11,8 +11,8 @@ android {
         applicationId "com.phicomm.remotecontrol"
         minSdkVersion 19
         targetSdkVersion 25
-        versionCode 2
-        versionName "1.0.0.2002"
+        versionCode 3
+        versionName "1.0.0.2003"
         buildConfigField "String", "LOG_TAG", "\"phicomm\""
         multiDexEnabled true
     }
@@ -73,14 +73,14 @@ android {
     }
 
     // rename output file
-//    applicationVariants.all { variant ->
-//        variant.outputs.each { output ->
-//            def oldOutputApkFile = output.outputFile
-//            def newOutputApkName = oldOutputApkFile.name.replace("app", "PhiTvRemote-" + defaultConfig.versionName + "-${releaseTime()}")
-//            def newOutputApkFile = new File(rootProject.projectDir.absolutePath + "/PhiTvRemote-${android.defaultConfig.versionName}" + "/", newOutputApkName)
-//            output.outputFile = newOutputApkFile
-//        }
-//    }
+    applicationVariants.all { variant ->
+        variant.outputs.each { output ->
+            def oldOutputApkFile = output.outputFile
+            def newOutputApkName = oldOutputApkFile.name.replace("app", "PhiTvRemote-" + defaultConfig.versionName + "-${releaseTime()}")
+            def newOutputApkFile = new File(rootProject.projectDir.absolutePath + "/PhiTvRemote-${android.defaultConfig.versionName}" + "/", newOutputApkName)
+            output.outputFile = newOutputApkFile
+        }
+    }
 }
 
 def releaseTime() {

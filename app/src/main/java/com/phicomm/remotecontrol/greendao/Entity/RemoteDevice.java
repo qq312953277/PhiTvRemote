@@ -1,15 +1,19 @@
 package com.phicomm.remotecontrol.greendao.Entity;
 
+import com.phicomm.remotecontrol.beans.BaseResponseBean;
+
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Keep;
 import org.greenrobot.greendao.annotation.Generated;
 
+import java.io.Serializable;
+
 /**
  * Created by chunya02.li on 2017/6/30.
  */
 @Entity
-public class RemoteDevice {
+public class RemoteDevice implements Serializable {
     @Id(autoincrement = true)
     private Long id;
     private String name;

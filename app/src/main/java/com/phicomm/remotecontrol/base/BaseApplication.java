@@ -7,6 +7,7 @@ import android.support.multidex.MultiDex;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.phicomm.remotecontrol.exception.CrashHandler;
 import com.phicomm.remotecontrol.greendao.GreenDaoManager;
 import com.phicomm.remotecontrol.greendao.gen.RemoteDeviceDao;
 import com.phicomm.remotecontrol.modules.main.screenprojection.entity.DeviceDisplay;
@@ -49,7 +50,7 @@ public class BaseApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        //CrashHandler.getInstance().init(this);
+        CrashHandler.getInstance().init(this);
         analyseLeak();
         initMultiDex();
         mContext = this;

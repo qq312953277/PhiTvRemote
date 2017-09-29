@@ -111,6 +111,10 @@
    *;
 }
 
+-keep public class com.phicomm.remotecontrol.R$*{
+public static final int *;
+}
+
 #保持native方法不混淆
 -keepclasseswithmembernames class * {
     native <methods>;
@@ -133,6 +137,10 @@
 #保持parcelable不混淆
 -keep class * implements android.os.Parcelable {
     public static final android.os.Parcelable$Creator *;
+}
+-keepclassmembers class * implements android.os.Parcelable {
+ public <fields>;
+ private <fields>;
 }
 
 #保持serializable不混淆
