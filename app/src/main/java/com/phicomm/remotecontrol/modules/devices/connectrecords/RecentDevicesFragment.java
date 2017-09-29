@@ -170,7 +170,7 @@ public class RecentDevicesFragment extends BaseFragment implements RecentDevices
     }
 
     @Override
-    @OnClick({R.id.iv_back, R.id.tv_right, R.id.bt_cancel})
+    @OnClick({R.id.iv_back, R.id.tv_right, R.id.bt_cancel, R.id.bt_delete})
     public void onClick(View view) {
         super.onClick(view);
         switch (view.getId()) {
