@@ -18,6 +18,7 @@
 
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
+    <!--设备 -->
     <string name="app_name">遥控器</string>
     <string name="app_title">斐讯盒子遥控器</string>
     <string name="unable_to_connect_device">未连接设备</string>
@@ -31,9 +32,6 @@
     <string name="manual_ip_connect">连接</string>
     <string name="manual_ip_cancel">取消</string>
     <string name="manual_ip_input">输入IP</string>
-    <string name="current_wifi">当前Wifi</string>
-    <!--  DiscoveryDevice - more devices -->
-
     <string name="choose_box_controll">选择盒子进行控制</string>
     <string name="recent_connect_devices">连接记录</string>
     <string name="research_discovery_devices">重新搜索</string>
@@ -41,6 +39,7 @@
     <string name="searching">正在搜索...</string>
     <string name="finder_searching_with_ssid">搜索网络 \"%s\" 上的设备.</string>
     <string name="finder_wifi_waiting">等待wifi网络.</string>
+    <string name="current_wifi">当前Wifi</string>
     <string name="finder_add_other">添加其他设备</string>
     <string name="finder_connect">连接</string>
     <string name="finder_cancel">取消</string>
@@ -52,16 +51,13 @@
     <string name="finder_no_devices_with_ssid">没有发现斐讯盒子 \"%s\"</string>
     <string name="finder_wifi_not_available">WiFi 不可用</string>
     <string name="finder_recently_connected">最近连接的设备</string>
-
     <string name="edit_recent_connect_devices">编辑</string>
     <string name="cancel_choose_box">取消选择</string>
     <string name="delete_choose_box">删除</string>
     <string name="no_item">没有记录</string>
-
     <plurals name="choose_count_box">
         <item quantity="other">共计<xliff:g id="count">%d</xliff:g>项</item>
     </plurals>
-
     <string name="device_find_tip">提示:\n \n
         1:当前只支持斐讯盒子 \n
         2:请确保盒子和手机在一个局域网内 \n
@@ -71,6 +67,7 @@
         <item quantity="other">搜索到 <xliff:g id="count">%d</xliff:g> 个盒子</item>
     </plurals>
 
+    <!--主界面控制键-->
     <string name="key_up">Up</string>
     <string name="key_down">Down</string>
     <string name="key_right">Right</string>
@@ -83,28 +80,16 @@
     <string name="key_menu">Menu</string>
     <string name="key_home">Home</string>
     <string name="key_back">Back</string>
+    <string name="vol">音量</string>
+    <string name="chanel">频道</string>
 
-    <string name="tab_screenshot">Screenshot</string>
-    <string name="tab_dlna">DLNA</string>
-    <string name="tab_control">Control</string>
-    <string name="tab_childrenlock">ChildrenLock</string>
-    <string name="tab_clean">Clean</string>
-
-    <string name="btn_screenshot">Screnshot</string>
-    <string name="btn_save">Save</string>
-
-    <string name="error_no_device">没有指定设备</string>
-    <string name="timeout_msg">该版本不可用，请更新应用！</string>
-    <string name="network_invailable_msg">"无法访问网络"</string>
-
+    <!--截图-->
     <string name="screenshot">截图</string>
     <string name="dlna">投屏</string>
     <string name="childlock">儿童锁</string>
     <string name="clear">一键清理</string>
     <string name="init_time">0:00:00</string>
     <string name="separate"> / </string>
-
-
     <string name="success_screenshot">"截屏成功"</string>
     <string name="fail_screenshot">"截屏失败"</string>
     <string name="success_save">"保存成功"</string>
@@ -113,13 +98,7 @@
     <string name="photo_help_tips">请前往&#060;本地存储&#062;-&#060;Pictures&#062;-&#060;Phibox&#x000A;Screenshot&#062;查找截图</string>
     <string name="confirm">确定</string>
 
-
-    <string name="vol">音量</string>
-    <string name="chanel">频道</string>
-
-    <string name="photo">照片</string>
-    <string name="video">视频</string>
-
+    <!--投屏-->
     <string name="tips">提示</string>
     <string name="tips_content">正在初始化投屏设备，请等待</string>
     <string name="device_search">正在查找设备详情,请稍后.</string>
@@ -127,15 +106,18 @@
     <string name="wifi_connecting">正在连接Wifi...</string>
     <string name="wifi_disconnecting">正在断开Wifi...</string>
     <string name="wifi_not_connected">未连接Wifi...</string>
+    <string name="photo">照片</string>
+    <string name="video">视频</string>
 
-    <!--Personal-->
+    <!--我的-->
     <string name="personal_title">我的</string>
     <string name="personal_appliction">应用</string>
     <string name="personal_setting">设置</string>
     <string name="personal_about">关于</string>
     <string name="personal_version">版本</string>
     <string name="personal_login">请点击登录您的斐讯账号</string>
-    <!--about-->
+
+    <!--关于-->
     <string name="about_project_name">斐讯遥控器V<xliff:g id="version">%1$s</xliff:g></string>
     <string name="website">官方网站</string>
     <string name="hotline">客服热线</string>
@@ -143,7 +125,8 @@
     <string name="phicomm_hotline">4007-567-567</string>
     <string name="copyright_info">©2017上海斐讯数据通信技术有限公司</string>
     <string name="dailnumber">呼叫</string>
-    <!--update-->
+
+    <!--更新-->
     <string name="update_description">新版本更新</string>
     <string name="version_info_tips">最新版本更新内容:</string>
     <string name="version_update_title">发现新版本(%s)</string>
@@ -156,15 +139,18 @@
     <string name="file_not_exist">安装文件不存在</string>
     <string name="update_later">以后再说</string>
     <string name="update_now">立即更新</string>
+    <string name="error_no_device">没有指定设备</string>
+    <string name="timeout_msg">该版本不可用，请更新应用！</string>
+    <string name="network_invailable_msg">"无法访问网络"</string>
 
-    <!--setting-->
+    <!--设置-->
     <string name="setting_title">遥控器设置</string>
     <string name="setting_vibrate_title">按键震动</string>
     <string name="setting_vibrate_context">点击遥控器有震动感</string>
     <string name="setting_voice_title">音量键控制</string>
     <string name="setting_voice_context">手机音量键控制盒子音量</string>
 
-    <string name="app_name_application">WiFi智能插座</string>
+    <!--注册登录-->
     <string name="register">注册</string>
     <string name="new_user_register">新用户注册</string>
     <string name="register_divide">注&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;册</string>
@@ -224,9 +210,7 @@
     <string name="kick_tips">你的账号已在其他设备上登录。如非本人操作，请重新登录后修改密码。</string>
     <string name="account_exit">确定退出当前账号？</string>
     <string name="account_exit_msg">退出账号后将无法同步数据</string>
-
     <string name="phicomm_account">斐讯账户</string>
-
     <string name="no_network_layout">无网络</string>
     <string name="no_network_reload">重新加载</string>
 
@@ -275,10 +259,7 @@
     <string name="mail_format_error">邮箱格式错误</string>
     <string name="username_format_error">用户名格式错误</string>
     <string name="phonenumber_not_register_account">该手机号未注册云账户</string>
-    <!--apply-->
-    <string name="refershlayout_is_loading">刷新中</string>
-    <string name="installed_app">已安装应用</string>
-    <string name="apply_title">应用</string>
+
     <!--IP-->
     <string name="input_phicomm_device_ip">请输入斐讯盒子的IP</string>
     <string name="check_ip_address_setting">IP地址在斐讯盒子设置-关于-网络信息中查看</string>
@@ -286,4 +267,11 @@
     <string name="ip_connect_fail_tips">请确保斐讯盒子和手机在同一 \n
         个局域网中，并检查WIFI设置 \n
         -高级设置-AP隔离是否关闭。 \n</string>
+
+    <!--apply-->
+    <string name="refershlayout_is_loading">刷新中</string>
+    <string name="installed_app">已安装应用</string>
+    <string name="apply_title">应用</string>
+
+
 </resources>

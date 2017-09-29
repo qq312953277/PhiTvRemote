@@ -1,9 +1,10 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <!--devices -->
     <string name="app_name">RemoteControl</string>
     <string name="app_title">PhiBoxRemote</string>
+    <string name="unable_to_connect_device">未连接设备</string>
     <string name="devices_list">devices list</string>
-    <string name="unable_to_connect_device">unable to connect</string>
-
     <string name="manual_ip_label">Add Phicomm BOX</string>
     <string name="manual_ip_entry_label">IP Address</string>
     <string name="manual_ip_hint">xxx.xxx.xxx.xxx</string>
@@ -13,9 +14,6 @@
     <string name="manual_ip_connect">Connect</string>
     <string name="manual_ip_cancel">Cancel</string>
     <string name="manual_ip_input">Manual IP</string>
-
-
-    <!--  Device Finder - more devices -->
     <string name="choose_box_controll">choose box control</string>
     <string name="recent_connect_devices">connected devices</string>
     <string name="research_discovery_devices">research</string>
@@ -35,8 +33,6 @@
     <string name="finder_no_devices_with_ssid">No Phicomm Box found on \"%s\"</string>
     <string name="finder_wifi_not_available">WiFi network not available</string>
     <string name="finder_recently_connected">Recently connected devices</string>
-
-    <!--  edit recent connected devices -->
     <string name="edit_recent_connect_devices">edit</string>
     <string name="cancel_choose_box">cancel</string>
     <string name="delete_choose_box">delete</string>
@@ -55,11 +51,12 @@
         <item quantity="other">Total <xliff:g id="count">%d</xliff:g>Item</item>
     </plurals>
 
+    <!--main boarder controller-->
     <string name="key_up">Up</string>
     <string name="key_down">Down</string>
     <string name="key_right">Right</string>
     <string name="key_left">Left</string>
-    <string name="key_enter">O</string>
+    <string name="key_enter">Ok</string>
     <string name="key_vol_down">Volume Down</string>
     <string name="key_vol_up">Volume Up</string>
     <string name="key_chanel_down">Chanel Down</string>
@@ -67,30 +64,69 @@
     <string name="key_menu">Menu</string>
     <string name="key_home">Home</string>
     <string name="key_back">Back</string>
+    <string name="vol">vol</string>
+    <string name="chanel">chanel</string>
 
+    <!--Screenshot-->
     <string name="screenshot">Screenshot</string>
     <string name="dlna">DLNA</string>
     <string name="childlock">ChildLock</string>
     <string name="clear">Clean</string>
     <string name="init_time">0:00:00</string>
     <string name="separate"> / </string>
+    <string name="success_screenshot">"Screenshot success"</string>
+    <string name="fail_screenshot">"Screenshot failed"</string>
+    <string name="success_save">"Save success"</string>
+    <string name="fail_save">"Save failed"</string>
+    <string name="screenshot_title_not_connnect">TV screenshot</string>
+    <string name="photo_help_tips">Ple goto&#060;local storage&#062;-&#060;Pictures&#062;-&#060;Phibox&#x000A;Screenshot&#062;check</string>
+    <string name="confirm">Confirm</string>
 
-
-    <string name="btn_screenshot">Screnshot</string>
-    <string name="btn_save">Save</string>
-
-    <string name="error_no_device">no device assigned</string>
-    <string name="timeout_msg">This version is unavailable,Please update your app !</string>
-    <string name="network_invailable_msg">"Can't access network!"</string>
-
-    <string name="vol">VOL</string>
-    <string name="chanel">CH</string>
-
+    <!--screen projection-->
+    <string name="tips">Tips</string>
+    <string name="tips_content">Initializing the casting devices , please waite.</string>
+    <string name="device_search">Looking for the devices , please waite.</string>
     <string name="wifi_connecting">Wifi connecting...</string>
     <string name="wifi_disconnecting">Wifi disconnecting...</string>
     <string name="wifi_not_connected">Wifi disconnected...</string>
+    <string name="local_screenprojection">Local ScreenProjection</string>
+    <string name="photo">Photo</string>
+    <string name="video">Video</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
+    <!--mine-->
+    <string name="personal_title">Mine</string>
+    <string name="personal_appliction">Applications</string>
+    <string name="personal_setting">Settings</string>
+    <string name="personal_about">About</string>
+    <string name="personal_version">Version</string>
+    <string name="personal_login">Please login your phicomm account</string>
+
+    <!--about-->
+    <string name="about_project_name">Phi Controller V<xliff:g id="version">%1$s</xliff:g></string>
+    <string name="website">Official website</string>
+    <string name="hotline">Service hotline</string>
+    <string name="phicomm_website">www.phicomm.com</string>
+    <string name="phicomm_hotline">4007-567-567</string>
+    <string name="copyright_info">©2017 Shanghai Fitch Data Communication Technology Co., Ltd</string>
+    <string name="dailnumber">Call</string>
+
+    <!--update-->
+    <string name="update_description">New version update</string>
+    <string name="version_info_tips">Latest version content update:</string>
+    <string name="version_update_title">Find new version(%s)</string>
+    <string name="update_current_version">Current version</string>
+    <string name="update_latest_version">Latest version</string>
+    <string name="update_version">Version update</string>
+    <string name="current_version_newest">Current version is the latest</string>
+    <string name="download_wait">downloading,pls wait...</string>
+    <string name="download_failure">download fail</string>
+    <string name="file_not_exist">Installed file not exist</string>
+    <string name="update_later">Later to consider</string>
+    <string name="update_now">Update now</string>
+    <string name="error_no_device">No devices secified</string>
+    <string name="timeout_msg">The version is not available, please update！</string>
+    <string name="network_invailable_msg">"Unable to connect network"</string>
+
     <!--setting-->
     <string name="setting_title">Remote control setting</string>
     <string name="setting_vibrate_title">Touch vibrating</string>
@@ -98,8 +134,7 @@
     <string name="setting_voice_title">Volume button control</string>
     <string name="setting_voice_context">Control the volume of the box by volume button</string>
 
-    <!--loginregister-->
-    <string name="app_name_application">WiFi Plug</string>
+    <!--register login-->
     <string name="register">Register</string>
     <string name="new_user_register">New user register</string>
     <string name="register_divide">Register</string>
@@ -157,8 +192,9 @@
     <string name="login_tips">the number is phicomm account, please log in.</string>
     <string name="exit">exit</string>
     <string name="kick_tips">Your account has been logged on to another device. Please login again and change the password.</string>
-
-
+    <string name="account_exit">Sure to exist account？</string>
+    <string name="account_exit_msg">Data cannot be synchronized after exit account</string>
+    <string name="phicomm_account">Phicomm account</string>
     <string name="no_network_layout">no network</string>
     <string name="no_network_reload">reload</string>
 
@@ -207,11 +243,19 @@
     <string name="mail_format_error">mail format error</string>
     <string name="username_format_error">username format error</string>
     <string name="phonenumber_not_register_account">phonenumber not register account</string>
+
+    <!--IP-->
     <string name="input_phicomm_device_ip">Input the PHICOMM device ip</string>
     <string name="check_ip_address_setting">Check IP address setting</string>
-    <string name="confirm">confirm</string>
     <string name="error_tips">please input the correct IP address</string>
     <string name="ip_connect_fail_tips">Please make sure that the message boxand mobile   \n
         phone are in the same LAN,and check the WIFI settings \n
         - Advanced settings ,-AP isolation, shutdown.</string>
+
+    <!--apply-->
+    <string name="refershlayout_is_loading">Refreshing</string>
+    <string name="installed_app">Installed applocations</string>
+    <string name="apply_title">Application</string>
+
+
 </resources>
