@@ -248,9 +248,7 @@
     <string name="input_phicomm_device_ip">Input the PHICOMM device ip</string>
     <string name="check_ip_address_setting">Check IP address setting</string>
     <string name="error_tips">please input the correct IP address</string>
-    <string name="ip_connect_fail_tips">Please make sure that the message boxand mobile   \n
-        phone are in the same LAN,and check the WIFI settings \n
-        - Advanced settings ,-AP isolation, shutdown.</string>
+    <string name="ip_connect_fail_tips">Please make sure that the message boxand mobile phone are in the same LAN,and check the WIFI settings- Advanced settings ,-AP isolation, shutdown.</string>
 
     <!--apply-->
     <string name="refershlayout_is_loading">Refreshing</string>

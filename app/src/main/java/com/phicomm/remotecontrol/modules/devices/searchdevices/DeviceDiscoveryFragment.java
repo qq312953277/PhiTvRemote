@@ -1,6 +1,5 @@
 package com.phicomm.remotecontrol.modules.devices.searchdevices;
 
-import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -42,6 +41,7 @@ import com.phicomm.remotecontrol.modules.devices.searchdevices.DeviceDiscoveryCo
 import com.phicomm.remotecontrol.util.DevicesUtil;
 import com.phicomm.remotecontrol.util.LogUtil;
 import com.phicomm.remotecontrol.util.SettingUtil;
+import com.phicomm.widgets.alertdialog.PhiAlertDialog;
 import com.tandong.bottomview.view.BottomView;
 
 import java.util.Formatter;
@@ -234,7 +234,7 @@ public class DeviceDiscoveryFragment extends BaseFragment implements DeviceDisco
                     mPresenter.ipConnect(inputStr);
                 } else {
                     mBottomView.dismissBottomView();
-                    illegalIPDialog().show();
+                    ipDialog(R.string.error_tips);
                 }
             }
         }
@@ -262,7 +262,7 @@ public class DeviceDiscoveryFragment extends BaseFragment implements DeviceDisco
 
     @Override
     public void showConnectFailDialog() {
-        ipConnectFailDialog().show();
+        ipDialog(R.string.ip_connect_fail_tips);
     }
 
     private AdapterView.OnItemClickListener manualConnectDevice = new AdapterView.OnItemClickListener() {
@@ -468,31 +468,17 @@ public class DeviceDiscoveryFragment extends BaseFragment implements DeviceDisco
         }
     }
 
-    private AlertDialog illegalIPDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        View view = LayoutInflater.from(getContext()).inflate(R.layout.dialog_illegal_ip, null);
-        builder.setPositiveButton(
-                R.string.confirm, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        manualConnectDevice();
-                    }
-                })
-                .setCancelable(true)
-                .setView(view);
-        return builder.create();
-    }
-
-    private AlertDialog ipConnectFailDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        View view = LayoutInflater.from(getContext()).inflate(R.layout.dialog_ip_connect_fail, null);
-        builder.setPositiveButton(
-                R.string.confirm, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                    }
-                })
-                .setCancelable(true)
-                .setView(view);
-        return builder.create();
+    private void ipDialog(int resId) {
+        PhiAlertDialog.Builder builder = new PhiAlertDialog.Builder(getContext());
+        builder.setMessage(resId);//R.string.error_tips   R.string.ip_connect_fail_tips
+        builder.setCancelable(false);//点击框外不取消
+        builder.setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        builder.show();
     }
 
     private boolean isValidIpAddress(String inputStr) {

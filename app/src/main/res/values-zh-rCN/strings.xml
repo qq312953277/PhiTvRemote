@@ -262,11 +262,9 @@
 
     <!--IP-->
     <string name="input_phicomm_device_ip">请输入斐讯盒子的IP</string>
-    <string name="check_ip_address_setting">IP地址在斐讯盒子设置-关于-网络信息中查看</string>
+    <string name="check_ip_address_setting">IP地址在斐讯盒子设置-网络.蓝牙-网络状态中查看</string>
     <string name="error_tips">请输入正确的IP地址</string>
-    <string name="ip_connect_fail_tips">请确保斐讯盒子和手机在同一 \n
-        个局域网中，并检查WIFI设置 \n
-        -高级设置-AP隔离是否关闭。 \n</string>
+    <string name="ip_connect_fail_tips">请确保斐讯盒子和手机在同一个局域网中，并检查WIFI设置-高级设置-AP隔离是否关闭。</string>
 
     <!--apply-->
     <string name="refershlayout_is_loading">刷新中</string>

@@ -375,7 +375,7 @@ public class ForgetPasswordActivity extends BaseActivity implements ForgetPasswo
                         super.onStart();
                         mGetCodeBtn.setEnabled(false);
                         String showText = String.format("%s s", count);
-                        mGetCodeBtn.setText(showText + R.string.verifycode_resend);
+                        mGetCodeBtn.setText(showText + getString(R.string.verifycode_resend));
                         mTimerRunning = true;
                     }
 
@@ -394,7 +394,7 @@ public class ForgetPasswordActivity extends BaseActivity implements ForgetPasswo
                     @Override
                     public void onNext(Long aLong) {
                         String showText = String.format("%s s", aLong);
-                        mGetCodeBtn.setText(showText + R.string.verifycode_resend);
+                        mGetCodeBtn.setText(showText + getString(R.string.verifycode_resend));
                     }
                 });
 
