@@ -508,6 +508,9 @@ public class DeviceDiscoveryFragment extends BaseFragment implements DeviceDisco
             return -1;
         }
         for (int i = 0; i < currentList.size(); i++) {
+            if (target.getBssid() == null || currentList.get(i) == null) {
+                continue;
+            }
             if (target.getBssid().equals(currentList.get(i).getBssid())) {
                 return i;
             }

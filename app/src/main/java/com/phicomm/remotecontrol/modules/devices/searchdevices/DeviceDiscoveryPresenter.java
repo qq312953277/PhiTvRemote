@@ -222,6 +222,9 @@ public class DeviceDiscoveryPresenter implements DeviceDiscoveryContract.Present
     @Override
     public boolean isContains(List<RemoteBoxDevice> mOnResumeRemoteBoxDevice, RemoteBoxDevice mTarget) {
         for (int i = 0; i < mOnResumeRemoteBoxDevice.size(); i++) {
+            if (mTarget == null || mTarget.getBssid() == null || mOnResumeRemoteBoxDevice.get(i) == null) {
+                continue;
+            }
             if (mTarget.getBssid().equals(mOnResumeRemoteBoxDevice.get(i).getBssid())) {
                 return true;
             }

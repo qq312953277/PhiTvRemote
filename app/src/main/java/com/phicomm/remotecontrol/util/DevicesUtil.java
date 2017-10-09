@@ -57,6 +57,9 @@ public class DevicesUtil {
         for (Long id : ids) {
             String tempBssid = mRecentedConnectedMap.get(id);
             LogUtil.d(TAG, "tempBssid=" + tempBssid + " remoteDevice.getBssid()=" + remoteDevice.getBssid());
+            if (tempBssid == null || remoteDevice == null) {
+                continue;
+            }
             if (tempBssid.equals(remoteDevice.getBssid())) {
                 findId = id;
                 break;
