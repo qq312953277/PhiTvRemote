@@ -56,8 +56,7 @@ public class ContentBrowseBiz {
     private void execute(final Service service, Container container) {
         upnpBiz.execute(new ContentBrowseActionCallback(service, container) {
             @Override
-            public void received(ActionInvocation actionInvocation,
-                                 DIDLContent didl) {
+            public void received(ActionInvocation actionInvocation, DIDLContent didl) {
                 LogUtil.d(TAG,
                         "Received browse action DIDL descriptor, creating tree nodes");
                 try {
@@ -68,8 +67,7 @@ public class ContentBrowseBiz {
                     }
                     for (Item item : didl.getItems()) {
                         String contentFormat = item.getFirstResource().getProtocolInfo().getContentFormat();
-                        ContentItem ct = new ContentItem(item, service, FiletypeUtil
-                                .getFiletype(contentFormat));
+                        ContentItem ct = new ContentItem(item, service, FiletypeUtil.getFiletype(contentFormat));
                         sendMsg(ct);
                     }
                 } catch (Exception e) {

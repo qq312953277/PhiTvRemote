@@ -22,12 +22,46 @@ import java.util.ArrayList;
  * Created by kang.sun on 2017/8/21.
  */
 public class MediaContentDao {
-    private static String resAddress;
-    private static ContentResolver cr;
+    private static String mResAddress;
+    private static ContentResolver mContentResolver;
 
     public MediaContentDao(Context ctx, String serverAdd) {
-        cr = ctx.getContentResolver();
-        resAddress = "http://" + serverAdd + "/";
+        mContentResolver = ctx.getContentResolver();
+        mResAddress = "http://" + serverAdd + "/";
+    }
+
+    public ArrayList<MItem> getImageItems() {
+        ArrayList<MItem> items = new ArrayList<MItem>();
+        String[] imageColumns = {Images.Media._ID,
+                Images.Media.TITLE,
+                Images.Media.DATA,
+                Images.Media.MIME_TYPE,
+                Images.Media.SIZE};
+        Cursor cur = mContentResolver.query(Images.Media.EXTERNAL_CONTENT_URI, imageColumns, null, null, null);
+        if (cur == null) {
+            return items;
+        }
+        try {
+            while (cur.moveToNext()) {
+                String id = ContentTree.IMAGE_PREFIX + cur.getInt(cur.getColumnIndex(MediaStore.Images.Media._ID));
+                String title = cur.getString(cur.getColumnIndex(MediaStore.Images.Media.TITLE));
+                String creator = "unkown";
+                String filePath = cur.getString(cur.getColumnIndex(MediaStore.Images.Media.DATA));
+                String mimeType = cur.getString(cur.getColumnIndex(MediaStore.Images.Media.MIME_TYPE));
+                long size = cur.getLong(cur
+                        .getColumnIndex(MediaStore.Images.Media.SIZE));
+                Res res = new Res(new MimeType(mimeType.substring(0, mimeType.indexOf('/')),
+                        mimeType.substring(mimeType.indexOf('/') + 1)), size, mResAddress + id);
+                ImageItem imageItem = new ImageItem(id, ContentTree.IMAGE_ID,
+                        title, creator, filePath, res);
+                items.add(imageItem);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            cur.close();
+        }
+        return items;
     }
 
     public ArrayList<MItem> getVideoItems() {
@@ -40,7 +74,7 @@ public class MediaContentDao {
                 Video.Media.SIZE,
                 Video.Media.DURATION,
                 Video.Media.RESOLUTION};
-        Cursor cur = cr.query(Video.Media.EXTERNAL_CONTENT_URI, videoColumns, null, null, null);
+        Cursor cur = mContentResolver.query(Video.Media.EXTERNAL_CONTENT_URI, videoColumns, null, null, null);
         if (cur == null) {
             return items;
         }
@@ -55,7 +89,7 @@ public class MediaContentDao {
                 long duration = cur.getLong(cur.getColumnIndex(Video.Media.DURATION));
                 String resolution = cur.getString(cur.getColumnIndex(Video.Media.RESOLUTION));
                 Res res = new Res(new MimeType(mimeType.substring(0, mimeType.indexOf('/')),
-                        mimeType.substring(mimeType.indexOf('/') + 1)), size, resAddress + id);
+                        mimeType.substring(mimeType.indexOf('/') + 1)), size, mResAddress + id);
                 res.setDuration(DurationUtil.toMilliTimeString(duration));
                 res.setResolution(resolution);
                 VideoItem videoItem = new VideoItem(id, ContentTree.VIDEO_ID, title, creator, filePath, res);
@@ -69,31 +103,35 @@ public class MediaContentDao {
         return items;
     }
 
-    public ArrayList<MItem> getImageItems() {
+    public ArrayList<MItem> getImageItems(String mAlbumName) {
         ArrayList<MItem> items = new ArrayList<MItem>();
         String[] imageColumns = {Images.Media._ID,
                 Images.Media.TITLE,
                 Images.Media.DATA,
                 Images.Media.MIME_TYPE,
-                Images.Media.SIZE};
-        Cursor cur = cr.query(Images.Media.EXTERNAL_CONTENT_URI, imageColumns, null, null, null);
+                Images.Media.SIZE,
+                Images.Media.BUCKET_DISPLAY_NAME};
+        Cursor cur = mContentResolver.query(Images.Media.EXTERNAL_CONTENT_URI, imageColumns, null, null, Images.Media.DATE_MODIFIED + " desc");
         if (cur == null) {
             return items;
         }
         try {
             while (cur.moveToNext()) {
-                String id = ContentTree.IMAGE_PREFIX + cur.getInt(cur.getColumnIndex(MediaStore.Images.Media._ID));
-                String title = cur.getString(cur.getColumnIndex(MediaStore.Images.Media.TITLE));
-                String creator = "unkown";
-                String filePath = cur.getString(cur.getColumnIndex(MediaStore.Images.Media.DATA));
-                String mimeType = cur.getString(cur.getColumnIndex(MediaStore.Images.Media.MIME_TYPE));
-                long size = cur.getLong(cur
-                        .getColumnIndex(MediaStore.Images.Media.SIZE));
-                Res res = new Res(new MimeType(mimeType.substring(0, mimeType.indexOf('/')),
-                        mimeType.substring(mimeType.indexOf('/') + 1)), size, resAddress + id);
-                ImageItem imageItem = new ImageItem(id, ContentTree.IMAGE_ID,
-                        title, creator, filePath, res);
-                items.add(imageItem);
+                String mBucketName = cur.getString(cur.getColumnIndexOrThrow(Images.Media.BUCKET_DISPLAY_NAME));
+                if (mBucketName.equals(mAlbumName)) {
+                    String id = ContentTree.IMAGE_PREFIX + cur.getInt(cur.getColumnIndex(MediaStore.Images.Media._ID));
+                    String title = cur.getString(cur.getColumnIndex(MediaStore.Images.Media.TITLE));
+                    String creator = "unkown";
+                    String filePath = cur.getString(cur.getColumnIndex(MediaStore.Images.Media.DATA));
+                    String mimeType = cur.getString(cur.getColumnIndex(MediaStore.Images.Media.MIME_TYPE));
+                    long size = cur.getLong(cur
+                            .getColumnIndex(MediaStore.Images.Media.SIZE));
+                    Res res = new Res(new MimeType(mimeType.substring(0, mimeType.indexOf('/')),
+                            mimeType.substring(mimeType.indexOf('/') + 1)), size, mResAddress + id);
+                    ImageItem imageItem = new ImageItem(id, ContentTree.IMAGE_ID,
+                            title, creator, filePath, res);
+                    items.add(imageItem);
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();

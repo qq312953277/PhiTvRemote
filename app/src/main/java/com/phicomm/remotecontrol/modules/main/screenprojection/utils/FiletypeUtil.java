@@ -41,9 +41,6 @@ public class FiletypeUtil {
     public static int getFiletype(String contentFormat) {
         String[] types = contentFormat.split("/");
         if (types.length >= 0) {
-            if ("audio".equals(types[0])) {
-                return FILETYPE_MUSIC;
-            }
             if ("video".equals(types[0])) {
                 return FILETYPE_MOVIE;
             }

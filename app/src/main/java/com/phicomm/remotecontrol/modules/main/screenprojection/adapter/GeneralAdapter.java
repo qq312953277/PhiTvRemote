@@ -22,9 +22,9 @@ import java.util.List;
  * Created by kang.sun on 2017/8/22.
  */
 public abstract class GeneralAdapter<E> extends BaseAdapter {
-    private int maxCount = 200; // ListView中最大显示数据条数
+    private int maxCount = Integer.MAX_VALUE;
     private List<E> data;
-    private int resource; // ListView中Item布局id
+    private int resource;
     private Context ctx;
     private final Object mLock = new Object();
 

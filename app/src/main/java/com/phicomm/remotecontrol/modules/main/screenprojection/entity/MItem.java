@@ -7,13 +7,14 @@ import org.fourthline.cling.support.model.WriteStatus;
 import org.fourthline.cling.support.model.container.Container;
 import org.fourthline.cling.support.model.item.Item;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by kang.sun on 2017/8/21.
  */
-public class MItem extends Item {
+public class MItem extends Item implements Serializable {
     private String filePath;
 
     public MItem() {

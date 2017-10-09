@@ -15,6 +15,10 @@ import java.util.List;
  */
 
 public class ContentAdapter extends GeneralAdapter<ContentItem> {
+    public static final int TITTLE_LIMIT_LENGTH = 28;
+    public static final int TITTLE_FRONT_LENGTH = 15;
+    public static final int TITTLE_BACK_LENGTH = 4;
+
     public ContentAdapter(Context ctx, int resource, List<ContentItem> data) {
         super(ctx, resource, data);
     }
@@ -32,17 +36,18 @@ public class ContentAdapter extends GeneralAdapter<ContentItem> {
                     holder.setImageResource(R.id.iv_icon,
                             R.drawable.file_video_icon);
                     break;
-                case FiletypeUtil.FILETYPE_MUSIC:
-                    holder.setImageResource(R.id.iv_icon,
-                            R.drawable.file_audio_icon);
-                    break;
                 case FiletypeUtil.FILETYPE_PIC:
                     holder.setImageResource(R.id.iv_icon,
                             R.drawable.file_image_icon);
                     break;
             }
         }
-        holder.setText(R.id.tv_title, contentTitle);
+        if (contentTitle.length() <= TITTLE_LIMIT_LENGTH) {
+            holder.setText(R.id.tv_title, contentTitle);
+        } else {
+            String mShortContentTitle = contentTitle.substring(0, TITTLE_FRONT_LENGTH) + "..." + contentTitle.substring(contentTitle.length() - TITTLE_BACK_LENGTH, contentTitle.length());
+            holder.setText(R.id.tv_title, mShortContentTitle);
+        }
     }
 }
 

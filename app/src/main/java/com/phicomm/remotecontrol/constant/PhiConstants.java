@@ -11,7 +11,7 @@ public class PhiConstants {
 
     public static final String SPINNER_DEVICES_LIST = "spinner_devices_list";
     public static final long DISCOVERY_TIMEOUT = 10000;  //10s
-
+    public static final long DISCOVER_DLNA_TIMEOUT = 5000;
     public static final int DISCOVERY_DERVICE_REMOVE = 2000;
     public static final int BROADCAST_TIMEOUT = 1000;
 

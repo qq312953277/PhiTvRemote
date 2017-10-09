@@ -54,35 +54,27 @@
         <activity
             android:name=".modules.main.controlpanel.CoreControlActivity"
             android:screenOrientation="nosensor" />
-
         <activity
             android:name=".modules.devices.connectrecords.RecentDevicesActivity"
             android:screenOrientation="nosensor" />
-
         <activity
             android:name=".modules.devices.searchdevices.DeviceDiscoveryActivity"
             android:screenOrientation="nosensor" />
-
         <activity
             android:name=".modules.main.screenshot.ScreenshotActivity"
             android:screenOrientation="nosensor" />
-
         <activity
             android:name=".modules.personal.personaldetail.PersonalActivity"
             android:screenOrientation="nosensor" />
-
         <activity
             android:name=".modules.main.screenprojection.activities.LocalMediaItemActivity"
             android:screenOrientation="nosensor" />
-
         <activity
             android:name=".modules.main.screenprojection.activities.VideoControlActivity"
             android:screenOrientation="nosensor" />
-
         <activity
             android:name=".modules.main.screenprojection.activities.PictureControlActivity"
             android:screenOrientation="nosensor" />
-
         <activity
             android:name=".modules.personal.about.AboutActivity"
             android:screenOrientation="nosensor" />
@@ -94,7 +86,6 @@
         <activity
             android:name=".modules.personal.setting.SettingActivity"
             android:screenOrientation="nosensor" />
-
         <activity
             android:name=".modules.personal.account.registerlogin.login.LoginActivity"
             android:screenOrientation="nosensor" />
@@ -107,7 +98,6 @@
         <activity
             android:name=".modules.personal.account.registerlogin.login.LoginoutActivity"
             android:screenOrientation="nosensor" />
-
         <activity
             android:name=".modules.personal.account.webh5.WebViewActivity"
             android:screenOrientation="nosensor" />
@@ -116,9 +106,6 @@
 
         <activity
             android:name=".modules.personal.apply.ApplyActivity"
-            android:screenOrientation="nosensor" />
-        <activity
-            android:name=".modules.main.screenprojection.activities.ImagebucketActivity"
             android:screenOrientation="nosensor" />
         <activity
             android:name=".modules.main.screenprojection.activities.ImageActivity"

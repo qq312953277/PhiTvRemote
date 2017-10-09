@@ -5,12 +5,12 @@ import java.util.List;
 
 /**
  * 一个目录下的相册对象
+ * 改动：PhotoUpImageItem->MItem
  */
 public class PhotoUpImageBucket implements Serializable {
-
     public int mCount = 0;
     public String mBucketName;
-    public List<PhotoUpImageItem> mImageList;
+    public List<ImageItem> mImageList;
 
     public int getCount() {
         return mCount;
@@ -28,12 +28,11 @@ public class PhotoUpImageBucket implements Serializable {
         this.mBucketName = bucketName;
     }
 
-    public List<PhotoUpImageItem> getImageList() {
+    public List<ImageItem> getImageList() {
         return mImageList;
     }
 
-    public void setImageList(List<PhotoUpImageItem> imageList) {
+    public void setImageList(List<ImageItem> imageList) {
         this.mImageList = imageList;
     }
-
 }

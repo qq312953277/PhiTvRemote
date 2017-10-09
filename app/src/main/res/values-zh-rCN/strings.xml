@@ -100,7 +100,7 @@
 
     <!--投屏-->
     <string name="tips">提示</string>
-    <string name="tips_content">正在初始化投屏设备，请等待</string>
+    <string name="tips_content">正在获取媒体资源，请等待</string>
     <string name="device_search">正在查找设备详情,请稍后.</string>
     <string name="local_screenprojection">本地投影</string>
     <string name="wifi_connecting">正在连接Wifi...</string>

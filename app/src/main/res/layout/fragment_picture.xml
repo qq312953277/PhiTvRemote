@@ -2,8 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:layout_margin="3dp">
+    android:layout_margin="3dp"
+    android:orientation="vertical">
 
     <GridView
         android:id="@+id/album_gridv"
@@ -13,5 +13,4 @@
         android:horizontalSpacing="4dp"
         android:numColumns="2"
         android:verticalSpacing="10dp" />
-
 </LinearLayout>

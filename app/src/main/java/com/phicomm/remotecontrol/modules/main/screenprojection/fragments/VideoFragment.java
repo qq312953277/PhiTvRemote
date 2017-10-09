@@ -1,43 +1,39 @@
 package com.phicomm.remotecontrol.modules.main.screenprojection.fragments;
 
-import android.content.Intent;
-import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.phicomm.remotecontrol.R;
-import com.phicomm.remotecontrol.base.BaseApplication;
 import com.phicomm.remotecontrol.base.BaseFragment;
-import com.phicomm.remotecontrol.modules.main.screenprojection.adapter.VideoAdapter;
+import com.phicomm.remotecontrol.modules.main.screenprojection.activities.PictureEvent;
+import com.phicomm.remotecontrol.modules.main.screenprojection.presenter.LocalMediaItemPresenter;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
+import butterknife.OnItemClick;
+
 
 /**
  * Created by yong04.zhou on 2017/9/19.
  */
 
 public class VideoFragment extends BaseFragment {
-
+    public static int mLayer = 0;
+    private LocalMediaItemPresenter mLocalMediaItemPresenter;
     @BindView(R.id.video_listview)
-    ListView mVideoListView;
+    ListView mListView;
 
-    private VideoAdapter mVideoAdapter;
-    private Cursor mCursor;
-
-    public static HashMap<String, Long> mVideoMap = new HashMap<>();
-    public static ArrayList<File> mVidData = new ArrayList<>();
-
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
 
     @Nullable
     @Override
@@ -46,54 +42,40 @@ public class VideoFragment extends BaseFragment {
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-        initView();
-    }
-
-    private void initView() {
-        mVideoMap.clear();
-        mVidData.clear();
-        setVideoListData();
-        mVideoAdapter = new VideoAdapter(mVidData, mVideoMap);
-        mVideoListView.setAdapter(mVideoAdapter);
-        mVideoListView.setOnItemClickListener(new VideoItemClickListener());
-    }
-
-
-    private void setVideoListData() {
-        try {
-            mCursor = BaseApplication.getContext().getContentResolver().query(MediaStore.Video.Media.EXTERNAL_CONTENT_URI,
-                    new String[]{MediaStore.Video.Media.TITLE, MediaStore.Video.Media.MIME_TYPE, MediaStore.Video.Media.DATA,
-                            MediaStore.Video.Media.DURATION}, null, null, null);
-            if (mCursor != null) {
-                mCursor.moveToFirst();
-                int count = mCursor.getCount();
-                for (int i = 0; i < count; i++) {
-                    mVideoMap.put(mCursor.getString(2).trim(), (long) mCursor.getInt(3));
-                    mVidData.add(new File(mCursor.getString(2).trim()));
-                    mCursor.moveToNext();
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (mCursor != null) {
-                mCursor.close();
-            }
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
         }
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
 
-    class VideoItemClickListener implements AdapterView.OnItemClickListener {
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            Intent intent = new Intent();
-            intent.setAction(Intent.ACTION_VIEW);
-            Uri uri = Uri.parse("file://" + mVidData.get(position));
-            intent.setDataAndType(uri, "video/*");
-            startActivity(intent);
+    /**
+     * 显示本地视频和照片
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void showItems(PictureEvent event) {
+        if (event.mType == 1) {
+            mListView.setAdapter(event.mItems);
+            mLocalMediaItemPresenter = event.mLocalMediaItemPresenter;
         }
     }
 
+    @OnItemClick(R.id.video_listview)
+    public void onItemClick(int position) {
+        mLayer = 1;
+        mLocalMediaItemPresenter.browserItems(position, this);
+    }
+
+    @Override
+    public void onDestroy() {
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
+        super.onDestroy();
+    }
 }

@@ -4,75 +4,62 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include
-        layout="@layout/title_bar" />
+    <include layout="@layout/title_bar" />
 
-    <RelativeLayout
-        android:id="@+id/main_layout"
+    <LinearLayout
+        android:id="@+id/tab_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerVertical="true"
+        android:orientation="vertical">
 
-
-        <LinearLayout
-            android:id="@+id/tab_layout"
+        <RadioGroup
+            android:id="@+id/radio_group"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerVertical="true"
-            android:orientation="vertical">
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
 
-            <RadioGroup
-                android:id="@+id/radio_group"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:orientation="horizontal">
+            <RadioButton
+                android:id="@+id/picture"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginRight="25dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/radiobutton"
+                android:button="@null"
+                android:checked="true"
+                android:gravity="center"
+                android:text="@string/photo" />
 
-                <RadioButton
-                    android:id="@+id/picture"
-                    android:layout_width="100dp"
-                    android:layout_height="40dp"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginRight="25dp"
-                    android:layout_marginTop="10dp"
-                    android:button="@null"
-                    android:background="@drawable/radiobutton"
-                    android:gravity="center"
-                    android:checked="true"
-                    android:text="@string/photo" />
+            <RadioButton
+                android:id="@+id/video"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/radiobutton"
+                android:button="@null"
+                android:gravity="center"
+                android:text="@string/video" />
+        </RadioGroup>
 
-                <RadioButton
-                    android:id="@+id/video"
-                    android:layout_width="100dp"
-                    android:layout_height="40dp"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginLeft="25dp"
-                    android:layout_marginTop="10dp"
-                    android:button="@null"
-                    android:background="@drawable/radiobutton"
-                    android:gravity="center"
-                    android:text="@string/video" />
-            </RadioGroup>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:background="#DEDEDE" />
-
-        </LinearLayout>
-
-
-        <LinearLayout
+        <TextView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tab_layout">
+            android:layout_height="1px"
+            android:background="#DEDEDE" />
+    </LinearLayout>
 
-            <android.support.v4.view.ViewPager
-                android:id="@+id/view_pager"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tab_layout"></LinearLayout>
 
-    </RelativeLayout>
-
+    <com.phicomm.remotecontrol.modules.main.screenprojection.activities.CustomViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </LinearLayout>

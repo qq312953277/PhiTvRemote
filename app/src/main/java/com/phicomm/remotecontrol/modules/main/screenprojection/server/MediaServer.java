@@ -31,6 +31,7 @@ public class MediaServer {
     private final static String TAG = MediaServer.class.getSimpleName();
     private final static int port = 8196;
     private static InetAddress localAddress;
+    private HttpServer mHttpServer;
 
     public MediaServer(InetAddress localAddress) throws ValidationException {
         DeviceType type = new UDADeviceType(deviceType, version);
@@ -50,12 +51,17 @@ public class MediaServer {
                 + details.getManufacturerDetails().getManufacturer());
         LogUtil.v(TAG, "model: " + details.getModelDetails().getModelName());
         try {
-            new HttpServer(port);
+            mHttpServer = new HttpServer(port);
         } catch (IOException ioe) {
             System.err.println("Couldn't start server:\n" + ioe);
-            System.exit(-1);
         }
         LogUtil.v(TAG, "Started Http Server on port " + port);
+    }
+
+    public void restore() {
+        if (null != mHttpServer){
+            mHttpServer.stop();
+        }
     }
 
     public LocalDevice getDevice() {

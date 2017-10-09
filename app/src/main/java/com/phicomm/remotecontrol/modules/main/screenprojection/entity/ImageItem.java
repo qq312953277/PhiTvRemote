@@ -14,6 +14,26 @@ import java.util.List;
  * Created by kang.sun on 2017/8/21.
  */
 public class ImageItem extends MItem {
+    private String mImageId;
+    //原图路径
+    private String mImagePath;
+
+    public String getmImageId() {
+        return mImageId;
+    }
+
+    public void setmImageId(String mImageId) {
+        this.mImageId = mImageId;
+    }
+
+    public String getmImagePath() {
+        return mImagePath;
+    }
+
+    public void setmImagePath(String mImagePath) {
+        this.mImagePath = mImagePath;
+    }
+
     public static final Class CLASS = new Class("object.item.imageItem");
 
     public ImageItem() {

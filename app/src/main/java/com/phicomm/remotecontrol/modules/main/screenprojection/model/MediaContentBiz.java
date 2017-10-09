@@ -17,24 +17,36 @@ import java.util.ArrayList;
  * Created by kang.sun on 2017/8/21.
  */
 public class MediaContentBiz {
-    private boolean serverPrepared = false;
+    private boolean mServerPrepared = false;
+    String[] mAlbumNameList = {"Camera", "WeiXin", "Pictures", "image", "Download", "Downloads", "Screenshots", "media", "tmp", "clip"};
 
-    public void prepareMediaServer(Context ctx, String serverAdd) {
-        if (serverPrepared) {
+    public void prepareMediaServer(Context ctx, String serverAdd, int type) {
+        if (mServerPrepared) {
             return;
         }
-        // 创建添加Video容器,节点
         MediaContentDao contentDao = new MediaContentDao(ctx, serverAdd);
-        ArrayList<MItem> videoItems = contentDao.getVideoItems();
-        creatContainer(ContentTree.VIDEO_ID, "Videos", videoItems);
-        // 创建添加image容器,节点
-        ArrayList<MItem> imageItems = contentDao.getImageItems();
-        creatContainer(ContentTree.IMAGE_ID, "Images", imageItems);
-        serverPrepared = true;
+        ContentNode rootNode = ContentTree.getRootNode();
+        Container rootContainer = rootNode.getContainer();
+        rootContainer.getContainers().clear();
+        if (type == 0) {
+            // 创建添加image容器,节点
+            ArrayList<MItem> mAllImageItems = contentDao.getImageItems();
+            creatContainer(rootNode, rootContainer, "All", "All", mAllImageItems);
+            for (int i = 0; i < mAlbumNameList.length; i++) {
+                ArrayList<MItem> imageItems = contentDao.getImageItems(mAlbumNameList[i]);
+                if (imageItems.size() > 0) {
+                    creatContainer(rootNode, rootContainer, mAlbumNameList[i], mAlbumNameList[i], imageItems);
+                }
+            }
+        } else {
+            // 创建添加Video容器,节点
+            ArrayList<MItem> videoItems = contentDao.getVideoItems();
+            creatContainer(rootNode, rootContainer, ContentTree.VIDEO_ID, "Videos", videoItems);
+        }
+        mServerPrepared = true;
     }
 
-    private void creatContainer(String id, String title, ArrayList<MItem> mItems) {
-        ContentNode rootNode = ContentTree.getRootNode();
+    private void creatContainer(ContentNode rootNode, Container rootContainer, String id, String title, ArrayList<MItem> mItems) {
         // 创建容器
         Container container = new Container();
         container.setClazz(new DIDLObject.Class("object.container"));
@@ -46,7 +58,6 @@ public class MediaContentBiz {
         container.setWriteStatus(WriteStatus.NOT_WRITABLE);
         container.setChildCount(0);
         // 添加video节点
-        Container rootContainer = rootNode.getContainer();
         rootContainer.addContainer(container);
         rootContainer.setChildCount(rootContainer.getChildCount() + 1);
         ContentTree.addNode(id, new ContentNode(id, container));

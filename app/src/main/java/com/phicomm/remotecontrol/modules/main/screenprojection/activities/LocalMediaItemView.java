@@ -8,5 +8,5 @@ import com.phicomm.remotecontrol.modules.main.screenprojection.entity.ContentIte
  * Created by kang.sun on 2017/8/31.
  */
 public interface LocalMediaItemView extends BasicView {
-    void showItems(GeneralAdapter<ContentItem> mContentAdapter);
+    void showItems(int type, GeneralAdapter<ContentItem> mContentAdapter);
 }

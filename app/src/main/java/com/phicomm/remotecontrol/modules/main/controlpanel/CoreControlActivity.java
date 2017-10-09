@@ -1,19 +1,18 @@
 package com.phicomm.remotecontrol.modules.main.controlpanel;
 
 import android.Manifest;
-import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -25,12 +24,10 @@ import com.phicomm.remotecontrol.BuildConfig;
 import com.phicomm.remotecontrol.R;
 import com.phicomm.remotecontrol.RemoteBoxDevice;
 import com.phicomm.remotecontrol.base.BaseActivity;
-import com.phicomm.remotecontrol.base.BaseApplication;
 import com.phicomm.remotecontrol.constant.Commands;
 import com.phicomm.remotecontrol.constant.KeyCode;
 import com.phicomm.remotecontrol.constant.PhiConstants;
 import com.phicomm.remotecontrol.modules.main.screenprojection.activities.LocalMediaItemActivity;
-import com.phicomm.remotecontrol.modules.main.screenprojection.constants.DeviceDisplayListOperation;
 import com.phicomm.remotecontrol.modules.main.screenprojection.entity.DeviceDisplay;
 import com.phicomm.remotecontrol.modules.main.screenprojection.entity.DisplayDeviceList;
 import com.phicomm.remotecontrol.modules.main.screenprojection.presenter.LocalMediaItemPresenter;
@@ -46,7 +43,6 @@ import com.phicomm.remotecontrol.preference.PreferenceRepository;
 import com.phicomm.remotecontrol.util.ActivityUtils;
 import com.phicomm.remotecontrol.util.CommonUtils;
 import com.phicomm.remotecontrol.util.DevicesUtil;
-import com.phicomm.remotecontrol.util.LogUtil;
 import com.phicomm.remotecontrol.util.SettingUtil;
 import com.phicomm.widgets.alertdialog.PhiGuideDialog;
 
@@ -60,11 +56,8 @@ import butterknife.OnClick;
 public class CoreControlActivity extends BaseActivity implements UpdateView {
     private final static String TAG = "CoreControlActivity";
     static final int REQUEST_CODE = 101;
-    private RemoteBoxDevice mRemoteBoxDevice;
     private DisplayDeviceList mDisplayDeviceList;
-    private ProgressDialog mProgressDialog;
     private Context mContext;
-    private DLNAHandler mDLNAHandler;
     private KeyPanelFragment mKeypanelFragment;
     private TouchPanelFragment mTouchPanelFragment;
     private ArrayList<Fragment> mFragmentList;
@@ -73,40 +66,6 @@ public class CoreControlActivity extends BaseActivity implements UpdateView {
     private UpdatePresenter mUpdatePresenter;
     private PreferenceRepository mPreference;
 
-    public class DLNAHandler extends Handler {
-        @Override
-        public void handleMessage(Message msg) {
-            DeviceDisplay mDeviceDisplay = (DeviceDisplay) msg.obj;
-            switch (msg.what) {
-                case DeviceDisplayListOperation.ADD:
-                    LogUtil.d(TAG, "开始添加数据：" + mDeviceDisplay.getDevice().toString());
-                    if (!mDisplayDeviceList.getDeviceDisplayList().contains(mDeviceDisplay)) {
-                        mDisplayDeviceList.addDevice(mDeviceDisplay);
-                    }
-                    break;
-                case DeviceDisplayListOperation.REMOVE:
-                    if (mDisplayDeviceList.getDeviceDisplayList().contains(mDeviceDisplay)) {
-                        mDisplayDeviceList.removeDevice(mDeviceDisplay);
-                    }
-                    break;
-                case PhiConstants.BROADCAST_TIMEOUT:
-                    mProgressDialog.dismiss();
-                    LogUtil.d(TAG, "进入MyDialogHandler");
-                    mLocalMediaItemPresenter.destory();
-                    LogUtil.d(TAG, "后台已销毁dlna搜索：");
-                    LogUtil.d(TAG, "目标设备是：" + DevicesUtil.getTarget());
-                    LogUtil.d(TAG, "搜索到的设备是：" + mDisplayDeviceList);
-                    if (DevicesUtil.getTarget() == null || mDisplayDeviceList == null || isSelectedDeviceNotOnline(DevicesUtil.getTarget(), mDisplayDeviceList.getDeviceDisplayList())) {
-                        //if (mDisplayDeviceList == null || isSelectedDeviceNotOnline(DevicesUtil.getTarget(), mDisplayDeviceList.getDeviceDisplayList())) {
-                        Toast.makeText(CoreControlActivity.this, "请先连接设备", Toast.LENGTH_SHORT).show();
-                    } else {
-                        startIntentToScreenProjection();
-                    }
-                    break;
-            }
-        }
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         clearRestoreFragment(savedInstanceState);
@@ -114,16 +73,12 @@ public class CoreControlActivity extends BaseActivity implements UpdateView {
         setContentView(R.layout.activity_core_controler);
         mDisplayDeviceList = DisplayDeviceList.getInstance();
         mContext = this;
-        mDLNAHandler = new DLNAHandler();
-//        transStatusbar();
         initSpinner();
         initPanel();
-
         HeaderButtons heads = new HeaderButtons(findViewById(R.id.header_view));
         PanelContract.Presenter presenter = new PanelPresenter();
         heads.setPresenter(presenter);
         mLocalMediaItemPresenter = new LocalMediaItemPresenterImpl();
-
         mPreference = new PreferenceRepository(this);
         checkNewVersion();
     }
@@ -140,8 +95,9 @@ public class CoreControlActivity extends BaseActivity implements UpdateView {
                 if (DevicesUtil.getTarget() == null) {
                     Toast.makeText(mContext, "请先连接设备", Toast.LENGTH_SHORT).show();
                 } else {
-                    mLocalMediaItemPresenter.init(mContext, mDLNAHandler);
-                    showProgressDialog();
+                    Intent intent = new Intent();
+                    intent.setClass(this, LocalMediaItemActivity.class);
+                    startActivity(intent);
                 }
                 break;
             case R.id.ib_voice:
@@ -152,23 +108,7 @@ public class CoreControlActivity extends BaseActivity implements UpdateView {
             case R.id.ib_clear:
                 mPresenter.sendCommand(Commands.OPEN_CLEAR);
                 break;
-
         }
-    }
-
-    private void startIntentToScreenProjection() {
-        LogUtil.d(TAG, "mDisplayDeviceList的个数是：" + mDisplayDeviceList.getDeviceDisplayList().size());
-        DeviceDisplay mDisplayDevice = mDisplayDeviceList.getDeviceDisplayList().get(0);
-        ((BaseApplication) getApplication()).setDeviceDisplay(mDisplayDevice);
-        if (mDisplayDevice.getDevice().isFullyHydrated()) {
-            CommonUtils.startIntent(this, null, LocalMediaItemActivity.class);
-        }
-    }
-
-    private void showProgressDialog() {
-        mProgressDialog = ProgressDialog.show(this, getString(R.string.tips), getString(R.string.tips_content));
-        mDLNAHandler.sendEmptyMessageDelayed(PhiConstants.BROADCAST_TIMEOUT,
-                PhiConstants.DISCOVERY_TIMEOUT);
     }
 
     private void clearRestoreFragment(Bundle savedInstanceState) {
@@ -193,15 +133,12 @@ public class CoreControlActivity extends BaseActivity implements UpdateView {
         PanelPresenter keyPresenter = new PanelPresenter();
         mKeypanelFragment = KeyPanelFragment.newInstance();
         mKeypanelFragment.setPresenter(keyPresenter);
-
         PanelPresenter touchPresenter = new PanelPresenter();
         mTouchPanelFragment = TouchPanelFragment.newInstance();
         mTouchPanelFragment.setPresenter(touchPresenter);
-
         mFragmentList = new ArrayList<Fragment>();
         mFragmentList.add(mKeypanelFragment);
         mFragmentList.add(mTouchPanelFragment);
-
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewPageMainContent);
         viewPager.setAdapter(new ViewPageAdapter(getSupportFragmentManager(), mFragmentList));
     }
@@ -274,7 +211,6 @@ public class CoreControlActivity extends BaseActivity implements UpdateView {
                     if (SettingUtil.isVibrateOn()) {
                         SettingUtil.doVibrate();
                     }
-
                     mPresenter.sendCommand(Commands.OPEN_SETTING);
                 }
             });
@@ -299,13 +235,8 @@ public class CoreControlActivity extends BaseActivity implements UpdateView {
 
     private boolean isSelectedDeviceNotOnline(RemoteBoxDevice mRemoteBoxDevice, List<DeviceDisplay> mDeviceDisplayList) {
         String ip = mRemoteBoxDevice.getAddress();
-        LogUtil.d(TAG, "搜到的设备有：" + mDeviceDisplayList.toString());
-        //String ip = "172.20.10.9";//测试需要
-        LogUtil.d(TAG, "当前选中设备的IP是:" + ip);
         for (int i = 0; i < mDeviceDisplayList.size(); i++) {
-            LogUtil.d(TAG, "当前设备是：" + mDeviceDisplayList.get(i).getDevice().toString());
             if (mDeviceDisplayList.get(i).getDevice().toString().indexOf(ip) != -1) {
-                LogUtil.d(TAG, "被选中的设备是：" + mDeviceDisplayList.get(i).getDevice().toString());
                 return false;
             }
         }
@@ -332,12 +263,10 @@ public class CoreControlActivity extends BaseActivity implements UpdateView {
         if (!TextUtils.isEmpty(updateType) && updateType.equals("1")) {
             isForceUpdate = true;
         }
-
         if (!TextUtils.isEmpty(ret)) {
             if (ret.equals("0")) {
                 mPreference.put(PreferenceDef.APP_VERSION, PreferenceDef.IS_HAVE_NEW_VERSIOM, true);
                 showUpdateInfoDialog(isForceUpdate, bean.getVerName(), bean.getVerInfos(), bean.getVerDown());
-
             } else {
                 mPreference.put(PreferenceDef.APP_VERSION, PreferenceDef.IS_HAVE_NEW_VERSIOM, false);
                 // CommonUtils.showShortToast(getString(R.string.current_version_newest));
@@ -380,16 +309,19 @@ public class CoreControlActivity extends BaseActivity implements UpdateView {
 
     @Override
     public void showMessage(Object message) {
-
     }
 
     @Override
     public void onSuccess(Object message) {
-
     }
 
     @Override
     public void onFailure(Object message) {
+    }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d("LocalMediaItemActivity", "CoreControlActivity onDestroy");
     }
 }

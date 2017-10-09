@@ -13,4 +13,6 @@ public interface PictureControlView extends BasicView {
     void dismissDialog();
 
     void showPicture(Bitmap bitmap);
+
+    void setTittle(String tittle);
 }

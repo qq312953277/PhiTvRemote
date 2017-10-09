@@ -45,6 +45,7 @@ public class PictureControlPresenterImpl implements PictureControlPresenter {
 
     @Override
     public void showPicture() {
+        mView.setTittle(item.getTitle());
         controlBiz.setPlayUri(item);//投屏
         new LoadImageAsyncTask().execute(imageurl);//本地展示
     }
@@ -56,6 +57,7 @@ public class PictureControlPresenterImpl implements PictureControlPresenter {
             if (index >= 0) {
                 Item item = PictureContentItemList.getInstance().getPictureContentItemList().get(index);
                 new LoadImageAsyncTask().execute(item.getFirstResource().getValue());
+                mView.setTittle(item.getTitle());
                 controlBiz.setPlayUri(item);
             }
         } else {
@@ -70,6 +72,7 @@ public class PictureControlPresenterImpl implements PictureControlPresenter {
             if (index < PictureContentItemList.getInstance().getPictureContentItemList().size()) {
                 Item item = PictureContentItemList.getInstance().getPictureContentItemList().get(index);
                 new LoadImageAsyncTask().execute(item.getFirstResource().getValue());
+                mView.setTittle(item.getTitle());
                 controlBiz.setPlayUri(item);
             }
         } else {
