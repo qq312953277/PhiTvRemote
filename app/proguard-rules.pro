@@ -156,12 +156,25 @@ public static final int *;
 
 ####################################第三方库 Start####################################
 
+# 投屏相关jar不混淆
 -dontwarn com.tandong.**
+-keep class com.tandong.** { *; }
+
 -dontwarn org.**
+-keep class org.** { *; }
+
 -dontwarn javax.**
+-keep class javax.** { *; }
+
 -dontwarn freemarker.**
+-keep class freemarker.** { *; }
+
 -dontwarn com.google.**
+-keep class com.google.** { *; }
+
 -dontwarn com.phicomm.**
+-keep class com.phicomm.** { *; }
+# 投屏相关jar不混淆
 
 # Retrofit
 -dontwarn retrofit2.**
