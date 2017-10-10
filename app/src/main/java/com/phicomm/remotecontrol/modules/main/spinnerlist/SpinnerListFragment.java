@@ -18,14 +18,12 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.PopupWindow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.phicomm.remotecontrol.ConnectManager;
 import com.phicomm.remotecontrol.R;
 import com.phicomm.remotecontrol.RemoteBoxDevice;
 import com.phicomm.remotecontrol.base.BaseFragment;
 import com.phicomm.remotecontrol.constant.PhiConstants;
-import com.phicomm.remotecontrol.greendao.Entity.RemoteDevice;
 import com.phicomm.remotecontrol.greendao.GreenDaoUserUtil;
 import com.phicomm.remotecontrol.modules.devices.searchdevices.DeviceDiscoveryActivity;
 import com.phicomm.remotecontrol.modules.personal.personaldetail.PersonalActivity;
@@ -92,8 +90,7 @@ public class SpinnerListFragment extends BaseFragment {
     public void onResume() {
         DevicesUtil.loadRecentList();
         //获取连接记录并显示
-        List<RemoteDevice> deviceList = mGreenDaoUserUtil.loadAllRecentByTimeOrder();
-        List<RemoteBoxDevice> remoteBoxDeviceList = parseToRemoteBoxDevice(deviceList);
+        List<RemoteBoxDevice> remoteBoxDeviceList = mGreenDaoUserUtil.querydata();
         RemoteBoxDevice target = DevicesUtil.getTarget();
         if (target != null) {
             mDeviceTv.setText(target.getName());
@@ -102,16 +99,6 @@ public class SpinnerListFragment extends BaseFragment {
         }
         refreshSpinnerListView(remoteBoxDeviceList);
         super.onResume();
-    }
-
-    private List<RemoteBoxDevice> parseToRemoteBoxDevice(List<RemoteDevice> deviceList) {
-        List<RemoteBoxDevice> remoteBoxDeviceList = new ArrayList<>();
-        for (int i = 0; i < deviceList.size(); i++) {
-            RemoteDevice mRemoteDevice = deviceList.get(i);
-            remoteBoxDeviceList.add(new RemoteBoxDevice(mRemoteDevice.getName(), mRemoteDevice.getAddress(),
-                    mRemoteDevice.getPort(), mRemoteDevice.getBssid()));
-        }
-        return remoteBoxDeviceList;
     }
 
 
@@ -145,13 +132,12 @@ public class SpinnerListFragment extends BaseFragment {
     };
 
     private void loadLastestConnectionDevice() {
-        List<RemoteDevice> deviceList = mGreenDaoUserUtil.loadAllRecentByTimeOrder();
-        List<RemoteBoxDevice> recentDevices = parseToRemoteBoxDevice(deviceList);
+        List<RemoteBoxDevice> remoteBoxDeviceList = mGreenDaoUserUtil.querydata();
         Log.d(TAG, "loadLastestConnectionDevice mCurrentDevicesList=" + mCurrentDevicesList);
         mCurrentDevicesList.clear();
         int i = 0;
-        while (recentDevices.size() > i && !mIsSuccess) {
-            RemoteBoxDevice device = recentDevices.get(i);
+        while (remoteBoxDeviceList.size() > i && !mIsSuccess) {
+            RemoteBoxDevice device = remoteBoxDeviceList.get(i);
             i++;
             if (device != null) {
                 ConnectManager.getInstance().connect(device, new ConnectManager
@@ -181,7 +167,7 @@ public class SpinnerListFragment extends BaseFragment {
     }
 
     private void sendMessage() {
-        Message msg = new Message();
+        Message msg = Message.obtain();
         Bundle data = new Bundle();
         data.putParcelableArrayList(PhiConstants.SPINNER_DEVICES_LIST, (ArrayList<? extends
                 Parcelable>) mCurrentDevicesList);
@@ -210,10 +196,9 @@ public class SpinnerListFragment extends BaseFragment {
                         }
                         mDeviceTv.setText(remoteDevice.getName());
                         //刷新下拉列表
-                        List<RemoteDevice> deviceList = mGreenDaoUserUtil.loadAllRecentByTimeOrder();
-                        List<RemoteBoxDevice> remoteBoxDeviceList = parseToRemoteBoxDevice(deviceList);
+                        List<RemoteBoxDevice> remoteBoxDeviceList = mGreenDaoUserUtil.querydata();
                         refreshSpinnerListView(remoteBoxDeviceList);
-                        Toast.makeText(getContext(), "connect SUCCESS", Toast.LENGTH_SHORT).show();
+                        CommonUtils.showToastBottom("connect SUCCESS");
                     }
 
                     @Override
@@ -221,7 +206,7 @@ public class SpinnerListFragment extends BaseFragment {
                         LogUtil.d("Connect fail:" + remoteDevice.toString());
                         mCurrentDevicesList.remove(remoteDevice);
                         DevicesUtil.setCurrentListResult(mCurrentDevicesList);
-                        Toast.makeText(getContext(), "connect fail", Toast.LENGTH_SHORT).show();
+                        CommonUtils.showToastBottom("connect fail");
                     }
                 });
             }
@@ -251,9 +236,8 @@ public class SpinnerListFragment extends BaseFragment {
                     .SPINNER_DEVICES_LIST);
             Log.d(TAG, " handleMessage deviceList.size()=" + deviceList.size());
             //手机后台自动connect连接记录的device，然后更新下拉展开栏
-            List<RemoteDevice> recentdDeviceList = mGreenDaoUserUtil.loadAllRecentByTimeOrder();
-            List<RemoteBoxDevice> remoteBoxDeviceList = parseToRemoteBoxDevice(recentdDeviceList);
-            mSpinerPopWindow.notifyDataChange(remoteBoxDeviceList);
+            List<RemoteBoxDevice> remoteBoxDeviceList = mGreenDaoUserUtil.querydata();
+            refreshSpinnerListView(remoteBoxDeviceList);
             if (deviceList.size() > 0) {
                 mDeviceTv.setText(deviceList.get(0).getName());
             } else {

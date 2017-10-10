@@ -58,7 +58,10 @@ public class GreenDaoUserUtil {
         List<RemoteDevice> devicelist = loadAllRecentByTimeOrder();
         List<RemoteBoxDevice> mRecentConnecedList = new ArrayList<>(0);
         for (int i = 0; i < devicelist.size(); i++) {
-            RemoteDevice recentdevice = devicelist.get(0);
+            RemoteDevice recentdevice = devicelist.get(i);
+            if (recentdevice == null) {
+                continue;
+            }
             RemoteBoxDevice temp = new RemoteBoxDevice(recentdevice.getName(), recentdevice.getAddress(), recentdevice.getPort(), recentdevice.getBssid());
             mRecentConnecedList.add(temp);
         }

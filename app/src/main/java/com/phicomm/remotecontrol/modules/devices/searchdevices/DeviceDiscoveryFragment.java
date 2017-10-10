@@ -29,7 +29,6 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.phicomm.remotecontrol.ConnectManager;
 import com.phicomm.remotecontrol.R;
@@ -38,6 +37,7 @@ import com.phicomm.remotecontrol.base.BaseFragment;
 import com.phicomm.remotecontrol.constant.PhiConstants;
 import com.phicomm.remotecontrol.modules.devices.connectrecords.RecentDevicesActivity;
 import com.phicomm.remotecontrol.modules.devices.searchdevices.DeviceDiscoveryContract.Presenter;
+import com.phicomm.remotecontrol.util.CommonUtils;
 import com.phicomm.remotecontrol.util.DevicesUtil;
 import com.phicomm.remotecontrol.util.LogUtil;
 import com.phicomm.remotecontrol.util.SettingUtil;
@@ -201,7 +201,7 @@ public class DeviceDiscoveryFragment extends BaseFragment implements DeviceDisco
                     }
                     startJmdnsDiscoveryDevice();
                 } else {
-                    Toast.makeText(getContext(), R.string.finder_wifi_not_available, Toast.LENGTH_SHORT).show();
+                    CommonUtils.showToastBottom(getString(R.string.finder_wifi_not_available));
                 }
                 break;
             case R.id.manual_ip:
@@ -325,7 +325,7 @@ public class DeviceDiscoveryFragment extends BaseFragment implements DeviceDisco
                             mDiscoveryAdapter.clearStates(pos);
                             mDiscoveryAdapter.notifyDataSetInvalidated();
                             mTvTitle.setText(remoteDevice.getName());
-                            Toast.makeText(getContext(), "connect SUCCESS", Toast.LENGTH_SHORT).show();
+                            CommonUtils.showToastBottom("connect SUCCESS");
                         }
                     }
 
@@ -333,7 +333,7 @@ public class DeviceDiscoveryFragment extends BaseFragment implements DeviceDisco
                     public void onFail(String msg) {
                         mPresenter.removeItemAndRefreshView(remoteDevice);
                         LogUtil.d(TAG, "remove connect fail device");
-                        Toast.makeText(getContext(), "this device is offline", Toast.LENGTH_SHORT).show();
+                        CommonUtils.showToastBottom("this device is offline");
                     }
                 });
             }
@@ -383,7 +383,7 @@ public class DeviceDiscoveryFragment extends BaseFragment implements DeviceDisco
 
     @Override
     public void showToast(String str) {
-        Toast.makeText(getContext(), str, Toast.LENGTH_SHORT).show();
+        CommonUtils.showToastBottom(str);
     }
 
     @Override
