@@ -1,7 +1,6 @@
 package com.phicomm.remotecontrol.modules.main.screenprojection.presenter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 
@@ -16,7 +15,6 @@ import com.phicomm.remotecontrol.modules.main.screenprojection.adapter.GeneralAd
 import com.phicomm.remotecontrol.modules.main.screenprojection.constants.DeviceDisplayListOperation;
 import com.phicomm.remotecontrol.modules.main.screenprojection.entity.ContentItem;
 import com.phicomm.remotecontrol.modules.main.screenprojection.entity.DeviceDisplay;
-import com.phicomm.remotecontrol.modules.main.screenprojection.entity.PictureContentItemList;
 import com.phicomm.remotecontrol.modules.main.screenprojection.listener.TestRegistryListener;
 import com.phicomm.remotecontrol.modules.main.screenprojection.model.ContentBrowseBiz;
 import com.phicomm.remotecontrol.modules.main.screenprojection.model.MediaContentBiz;
@@ -40,27 +38,23 @@ import java.util.ArrayList;
  */
 public class LocalMediaItemPresenterImpl implements LocalMediaItemPresenter {
     private static String TAG = "LocalMediaItemPresenterImpl";
+    public static int mAlbumIndex;
     private Context mContext;
     private LocalMediaItemView mView;
     private BaseApplication mBaseApplication;
     private GeneralAdapter<ContentItem> mContentAdapter;
     private DeviceDisplay mDeviceDisplay;
     private ContentBrowseBiz mContentBrowseBiz;
-    private PictureContentItemList mPictureContentItemList;
     private TestRegistryListener rListener;
     private UpnpServiceBiz upnpServiceBiz;
     private MediaServer mediaServer;
+    private int mType = -1;
     Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case DeviceDisplayListOperation.ADD:
                     ContentItem mContentItem = (ContentItem) msg.obj;
-                    if (msg.arg2 == 1) {
-                        if (!mPictureContentItemList.getPictureContentItemList().contains(mContentItem))
-                            LogUtil.d(TAG, "添加的图片是： " + msg.obj.toString());
-                        mPictureContentItemList.addPictureContentItem(mContentItem.getItem());
-                    }
                     mContentAdapter.add(mContentItem);
                     showItems(mType);
                     break;
@@ -102,12 +96,9 @@ public class LocalMediaItemPresenterImpl implements LocalMediaItemPresenter {
         }
     }
 
-    private int mType = -1;
-
     @Override
     public void getItems(int type) {
         mType = type;
-        mPictureContentItemList = PictureContentItemList.getInstance();
         mContentAdapter = new ContentAdapter(mContext, R.layout.item_content, null);
         mDeviceDisplay = mBaseApplication.getDeviceDisplay();
 
@@ -134,16 +125,15 @@ public class LocalMediaItemPresenterImpl implements LocalMediaItemPresenter {
     @Override
     public void browserItems(int position, BaseFragment mLocalMediaItemActivity) {
         ContentItem mContentItem = mContentAdapter.getItem(position);
-        browserSubContainer(mContentBrowseBiz, mContentItem, mLocalMediaItemActivity);
+        browserSubContainer(mContentBrowseBiz, mContentItem, mLocalMediaItemActivity, position);
     }
 
-    public void browserSubContainer(ContentBrowseBiz mContentBrowseBiz, ContentItem mContentItem, BaseFragment mLocalMediaItemActivity) {
+    public void browserSubContainer(ContentBrowseBiz mContentBrowseBiz, ContentItem mContentItem, BaseFragment mLocalMediaItemActivity, int position) {
         if (mContentItem.isContainer()) {
+            mAlbumIndex = position;
             mContentBrowseBiz.getContent(mContentItem);
         } else {
-            // 打开文件
             Item mItem = mContentItem.getItem();
-            Intent intent = null;
             switch (mContentItem.getFiletype()) {
                 case FiletypeUtil.FILETYPE_PIC:
                     selectDMPToPlay(mItem, mLocalMediaItemActivity, PictureControlActivity.class);

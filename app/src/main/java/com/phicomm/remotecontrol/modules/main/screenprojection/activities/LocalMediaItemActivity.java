@@ -60,6 +60,7 @@ public class LocalMediaItemActivity extends BaseActivity implements MyFragmentAd
                 case DeviceDisplayListOperation.ADD:
                     if (!mDisplayDeviceList.getDeviceDisplayList().contains(mDeviceDisplay)) {
                         mDisplayDeviceList.addDevice(mDeviceDisplay);
+                        Log.d(TAG, "搜索到的DLNA设备是：" + mDeviceDisplay);
                     }
                     break;
                 case DeviceDisplayListOperation.REMOVE:
@@ -125,6 +126,7 @@ public class LocalMediaItemActivity extends BaseActivity implements MyFragmentAd
     private void finishScan(int type) {
         mProgressDialog.dismiss();
         mLocalMediaItemPresenter.destory();
+        Log.d(TAG, "目标设备是：" + DevicesUtil.getTarget());
         if (null == DevicesUtil.getTarget() || mDisplayDeviceList == null || isSelectedDeviceNotOnline(DevicesUtil.getTarget(), mDisplayDeviceList.getDeviceDisplayList())) {
             CommonUtils.showShortToast("初始化投屏失败");
         } else {

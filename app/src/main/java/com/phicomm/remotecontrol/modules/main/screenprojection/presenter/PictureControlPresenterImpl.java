@@ -6,9 +6,8 @@ import android.os.AsyncTask;
 
 import com.phicomm.remotecontrol.base.BaseApplication;
 import com.phicomm.remotecontrol.modules.main.screenprojection.activities.PictureControlView;
-import com.phicomm.remotecontrol.modules.main.screenprojection.entity.PictureContentItemList;
+import com.phicomm.remotecontrol.modules.main.screenprojection.model.MediaContentBiz;
 import com.phicomm.remotecontrol.modules.main.screenprojection.model.MediaControlBiz;
-import com.phicomm.remotecontrol.util.LogUtil;
 
 import org.fourthline.cling.model.meta.Device;
 import org.fourthline.cling.support.model.item.Item;
@@ -39,8 +38,11 @@ public class PictureControlPresenterImpl implements PictureControlPresenter {
         imageurl = item.getFirstResource().getValue();
         mId = 0;
         controlBiz = new MediaControlBiz(device, mId);
-        index = PictureContentItemList.getInstance().getPictureContentItemList().indexOf(item);
-        LogUtil.d(TAG, "正在投屏的图片的序号是第：" + index + "个");
+        for (int i = 0; i < MediaContentBiz.mPictureItemArrayList.get(LocalMediaItemPresenterImpl.mAlbumIndex).getPictureItemList().size(); i++) {
+            if (item.getId().equals(MediaContentBiz.mPictureItemArrayList.get(LocalMediaItemPresenterImpl.mAlbumIndex).getPictureItemList().get(i).getId())) {
+                index = i;
+            }
+        }
     }
 
     @Override
@@ -55,7 +57,7 @@ public class PictureControlPresenterImpl implements PictureControlPresenter {
         if (index > 0) {
             index--;
             if (index >= 0) {
-                Item item = PictureContentItemList.getInstance().getPictureContentItemList().get(index);
+                Item item = MediaContentBiz.mPictureItemArrayList.get(LocalMediaItemPresenterImpl.mAlbumIndex).getPictureItemList().get(index);
                 new LoadImageAsyncTask().execute(item.getFirstResource().getValue());
                 mView.setTittle(item.getTitle());
                 controlBiz.setPlayUri(item);
@@ -67,10 +69,10 @@ public class PictureControlPresenterImpl implements PictureControlPresenter {
 
     @Override
     public void showNextPicture() {
-        if (index < PictureContentItemList.getInstance().getPictureContentItemList().size()) {
+        if (index < MediaContentBiz.mPictureItemArrayList.get(LocalMediaItemPresenterImpl.mAlbumIndex).getPictureItemList().size()) {
             index++;
-            if (index < PictureContentItemList.getInstance().getPictureContentItemList().size()) {
-                Item item = PictureContentItemList.getInstance().getPictureContentItemList().get(index);
+            if (index < MediaContentBiz.mPictureItemArrayList.get(LocalMediaItemPresenterImpl.mAlbumIndex).getPictureItemList().size()) {
+                Item item = MediaContentBiz.mPictureItemArrayList.get(LocalMediaItemPresenterImpl.mAlbumIndex).getPictureItemList().get(index);
                 new LoadImageAsyncTask().execute(item.getFirstResource().getValue());
                 mView.setTittle(item.getTitle());
                 controlBiz.setPlayUri(item);

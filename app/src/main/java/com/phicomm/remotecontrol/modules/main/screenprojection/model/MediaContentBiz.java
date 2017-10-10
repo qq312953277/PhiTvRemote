@@ -6,17 +6,20 @@ import com.phicomm.remotecontrol.modules.main.screenprojection.dao.MediaContentD
 import com.phicomm.remotecontrol.modules.main.screenprojection.entity.ContentNode;
 import com.phicomm.remotecontrol.modules.main.screenprojection.entity.ContentTree;
 import com.phicomm.remotecontrol.modules.main.screenprojection.entity.MItem;
+import com.phicomm.remotecontrol.modules.main.screenprojection.entity.PictureItemList;
 
 import org.fourthline.cling.support.model.DIDLObject;
 import org.fourthline.cling.support.model.WriteStatus;
 import org.fourthline.cling.support.model.container.Container;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by kang.sun on 2017/8/21.
  */
 public class MediaContentBiz {
+    public static List<PictureItemList> mPictureItemArrayList = new ArrayList<>();
     private boolean mServerPrepared = false;
     String[] mAlbumNameList = {"Camera", "WeiXin", "Pictures", "image", "Download", "Downloads", "Screenshots", "media", "tmp", "clip"};
 
@@ -32,10 +35,21 @@ public class MediaContentBiz {
             // 创建添加image容器,节点
             ArrayList<MItem> mAllImageItems = contentDao.getImageItems();
             creatContainer(rootNode, rootContainer, "All", "All", mAllImageItems);
+            PictureItemList mAllPictureItemList = new PictureItemList();
+            for (MItem mMItem : mAllImageItems) {
+                mAllPictureItemList.addPictureItem(mMItem);
+            }
+            mPictureItemArrayList.add(mAllPictureItemList);
             for (int i = 0; i < mAlbumNameList.length; i++) {
                 ArrayList<MItem> imageItems = contentDao.getImageItems(mAlbumNameList[i]);
                 if (imageItems.size() > 0) {
                     creatContainer(rootNode, rootContainer, mAlbumNameList[i], mAlbumNameList[i], imageItems);
+                    //创建对应的ItemList,实现左右滑动切换图片的功能
+                    PictureItemList mPictureItemList = new PictureItemList();
+                    for (MItem mMItem : imageItems) {
+                        mPictureItemList.addPictureItem(mMItem);
+                    }
+                    mPictureItemArrayList.add(mPictureItemList);
                 }
             }
         } else {
