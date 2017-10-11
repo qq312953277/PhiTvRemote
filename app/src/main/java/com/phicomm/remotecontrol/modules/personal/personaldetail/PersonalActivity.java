@@ -83,7 +83,7 @@ public class PersonalActivity extends BaseActivity implements UpdateView, Person
         myPresenter = new PersonalPresenter(this);
         if (BaseApplication.getApplication().isLogined) {
             refreshDataInUI(); //先从本地取
-            myPresenter.getPersonInfoFromServer();//analysisResponseBean调用过refreshDataInUI
+            myPresenter.getPersonInfoFromServer();//判断是否多端登录
         } else {
             mHeaderPicture.setImageResource(R.drawable.default_avatar);
             mUserName.setText(R.string.personal_login);
@@ -99,7 +99,6 @@ public class PersonalActivity extends BaseActivity implements UpdateView, Person
         if (requestCode == REQUEST_CODE) {
             switch (resultCode) {
                 case LOGIN_RESULT_CODE:
-                    refreshDataInUI(); //先从本地取
                     myPresenter.getPersonInfoFromServer();
                     break;
                 case LOGINOUT_RESULT_CODE:
@@ -119,7 +118,6 @@ public class PersonalActivity extends BaseActivity implements UpdateView, Person
         super.onNewIntent(intent);
         boolean refreshUI_flag = intent.getBooleanExtra("refreshUI_flag", false);//从RegisterActivity注册成功直接登录跳转过来刷新界面
         if (refreshUI_flag) {
-            refreshDataInUI(); //先从本地取
             myPresenter.getPersonInfoFromServer();
         }
 
