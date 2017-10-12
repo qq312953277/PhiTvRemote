@@ -104,8 +104,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:layout_marginBottom="10dp">
+        android:layout_height="45dp">
 
         <TextView
             android:id="@+id/choose_text"
@@ -119,13 +118,18 @@
             android:layout_marginTop="10dp"
             android:text="@string/choose_box_controll"
             android:textAlignment="center"
-            android:textSize="16sp" />
+            android:textColor="#384144"
+            android:textSize="17sp" />
     </RelativeLayout>
 
     <ListView
         android:id="@+id/discovery_devices_list"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="36dp"
+        android:layout_marginRight="33.5dp"
+        android:divider="#727272"
+        android:dividerHeight="0.5dp" />
 
     <TextView
         android:id="@android:id/empty"

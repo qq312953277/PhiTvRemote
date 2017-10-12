@@ -10,7 +10,9 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.phicomm.remotecontrol.R;
+import com.phicomm.remotecontrol.constant.Commands;
 import com.phicomm.remotecontrol.constant.KeyCode;
+import com.phicomm.remotecontrol.util.CommonUtils;
 import com.phicomm.remotecontrol.util.LogUtil;
 import com.phicomm.remotecontrol.util.SettingUtil;
 
@@ -48,17 +50,18 @@ public class KeyPanelFragment extends Fragment implements PanelContract.View, an
     @BindView(R.id.btn_vol_down)
     ImageButton mVolDownBtn;
 
-    @BindView(R.id.btn_chanel_up)
-    ImageButton mChanelUpBtn;
-
-    @BindView(R.id.btn_chanel_down)
-    ImageButton mChanelDownBtn;
-
     @BindView(R.id.btn_home)
     ImageButton mHomeBtn;
 
     @BindView(R.id.btn_back)
     ImageButton mBackBtn;
+
+    @BindView(R.id.btn_setting)
+    ImageButton mSettingBtn;
+
+    @BindView(R.id.btn_menu)
+    ImageButton mMenuBtn;
+
 
     public static KeyPanelFragment newInstance() {
         return new KeyPanelFragment();
@@ -89,11 +92,11 @@ public class KeyPanelFragment extends Fragment implements PanelContract.View, an
         mVolDownBtn.setOnClickListener(this);
         mVolUpBtn.setOnClickListener(this);
 
-        mChanelDownBtn.setOnClickListener(this);
-        mChanelUpBtn.setOnClickListener(this);
-
         mHomeBtn.setOnClickListener(this);
         mBackBtn.setOnClickListener(this);
+
+        mSettingBtn.setOnClickListener(this);
+        mMenuBtn.setOnClickListener(this);
     }
 
     @Override
@@ -108,27 +111,38 @@ public class KeyPanelFragment extends Fragment implements PanelContract.View, an
 
         LogUtil.d(TAG, "onClick");
         if (v == mRightBtn) {
+            CommonUtils.showShortToast("btn_right");
             mPresenter.sendKeyEvent(KeyCode.RIGHT);
         } else if (v == mLeftBtn) {
+            CommonUtils.showShortToast("btn_left");
             mPresenter.sendKeyEvent(KeyCode.LEFT);
         } else if (v == mUpBtn) {
+            CommonUtils.showShortToast("btn_up");
             mPresenter.sendKeyEvent(KeyCode.UP);
         } else if (v == mDownBtn) {
+            CommonUtils.showShortToast("btn_down");
             mPresenter.sendKeyEvent(KeyCode.DOWN);
         } else if (v == mEnterBtn) {
+            CommonUtils.showShortToast("btn_ok");
             mPresenter.sendKeyEvent(KeyCode.CENTER);
         } else if (v == mVolDownBtn) {
+            CommonUtils.showShortToast("btn_vol_down");
             mPresenter.sendKeyEvent(KeyCode.VOL_DOWN);
         } else if (v == mVolUpBtn) {
+            CommonUtils.showShortToast("btn_vol_up");
             mPresenter.sendKeyEvent(KeyCode.VOL_UP);
-        } else if (v == mChanelDownBtn) {
-            mPresenter.sendKeyEvent(KeyCode.CHANEL_DOWN);
-        } else if (v == mChanelUpBtn) {
-            mPresenter.sendKeyEvent(KeyCode.CHANEL_UP);
         } else if (v == mHomeBtn) {
+            CommonUtils.showShortToast("btn_home");
             mPresenter.sendKeyEvent(KeyCode.HOME);
         } else if (v == mBackBtn) {
+            CommonUtils.showShortToast("btn_back");
             mPresenter.sendKeyEvent(KeyCode.BACK);
+        } else if (v == mMenuBtn) {
+            CommonUtils.showShortToast("btn_menu");
+            mPresenter.sendKeyEvent(KeyCode.MENU);
+        } else if (v == mSettingBtn) {
+            CommonUtils.showShortToast("btn_setting");
+            mPresenter.sendCommand(Commands.OPEN_SETTING);
         }
     }
 

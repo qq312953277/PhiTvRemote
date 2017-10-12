@@ -21,7 +21,7 @@
     <!--设备 -->
     <string name="app_name">遥控器</string>
     <string name="app_title">斐讯盒子遥控器</string>
-    <string name="unable_to_connect_device">未连接设备</string>
+    <string name="unable_to_connect_device">电视未连接</string>
     <string name="devices_list">设备列表</string>
     <string name="manual_ip_label">请输入斐讯盒子的IP</string>
     <string name="manual_ip_entry_label">IP地址输入</string>

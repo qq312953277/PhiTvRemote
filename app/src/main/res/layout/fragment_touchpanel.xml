@@ -2,123 +2,112 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#039AE5"
     android:orientation="vertical">
 
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
             android:orientation="vertical">
 
             <LinearLayout
                 android:id="@+id/ll_touch_area"
-                android:layout_width="300dp"
-                android:layout_height="300dp"
+                android:layout_width="331.5dp"
+                android:layout_height="230dp"
                 android:layout_gravity="center"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="10dp"
-                android:background="#ffaaaaaa"
+                android:background="@drawable/touch_bg"
                 android:orientation="horizontal">
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="135dp"
                 android:layout_gravity="center"
-                android:layout_marginTop="25dp"
-                android:gravity="center"
-                android:orientation="horizontal">
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal"
+                android:paddingLeft="75dp"
+                android:paddingRight="75dp">
 
-                <LinearLayout
+                <RelativeLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="50dp"
-                    android:background="@drawable/around_vol_chanel"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <ImageButton
-                        android:id="@+id/btn_vol_up"
-                        style="@style/FunctionButtonStyle"
-                        android:src="@drawable/plus_light" />
-
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="@string/vol"
-                        android:textColor="@color/white_normal"
-                        android:textSize="20sp" />
-
-                    <ImageButton
-                        android:id="@+id/btn_vol_down"
-                        style="@style/FunctionButtonStyle"
-                        android:src="@drawable/minus_light" />
-
-                </LinearLayout>
-
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <ImageButton
-                        android:id="@+id/btn_home"
-                        style="@style/FunctionButtonStyle_small"
-                        android:scaleType="fitCenter"
-                        android:src="@drawable/svg_new_home" />
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
 
                     <ImageButton
                         android:id="@+id/btn_back"
-                        style="@style/FunctionButtonStyle_small"
-                        android:layout_marginTop="30dp"
-                        android:scaleType="fitCenter"
-                        android:src="@drawable/svg_new_back" />
+                        android:layout_width="44.5dp"
+                        android:layout_height="44.5dp"
+                        android:layout_alignParentTop="true"
+                        android:background="@null"
+                        android:src="@drawable/selector_button_back" />
 
-                </LinearLayout>
+                    <ImageButton
+                        android:id="@+id/btn_home"
+                        android:layout_width="44.5dp"
+                        android:layout_height="44.5dp"
+                        android:layout_alignParentBottom="true"
+                        android:background="@null"
+                        android:src="@drawable/selector_button_home" />
 
+                </RelativeLayout>
 
-                <LinearLayout
+                <RelativeLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="50dp"
-                    android:background="@drawable/around_vol_chanel"
-                    android:gravity="center"
-                    android:orientation="vertical">
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal">
 
                     <ImageButton
-                        android:id="@+id/btn_chanel_up"
-                        style="@style/FunctionButtonStyle"
-                        android:src="@drawable/plus_light" />
-
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="@string/chanel"
-                        android:textColor="@color/white_normal"
-                        android:textSize="20sp" />
+                        android:id="@+id/btn_setting"
+                        android:layout_width="44.5dp"
+                        android:layout_height="44.5dp"
+                        android:layout_alignParentTop="true"
+                        android:background="@null"
+                        android:src="@drawable/selector_button_setting" />
 
                     <ImageButton
-                        android:id="@+id/btn_chanel_down"
-                        style="@style/FunctionButtonStyle"
-                        android:src="@drawable/minus_light" />
-                </LinearLayout>
+                        android:id="@+id/btn_menu"
+                        android:layout_width="44.5dp"
+                        android:layout_height="44.5dp"
+                        android:layout_alignParentBottom="true"
+                        android:background="@null"
+                        android:src="@drawable/selector_button_menu" />
 
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="end">
+
+                    <ImageButton
+                        android:id="@+id/btn_vol_up"
+                        android:layout_width="44.5dp"
+                        android:layout_height="44.5dp"
+                        android:layout_alignParentTop="true"
+                        android:background="@null"
+                        android:src="@drawable/selector_button_plus" />
+
+
+                    <ImageButton
+                        android:id="@+id/btn_vol_down"
+                        android:layout_width="44.5dp"
+                        android:layout_height="44.5dp"
+                        android:layout_alignParentBottom="true"
+                        android:background="@null"
+                        android:src="@drawable/selector_button_minus" />
+
+
+                </RelativeLayout>
             </LinearLayout>
-
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

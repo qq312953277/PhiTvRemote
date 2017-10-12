@@ -14,7 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.PopupWindow;
 import android.widget.TextView;
@@ -53,7 +52,7 @@ public class SpinnerListFragment extends BaseFragment {
     public TextView mDeviceTv;
 
     @BindView(R.id.scan)
-    public Button mDiscoveryBtn;
+    public ImageButton mDiscoveryBtn;
 
     @BindView(R.id.login)
     public ImageButton mLoginIBtn;
@@ -93,6 +92,7 @@ public class SpinnerListFragment extends BaseFragment {
         List<RemoteBoxDevice> remoteBoxDeviceList = mGreenDaoUserUtil.querydata();
         RemoteBoxDevice target = DevicesUtil.getTarget();
         if (target != null) {
+            setTextImage(R.drawable.icon_up);
             mDeviceTv.setText(target.getName());
         } else {
             mDeviceTv.setText(getString(R.string.unable_to_connect_device));
@@ -217,7 +217,7 @@ public class SpinnerListFragment extends BaseFragment {
     private PopupWindow.OnDismissListener dismissListener = new PopupWindow.OnDismissListener() {
         @Override
         public void onDismiss() {
-            setTextImage(R.drawable.icon_down);
+            //setTextImage(R.drawable.icon_down);
         }
     };
 
@@ -270,7 +270,6 @@ public class SpinnerListFragment extends BaseFragment {
                     mDisconnectSpinnerWindowView.setWidth(wm.getDefaultDisplay().getWidth());
                     mDisconnectSpinnerWindowView.showAsDropDown(mDeviceTv);
                 }
-                setTextImage(R.drawable.icon_up);
                 break;
         }
     }

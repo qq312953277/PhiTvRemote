@@ -3,77 +3,78 @@
     android:id="@+id/root_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/control_panel_background"
     android:clipToPadding="true"
     android:fitsSystemWindows="true"
     android:orientation="vertical">
 
+    <FrameLayout
+        android:id="@+id/spinner_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="#555555"
         android:orientation="vertical">
 
-        <FrameLayout
-            android:id="@+id/spinner_container"
+        <RelativeLayout
+            android:id="@+id/header_view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="wrap_content"
+            android:paddingTop="12dp">
 
-        <View
-            android:layout_width="fill_parent"
-            android:layout_height="1dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:layout_marginTop="2dp"
-            android:background="#aa000000" />
-    </LinearLayout>
+            <ImageButton
+                android:id="@+id/btn_power"
+                android:layout_width="50.5dp"
+                android:layout_height="50.5dp"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="30dp"
+                android:background="@null"
+                android:src="@drawable/selector_button_power" />
 
-    <LinearLayout
-        android:id="@+id/header_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:paddingTop="12dp">
-
-        <ImageButton
-            android:id="@+id/btn_power"
-            style="@style/FunctionButtonStyle"
-            android:src="@drawable/svg_new_close" />
-
-        <ImageButton
-            android:id="@+id/btn_menu"
-            style="@style/FunctionButtonStyle"
-            android:layout_marginLeft="54dp"
-            android:src="@drawable/offered_menu" />
-
-        <ImageButton
-            android:id="@+id/btn_setting"
-            style="@style/FunctionButtonStyle"
-            android:layout_marginLeft="54dp"
-            android:src="@drawable/svg_new_setting" />
-    </LinearLayout>
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="2dp">
+        </RelativeLayout>
 
         <android.support.v4.view.ViewPager
             android:id="@+id/viewPageMainContent"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="48dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:fadingEdge="none"
             android:overScrollMode="never" />
 
-        <include
-            android:id="@+id/bottom_function"
-            layout="@layout/layout_remote_bottom"
-            android:layout_width="fill_parent"
-            android:layout_height="match_parent"
-            android:layout_alignParentBottom="true"
-            android:background="@color/common_global_btn_color"
-            android:paddingTop="2dp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="25dp"
+            android:layout_marginTop="25dp"
+            android:gravity="center">
 
-    </FrameLayout>
+            <ImageView
+                android:id="@+id/tab_first"
+                android:layout_width="35dp"
+                android:layout_height="3.5dp"
+                android:background="@null"
+                android:clickable="false"
+                android:src="@drawable/tab_on" />
+
+            <ImageView
+                android:id="@+id/tab_second"
+                android:layout_width="35dp"
+                android:layout_height="3.5dp"
+                android:background="@null"
+                android:clickable="false"
+                android:src="@drawable/tab_off" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <include
+        android:id="@+id/bottom_function"
+        layout="@layout/layout_remote_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
 
 
 </LinearLayout>

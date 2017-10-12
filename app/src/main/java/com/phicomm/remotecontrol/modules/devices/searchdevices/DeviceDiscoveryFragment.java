@@ -5,8 +5,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
@@ -179,8 +177,7 @@ public class DeviceDiscoveryFragment extends BaseFragment implements DeviceDisco
 
     private void initAdapter() {
         mDiscoveryListDevices.setEmptyView(mEmptyTv);
-        mDiscoveryListDevices.setDivider(new ColorDrawable(Color.GRAY));
-        mDiscoveryListDevices.setDividerHeight(1);
+        mDiscoveryListDevices.addFooterView(new View(getContext()));//作用：最后一条item也加分割线
         mDiscoveryAdapter = new DeviceDiscoveryAdapter();
         mDiscoveryListDevices.setAdapter(mDiscoveryAdapter);
     }

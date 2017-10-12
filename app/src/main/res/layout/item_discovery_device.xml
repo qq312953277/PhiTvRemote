@@ -1,55 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal">
+    android:gravity="center_vertical">
 
     <LinearLayout
-        android:layout_width="41dp"
-        android:layout_height="wrap_content">
+        android:id="@+id/ll_tv_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="32dp"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp">
 
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="match_parent"
-            android:layout_height="52dp"
-            android:layout_gravity="center_vertical"
-            android:src="@drawable/phi_pic_tv_p" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:src="@drawable/phi_pic_tv" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_weight="1"
-        android:orientation="vertical">
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="5dp"
+        android:layout_toLeftOf="@+id/ll_choose"
+        android:layout_toRightOf="@+id/ll_tv_icon"
+        android:orientation="vertical"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp">
 
         <TextView
             android:id="@+id/box_device_bssid"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/box_device_name"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textColor="#384144"
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/box_device_localip"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/ll_choose"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="30dp"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp">
 
         <RadioButton
             android:id="@+id/box_connect_device"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:focusable="false"
-            android:padding="10dp" />
+            android:background="@drawable/selector_radiobutton"
+            android:button="@null"
+            android:focusable="false" />
     </LinearLayout>
 
-</LinearLayout>
+</RelativeLayout>

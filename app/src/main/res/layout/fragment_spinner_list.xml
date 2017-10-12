@@ -1,34 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="45dip"
+    android:layout_height="45dp"
+    android:background="@color/white_normal"
     android:orientation="horizontal"
+    android:gravity="center_vertical"
     android:padding="2dp">
 
     <ImageButton
         android:id="@+id/login"
         android:layout_width="wrap_content"
-        android:layout_height="45dp"
+        android:layout_height="17dp"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="18dp"
+        android:background="@null"
         android:contentDescription="@null"
-        android:src="@drawable/phi_bottom_btn_icon_contact_select" />
+        android:padding="15dp"
+        android:src="@drawable/selector_imagebutton_touxiang" />
 
     <TextView
         android:id="@+id/connected_device"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="-3dp"
-        android:layout_marginLeft="25dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
         android:layout_weight="1"
-        android:background="@drawable/shape_help_category_tv_bg"
-        android:drawableRight="@drawable/icon_down"
-        android:padding="10dp"
+        android:gravity="center"
         android:text="@string/unable_to_connect_device"
-        android:textColor="@color/content_color"
-        android:textSize="18sp" />
+        android:textColor="@color/black_normal"
+        android:textSize="17sp" />
 
-    <Button
+    <ImageButton
         android:id="@+id/scan"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/devices_list" />
+        android:layout_height="17dp"
+        android:layout_gravity="center_vertical"
+        android:layout_marginRight="18dp"
+        android:background="@null"
+        android:padding="15dp"
+        android:src="@drawable/selector_imagebutton_devicelist" />
 </LinearLayout>

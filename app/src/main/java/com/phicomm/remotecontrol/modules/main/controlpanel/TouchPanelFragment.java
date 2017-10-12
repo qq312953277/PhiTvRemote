@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.phicomm.remotecontrol.R;
 import com.phicomm.remotecontrol.base.BaseFragment;
+import com.phicomm.remotecontrol.constant.Commands;
 import com.phicomm.remotecontrol.constant.KeyCode;
 import com.phicomm.remotecontrol.constant.PhiConstants;
 import com.phicomm.remotecontrol.event.GestureDelectorSimlpeListener;
@@ -92,7 +93,7 @@ public class TouchPanelFragment extends BaseFragment implements PanelContract.Vi
 
 
     @Override
-    @OnClick({R.id.btn_vol_up, R.id.btn_vol_down, R.id.btn_chanel_up, R.id.btn_chanel_down, R.id.btn_home, R.id.btn_back})
+    @OnClick({R.id.btn_vol_up, R.id.btn_vol_down, R.id.btn_home, R.id.btn_back, R.id.btn_setting, R.id.btn_menu})
     public void onClick(View view) {
         super.onClick(view);
 
@@ -105,14 +106,6 @@ public class TouchPanelFragment extends BaseFragment implements PanelContract.Vi
                 CommonUtils.showShortToast("btn_vol_down");
                 mPresenter.sendKeyEvent(KeyCode.VOL_DOWN);
                 break;
-            case R.id.btn_chanel_up:
-                CommonUtils.showShortToast("btn_chanel_up");
-                mPresenter.sendKeyEvent(KeyCode.CHANEL_UP);
-                break;
-            case R.id.btn_chanel_down:
-                CommonUtils.showShortToast("btn_chanel_down");
-                mPresenter.sendKeyEvent(KeyCode.CHANEL_DOWN);
-                break;
             case R.id.btn_home:
                 CommonUtils.showShortToast("btn_home");
                 mPresenter.sendKeyEvent(KeyCode.HOME);
@@ -120,6 +113,14 @@ public class TouchPanelFragment extends BaseFragment implements PanelContract.Vi
             case R.id.btn_back:
                 CommonUtils.showShortToast("btn_back");
                 mPresenter.sendKeyEvent(KeyCode.BACK);
+                break;
+            case R.id.btn_setting:
+                CommonUtils.showShortToast("btn_setting");
+                mPresenter.sendCommand(Commands.OPEN_SETTING);
+                break;
+            case R.id.btn_menu:
+                CommonUtils.showShortToast("btn_menu");
+                mPresenter.sendKeyEvent(KeyCode.MENU);
                 break;
             default:
                 break;

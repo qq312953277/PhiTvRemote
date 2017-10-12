@@ -1,188 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
     android:layout_gravity="bottom"
-    android:orientation="horizontal">
+    android:layout_marginBottom="5.5dp"
+    android:gravity="bottom">
 
-
-    <RelativeLayout
-        android:id="@+id/remote_bottom_layout_1"
+    <TextView
+        android:id="@+id/ib_screenshot"
         android:layout_width="0dp"
-        android:layout_height="48dp"
+        android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:layout_gravity="bottom"
-        android:background="@color/common_global_btn_color"
-        android:gravity="bottom|center">
+        android:clickable="true"
+        android:drawableTop="@drawable/selector_textview_screenshot"
+        android:gravity="center_horizontal"
+        android:padding="5dp"
+        android:text="@string/screenshot"
+        android:textColor="@drawable/selector_textview_color"
+        android:textSize="11sp" />
 
-        <View
-            android:layout_width="fill_parent"
-            android:layout_height="1dp"
-            android:layout_marginLeft="5dp"
-            android:background="@color/black_normal" />
-
-        <ImageView
-            android:id="@+id/ib_screenshot"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="15.0dp"
-            android:clickable="true"
-            android:src="@drawable/ok" />
-
-        <TextView
-            android:id="@+id/remote_bottom_text_1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:text="@string/screenshot" />
-
-
-    </RelativeLayout>
-
-
-    <RelativeLayout
-        android:id="@+id/remote_bottom_layout_2"
+    <TextView
+        android:id="@+id/ib_screenprojection"
         android:layout_width="0dp"
-        android:layout_height="48.0dp"
+        android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:background="@color/common_global_btn_color"
-        android:layout_gravity="bottom"
-        android:gravity="bottom|center">
-
-        <View
-            android:layout_width="fill_parent"
-            android:layout_height="1dp"
-            android:background="@color/black_normal" />
+        android:clickable="true"
+        android:drawableTop="@drawable/selector_textview_screenprojection"
+        android:gravity="center_horizontal"
+        android:text="@string/dlna"
+        android:textColor="@drawable/selector_textview_color"
+        android:textSize="11sp" />
 
 
-        <ImageView
-            android:id="@+id/ib_screenprojection"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="15.0dp"
-            android:clickable="true"
-            android:src="@drawable/ok" />
-
-        <TextView
-            android:id="@+id/remote_bottom_text_2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:text="@string/dlna" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/remote_bottom_layout_3"
-        android:layout_width="76dp"
-        android:layout_height="69.0dp"
-        android:background="@drawable/ctrl_bottom_center_shape"
-        android:layout_gravity="bottom"
-        android:gravity="bottom|center">
-
-        <View
-            android:id="@+id/v1"
-            android:layout_width="76dp"
-            android:layout_height="48.0dp"
-            android:layout_alignParentBottom="true"
-            android:background="@color/common_global_btn_color" />
-
-        <View
-            android:layout_width="4.5dp"
-            android:layout_height="1.0dp"
-            android:layout_marginTop="21.0dp"
-            android:background="@color/black_normal" />
-
-        <View
-            android:layout_width="4.5dp"
-            android:layout_height="1.0dp"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="21.0dp"
-            android:background="@color/black_normal" />
-
-        <ImageView
-            android:id="@+id/ib_voice"
-            android:layout_width="52.0dp"
-            android:layout_height="52.0dp"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:clickable="true"
-            android:src="@drawable/btn_voice_p" />
-
-    </RelativeLayout>
-
-
-    <RelativeLayout
-        android:id="@+id/remote_bottom_layout_4"
+    <TextView
+        android:id="@+id/ib_childrenlock"
         android:layout_width="0dp"
-        android:layout_height="48dp"
+        android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:background="@color/common_global_btn_color"
-        android:layout_gravity="bottom"
-        android:gravity="bottom|center">
-
-        <View
-            android:layout_width="fill_parent"
-            android:layout_height="1dp"
-            android:background="@color/black_normal" />
-
-        <ImageView
-            android:id="@+id/ib_childrenlock"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="15.0dp"
-            android:clickable="true"
-            android:src="@drawable/ok" />
-
-        <TextView
-            android:id="@+id/remote_bottom_text_4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:text="@string/childlock" />
-    </RelativeLayout>
+        android:clickable="true"
+        android:drawableTop="@drawable/selector_textview_childlock"
+        android:gravity="center_horizontal"
+        android:text="@string/childlock"
+        android:textColor="@drawable/selector_textview_color"
+        android:textSize="11sp" />
 
 
-    <RelativeLayout
-        android:id="@+id/remote_bottom_layout_5"
+    <TextView
+        android:id="@+id/ib_clear"
         android:layout_width="0dp"
-        android:layout_height="48dp"
+        android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:background="@color/common_global_btn_color"
-        android:layout_gravity="bottom"
-        android:gravity="bottom|center">
-
-        <View
-            android:layout_width="fill_parent"
-            android:layout_height="1dp"
-            android:layout_marginRight="5dp"
-            android:background="@color/black_normal" />
-
-        <ImageView
-            android:id="@+id/ib_clear"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="15.0dp"
-            android:clickable="true"
-            android:src="@drawable/ok" />
-
-        <TextView
-            android:id="@+id/remote_bottom_text_5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:text="@string/clear" />
-    </RelativeLayout>
-
+        android:clickable="true"
+        android:drawableTop="@drawable/selector_textview_clean"
+        android:gravity="center_horizontal"
+        android:text="@string/clear"
+        android:textColor="@drawable/selector_textview_color"
+        android:textSize="11sp" />
 
 </LinearLayout>

@@ -1,43 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+    android:layout_width="305.5dp"
     android:layout_height="wrap_content"
+    android:gravity="center_vertical"
     android:orientation="horizontal">
 
     <LinearLayout
-        android:layout_width="41dp"
-        android:layout_height="50dp"
-        android:layout_gravity="center_vertical"
-        android:layout_marginLeft="50dp">
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="48.5dp">
 
         <ImageView
             android:id="@+id/imageViewTV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:src="@drawable/phi_pic_tv_p" />
+            android:src="@drawable/phi_pic_tv" />
     </LinearLayout>
 
     <TextView
         android:id="@+id/tv_device_name"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
+        android:layout_weight="1"
+        android:layout_marginLeft="20dp"
         android:padding="10dp"
-        android:textColor="@color/content_color"
-        android:textSize="20sp" />
+        android:textColor="@color/black_normal"
+        android:textSize="19sp" />
 
     <LinearLayout
-        android:layout_width="41dp"
-        android:layout_height="50dp"
-        android:layout_gravity="center_vertical"
-        android:layout_marginLeft="50dp">
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="56dp">
 
         <ImageView
             android:id="@+id/imageViewSelectede"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/voice_halo_01"
+            android:src="@drawable/tv_select_icon"
             android:visibility="gone" />
     </LinearLayout>
 </LinearLayout>

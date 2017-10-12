@@ -17,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -51,9 +52,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import butterknife.BindView;
 import butterknife.OnClick;
 
 public class CoreControlActivity extends BaseActivity implements UpdateView {
+
+    @BindView(R.id.tab_first)
+    ImageView mTabFirst;
+
+    @BindView(R.id.tab_second)
+    ImageView mTabSecond;
+
     private final static String TAG = "CoreControlActivity";
     static final int REQUEST_CODE = 101;
     private DisplayDeviceList mDisplayDeviceList;
@@ -71,6 +80,7 @@ public class CoreControlActivity extends BaseActivity implements UpdateView {
         clearRestoreFragment(savedInstanceState);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_core_controler);
+        transStatusbar();
         mDisplayDeviceList = DisplayDeviceList.getInstance();
         mContext = this;
         initSpinner();
@@ -83,8 +93,13 @@ public class CoreControlActivity extends BaseActivity implements UpdateView {
         checkNewVersion();
     }
 
+    private void transStatusbar() {
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);//状态栏
+        //getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);//导航栏
+    }
+
     @Override
-    @OnClick({R.id.ib_screenshot, R.id.ib_screenprojection, R.id.ib_voice, R.id.ib_childrenlock, R.id.ib_clear})
+    @OnClick({R.id.ib_screenshot, R.id.ib_screenprojection, R.id.ib_childrenlock, R.id.ib_clear})
     public void onClick(View view) {
         super.onClick(view);
         switch (view.getId()) {
@@ -99,8 +114,6 @@ public class CoreControlActivity extends BaseActivity implements UpdateView {
                     intent.setClass(this, LocalMediaItemActivity.class);
                     startActivity(intent);
                 }
-                break;
-            case R.id.ib_voice:
                 break;
             case R.id.ib_childrenlock:
                 mPresenter.sendCommand(Commands.OPEN_LOCK);
@@ -136,11 +149,38 @@ public class CoreControlActivity extends BaseActivity implements UpdateView {
         PanelPresenter touchPresenter = new PanelPresenter();
         mTouchPanelFragment = TouchPanelFragment.newInstance();
         mTouchPanelFragment.setPresenter(touchPresenter);
-        mFragmentList = new ArrayList<Fragment>();
+        mFragmentList = new ArrayList<>();
         mFragmentList.add(mKeypanelFragment);
         mFragmentList.add(mTouchPanelFragment);
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewPageMainContent);
         viewPager.setAdapter(new ViewPageAdapter(getSupportFragmentManager(), mFragmentList));
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                switch (position) {
+                    case 0:
+                        mTabFirst.setImageDrawable(getResources().getDrawable(R.drawable.tab_on));
+                        mTabSecond.setImageDrawable(getResources().getDrawable(R.drawable.tab_off));
+                        break;
+                    case 1:
+                        mTabFirst.setImageDrawable(getResources().getDrawable(R.drawable.tab_off));
+                        mTabSecond.setImageDrawable(getResources().getDrawable(R.drawable.tab_on));
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
     @Override
@@ -159,10 +199,6 @@ public class CoreControlActivity extends BaseActivity implements UpdateView {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
-    private void transStatusbar() {
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-    }
-
     class HeaderButtons implements PanelContract.View {
         View mRootView;
         //PanelContract.Presenter mPresenter;
@@ -171,8 +207,6 @@ public class CoreControlActivity extends BaseActivity implements UpdateView {
         HeaderButtons(View view) {
             mRootView = view;
             initPowerButton();
-            initMenuButton();
-            initSettingButton();
         }
 
         void initPowerButton() {
@@ -183,35 +217,7 @@ public class CoreControlActivity extends BaseActivity implements UpdateView {
                     if (SettingUtil.isVibrateOn()) {
                         SettingUtil.doVibrate();
                     }
-
                     mPresenter.sendKeyEvent(KeyCode.POWER);
-                }
-            });
-        }
-
-        void initMenuButton() {
-            ImageButton menuBtn = (ImageButton) mRootView.findViewById(R.id.btn_menu);
-            menuBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (SettingUtil.isVibrateOn()) {
-                        SettingUtil.doVibrate();
-                    }
-
-                    mPresenter.sendKeyEvent(KeyCode.MENU);
-                }
-            });
-        }
-
-        void initSettingButton() {
-            ImageButton settingBtn = (ImageButton) mRootView.findViewById(R.id.btn_setting);
-            settingBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (SettingUtil.isVibrateOn()) {
-                        SettingUtil.doVibrate();
-                    }
-                    mPresenter.sendCommand(Commands.OPEN_SETTING);
                 }
             });
         }
