@@ -20,11 +20,10 @@ public abstract class PhiCallBack<M> extends Subscriber<M> {
             PhiConnectException exception = (PhiConnectException) e;
             if (exception.getErrorCode() == ErrorCode.NO_DEVICE) {
                 onFailure("no device assigned");
+                return;
             }
-            onFailure("fail");
-        } else {
-            onFailure("fail");
         }
+        onFailure(e.getMessage());
 
     }
 

@@ -37,6 +37,7 @@ import com.phicomm.remotecontrol.modules.devices.connectrecords.RecentDevicesAct
 import com.phicomm.remotecontrol.modules.devices.searchdevices.DeviceDiscoveryContract.Presenter;
 import com.phicomm.remotecontrol.util.CommonUtils;
 import com.phicomm.remotecontrol.util.DevicesUtil;
+import com.phicomm.remotecontrol.util.DialogUtils;
 import com.phicomm.remotecontrol.util.LogUtil;
 import com.phicomm.remotecontrol.util.SettingUtil;
 import com.phicomm.widgets.alertdialog.PhiAlertDialog;
@@ -305,6 +306,7 @@ public class DeviceDiscoveryFragment extends BaseFragment implements DeviceDisco
     private AdapterView.OnItemClickListener selectHandler = new AdapterView.OnItemClickListener() {
         public void onItemClick(AdapterView<?> parent, View v, int position,
                                 long id) {
+            showLoadingDialog(null);
             if (SettingUtil.isVibrateOn()) {
                 SettingUtil.doVibrate();
             }
@@ -324,13 +326,16 @@ public class DeviceDiscoveryFragment extends BaseFragment implements DeviceDisco
                             mTvTitle.setText(remoteDevice.getName());
                             CommonUtils.showToastBottom("connect SUCCESS");
                         }
+                        DialogUtils.cancelLoadingDialog();
                     }
 
                     @Override
                     public void onFail(String msg) {
                         mPresenter.removeItemAndRefreshView(remoteDevice);
                         LogUtil.d(TAG, "remove connect fail device");
-                        CommonUtils.showToastBottom("this device is offline");
+                        CommonUtils.showToastBottom("Fail reason:" + msg);
+                        //CommonUtils.showToastBottom("this device is offline");
+                        DialogUtils.cancelLoadingDialog();
                     }
                 });
             }

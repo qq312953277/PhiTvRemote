@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import com.phicomm.remotecontrol.util.DialogUtils;
 import com.phicomm.remotecontrol.util.ScreenUtils;
 import com.phicomm.remotecontrol.util.SettingUtil;
 
@@ -37,5 +38,13 @@ public class BaseFragment extends Fragment {
         LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) view.getLayoutParams();
         params.height = ScreenUtils.getSystemBarHeight() + ScreenUtils.dp2px(titleBarHeightDp);
         view.setLayoutParams(params);
+    }
+
+    public void showLoadingDialog(Integer stringRes) {
+        if (stringRes == null) {
+            DialogUtils.showLoadingDialog(getActivity());
+        } else {
+            DialogUtils.showLoadingDialog(getActivity(), stringRes);
+        }
     }
 }
