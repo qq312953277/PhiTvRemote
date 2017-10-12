@@ -42,7 +42,7 @@ public class DiscoveryProgressbar extends View {
 
     private void init() {
         mPaint = new Paint();
-        mPaint.setColor(getResources().getColor(R.color.discovery_circle));
+        mPaint.setColor(getResources().getColor(R.color.white_normal));
         mAlphaList.add(mInitAlphaList);
         mStartWidthList.add(mInitStartWidthList);
     }

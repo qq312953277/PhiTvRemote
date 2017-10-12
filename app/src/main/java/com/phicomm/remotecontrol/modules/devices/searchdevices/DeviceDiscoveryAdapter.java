@@ -113,25 +113,19 @@ public class DeviceDiscoveryAdapter extends BaseAdapter {
     }
 
     public class DeviceViewHolder {
-        TextView mBoxBssid;
         TextView mBoxName;
-        TextView mBoxLocalIp;
         RadioButton mRadioButton;
         View mItemView;
 
         DeviceViewHolder(View itemView) {
             mItemView = itemView;
-            mBoxBssid = (TextView) mItemView.findViewById(R.id.box_device_bssid);
             mBoxName = (TextView) mItemView.findViewById(R.id.box_device_name);
-            mBoxLocalIp = (TextView) mItemView.findViewById(R.id.box_device_localip);
             mRadioButton = (RadioButton) mItemView.findViewById(R.id.box_connect_device);
         }
 
         private void bind(RemoteBoxDevice device) {
             if (device != null) {
-                mBoxBssid.setText(device.getBssid());
                 mBoxName.setText(device.getName());
-                mBoxLocalIp.setText(device.getAddress().toString());
             }
         }
     }

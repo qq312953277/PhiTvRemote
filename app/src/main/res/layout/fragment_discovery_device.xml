@@ -9,113 +9,130 @@
     <include layout="@layout/title_bar" />
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="135dp"
+        android:layout_width="match_parent"
+        android:layout_height="190dp"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="10dp"
-        android:gravity="center_horizontal">
+        android:background="@drawable/search_bg"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
 
-        <Button
-            android:id="@+id/start_discovery"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:background="@drawable/round_button_bg"
-            android:gravity="center"
-            android:text="@string/research_discovery_devices" />
 
-        <FrameLayout
-            android:id="@+id/discovery_progress_view"
-            android:layout_width="135dp"
-            android:layout_height="135dp"
-            android:layout_gravity="center"
-            android:visibility="gone">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="130dp"
+            android:gravity="center_vertical">
 
-            <com.phicomm.remotecontrol.modules.devices.searchdevices.DiscoveryProgressbar
-                android:id="@+id/discovery_progressbar"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+            <Button
+                android:id="@+id/start_discovery"
+                android:layout_width="102dp"
+                android:layout_height="102dp"
+                android:background="@drawable/search_btn"
+                android:gravity="bottom|center_horizontal"
+                android:paddingBottom="18dp"
+                android:text="@string/research_discovery_devices" />
+
+            <FrameLayout
+                android:id="@+id/discovery_progress_view"
+                android:layout_width="135dp"
+                android:layout_height="135dp"
+                android:layout_gravity="center"
+                android:visibility="gone">
+
+                <com.phicomm.remotecontrol.modules.devices.searchdevices.DiscoveryProgressbar
+                    android:id="@+id/discovery_progressbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center" />
+
+                <TextView
+                    android:id="@+id/discovery_progress_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="0%" />
+            </FrameLayout>
+
+            <ProgressBar
+                android:id="@+id/ipConnectProgressBar"
+                style="?android:attr/progressBarStyleSmall"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:gravity="center"
+                android:indeterminateDrawable="@drawable/imofan_round_progress_bar_1"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/manual_ip"
+                android:layout_width="102dp"
+                android:layout_height="102dp"
+                android:layout_marginLeft="70dp"
+                android:background="@drawable/ip_btn"
+                android:gravity="bottom|center_horizontal"
+                android:paddingBottom="18dp"
+                android:text="@string/manual_ip_input" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="20.5dp"
+            android:layout_marginRight="20.5dp"
+            android:background="#727272" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/discovery_progress_tv"
+                android:id="@+id/network_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="0%" />
-        </FrameLayout>
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="20.5dp"
+                android:text="@string/current_wifi"
+                android:textColor="@color/white"
+                android:textSize="17sp" />
 
-        <ProgressBar
-            android:id="@+id/ipConnectProgressBar"
-            style="?android:attr/progressBarStyleSmall"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:gravity="center"
-            android:indeterminateDrawable="@drawable/imofan_round_progress_bar_1"
-            android:visibility="gone" />
+            <TextView
+                android:id="@+id/local_networkname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@+id/network_name"
+                android:textColor="@color/white"
+                android:textSize="17sp" />
 
-        <Button
-            android:id="@+id/manual_ip"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_marginLeft="80dp"
-            android:background="@drawable/round_button_bg"
-            android:gravity="center"
-            android:text="@string/manual_ip_input" />
+            <TextView
+                android:id="@+id/device_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginRight="20.5dp"
+                android:paddingBottom="8dp"
+                android:text="@plurals/NdeviceCount"
+                android:textColor="@color/white"
+                android:textSize="11sp" />
+        </RelativeLayout>
+
     </LinearLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp">
-
-        <TextView
-            android:id="@+id/network_name"
-            android:layout_width="wrap_content"
-            android:layout_height="25dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginLeft="20dp"
-            android:text="@string/current_wifi" />
-
-        <TextView
-            android:id="@+id/local_networkname"
-            android:layout_width="wrap_content"
-            android:layout_height="20dp"
-            android:layout_below="@+id/network_name"
-            android:layout_marginLeft="20dp" />
-
-        <TextView
-            android:id="@+id/device_count"
-            android:layout_width="120dp"
-            android:layout_height="25dp"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="10dp"
-            android:text="@plurals/NdeviceCount" />
-    </RelativeLayout>
-
-    <View
-        android:layout_width="fill_parent"
-        android:layout_height="1dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:layout_marginTop="2dp"
-        android:background="@color/black_normal" />
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="45dp">
+        android:layout_height="45dp"
+        android:layout_marginTop="15dp">
 
         <TextView
             android:id="@+id/choose_text"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
             android:layout_gravity="center"
-            android:layout_marginTop="10dp"
             android:text="@string/choose_box_controll"
             android:textAlignment="center"
             android:textColor="#384144"
@@ -129,12 +146,16 @@
         android:layout_marginLeft="36dp"
         android:layout_marginRight="33.5dp"
         android:divider="#727272"
-        android:dividerHeight="0.5dp" />
+        android:dividerHeight="0.5dp"
+        android:footerDividersEnabled="true"
+        android:scrollbars="none" />
 
     <TextView
         android:id="@android:id/empty"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="left"
-        android:text="@string/device_find_tip" />
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="22.5dp"
+        android:text="@string/device_find_tip"
+        android:textColor="#808080"
+        android:textSize="14sp" />
 </LinearLayout>

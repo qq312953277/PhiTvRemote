@@ -3,9 +3,7 @@ package com.phicomm.remotecontrol.modules.splash;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
-import android.widget.TextView;
 
-import com.phicomm.remotecontrol.BuildConfig;
 import com.phicomm.remotecontrol.R;
 import com.phicomm.remotecontrol.base.BaseActivity;
 import com.phicomm.remotecontrol.base.BaseApplication;
@@ -23,17 +21,12 @@ import com.phicomm.remotecontrol.util.StatusBarUtils;
 public class WelcomeActivity extends BaseActivity {
 
     Handler mHandler;
-    TextView mInfoView;
-    TextView mOutlineView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcom);
         mHandler = new Handler();
-        mInfoView = (TextView) findViewById(R.id.tv_info);
-        mInfoView.setText("Version Name:" + BuildConfig.VERSION_NAME);
-        mOutlineView = (TextView) findViewById(R.id.tv_outtime);
         StatusBarUtils.setFullScreen(WelcomeActivity.this);
     }
 

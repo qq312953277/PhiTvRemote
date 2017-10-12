@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:drawable="@drawable/search_icon_bg"
+        android:gravity="center" />
+    <item
+        android:drawable="@drawable/ip_icon"
+        android:gravity="center"
+        android:bottom="25dp"/>
+
+</layer-list>

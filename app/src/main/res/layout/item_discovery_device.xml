@@ -34,23 +34,14 @@
         android:paddingTop="5dp">
 
         <TextView
-            android:id="@+id/box_device_bssid"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone" />
-
-        <TextView
             android:id="@+id/box_device_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:lines="1"
             android:textColor="#384144"
             android:textSize="20sp" />
 
-        <TextView
-            android:id="@+id/box_device_localip"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone" />
     </LinearLayout>
 
     <LinearLayout

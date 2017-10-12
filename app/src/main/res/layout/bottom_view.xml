@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/ip_input_bg"
     android:focusable="true"
     android:focusableInTouchMode="true"
     android:orientation="vertical">
@@ -12,7 +13,8 @@
         android:layout_gravity="center"
         android:layout_marginTop="5dp"
         android:text="@string/input_phicomm_device_ip"
-        android:textSize="20sp" />
+        android:textColor="@color/black"
+        android:textSize="17sp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -20,56 +22,66 @@
         android:layout_gravity="center"
         android:layout_marginTop="5dp"
         android:text="@string/check_ip_address_setting"
-        android:textSize="16sp" />
+        android:textColor="#727272"
+        android:textSize="14sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="36dp"
+        android:layout_marginRight="36dp"
+        android:layout_marginTop="4dp">
 
         <com.phicomm.remotecontrol.modules.devices.searchdevices.EditTextWithDel
             android:id="@+id/edittext_ipinput"
             android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_marginLeft="24dp"
-            android:layout_marginRight="24dp"
+            android:layout_height="36.5dp"
             android:layout_marginTop="5dp"
-            android:drawableRight="@drawable/delete"
-            android:background="@drawable/around_ip_input" />
+            android:background="@drawable/ip_bg"
+            android:drawableRight="@drawable/delete" />
     </LinearLayout>
 
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_height="36.5dp"
+        android:layout_marginLeft="36dp"
+        android:layout_marginRight="36dp"
         android:orientation="horizontal">
 
         <Button
             android:id="@+id/bt_cancelinput"
-            android:layout_width="wrap_content"
+            android:layout_width="145dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_weight="1"
-            android:text="@string/finder_cancel" />
+            android:background="@drawable/cancel_bg"
+            android:text="@string/finder_cancel"
+            android:textColor="#727272"
+            android:textSize="17sp" />
 
         <Button
             android:id="@+id/bt_confirminput"
-            android:layout_width="wrap_content"
+            android:layout_width="145dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="20dp"
-            android:layout_weight="1"
-            android:text="@string/confirm" />
+            android:layout_marginLeft="9.5dp"
+            android:background="@drawable/confirm_bg"
+            android:text="@string/confirm"
+            android:textColor="@color/white"
+            android:textSize="17sp" />
     </LinearLayout>
 
-    <GridView
-        android:id="@+id/grid_buttons"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_margin="10dp"
-        android:layout_marginTop="10dp"
-        android:gravity="center"
-        android:horizontalSpacing="0dp"
-        android:numColumns="3"
-        android:verticalSpacing="0dp" />
+        android:layout_height="match_parent"
+        android:layout_marginTop="15dp"
+        android:background="@color/white">
+
+        <GridView
+            android:id="@+id/grid_buttons"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:numColumns="3" />
+    </LinearLayout>
+
 </LinearLayout>

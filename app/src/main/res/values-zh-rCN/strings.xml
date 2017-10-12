@@ -39,7 +39,7 @@
     <string name="searching">正在搜索...</string>
     <string name="finder_searching_with_ssid">搜索网络 \"%s\" 上的设备.</string>
     <string name="finder_wifi_waiting">等待wifi网络.</string>
-    <string name="current_wifi">当前Wifi</string>
+    <string name="current_wifi">当前Wifi:</string>
     <string name="finder_add_other">添加其他设备</string>
     <string name="finder_connect">连接</string>
     <string name="finder_cancel">取消</string>
@@ -59,9 +59,9 @@
         <item quantity="other">共计<xliff:g id="count">%d</xliff:g>项</item>
     </plurals>
     <string name="device_find_tip">提示:\n \n
-        1:当前只支持斐讯盒子 \n
-        2:请确保盒子和手机在一个局域网内 \n
-        3:请尝试重新扫描或者输入ip \n
+        1.当前只支持斐讯盒子 \n
+        2.请确保盒子和手机在一个局域网内 \n
+        3.请尝试重新扫描或者输入ip \n
     </string>
     <plurals name="NdeviceCount">
         <item quantity="other">搜索到 <xliff:g id="count">%d</xliff:g> 个盒子</item>

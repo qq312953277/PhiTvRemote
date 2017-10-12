@@ -7,7 +7,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.Toast;
 
@@ -31,7 +31,7 @@ public class TouchPanelFragment extends BaseFragment implements PanelContract.Vi
     PanelContract.Presenter mPresenter;
     private Toast mToast;
     @BindView(R.id.ll_touch_area)
-    LinearLayout mTouchArea;
+    RelativeLayout mTouchArea;
     @BindView(R.id.scrollView)
     ScrollView mScrollView;
 
