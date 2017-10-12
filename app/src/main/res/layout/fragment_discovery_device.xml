@@ -33,7 +33,7 @@
                 <Button
                     android:id="@+id/start_discovery"
                     android:layout_width="40dp"
-                    android:layout_height="29dp"
+                    android:layout_height="31.5dp"
                     android:layout_marginBottom="5dp"
                     android:background="@drawable/search_icon" />
 
@@ -54,9 +54,8 @@
 
                 <com.phicomm.remotecontrol.modules.devices.searchdevices.DiscoveryProgressbar
                     android:id="@+id/discovery_progressbar"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center" />
+                    android:layout_width="135dp"
+                    android:layout_height="135dp" />
 
                 <TextView
                     android:id="@+id/discovery_progress_tv"
@@ -86,8 +85,8 @@
 
                 <Button
                     android:id="@+id/manual_ip"
-                    android:layout_width="42dp"
-                    android:layout_height="29dp"
+                    android:layout_width="43.5dp"
+                    android:layout_height="31.5dp"
                     android:layout_marginBottom="5dp"
                     android:background="@drawable/ip_icon" />
 

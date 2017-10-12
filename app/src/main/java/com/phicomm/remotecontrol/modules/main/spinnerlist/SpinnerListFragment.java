@@ -94,8 +94,10 @@ public class SpinnerListFragment extends BaseFragment {
         if (target != null) {
             setTextImage(R.drawable.icon_up);
             mDeviceTv.setText(target.getName());
+            mDeviceTv.setEnabled(true);
         } else {
             mDeviceTv.setText(getString(R.string.unable_to_connect_device));
+            mDeviceTv.setEnabled(false);
         }
         refreshSpinnerListView(remoteBoxDeviceList);
         super.onResume();
@@ -271,6 +273,7 @@ public class SpinnerListFragment extends BaseFragment {
                 } else {
                     mDisconnectSpinnerWindowView.setWidth(wm.getDefaultDisplay().getWidth());
                     mDisconnectSpinnerWindowView.showAsDropDown(mDeviceTv);
+
                 }
                 break;
         }
