@@ -345,7 +345,6 @@ public class DeviceDiscoveryFragment extends BaseFragment implements DeviceDisco
     @Override
     public void onResume() {
         LogUtil.d(TAG, "onResume() is called");
-        LogUtil.d(TAG, mPresenter.getCurrentDeviceList().toString());
         mPresenter.loadRecentList();
         mWifiManager = (WifiManager) getContext().getApplicationContext().getSystemService(WIFI_SERVICE);
         IntentFilter filter = new IntentFilter();

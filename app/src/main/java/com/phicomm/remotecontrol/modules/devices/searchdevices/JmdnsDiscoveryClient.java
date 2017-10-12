@@ -45,6 +45,7 @@ public class JmdnsDiscoveryClient implements Runnable {
     @Override
     public void run() {
         mBoxDeviceList.clear();
+        mBoxDeviceListMap.clear();
         try {
             discoverJmdnsDevices();
         } catch (IOException e) {

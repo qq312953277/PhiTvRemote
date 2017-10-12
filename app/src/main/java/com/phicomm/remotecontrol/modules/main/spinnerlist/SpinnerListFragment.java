@@ -146,7 +146,9 @@ public class SpinnerListFragment extends BaseFragment {
                     public void onSuccess(RemoteBoxDevice device) {
                         Log.d(TAG, "onSuccess device=" + device);
                         DevicesUtil.setTarget(device);
-                        mCurrentDevicesList.add(device);
+                        if (mCurrentDevicesList.size() == 0) {
+                            mCurrentDevicesList.add(device);
+                        }
                         mIsSuccess = true;
                         sendMessage();
                         DevicesUtil.setTarget(device);
