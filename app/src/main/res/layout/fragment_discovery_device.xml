@@ -22,14 +22,28 @@
             android:layout_height="130dp"
             android:gravity="center_vertical">
 
-            <Button
-                android:id="@+id/start_discovery"
+            <LinearLayout
+                android:id="@+id/ll_search"
                 android:layout_width="102dp"
                 android:layout_height="102dp"
-                android:background="@drawable/search_btn"
-                android:gravity="bottom|center_horizontal"
-                android:paddingBottom="18dp"
-                android:text="@string/research_discovery_devices" />
+                android:background="@drawable/search_icon_bg"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/start_discovery"
+                    android:layout_width="40dp"
+                    android:layout_height="29dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@drawable/search_icon" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/research_discovery_devices"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
 
             <FrameLayout
                 android:id="@+id/discovery_progress_view"
@@ -55,21 +69,34 @@
             <ProgressBar
                 android:id="@+id/ipConnectProgressBar"
                 style="?android:attr/progressBarStyleSmall"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
+                android:layout_width="56.5dp"
+                android:layout_height="56.5dp"
                 android:gravity="center"
                 android:indeterminateDrawable="@drawable/imofan_round_progress_bar_1"
                 android:visibility="gone" />
 
-            <Button
-                android:id="@+id/manual_ip"
+            <LinearLayout
+                android:id="@+id/ll_ip"
                 android:layout_width="102dp"
                 android:layout_height="102dp"
                 android:layout_marginLeft="70dp"
-                android:background="@drawable/ip_btn"
-                android:gravity="bottom|center_horizontal"
-                android:paddingBottom="18dp"
-                android:text="@string/manual_ip_input" />
+                android:background="@drawable/search_icon_bg"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/manual_ip"
+                    android:layout_width="42dp"
+                    android:layout_height="29dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@drawable/ip_icon" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/manual_ip_input"
+                    android:textSize="14sp" />
+            </LinearLayout>
         </LinearLayout>
 
         <View

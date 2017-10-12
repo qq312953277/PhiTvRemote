@@ -23,6 +23,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.GridView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -64,35 +65,56 @@ import static com.phicomm.remotecontrol.constant.PhiConstants.TITLE_BAR_HEIGHT_D
  */
 
 public class DeviceDiscoveryFragment extends BaseFragment implements DeviceDiscoveryContract.View {
-    private static String TAG = "DeviceDiscoveryFragment";
+
     @BindView(ipConnectProgressBar)
     ProgressBar mConnectProgressBar;
+
     @BindView(R.id.discovery_devices_list)
     public ListView mDiscoveryListDevices;
+
     @BindView(R.id.start_discovery)
     public Button mDiscoveryBtn;
+
     @BindView(R.id.manual_ip)
     public Button mManualIpBtn;
+
     @BindView(R.id.tv_right)
     public TextView mTvRecords;
+
     @BindView(R.id.local_networkname)
     public TextView mNetworkNameTv;
+
     @BindView(R.id.choose_text)
     public TextView mChooseTv;
+
     @BindView(R.id.device_count)
     public TextView mCountTv;
+
     @BindView(android.R.id.empty)
     public TextView mEmptyTv;
+
     @BindView(R.id.discovery_progressbar)
     DiscoveryProgressbar mDiscoveryProgressbar;
+
     @BindView(R.id.discovery_progress_tv)
     TextView mDiscoveryProgressTv;
+
     @BindView(R.id.discovery_progress_view)
     FrameLayout mDiscoveryProgressView;
+
     @BindView(R.id.tv_title)
     TextView mTvTitle;
+
     @BindView(R.id.rl_title)
     RelativeLayout mRlTitle;
+
+    @BindView(R.id.ll_search)
+    LinearLayout mLlSearch;
+
+    @BindView(R.id.ll_ip)
+    LinearLayout mLlIP;
+
+    private static String TAG = "DeviceDiscoveryFragment";
     private Presenter mPresenter;
     private DeviceDiscoveryAdapter mDiscoveryAdapter;
     private WifiManager mWifiManager;
@@ -188,11 +210,11 @@ public class DeviceDiscoveryFragment extends BaseFragment implements DeviceDisco
     }
 
     @Override
-    @OnClick({R.id.iv_back, R.id.tv_right, R.id.start_discovery, R.id.manual_ip})
+    @OnClick({R.id.iv_back, R.id.tv_right, R.id.ll_search, R.id.ll_ip})
     public void onClick(View view) {
         super.onClick(view);
         switch (view.getId()) {
-            case R.id.start_discovery:
+            case R.id.ll_search:
                 if (isWifiAvailable()) {
                     if (mFindIndex != -1) {
                         mDiscoveryAdapter.noClearStates(mFindIndex);
@@ -202,7 +224,7 @@ public class DeviceDiscoveryFragment extends BaseFragment implements DeviceDisco
                     CommonUtils.showToastBottom(getString(R.string.finder_wifi_not_available));
                 }
                 break;
-            case R.id.manual_ip:
+            case R.id.ll_ip:
                 manualConnectDevice();
                 break;
             case R.id.tv_right:
@@ -240,20 +262,16 @@ public class DeviceDiscoveryFragment extends BaseFragment implements DeviceDisco
 
     public void startIPConnectProgressBar() {
         mConnectProgressBar.setVisibility(View.VISIBLE);
-        mDiscoveryBtn.setVisibility(View.GONE);
-        mManualIpBtn.setVisibility(View.GONE);
-        mDiscoveryBtn.setEnabled(false);
-        mManualIpBtn.setEnabled(false);
+        mLlIP.setVisibility(View.GONE);
+        mLlSearch.setVisibility(View.GONE);
         mTvRecords.setEnabled(false);
         mDiscoveryListDevices.setEnabled(false);
     }
 
     public void stopIPConnectProgressBar() {
         mConnectProgressBar.setVisibility(View.GONE);
-        mDiscoveryBtn.setVisibility(View.VISIBLE);
-        mManualIpBtn.setVisibility(View.VISIBLE);
-        mDiscoveryBtn.setEnabled(true);
-        mManualIpBtn.setEnabled(true);
+        mLlIP.setVisibility(View.VISIBLE);
+        mLlSearch.setVisibility(View.VISIBLE);
         mTvRecords.setEnabled(true);
         mDiscoveryListDevices.setEnabled(true);
     }
@@ -345,6 +363,7 @@ public class DeviceDiscoveryFragment extends BaseFragment implements DeviceDisco
     @Override
     public void onResume() {
         LogUtil.d(TAG, "onResume() is called");
+        LogUtil.d(TAG, mPresenter.getCurrentDeviceList().toString());
         mPresenter.loadRecentList();
         mWifiManager = (WifiManager) getContext().getApplicationContext().getSystemService(WIFI_SERVICE);
         IntentFilter filter = new IntentFilter();
@@ -520,19 +539,15 @@ public class DeviceDiscoveryFragment extends BaseFragment implements DeviceDisco
     }
 
     private void stopProgressBar() {
-        mDiscoveryBtn.setVisibility(View.VISIBLE);
-        mManualIpBtn.setVisibility(View.VISIBLE);
-        mDiscoveryBtn.setEnabled(true);
-        mManualIpBtn.setEnabled(true);
+        mLlSearch.setVisibility(View.VISIBLE);
+        mLlIP.setVisibility(View.VISIBLE);
         mTvRecords.setEnabled(true);
         mDiscoveryListDevices.setEnabled(true);
     }
 
     private void startProgressBar() {
-        mDiscoveryBtn.setVisibility(View.GONE);
-        mManualIpBtn.setVisibility(View.GONE);
-        mDiscoveryBtn.setEnabled(false);
-        mManualIpBtn.setEnabled(false);
+        mLlSearch.setVisibility(View.GONE);
+        mLlIP.setVisibility(View.GONE);
         mTvRecords.setEnabled(false);
         mDiscoveryListDevices.setEnabled(false);
         canGoBack = false;
