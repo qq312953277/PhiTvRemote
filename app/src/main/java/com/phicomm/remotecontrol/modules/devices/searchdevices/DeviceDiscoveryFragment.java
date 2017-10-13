@@ -2,7 +2,6 @@ package com.phicomm.remotecontrol.modules.devices.searchdevices;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.NetworkInfo;
@@ -41,7 +40,7 @@ import com.phicomm.remotecontrol.util.DevicesUtil;
 import com.phicomm.remotecontrol.util.DialogUtils;
 import com.phicomm.remotecontrol.util.LogUtil;
 import com.phicomm.remotecontrol.util.SettingUtil;
-import com.phicomm.widgets.alertdialog.PhiAlertDialog;
+import com.phicomm.widgets.alertdialog.PhiGuideDialog;
 import com.tandong.bottomview.view.BottomView;
 
 import java.util.Formatter;
@@ -71,12 +70,6 @@ public class DeviceDiscoveryFragment extends BaseFragment implements DeviceDisco
 
     @BindView(R.id.discovery_devices_list)
     public ListView mDiscoveryListDevices;
-
-    @BindView(R.id.start_discovery)
-    public Button mDiscoveryBtn;
-
-    @BindView(R.id.manual_ip)
-    public Button mManualIpBtn;
 
     @BindView(R.id.tv_right)
     public TextView mTvRecords;
@@ -200,7 +193,6 @@ public class DeviceDiscoveryFragment extends BaseFragment implements DeviceDisco
 
     private void initAdapter() {
         mDiscoveryListDevices.setEmptyView(mEmptyTv);
-        mDiscoveryListDevices.addFooterView(new View(getContext()));//作用：最后一条item也加分割线
         mDiscoveryAdapter = new DeviceDiscoveryAdapter();
         mDiscoveryListDevices.setAdapter(mDiscoveryAdapter);
     }
@@ -489,16 +481,25 @@ public class DeviceDiscoveryFragment extends BaseFragment implements DeviceDisco
     }
 
     private void ipDialog(int resId) {
-        PhiAlertDialog.Builder builder = new PhiAlertDialog.Builder(getContext());
-        builder.setMessage(resId);//R.string.error_tips   R.string.ip_connect_fail_tips
-        builder.setCancelable(false);//点击框外不取消
-        builder.setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
+        View view = LayoutInflater.from(getActivity()).inflate(R.layout.ip_alertdialog, null);
+        TextView message = (TextView) view.findViewById(R.id.context_message);
+        message.setText(resId);
+        final PhiGuideDialog dialog = new PhiGuideDialog(getActivity());
+        dialog.setContentPanel(view);
+        dialog.setCancelable(false);//点击框外不取消
+
+        dialog.setRightGuideOnclickListener(null, R.color.confirm_btn_text, new PhiGuideDialog.onRightGuideOnclickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
+            public void onRightGuideClick() {
+            }
+        });
+        dialog.setLeftGuideOnclickListener(getActivity().getString(R.string.confirm), R.color.confirm_btn_text, new PhiGuideDialog.onLeftGuideOnclickListener() {
+            @Override
+            public void onLeftGuideClick() {
                 dialog.dismiss();
             }
         });
-        builder.show();
+        dialog.show();
     }
 
     private boolean isValidIpAddress(String inputStr) {

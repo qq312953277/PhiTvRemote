@@ -93,7 +93,7 @@ public class TouchPanelFragment extends BaseFragment implements PanelContract.Vi
 
 
     @Override
-    @OnClick({R.id.btn_vol_up, R.id.btn_vol_down, R.id.btn_home, R.id.btn_back, R.id.btn_setting, R.id.btn_menu})
+    @OnClick({R.id.btn_vol_up, R.id.btn_vol_down, R.id.btn_home, R.id.btn_back, R.id.btn_setting, R.id.btn_menu, R.id.btn_power})
     public void onClick(View view) {
         super.onClick(view);
 
@@ -122,6 +122,9 @@ public class TouchPanelFragment extends BaseFragment implements PanelContract.Vi
                 CommonUtils.showShortToast("btn_menu");
                 mPresenter.sendKeyEvent(KeyCode.MENU);
                 break;
+            case R.id.btn_power:
+                CommonUtils.showShortToast("btn_power");
+                mPresenter.sendKeyEvent(KeyCode.POWER);
             default:
                 break;
         }

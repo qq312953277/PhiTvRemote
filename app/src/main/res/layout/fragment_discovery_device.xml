@@ -171,7 +171,7 @@
         android:layout_height="match_parent"
         android:layout_marginLeft="36dp"
         android:layout_marginRight="33.5dp"
-        android:divider="#727272"
+        android:divider="@color/listview_divider"
         android:dividerHeight="0.5dp"
         android:footerDividersEnabled="true"
         android:scrollbars="none" />

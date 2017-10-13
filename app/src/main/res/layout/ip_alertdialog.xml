@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_dialog"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/spinlist_bg"
     android:orientation="vertical">
 
-    <ListView
-        android:id="@+id/listview"
+    <TextView
+        android:id="@+id/context_message"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="35dp"
-        android:layout_marginRight="34dp"
-        android:divider="@color/listview_divider"
-        android:dividerHeight="0.5dp"
-        android:scrollbars="none" />
+        android:layout_gravity="center"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:textColor="@color/listview_divider"
+        android:textSize="14sp" />
+
 </LinearLayout>

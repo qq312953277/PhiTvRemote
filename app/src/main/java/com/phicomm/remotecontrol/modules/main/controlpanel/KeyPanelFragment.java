@@ -62,6 +62,9 @@ public class KeyPanelFragment extends Fragment implements PanelContract.View, an
     @BindView(R.id.btn_menu)
     ImageButton mMenuBtn;
 
+    @BindView(R.id.btn_power)
+    ImageButton mPowerBtn;
+
 
     public static KeyPanelFragment newInstance() {
         return new KeyPanelFragment();
@@ -97,6 +100,7 @@ public class KeyPanelFragment extends Fragment implements PanelContract.View, an
 
         mSettingBtn.setOnClickListener(this);
         mMenuBtn.setOnClickListener(this);
+        mPowerBtn.setOnClickListener(this);
     }
 
     @Override
@@ -143,6 +147,9 @@ public class KeyPanelFragment extends Fragment implements PanelContract.View, an
         } else if (v == mSettingBtn) {
             CommonUtils.showShortToast("btn_setting");
             mPresenter.sendCommand(Commands.OPEN_SETTING);
+        } else if (v == mPowerBtn) {
+            CommonUtils.showShortToast("btn_power");
+            mPresenter.sendKeyEvent(KeyCode.POWER);
         }
     }
 

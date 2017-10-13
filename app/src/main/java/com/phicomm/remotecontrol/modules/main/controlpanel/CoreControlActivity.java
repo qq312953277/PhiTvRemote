@@ -16,7 +16,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,7 +25,6 @@ import com.phicomm.remotecontrol.R;
 import com.phicomm.remotecontrol.RemoteBoxDevice;
 import com.phicomm.remotecontrol.base.BaseActivity;
 import com.phicomm.remotecontrol.constant.Commands;
-import com.phicomm.remotecontrol.constant.KeyCode;
 import com.phicomm.remotecontrol.constant.PhiConstants;
 import com.phicomm.remotecontrol.modules.main.screenprojection.activities.LocalMediaItemActivity;
 import com.phicomm.remotecontrol.modules.main.screenprojection.entity.DeviceDisplay;
@@ -44,7 +42,6 @@ import com.phicomm.remotecontrol.preference.PreferenceRepository;
 import com.phicomm.remotecontrol.util.ActivityUtils;
 import com.phicomm.remotecontrol.util.CommonUtils;
 import com.phicomm.remotecontrol.util.DevicesUtil;
-import com.phicomm.remotecontrol.util.SettingUtil;
 import com.phicomm.widgets.alertdialog.PhiGuideDialog;
 
 import java.util.ArrayList;
@@ -206,20 +203,6 @@ public class CoreControlActivity extends BaseActivity implements UpdateView {
 
         HeaderButtons(View view) {
             mRootView = view;
-            initPowerButton();
-        }
-
-        void initPowerButton() {
-            ImageButton powerBtn = (ImageButton) mRootView.findViewById(R.id.btn_power);
-            powerBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (SettingUtil.isVibrateOn()) {
-                        SettingUtil.doVibrate();
-                    }
-                    mPresenter.sendKeyEvent(KeyCode.POWER);
-                }
-            });
         }
 
         @Override
