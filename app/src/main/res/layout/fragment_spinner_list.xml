@@ -3,28 +3,31 @@
     android:layout_width="match_parent"
     android:layout_height="45dp"
     android:background="@color/white_normal"
-    android:orientation="horizontal"
     android:gravity="center_vertical"
+    android:orientation="horizontal"
     android:padding="2dp">
 
-    <ImageButton
-        android:id="@+id/login"
+    <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="17dp"
-        android:layout_marginLeft="8dp"
-        android:background="@null"
-        android:contentDescription="@null"
-        android:paddingLeft="20dp"
-        android:paddingRight="10dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:src="@drawable/selector_imagebutton_touxiang" />
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:padding="5dp">
+
+        <ImageButton
+            android:id="@+id/login"
+            android:layout_width="18dp"
+            android:layout_height="19dp"
+            android:background="@null"
+            android:contentDescription="@null"
+            android:src="@drawable/selector_imagebutton_touxiang" />
+
+    </LinearLayout>
+
 
     <TextView
         android:id="@+id/connected_device"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="-3dp"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="20dp"
         android:layout_weight="1"
@@ -33,15 +36,18 @@
         android:textColor="@color/black_normal"
         android:textSize="17sp" />
 
-    <ImageButton
-        android:id="@+id/scan"
+
+    <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="17dp"
-        android:layout_marginRight="8dp"
-        android:background="@null"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:src="@drawable/selector_imagebutton_devicelist" />
+        android:layout_height="wrap_content"
+        android:layout_marginRight="16dp"
+        android:padding="5dp">
+
+        <ImageButton
+            android:id="@+id/scan"
+            android:layout_width="3dp"
+            android:layout_height="19dp"
+            android:background="@null"
+            android:src="@drawable/selector_imagebutton_devicelist" />
+    </LinearLayout>
 </LinearLayout>

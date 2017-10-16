@@ -12,7 +12,9 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.text.InputType;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,7 +42,6 @@ import com.phicomm.remotecontrol.util.DevicesUtil;
 import com.phicomm.remotecontrol.util.DialogUtils;
 import com.phicomm.remotecontrol.util.LogUtil;
 import com.phicomm.remotecontrol.util.SettingUtil;
-import com.phicomm.widgets.alertdialog.PhiGuideDialog;
 import com.tandong.bottomview.view.BottomView;
 
 import java.util.Formatter;
@@ -167,7 +168,6 @@ public class DeviceDiscoveryFragment extends BaseFragment implements DeviceDisco
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_discovery_device, container, false);
         return view;
     }
@@ -246,7 +246,7 @@ public class DeviceDiscoveryFragment extends BaseFragment implements DeviceDisco
                     mPresenter.ipConnect(inputStr);
                 } else {
                     mBottomView.dismissBottomView();
-                    ipDialog(R.string.error_tips);
+                    ipDialog(R.string.error_tips, true);
                 }
             }
         }
@@ -270,7 +270,7 @@ public class DeviceDiscoveryFragment extends BaseFragment implements DeviceDisco
 
     @Override
     public void showConnectFailDialog() {
-        ipDialog(R.string.ip_connect_fail_tips);
+        ipDialog(R.string.ip_connect_fail_tips, false);
     }
 
     private AdapterView.OnItemClickListener manualConnectDevice = new AdapterView.OnItemClickListener() {
@@ -480,26 +480,26 @@ public class DeviceDiscoveryFragment extends BaseFragment implements DeviceDisco
         }
     }
 
-    private void ipDialog(int resId) {
-        View view = LayoutInflater.from(getActivity()).inflate(R.layout.ip_alertdialog, null);
-        TextView message = (TextView) view.findViewById(R.id.context_message);
+    private void ipDialog(int resId, boolean flag) {
+        final AlertDialog myDialog = new AlertDialog.Builder(getActivity()).create();
+        myDialog.show();
+        myDialog.setCancelable(false);
+        myDialog.getWindow().setContentView(R.layout.ip_alertdialog);
+        myDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);//与background属性配合设置圆角边框的作用
+        TextView message = (TextView) myDialog.getWindow().findViewById(R.id.context_message);
+        if (flag) {
+            message.setGravity(Gravity.CENTER);
+        } else {
+            message.setGravity(Gravity.LEFT);
+        }
+        Button confirmBtn = (Button) myDialog.getWindow().findViewById(R.id.bt_confirm);
         message.setText(resId);
-        final PhiGuideDialog dialog = new PhiGuideDialog(getActivity());
-        dialog.setContentPanel(view);
-        dialog.setCancelable(false);//点击框外不取消
-
-        dialog.setRightGuideOnclickListener(null, R.color.confirm_btn_text, new PhiGuideDialog.onRightGuideOnclickListener() {
+        confirmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onRightGuideClick() {
+            public void onClick(View v) {
+                myDialog.dismiss();
             }
         });
-        dialog.setLeftGuideOnclickListener(getActivity().getString(R.string.confirm), R.color.confirm_btn_text, new PhiGuideDialog.onLeftGuideOnclickListener() {
-            @Override
-            public void onLeftGuideClick() {
-                dialog.dismiss();
-            }
-        });
-        dialog.show();
     }
 
     private boolean isValidIpAddress(String inputStr) {

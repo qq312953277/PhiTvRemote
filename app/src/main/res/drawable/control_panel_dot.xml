@@ -2,8 +2,8 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="oval"
     android:useLevel="false">
-    <solid android:color="#898985" />
+    <solid android:color="@color/btn_dot" />
     <size
-        android:width="14dp"
-        android:height="14dp" />
+        android:width="16dp"
+        android:height="16dp" />
 </shape>

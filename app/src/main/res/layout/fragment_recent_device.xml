@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/spinlist_bg"
     android:orientation="vertical">
 
     <include layout="@layout/title_bar" />
@@ -10,7 +11,13 @@
         android:id="@+id/recent_devices_list"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:layout_marginLeft="36dp"
+        android:layout_marginRight="33.5dp"
+        android:divider="@color/listview_divider"
+        android:dividerHeight="0.5dp"
+        android:footerDividersEnabled="true"
+        android:scrollbars="none" />
 
     <TextView
         android:id="@android:id/empty"

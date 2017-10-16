@@ -14,7 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
-import android.widget.ImageButton;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
@@ -48,14 +47,9 @@ public class SpinnerListFragment extends BaseFragment {
     private List<RemoteBoxDevice> mCurrentDevicesList = new ArrayList<>(0);
     private boolean mIsSuccess = false;
     private DisconnectSpinnerWindowView mDisconnectSpinnerWindowView;
+
     @BindView(R.id.connected_device)
-    public TextView mDeviceTv;
-
-    @BindView(R.id.scan)
-    public ImageButton mDiscoveryBtn;
-
-    @BindView(R.id.login)
-    public ImageButton mLoginIBtn;
+    TextView mDeviceTv;
 
     public SpinnerListFragment() {
 
@@ -181,6 +175,7 @@ public class SpinnerListFragment extends BaseFragment {
 
     private AdapterView.OnItemClickListener itemClickListener = new AdapterView
             .OnItemClickListener() {
+
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             SettingUtil.isVibrate();
@@ -221,6 +216,7 @@ public class SpinnerListFragment extends BaseFragment {
     private PopupWindow.OnDismissListener dismissListener = new PopupWindow.OnDismissListener() {
         @Override
         public void onDismiss() {
+            setBackgroundTransparent(1.0f);
             //setTextImage(R.drawable.icon_down);
         }
     };
@@ -267,15 +263,26 @@ public class SpinnerListFragment extends BaseFragment {
             case R.id.connected_device:
                 WindowManager wm = (WindowManager) getContext()
                         .getSystemService(Context.WINDOW_SERVICE);
+
                 if (DevicesUtil.getTarget() != null) {
+                    setBackgroundTransparent(0.4f);
+
                     mSpinerPopWindow.setWidth(wm.getDefaultDisplay().getWidth());
                     mSpinerPopWindow.showAsDropDown(mDeviceTv);
                 } else {
                     mDisconnectSpinnerWindowView.setWidth(wm.getDefaultDisplay().getWidth());
                     mDisconnectSpinnerWindowView.showAsDropDown(mDeviceTv);
-
                 }
                 break;
         }
+    }
+
+    private void setBackgroundTransparent(float value) {
+        WindowManager.LayoutParams lp = getActivity().getWindow()
+                .getAttributes();
+        lp.alpha = value;
+        getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+        getActivity().getWindow().setAttributes(lp);
+
     }
 }
