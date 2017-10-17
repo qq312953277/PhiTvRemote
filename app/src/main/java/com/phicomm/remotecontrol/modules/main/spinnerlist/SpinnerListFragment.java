@@ -269,9 +269,6 @@ public class SpinnerListFragment extends BaseFragment {
 
                     mSpinerPopWindow.setWidth(wm.getDefaultDisplay().getWidth());
                     mSpinerPopWindow.showAsDropDown(mDeviceTv);
-                } else {
-                    mDisconnectSpinnerWindowView.setWidth(wm.getDefaultDisplay().getWidth());
-                    mDisconnectSpinnerWindowView.showAsDropDown(mDeviceTv);
                 }
                 break;
         }

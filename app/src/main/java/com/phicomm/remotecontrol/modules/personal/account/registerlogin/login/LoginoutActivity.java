@@ -2,8 +2,10 @@ package com.phicomm.remotecontrol.modules.personal.account.registerlogin.login;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -18,7 +20,6 @@ import com.phicomm.remotecontrol.modules.personal.account.http.CustomSubscriber;
 import com.phicomm.remotecontrol.modules.personal.account.http.HttpDataRepository;
 import com.phicomm.remotecontrol.modules.personal.account.local.LocalDataRepository;
 import com.phicomm.remotecontrol.modules.personal.account.resultbean.AccountDetailBean;
-import com.phicomm.widgets.alertdialog.PhiGuideDialog;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -96,20 +97,25 @@ public class LoginoutActivity extends BaseActivity {
 
     @OnClick(R.id.bt_loginout)
     public void clickLogout() {
-        final PhiGuideDialog deleteDialog = new PhiGuideDialog(this);
-        deleteDialog.setTitle(getResources().getString(R.string.account_exit));
-        deleteDialog.setMessage(getResources().getString(R.string.account_exit_msg));
-        deleteDialog.setLeftGuideOnclickListener(getResources().getString(R.string.cancel), R.color.weight_line_color, new PhiGuideDialog.onLeftGuideOnclickListener() {
-            @Override
-            public void onLeftGuideClick() {
-                deleteDialog.dismiss();
-            }
+        final AlertDialog myDialog = new AlertDialog.Builder(this).create();
+        myDialog.show();
+        myDialog.setCancelable(false);
+        myDialog.getWindow().setContentView(R.layout.loginout_alertdialog);
+        myDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);//与background属性配合设置圆角边框的作用
+        Button confirmBtn = (Button) myDialog.getWindow().findViewById(R.id.bt_confirm);
+        Button cancelBtn = (Button) myDialog.getWindow().findViewById(R.id.bt_cancel);
 
-        });
-        deleteDialog.setRightGuideOnclickListener(getResources().getString(R.string.ok), R.color.syn_text_color, new PhiGuideDialog.onRightGuideOnclickListener() {
+        cancelBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onRightGuideClick() {
-                deleteDialog.dismiss();
+            public void onClick(View v) {
+                myDialog.dismiss();
+            }
+        });
+
+        confirmBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myDialog.dismiss();
                 //send logout event
                 EventBus.getDefault().post(new LogoutEvent());//BaseActivity接收该事件
 
@@ -117,7 +123,6 @@ public class LoginoutActivity extends BaseActivity {
                 finish();
             }
         });
-        deleteDialog.show();
     }
 
 }

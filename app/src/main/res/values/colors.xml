@@ -16,7 +16,7 @@
     <color name="textHint">#4CFFFFFF</color>
     <color name="discovery_circle">#0059ccf5</color>
     <color name="color_b3bece">#b3bece</color>
-    <color name="copyright_text_color">#FF1C76F3</color>
+    <color name="copyright_text_color">#484848</color>
     <color name="confirm_btn_text">#FC7E51</color>
     <color name="listview_divider">#484848</color>
     <color name="alertdialog_bg">#F5F5F5</color>
@@ -24,6 +24,8 @@
     <color name="spinlist_bg">#EDEDEB</color>
     <color name="device_find_tip_textcolor">#808080</color>
     <color name="core_activity_bg">#373737</color>
+    <color name="loginout_core_bg">#F7F7F7</color>
+    <color name="loginout_alert_bg">#E6E6E6</color>
 
 
 </resources>

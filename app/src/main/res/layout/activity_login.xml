@@ -11,13 +11,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:background="@drawable/login_register_bg"
         android:orientation="vertical">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
+            android:layout_marginLeft="20dp"
             android:layout_marginRight="30dp"
             android:layout_marginTop="20dp">
 
@@ -37,7 +36,7 @@
                     android:singleLine="true"
                     android:text="@string/phone_prefix"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/text_size_14sp" />
+                    android:textSize="@dimen/text_size_17sp" />
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -54,17 +53,19 @@
 
         </RelativeLayout>
 
+        <View style="@style/registerforgetpassword_diriver_view_style" />
+
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
+            android:layout_marginLeft="20dp"
             android:layout_marginRight="30dp"
             android:layout_marginTop="20dp">
 
             <EditText
                 android:id="@+id/password"
                 style="@style/loginregister_passwrod_edittext_style"
-                android:background="@drawable/input_edittext_bg"
                 android:hint="@string/password_hint" />
 
             <ImageView
@@ -72,23 +73,26 @@
                 style="@style/password_showhide_imageview_style_white" />
         </RelativeLayout>
 
+        <View style="@style/registerforgetpassword_diriver_view_style" />
+
+
         <Button
             android:id="@+id/bt_login"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginLeft="30dp"
+            android:layout_height="@dimen/button_colour_height"
+            android:layout_marginLeft="35dp"
             android:layout_marginRight="30dp"
             android:layout_marginTop="20dp"
             android:background="@drawable/btn_bg_selector"
-            android:textSize="15sp"
-            android:textColor="@drawable/button_colour_text_selector"
             android:text="@string/login_divide"
-            android:textAllCaps="false" />
+            android:textAllCaps="false"
+            android:textColor="@color/copyright_text_color"
+            android:textSize="@dimen/text_size_19sp" />
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
+            android:layout_marginLeft="35dp"
             android:layout_marginRight="30dp"
             android:layout_marginTop="10dp">
 
