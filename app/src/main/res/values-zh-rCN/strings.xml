@@ -82,6 +82,8 @@
     <string name="key_back">Back</string>
     <string name="vol">音量</string>
     <string name="chanel">频道</string>
+    <string name="exit_application_hint">再按一次退出程序</string>
+    <string name="click_force_hint">力度不够哦，用力点</string>
 
     <!--截图-->
     <string name="screenshot">截图</string>

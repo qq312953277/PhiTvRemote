@@ -71,6 +71,7 @@ public class CoreControlActivity extends BaseActivity implements UpdateView {
     private LocalMediaItemPresenter mLocalMediaItemPresenter;
     private UpdatePresenter mUpdatePresenter;
     private PreferenceRepository mPreference;
+    private long mFirstTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -312,5 +313,17 @@ public class CoreControlActivity extends BaseActivity implements UpdateView {
     protected void onDestroy() {
         super.onDestroy();
         Log.d("LocalMediaItemActivity", "CoreControlActivity onDestroy");
+    }
+
+    @Override
+    public void onBackPressed() {
+        long secondTime = System.currentTimeMillis();
+        if (secondTime - mFirstTime > 2000) {
+            CommonUtils.showShortToast(getString(R.string.exit_application_hint));
+            mFirstTime = secondTime;
+        } else {
+            finish();
+            System.exit(0);
+        }
     }
 }

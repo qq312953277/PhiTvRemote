@@ -66,6 +66,8 @@
     <string name="key_back">Back</string>
     <string name="vol">vol</string>
     <string name="chanel">chanel</string>
+    <string name="exit_application_hint">click again then exit application</string>
+    <string name="click_force_hint">please force deep</string>
 
     <!--Screenshot-->
     <string name="screenshot">Screenshot</string>
