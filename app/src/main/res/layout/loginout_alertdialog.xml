@@ -44,7 +44,7 @@
         android:layout_width="match_parent"
         android:layout_height="49dp">
 
-        <Button
+        <TextView
             android:id="@+id/bt_cancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -61,17 +61,17 @@
             android:layout_height="match_parent"
             android:background="@color/listview_divider" />
 
-        <Button
-            android:id="@+id/bt_confirm"
+        <TextView
+            android:id="@+id/tv_confirm"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:background="@drawable/shape_alertdialog_confirm_bg"
             android:gravity="center"
             android:text="@string/confirm"
             android:textColor="@color/confirm_btn_text"
-            android:textSize="17sp" />
+            android:textSize="17sp"
+            android:background="@drawable/shape_alertdialog_confirm_bg"/>
     </LinearLayout>
 
 

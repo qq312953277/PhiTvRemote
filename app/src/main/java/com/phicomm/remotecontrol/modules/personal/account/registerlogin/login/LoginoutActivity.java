@@ -102,8 +102,8 @@ public class LoginoutActivity extends BaseActivity {
         myDialog.setCancelable(false);
         myDialog.getWindow().setContentView(R.layout.loginout_alertdialog);
         myDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);//与background属性配合设置圆角边框的作用
-        Button confirmBtn = (Button) myDialog.getWindow().findViewById(R.id.bt_confirm);
-        Button cancelBtn = (Button) myDialog.getWindow().findViewById(R.id.bt_cancel);
+        TextView confirmBtn = (TextView) myDialog.getWindow().findViewById(R.id.tv_confirm);
+        TextView cancelBtn = (TextView) myDialog.getWindow().findViewById(R.id.bt_cancel);
 
         cancelBtn.setOnClickListener(new View.OnClickListener() {
             @Override

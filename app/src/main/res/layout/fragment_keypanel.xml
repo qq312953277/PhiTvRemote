@@ -34,15 +34,7 @@
                 android:layout_width="217.5dp"
                 android:layout_height="217.5dp"
                 android:layout_gravity="center"
-                android:layout_marginTop="15dp"
-                android:background="@drawable/controll_panel_bg">
-
-                <ImageView
-                    android:id="@+id/btn_enter"
-                    android:layout_width="117dp"
-                    android:layout_height="117dp"
-                    android:layout_centerInParent="true"
-                    android:src="@drawable/selector_button_ok" />
+                android:layout_marginTop="15dp">
 
                 <ImageView
                     android:id="@+id/btn_left"
@@ -50,8 +42,6 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="8.1dp"
-                    android:padding="10dp"
                     android:src="@drawable/selector_button_left" />
 
                 <ImageView
@@ -60,9 +50,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginRight="7.7dp"
-                    android:padding="10dp"
-                    android:src="@drawable/selector_button_left" />
+                    android:src="@drawable/selector_button_right" />
 
                 <ImageView
                     android:id="@+id/btn_up"
@@ -70,9 +58,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="8.5dp"
-                    android:padding="10dp"
-                    android:src="@drawable/selector_button_left" />
+                    android:src="@drawable/selector_button_up" />
 
                 <ImageView
                     android:id="@+id/btn_down"
@@ -80,9 +66,14 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginBottom="7.1dp"
-                    android:padding="10dp"
-                    android:src="@drawable/selector_button_left" />
+                    android:src="@drawable/selector_button_down" />
+
+                <ImageView
+                    android:id="@+id/btn_enter"
+                    android:layout_width="117dp"
+                    android:layout_height="117dp"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/selector_button_ok" />
 
             </RelativeLayout>
 
