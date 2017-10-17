@@ -12,7 +12,7 @@ import com.phicomm.remotecontrol.constant.PhiConstants;
 public class GestureDelectorSimlpeListener extends GestureDetector.SimpleOnGestureListener {
 
     private GestureCallBackListener mGestureCallBackListener;
-    private final int SLIDE_DISTANCE = 200;
+    private final int SLIDE_DISTANCE = 100;
 
     @Override
     public boolean onDown(MotionEvent e) {
@@ -33,39 +33,6 @@ public class GestureDelectorSimlpeListener extends GestureDetector.SimpleOnGestu
                            float velocityY) {
         drawTouch(e1.getX(), e1.getY(), e2.getX(), e2.getY());
         return true;
-    }
-
-    /**
-     * 当用户在屏幕上滚动时触发，在onFling前执行
-     *
-     * @param downEvent 按下时的事件，可获取按下时的坐标等
-     * @param moveEvent 移动的事件，获取移动后的坐标
-     * @param distanceX
-     * @param distanceY
-     * @return
-     */
-    @Override
-    public boolean onScroll(MotionEvent downEvent, MotionEvent moveEvent, float distanceX, float distanceY) {
-        int direction = -1;
-
-        if (Math.abs(distanceX) > SLIDE_DISTANCE) {
-            if (distanceX > 0) {
-                direction = PhiConstants.SLIDE_LEFT;
-            } else {
-                direction = PhiConstants.SLIDE_RIGHT;
-            }
-
-        } else if (Math.abs(distanceY) > SLIDE_DISTANCE) {
-            if (distanceY > 0) {
-                direction = PhiConstants.SLIDE_UP;
-            } else {
-                direction = PhiConstants.SLIDE_DOWN;
-            }
-        }
-        if (mGestureCallBackListener != null) {
-            mGestureCallBackListener.showArrowDirection(direction);
-        }
-        return false;
     }
 
     /**
@@ -131,7 +98,5 @@ public class GestureDelectorSimlpeListener extends GestureDetector.SimpleOnGestu
 
     public interface GestureCallBackListener {
         void showDirection(int direction);
-
-        void showArrowDirection(int direction);
     }
 }

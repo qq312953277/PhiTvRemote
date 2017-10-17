@@ -158,58 +158,29 @@ public class TouchPanelFragment extends BaseFragment implements PanelContract.Vi
     public void showDirection(int position) {
         switch (position) {
             case PhiConstants.SLIDE_RIGHT:
-                Log.v("SLIDE_RIGHT1", "SLIDE_RIGHT1");
+                mIvRightArrow.setVisibility(View.VISIBLE);
                 hideArrow(mIvRightArrow);
-                Log.v("SLIDE_RIGHT2", "SLIDE_RIGHT2");
                 mPresenter.sendKeyEvent(KeyCode.RIGHT);
-                Log.v("SLIDE_RIGHT3", "SLIDE_RIGHT3");
                 break;
             case PhiConstants.SLIDE_LEFT:
-                Log.v("SLIDE_LEFT1", "SLIDE_LEFT1");
+                mIvLfetArrow.setVisibility(View.VISIBLE);
                 hideArrow(mIvLfetArrow);
-                Log.v("SLIDE_LEFT2", "SLIDE_LEFT2");
                 mPresenter.sendKeyEvent(KeyCode.LEFT);
-                Log.v("SLIDE_LEFT3", "SLIDE_LEFT3");
                 break;
             case PhiConstants.SLIDE_DOWN:
-                Log.v("SLIDE_DOWN1", "SLIDE_DOWN1");
+                mIvDownArrow.setVisibility(View.VISIBLE);
                 hideArrow(mIvDownArrow);
-                Log.v("SLIDE_DOWN2", "SLIDE_DOWN2");
                 mPresenter.sendKeyEvent(KeyCode.DOWN);
-                Log.v("SLIDE_DOWN3", "SLIDE_DOWN3");
                 break;
             case PhiConstants.SLIDE_UP:
-                Log.v("SLIDE_UP1", "SLIDE_UP1");
+                mIvUpArrow.setVisibility(View.VISIBLE);
                 hideArrow(mIvUpArrow);
-                Log.v("SLIDE_UP2", "SLIDE_UP2");
                 mPresenter.sendKeyEvent(KeyCode.UP);
-                Log.v("SLIDE_UP3", "SLIDE_UP3");
                 break;
             default:
                 showSlideHint();
                 CommonUtils.showShortToast(getString(R.string.click_force_hint));
                 break;
-        }
-    }
-
-    @Override
-    public void showArrowDirection(int direction) {
-        switch (direction) {
-            case PhiConstants.SLIDE_RIGHT:
-                mIvRightArrow.setVisibility(View.VISIBLE);
-                break;
-            case PhiConstants.SLIDE_LEFT:
-                mIvLfetArrow.setVisibility(View.VISIBLE);
-                break;
-            case PhiConstants.SLIDE_DOWN:
-                mIvDownArrow.setVisibility(View.VISIBLE);
-                break;
-            case PhiConstants.SLIDE_UP:
-                mIvUpArrow.setVisibility(View.VISIBLE);
-                break;
-            default:
-                break;
-
         }
     }
 
@@ -240,7 +211,7 @@ public class TouchPanelFragment extends BaseFragment implements PanelContract.Vi
     private void hideArrow(final View view) {
         //缩放动画
         Animation scaleAnimation = new ScaleAnimation(1.0f, 0f, 1.0f, 0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-        scaleAnimation.setDuration(500);
+        scaleAnimation.setDuration(1000);
         scaleAnimation.setFillAfter(true);
         view.startAnimation(scaleAnimation);
         scaleAnimation.setAnimationListener(new Animation.AnimationListener() {
