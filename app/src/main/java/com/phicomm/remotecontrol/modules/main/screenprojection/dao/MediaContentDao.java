@@ -44,16 +44,16 @@ public class MediaContentDao {
         try {
             while (cur.moveToNext()) {
                 String id = ContentTree.IMAGE_PREFIX + cur.getInt(cur.getColumnIndex(MediaStore.Images.Media._ID));
-                String title = cur.getString(cur.getColumnIndex(MediaStore.Images.Media.TITLE));
                 String creator = "unkown";
                 String filePath = cur.getString(cur.getColumnIndex(MediaStore.Images.Media.DATA));
+                String tittle = getPicNameFromPath(filePath);
                 String mimeType = cur.getString(cur.getColumnIndex(MediaStore.Images.Media.MIME_TYPE));
                 long size = cur.getLong(cur
                         .getColumnIndex(MediaStore.Images.Media.SIZE));
                 Res res = new Res(new MimeType(mimeType.substring(0, mimeType.indexOf('/')),
                         mimeType.substring(mimeType.indexOf('/') + 1)), size, mResAddress + id);
                 ImageItem imageItem = new ImageItem(id, ContentTree.IMAGE_ID,
-                        title, creator, filePath, res);
+                        tittle, creator, filePath, res);
                 items.add(imageItem);
             }
         } catch (Exception e) {
@@ -81,8 +81,8 @@ public class MediaContentDao {
         try {
             while (cur.moveToNext()) {
                 String id = ContentTree.VIDEO_PREFIX + cur.getInt(cur.getColumnIndex(Video.Media._ID));
-                String title = cur.getString(cur.getColumnIndex(Video.Media.TITLE));
                 String filePath = cur.getString(cur.getColumnIndex(Video.Media.DATA));
+                String tittle = getPicNameFromPath(filePath);
                 String creator = cur.getString(cur.getColumnIndex(Video.Media.ARTIST));
                 String mimeType = cur.getString(cur.getColumnIndex(Video.Media.MIME_TYPE));
                 long size = cur.getLong(cur.getColumnIndex(Video.Media.SIZE));
@@ -92,7 +92,7 @@ public class MediaContentDao {
                         mimeType.substring(mimeType.indexOf('/') + 1)), size, mResAddress + id);
                 res.setDuration(DurationUtil.toMilliTimeString(duration));
                 res.setResolution(resolution);
-                VideoItem videoItem = new VideoItem(id, ContentTree.VIDEO_ID, title, creator, filePath, res);
+                VideoItem videoItem = new VideoItem(id, ContentTree.VIDEO_ID, tittle, creator, filePath, res);
                 items.add(videoItem);
             }
         } catch (Exception e) {
@@ -120,16 +120,16 @@ public class MediaContentDao {
                 String mBucketName = cur.getString(cur.getColumnIndexOrThrow(Images.Media.BUCKET_DISPLAY_NAME));
                 if (mBucketName.equals(mAlbumName)) {
                     String id = ContentTree.IMAGE_PREFIX + cur.getInt(cur.getColumnIndex(MediaStore.Images.Media._ID));
-                    String title = cur.getString(cur.getColumnIndex(MediaStore.Images.Media.TITLE));
                     String creator = "unkown";
                     String filePath = cur.getString(cur.getColumnIndex(MediaStore.Images.Media.DATA));
+                    String tittle = getPicNameFromPath(filePath);
                     String mimeType = cur.getString(cur.getColumnIndex(MediaStore.Images.Media.MIME_TYPE));
                     long size = cur.getLong(cur
                             .getColumnIndex(MediaStore.Images.Media.SIZE));
                     Res res = new Res(new MimeType(mimeType.substring(0, mimeType.indexOf('/')),
                             mimeType.substring(mimeType.indexOf('/') + 1)), size, mResAddress + id);
                     ImageItem imageItem = new ImageItem(id, ContentTree.IMAGE_ID,
-                            title, creator, filePath, res);
+                            tittle, creator, filePath, res);
                     items.add(imageItem);
                 }
             }
@@ -139,6 +139,15 @@ public class MediaContentDao {
             cur.close();
         }
         return items;
+    }
+
+    public String getPicNameFromPath(String picturePath) {
+        String temp[] = picturePath.replaceAll("\\\\", "/").split("/");
+        String fileName = "";
+        if (temp.length > 1) {
+            fileName = temp[temp.length - 1];
+        }
+        return fileName;
     }
 }
 

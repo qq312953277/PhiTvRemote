@@ -47,6 +47,7 @@ public class LocalMediaItemPresenterImpl implements LocalMediaItemPresenter {
     private ContentBrowseBiz mContentBrowseBiz;
     private TestRegistryListener rListener;
     private UpnpServiceBiz upnpServiceBiz;
+    private MediaContentBiz mediaContentBiz;
     private MediaServer mediaServer;
     private int mType = -1;
     Handler mHandler = new Handler() {
@@ -88,7 +89,7 @@ public class LocalMediaItemPresenterImpl implements LocalMediaItemPresenter {
                 }
             }
             upnpServiceBiz.addDevice(mediaServer.getDevice());
-            MediaContentBiz mediaContentBiz = new MediaContentBiz();
+            mediaContentBiz = new MediaContentBiz();
             mediaContentBiz.prepareMediaServer(mContext, mediaServer.getAddress(), type);
         } catch (Exception e) {
             e.printStackTrace();
@@ -101,7 +102,6 @@ public class LocalMediaItemPresenterImpl implements LocalMediaItemPresenter {
         mType = type;
         mContentAdapter = new ContentAdapter(mContext, R.layout.item_content, null);
         mDeviceDisplay = mBaseApplication.getDeviceDisplay();
-
         mBaseApplication.setDeviceDisplay(null);
         mContentBrowseBiz = new ContentBrowseBiz(mHandler);
         if (mDeviceDisplay == null) {
@@ -131,6 +131,7 @@ public class LocalMediaItemPresenterImpl implements LocalMediaItemPresenter {
     public void browserSubContainer(ContentBrowseBiz mContentBrowseBiz, ContentItem mContentItem, BaseFragment mLocalMediaItemActivity, int position) {
         if (mContentItem.isContainer()) {
             mAlbumIndex = position;
+            mView.setAlbumTittle(mContentItem.getContainer().getTitle());
             mContentBrowseBiz.getContent(mContentItem);
         } else {
             Item mItem = mContentItem.getItem();
@@ -167,6 +168,9 @@ public class LocalMediaItemPresenterImpl implements LocalMediaItemPresenter {
         if (upnpServiceBiz != null) {
             upnpServiceBiz.removeListener(rListener);
             upnpServiceBiz = null;
+        }
+        if (mediaContentBiz != null) {
+            mediaContentBiz = null;
         }
     }
 

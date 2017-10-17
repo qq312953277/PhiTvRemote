@@ -71,7 +71,6 @@ public class LocalMediaItemActivity extends BaseActivity implements MyFragmentAd
             }
         }
     };
-
     @BindView(R.id.viewPager)
     CustomViewPager mViewPage;
 
@@ -147,11 +146,13 @@ public class LocalMediaItemActivity extends BaseActivity implements MyFragmentAd
                 mFragmentFlag = 0;
                 mViewPage.setCurrentItem(0, false);
                 getDataLogic(0);
+                mTvTitle.setText(getString(R.string.local_screenprojection));
                 break;
             case R.id.video:
                 mFragmentFlag = 1;
                 mViewPage.setCurrentItem(1, false);
                 getDataLogic(1);
+                mTvTitle.setText(getString(R.string.local_screenprojection));
                 break;
             case R.id.iv_back:
                 if ((mFragmentFlag == 0) && (PictureFragment.mLayer == 1)) {//处于图片界面次层
@@ -159,11 +160,13 @@ public class LocalMediaItemActivity extends BaseActivity implements MyFragmentAd
                     PictureFragment.mLayer = 0;
                     mViewPage.setCurrentItem(0, false);
                     getDataLogic(0);
+                    mTvTitle.setText(getString(R.string.local_screenprojection));
                 } else if ((mFragmentFlag == 1) && (VideoFragment.mLayer == 1)) {//处于视频界面次层
                     mFragmentFlag = 1;
                     VideoFragment.mLayer = 0;
                     mViewPage.setCurrentItem(1, false);
                     getDataLogic(1);
+                    mTvTitle.setText(getString(R.string.local_screenprojection));
                 } else {
                     finish();
                 }
@@ -230,6 +233,11 @@ public class LocalMediaItemActivity extends BaseActivity implements MyFragmentAd
         EventBus.getDefault().post(new PictureEvent(type, mContentAdapter, mLocalMediaItemPresenter));
     }
 
+    @Override
+    public void setAlbumTittle(String tittle) {
+        mTvTitle.setText(tittle);
+    }
+
     private void showProgressDialog() {
         mProgressDialog = ProgressDialog.show(this, getString(R.string.tips), getString(R.string.tips_content));
     }
@@ -258,11 +266,13 @@ public class LocalMediaItemActivity extends BaseActivity implements MyFragmentAd
                 PictureFragment.mLayer = 0;
                 mViewPage.setCurrentItem(0, false);
                 getDataLogic(0);
+                mTvTitle.setText(getString(R.string.local_screenprojection));
             } else if ((mFragmentFlag == 1) && (VideoFragment.mLayer == 1)) {
                 mFragmentFlag = 1;
                 VideoFragment.mLayer = 0;
                 mViewPage.setCurrentItem(1, false);
                 getDataLogic(1);
+                mTvTitle.setText(getString(R.string.local_screenprojection));
             } else {
                 finish();
             }

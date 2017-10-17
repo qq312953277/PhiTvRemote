@@ -18,7 +18,7 @@ import org.fourthline.cling.model.message.UpnpResponse;
 public class RealtimeUpdatePositionInfo extends AsyncTask<Void, PositionInfo, PositionInfo> {
     public static final int SEEKBARMAX = 100;
     public static final int RESPONDRATE = 250;
-    private static String TAG = RealtimeUpdatePositionInfo.class.getSimpleName();
+    private static String TAG = "RealtimeUpdatePositionInfo";
     private boolean isPlaying; // 是否正在播放
     private SeekBar sbPlayback;
     private TextView tvCurTime;
@@ -38,11 +38,7 @@ public class RealtimeUpdatePositionInfo extends AsyncTask<Void, PositionInfo, Po
     protected PositionInfo doInBackground(Void... params) {
         PositionInfo info = null;
         while (!isCancelled()) {
-            if (!isPlaying) {
-                //LogUtil.d(TAG,"点击暂停后，不在接收被投屏设备返回的播放信息");
-            }
             while (isPlaying) {
-                //LogUtil.d(TAG,"开始接收被投屏设备返回的播放信息");
                 try {
                     Thread.sleep(RESPONDRATE);
                     controlBiz.getPositionInfo(new GetPositionInfoListerner() {
@@ -73,26 +69,6 @@ public class RealtimeUpdatePositionInfo extends AsyncTask<Void, PositionInfo, Po
         tvCurTime.setText(info.getRelTime());
         tvTotalTime.setText(info.getTrackDuration());
         LogUtil.d(TAG, "开始设置tvCurTime：" + info.getRelTime() + ",tvTotalTime:" + info.getTrackDuration());
-//        if(isPlayingOver(info.getRelTime(),info.getTrackDuration())){
-//            isPlaying = false;
-//            onCancelled();
-//        }
-    }
-
-    private boolean isPlayingOver(String relTime, String trackDuration) {
-        String[] relTimeArr = relTime.split(":");
-        String[] tolTimeArr = trackDuration.split(":");
-        LogUtil.d(TAG, "relTimeArr" + Integer.parseInt(relTimeArr[2]));
-        LogUtil.d(TAG, "tolTimeArr" + Integer.parseInt(tolTimeArr[2]));
-        if ((relTimeArr[0].equals(tolTimeArr[0])) && (relTimeArr[1].equals(tolTimeArr[1])) && (Integer.parseInt(tolTimeArr[2]) - Integer.parseInt(relTimeArr[2]) < 4)) {
-            LogUtil.d(TAG, "还有4秒");
-            return true;
-        }
-        return false;
-    }
-
-    public boolean isPlaying() {
-        return isPlaying;
     }
 
     /**

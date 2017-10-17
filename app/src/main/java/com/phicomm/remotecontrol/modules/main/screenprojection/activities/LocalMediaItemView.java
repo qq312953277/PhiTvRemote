@@ -9,4 +9,6 @@ import com.phicomm.remotecontrol.modules.main.screenprojection.entity.ContentIte
  */
 public interface LocalMediaItemView extends BasicView {
     void showItems(int type, GeneralAdapter<ContentItem> mContentAdapter);
+
+    void setAlbumTittle(String tittle);
 }

@@ -13,13 +13,17 @@ import org.fourthline.cling.support.model.WriteStatus;
 import org.fourthline.cling.support.model.container.Container;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by kang.sun on 2017/8/21.
  */
 public class MediaContentBiz {
     public static List<PictureItemList> mPictureItemArrayList = new ArrayList<>();
+    public static Map<String, String> mPictureMapList = new HashMap<>();
+    public static Map<String, String> mVideoMapList = new HashMap<>();
     private boolean mServerPrepared = false;
     String[] mAlbumNameList = {"Camera", "WeiXin", "Pictures", "image", "Download", "Downloads", "Screenshots", "media", "tmp", "clip"};
 
@@ -38,6 +42,7 @@ public class MediaContentBiz {
             PictureItemList mAllPictureItemList = new PictureItemList();
             for (MItem mMItem : mAllImageItems) {
                 mAllPictureItemList.addPictureItem(mMItem);
+                mPictureMapList.put(mMItem.getId(),mMItem.getFilePath());
             }
             mPictureItemArrayList.add(mAllPictureItemList);
             for (int i = 0; i < mAlbumNameList.length; i++) {
@@ -56,6 +61,10 @@ public class MediaContentBiz {
             // 创建添加Video容器,节点
             ArrayList<MItem> videoItems = contentDao.getVideoItems();
             creatContainer(rootNode, rootContainer, ContentTree.VIDEO_ID, "Videos", videoItems);
+            for (MItem mMItem : videoItems) {
+                mVideoMapList.put(mMItem.getId(),mMItem.getFilePath());
+            }
+
         }
         mServerPrepared = true;
     }

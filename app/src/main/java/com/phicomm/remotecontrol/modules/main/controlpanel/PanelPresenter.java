@@ -59,6 +59,7 @@ public class PanelPresenter implements PanelContract.Presenter {
                 } else {
                     Toast.makeText(mContext, "fail", Toast.LENGTH_SHORT).show();
                 }
+                //mView.connectFail();
             }
 
             @Override
