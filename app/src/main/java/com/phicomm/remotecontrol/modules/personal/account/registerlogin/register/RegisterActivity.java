@@ -290,6 +290,7 @@ public class RegisterActivity extends BaseActivity implements RegisterContract.V
         }
 
         if (NetworkManagerUtils.instance().networkError()) {
+            CommonUtils.showToastBottom(getString(R.string.net_connect_fail));
             return;
         }
 
@@ -399,6 +400,7 @@ public class RegisterActivity extends BaseActivity implements RegisterContract.V
         }
 
         if (NetworkManagerUtils.instance().networkError()) {
+            CommonUtils.showToastBottom(getString(R.string.net_connect_fail));
             return;
         }
         DialogUtils.showLoadingDialog(this);

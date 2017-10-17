@@ -285,6 +285,7 @@ public class ForgetPasswordActivity extends BaseActivity implements ForgetPasswo
         }
 
         if (NetworkManagerUtils.instance().networkError()) {
+            CommonUtils.showToastBottom(getString(R.string.net_connect_fail));
             return;
         }
 
@@ -342,6 +343,7 @@ public class ForgetPasswordActivity extends BaseActivity implements ForgetPasswo
         }
 
         if (NetworkManagerUtils.instance().networkError()) {
+            CommonUtils.showToastBottom(getString(R.string.net_connect_fail));
             return;
         }
         DialogUtils.showLoadingDialog(this);

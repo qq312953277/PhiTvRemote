@@ -3,14 +3,14 @@
     android:id="@+id/ll_parent"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5F5F6"
+    android:background="@color/loginout_core_bg"
     android:orientation="vertical">
 
     <include layout="@layout/title_bar" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="220dp"
         android:background="@drawable/personal_userinfo_bg"
         android:gravity="center"
         android:orientation="vertical">
@@ -18,8 +18,8 @@
 
         <com.phicomm.widgets.PhiRoundImageView
             android:id="@+id/iv_header_picture"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="95.5dp"
+            android:layout_height="95.5dp"
             android:layout_margin="4dp"
             android:background="@color/transparent"
             android:src="@drawable/default_avatar" />
@@ -28,20 +28,21 @@
             android:id="@+id/tv_user_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="15dp"
             android:gravity="center"
             android:text="@string/personal_login"
             android:textColor="@color/white_normal"
-            android:textSize="@dimen/text_size_14sp" />
+            android:textSize="@dimen/text_size_17sp" />
     </LinearLayout>
 
     <RelativeLayout
         android:id="@+id/rl_appilcation"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="45dp"
+        android:layout_marginBottom="7.5dp"
         android:background="@color/white_normal"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp">
+        android:paddingLeft="39.5dp"
+        android:paddingRight="39.1dp">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -52,37 +53,37 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="18dp"
-                android:layout_height="18dp"
-                android:layout_marginRight="10dp"
-                android:src="@drawable/me_icon_aboutus" />
+                android:layout_width="15.5dp"
+                android:layout_height="15.5dp"
+                android:layout_marginRight="20dp"
+                android:src="@drawable/icon_application" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:text="@string/personal_appliction"
-                android:textColor="@color/black_normal"
-                android:textSize="16sp" />
+                android:textColor="@color/copyright_text_color"
+                android:textSize="@dimen/text_size_17sp" />
         </LinearLayout>
 
         <ImageView
-            android:layout_width="20sp"
-            android:layout_height="20sp"
+            android:layout_width="8.8dp"
+            android:layout_height="17.9dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_gravity="center"
-            android:src="@drawable/right_arrow_blue" />
+            android:src="@drawable/right_arrow_black" />
     </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/rl_setting"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="1dp"
+        android:layout_height="45dp"
+        android:layout_marginBottom="7.5dp"
         android:background="@color/white_normal"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp">
+        android:paddingLeft="39.5dp"
+        android:paddingRight="39.1dp">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -93,37 +94,37 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="18dp"
-                android:layout_height="18dp"
-                android:layout_marginRight="10dp"
-                android:src="@drawable/me_icon_aboutus" />
+                android:layout_width="18.5dp"
+                android:layout_height="18.5dp"
+                android:layout_marginRight="20dp"
+                android:src="@drawable/icon_setting" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:text="@string/personal_setting"
-                android:textColor="@color/black_normal"
-                android:textSize="16sp" />
+                android:textColor="@color/copyright_text_color"
+                android:textSize="@dimen/text_size_17sp" />
         </LinearLayout>
 
         <ImageView
-            android:layout_width="20sp"
-            android:layout_height="20sp"
+            android:layout_width="8.8dp"
+            android:layout_height="17.9dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_gravity="center"
-            android:src="@drawable/right_arrow_blue" />
+            android:src="@drawable/right_arrow_black" />
     </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/rl_about"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="1dp"
+        android:layout_height="45dp"
+        android:layout_marginBottom="7.5dp"
         android:background="@color/white_normal"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp">
+        android:paddingLeft="39.5dp"
+        android:paddingRight="39.1dp">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -134,37 +135,37 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="18dp"
-                android:layout_height="18dp"
-                android:layout_marginRight="10dp"
-                android:src="@drawable/me_icon_aboutus" />
+                android:layout_width="18.5dp"
+                android:layout_height="18.5dp"
+                android:layout_marginRight="20dp"
+                android:src="@drawable/icon_about" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:text="@string/personal_about"
-                android:textColor="@color/black_normal"
-                android:textSize="16sp" />
+                android:textColor="@color/copyright_text_color"
+                android:textSize="@dimen/text_size_17sp" />
         </LinearLayout>
 
         <ImageView
-            android:layout_width="20sp"
-            android:layout_height="20sp"
+            android:layout_width="8.8dp"
+            android:layout_height="17.9dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_gravity="center"
-            android:src="@drawable/right_arrow_blue" />
+            android:src="@drawable/right_arrow_black" />
     </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/rl_version"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="20dp"
+        android:layout_height="45dp"
+
         android:background="@color/white_normal"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp">
+        android:paddingLeft="39.5dp"
+        android:paddingRight="39.1dp">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -175,18 +176,19 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="18dp"
-                android:layout_height="18dp"
-                android:layout_marginRight="10dp"
-                android:src="@drawable/me_icon_update" />
+                android:id="@+id/imageView2"
+                android:layout_width="16.5dp"
+                android:layout_height="17dp"
+                android:layout_marginRight="20dp"
+                android:src="@drawable/icon_version" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:text="@string/personal_version"
-                android:textColor="@color/black_normal"
-                android:textSize="16sp" />
+                android:textColor="@color/copyright_text_color"
+                android:textSize="@dimen/text_size_17sp" />
 
             <ImageView
                 android:id="@+id/new_version_indicator"

@@ -5,7 +5,8 @@
     android:background="@color/white_normal"
     android:gravity="center_vertical"
     android:orientation="horizontal"
-    android:padding="2dp">
+    android:padding="2dp"
+    android:id="@+id/ll_spinlist">
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -29,7 +30,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginRight="40dp"
         android:layout_weight="1"
         android:gravity="center"
         android:text="@string/unable_to_connect_device"

@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
@@ -50,6 +51,9 @@ public class SpinnerListFragment extends BaseFragment {
 
     @BindView(R.id.connected_device)
     TextView mDeviceTv;
+
+    @BindView(R.id.ll_spinlist)
+    LinearLayout mLlSpinlist;
 
     public SpinnerListFragment() {
 
@@ -268,7 +272,7 @@ public class SpinnerListFragment extends BaseFragment {
                     setBackgroundTransparent(0.4f);
 
                     mSpinerPopWindow.setWidth(wm.getDefaultDisplay().getWidth());
-                    mSpinerPopWindow.showAsDropDown(mDeviceTv);
+                    mSpinerPopWindow.showAsDropDown(mLlSpinlist);
                 }
                 break;
         }
