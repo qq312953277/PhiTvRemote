@@ -7,21 +7,28 @@
 
     <include layout="@layout/title_bar" />
 
-    <com.phicomm.remotecontrol.widget.refreshlayout.CustomPtrFrameLayoutRefreshHeader
-        android:id="@+id/fl_app_infos"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:ptr_duration_to_close="200"
-        app:ptr_duration_to_close_header="1000"
-        app:ptr_keep_header_when_refresh="true"
-        app:ptr_pull_to_fresh="false"
-        app:ptr_ratio_of_header_height_to_refresh="1.2"
-        app:ptr_resistance="2.3">
+        android:layout_height="match_parent"
+        android:background="@color/loginout_core_bg">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recyclerview_app_list"
+        <com.phicomm.remotecontrol.widget.refreshlayout.CustomPtrFrameLayoutRefreshHeader
+            android:id="@+id/fl_app_infos"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            app:ptr_duration_to_close="200"
+            app:ptr_duration_to_close_header="1000"
+            app:ptr_keep_header_when_refresh="true"
+            app:ptr_pull_to_fresh="false"
+            app:ptr_ratio_of_header_height_to_refresh="1.2"
+            app:ptr_resistance="2.3">
 
-    </com.phicomm.remotecontrol.widget.refreshlayout.CustomPtrFrameLayoutRefreshHeader>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerview_app_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </com.phicomm.remotecontrol.widget.refreshlayout.CustomPtrFrameLayoutRefreshHeader>
+
+    </LinearLayout>
 </LinearLayout>

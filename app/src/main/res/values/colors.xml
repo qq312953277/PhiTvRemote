@@ -26,6 +26,9 @@
     <color name="core_activity_bg">#373737</color>
     <color name="loginout_core_bg">#F7F7F7</color>
     <color name="loginout_alert_bg">#E6E6E6</color>
+    <color name="bottom_text_color">#FF6731</color>
+
+
 
 
 </resources>

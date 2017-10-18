@@ -53,8 +53,8 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="15.5dp"
-                android:layout_height="15.5dp"
+                android:layout_width="16.5dp"
+                android:layout_height="16.5dp"
                 android:layout_marginRight="20dp"
                 android:src="@drawable/icon_application" />
 
@@ -94,7 +94,7 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="18.5dp"
+                android:layout_width="19.5dp"
                 android:layout_height="18.5dp"
                 android:layout_marginRight="20dp"
                 android:src="@drawable/icon_setting" />
@@ -135,8 +135,8 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="18.5dp"
-                android:layout_height="18.5dp"
+                android:layout_width="19.5dp"
+                android:layout_height="19.5dp"
                 android:layout_marginRight="20dp"
                 android:src="@drawable/icon_about" />
 

@@ -8,8 +8,9 @@
         android:id="@+id/tv_apply_title"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/progress_middle"
         android:gravity="center_vertical"
-        android:paddingLeft="10dp"
-        android:text="@string/installed_app" />
+        android:paddingLeft="21.5dp"
+        android:text="@string/installed_app"
+        android:textSize="@dimen/text_size_14sp"
+        android:textColor="@color/core_activity_bg"/>
 </LinearLayout>

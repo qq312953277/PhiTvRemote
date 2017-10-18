@@ -105,8 +105,8 @@
 
     <!--about-->
     <string name="about_project_name">Phi Controller V<xliff:g id="version">%1$s</xliff:g></string>
-    <string name="website">Official website</string>
-    <string name="hotline">Service hotline</string>
+    <string name="website">Official website:</string>
+    <string name="hotline">Service hotline:</string>
     <string name="phicomm_website">www.phicomm.com</string>
     <string name="phicomm_hotline">4007-567-567</string>
     <string name="copyright_info">©2017 Shanghai Fitch Data Communication Technology Co., Ltd</string>

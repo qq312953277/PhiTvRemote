@@ -42,12 +42,11 @@ public class EditTextWithDel extends AppCompatEditText implements View.OnFocusCh
         //textView.setCompoundDrawables(Drawable left, Drawable top, Drawable right, Drawable bottom)
         mClearDrawable = getCompoundDrawables()[2];
         if (mClearDrawable == null) {
-            mClearDrawable = ContextCompat.getDrawable(BaseApplication.getContext(), R.drawable.delete);
+            mClearDrawable = ContextCompat.getDrawable(BaseApplication.getContext(), R.drawable.ip_input_clear_icon);
         }
 
         //设置图标的位置以及大小,getIntrinsicWidth()获取显示出来的大小而不是原图片的带小
         mClearDrawable.setBounds(0, 0, mClearDrawable.getIntrinsicWidth(), mClearDrawable.getIntrinsicHeight());
-
         //默认设置隐藏图标
         setClearIconVisible(false);
         //设置焦点改变的监听

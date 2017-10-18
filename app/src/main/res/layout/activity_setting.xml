@@ -6,90 +6,114 @@
 
     <include layout="@layout/title_bar" />
 
-
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@color/loginout_core_bg"
+        android:orientation="vertical">
+
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:padding="8dp">
+            android:layout_height="60dp"
+            android:layout_marginBottom="7.5dp"
+            android:layout_marginTop="7.5dp"
+            android:background="@color/white">
 
-            <TextView
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="13.5dp"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="2dp"
+                    android:text="@string/setting_vibrate_title"
+                    android:textColor="@color/core_activity_bg"
+                    android:textSize="@dimen/text_size_17sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="@string/setting_vibrate_context"
+                    android:textColor="@color/device_find_tip_textcolor"
+                    android:textSize="@dimen/text_size_14sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/setting_vibrate_title"
-                android:textSize="18sp" />
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="19dp">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/setting_vibrate_context" />
+                <ToggleButton
+                    android:id="@+id/tb_vibrate"
+                    style="@style/MyToggleButton"
+                    android:layout_width="41dp"
+                    android:layout_height="24dp"
+                    android:checked="false"
+                    android:textOff=""
+                    android:textOn="" />
+            </LinearLayout>
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical">
-
-            <ToggleButton
-                android:id="@+id/tb_vibrate"
-                style="@style/MyToggleButton"
-                android:layout_width="61dp"
-                android:layout_height="wrap_content"
-                android:background="#00000000"
-                android:checked="false"
-                android:textOff=""
-                android:textOn="" />
-        </LinearLayout>
-
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:padding="8dp">
+            android:layout_height="60dp"
+            android:background="@color/white">
 
-            <TextView
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="13.5dp"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="2dp"
+                    android:text="@string/setting_voice_title"
+                    android:textColor="@color/core_activity_bg"
+                    android:textSize="@dimen/text_size_17sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="@string/setting_voice_context"
+                    android:textColor="@color/device_find_tip_textcolor"
+                    android:textSize="@dimen/text_size_14sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/setting_voice_title"
-                android:textSize="18sp" />
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="19dp">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/setting_voice_context" />
+                <ToggleButton
+                    android:id="@+id/tb_voice"
+                    style="@style/MyToggleButton"
+                    android:layout_width="41dp"
+                    android:layout_height="24dp"
+                    android:checked="false"
+                    android:textOff=""
+                    android:textOn="" />
+            </LinearLayout>
 
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical">
-
-            <ToggleButton
-                android:id="@+id/tb_voice"
-                style="@style/MyToggleButton"
-                android:layout_width="61dp"
-                android:layout_height="wrap_content"
-                android:background="#00000000"
-                android:checked="false"
-                android:textOff=""
-                android:textOn="" />
         </LinearLayout>
 
     </LinearLayout>
