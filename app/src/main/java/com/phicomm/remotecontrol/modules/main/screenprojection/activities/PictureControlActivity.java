@@ -50,7 +50,7 @@ public class PictureControlActivity extends BaseActivity implements PictureContr
         ButterKnife.bind(this);
         initTitleView();
         init();
-        mPictureControlPresenter.showPicture();
+        mPictureControlPresenter.showPicture(mImageView);
         showDialog();
     }
 
@@ -120,9 +120,9 @@ public class PictureControlActivity extends BaseActivity implements PictureContr
         @Override
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
             if (e1.getX() - e2.getX() > SLIDING_DISTANCE) {
-                mPictureControlPresenter.showNextPicture();
+                mPictureControlPresenter.showNextPicture(mImageView);
             } else if (e2.getX() - e1.getX() > SLIDING_DISTANCE) {
-                mPictureControlPresenter.showPrePicture();
+                mPictureControlPresenter.showPrePicture(mImageView);
             }
             return super.onFling(e1, e2, velocityX, velocityY);
         }
