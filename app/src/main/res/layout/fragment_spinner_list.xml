@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_spinlist"
     android:layout_width="match_parent"
     android:layout_height="45dp"
     android:background="@color/white_normal"
     android:gravity="center_vertical"
     android:orientation="horizontal"
-    android:padding="2dp"
-    android:id="@+id/ll_spinlist">
+    android:padding="2dp">
 
     <LinearLayout
+        android:id="@+id/ll_touxiang"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
@@ -24,18 +25,37 @@
 
     </LinearLayout>
 
-
-    <TextView
-        android:id="@+id/connected_device"
+    <RelativeLayout
+        android:id="@+id/rl_connected_device"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="40dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:layout_weight="1"
-        android:gravity="center"
-        android:text="@string/unable_to_connect_device"
-        android:textColor="@color/black_normal"
-        android:textSize="17sp" />
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/connected_device"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:ellipsize="end"
+            android:lines="1"
+            android:text="@string/unable_to_connect_device"
+            android:textColor="@color/black_normal"
+            android:textSize="@dimen/text_size_17sp" />
+
+        <ImageView
+            android:id="@+id/iv_up_down"
+            android:layout_width="19.5dp"
+            android:layout_height="12dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="27dp"
+            android:layout_toRightOf="@+id/connected_device"
+            android:visibility="gone"/>
+
+
+    </RelativeLayout>
 
 
     <LinearLayout
@@ -45,11 +65,11 @@
 
         <ImageButton
             android:id="@+id/scan"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
             android:layout_width="13dp"
             android:layout_height="21dp"
             android:background="@null"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
             android:src="@drawable/selector_imagebutton_devicelist" />
     </LinearLayout>
 </LinearLayout>

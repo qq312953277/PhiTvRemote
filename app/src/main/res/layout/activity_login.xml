@@ -28,7 +28,7 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="30dp"
+                    android:layout_width="40dp"
                     android:layout_height="match_parent"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="35dp"
@@ -49,7 +49,7 @@
             <EditText
                 android:id="@+id/phoneNumber"
                 style="@style/loginregister_phonenumber_edittext_style"
-                android:drawablePadding="50dp" />
+                android:drawablePadding="60dp" />
 
         </RelativeLayout>
 

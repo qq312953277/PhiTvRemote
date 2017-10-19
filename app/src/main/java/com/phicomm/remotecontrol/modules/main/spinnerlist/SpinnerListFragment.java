@@ -2,7 +2,6 @@ package com.phicomm.remotecontrol.modules.main.spinnerlist;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -14,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
@@ -47,13 +47,15 @@ public class SpinnerListFragment extends BaseFragment {
     private GreenDaoUserUtil mGreenDaoUserUtil;
     private List<RemoteBoxDevice> mCurrentDevicesList = new ArrayList<>(0);
     private boolean mIsSuccess = false;
-    private DisconnectSpinnerWindowView mDisconnectSpinnerWindowView;
 
     @BindView(R.id.connected_device)
     TextView mDeviceTv;
 
     @BindView(R.id.ll_spinlist)
     LinearLayout mLlSpinlist;
+
+    @BindView(R.id.iv_up_down)
+    ImageView mUpDown;
 
     public SpinnerListFragment() {
 
@@ -86,16 +88,17 @@ public class SpinnerListFragment extends BaseFragment {
     @Override
     public void onResume() {
         DevicesUtil.loadRecentList();
+
         //获取连接记录并显示
         List<RemoteBoxDevice> remoteBoxDeviceList = mGreenDaoUserUtil.querydata();
         RemoteBoxDevice target = DevicesUtil.getTarget();
+
         if (target != null) {
-            setTextImage(R.drawable.icon_up);
+            mUpDown.setVisibility(View.VISIBLE);
             mDeviceTv.setText(target.getName());
-            mDeviceTv.setEnabled(true);
         } else {
+            mUpDown.setVisibility(View.GONE);
             mDeviceTv.setText(getString(R.string.unable_to_connect_device));
-            mDeviceTv.setEnabled(false);
         }
         refreshSpinnerListView(remoteBoxDeviceList);
         super.onResume();
@@ -110,15 +113,19 @@ public class SpinnerListFragment extends BaseFragment {
 
     private void refreshSpinnerListView(List<RemoteBoxDevice> deviceList) {
         if (deviceList != null) {
+            mUpDown.setVisibility(View.VISIBLE);
             mSpinerPopWindow.notifyDataChange(deviceList);
+            mUpDown.setImageResource(R.drawable.icon_down);
+            mDeviceTv.setEnabled(true);
+        } else {
+            mUpDown.setVisibility(View.GONE);
+            mDeviceTv.setEnabled(false);
         }
     }
 
     private void initAdapter() {
         mSpinerPopWindow = new SpinnerWindowView(getContext(), itemClickListener);
         mSpinerPopWindow.setOnDismissListener(dismissListener);
-        mDisconnectSpinnerWindowView = new DisconnectSpinnerWindowView(getContext());
-        mDisconnectSpinnerWindowView.setOnDismissListener(dismissListener);
         mGreenDaoUserUtil = new GreenDaoUserUtil();
         new Thread(mLoadConnectedTask).start();
         DevicesUtil.setGreenDaoUserUtil(mGreenDaoUserUtil);
@@ -221,15 +228,9 @@ public class SpinnerListFragment extends BaseFragment {
         @Override
         public void onDismiss() {
             setBackgroundTransparent(1.0f);
-            //setTextImage(R.drawable.icon_down);
+            mUpDown.setImageResource(R.drawable.icon_down);
         }
     };
-
-    private void setTextImage(int resId) {
-        Drawable drawable = getResources().getDrawable(resId);
-        drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
-        mDeviceTv.setCompoundDrawables(null, null, drawable, null);
-    }
 
     Handler mLoadTargetDevice = new Handler() {
         @Override
@@ -246,12 +247,13 @@ public class SpinnerListFragment extends BaseFragment {
                 mDeviceTv.setText(deviceList.get(0).getName());
             } else {
                 mDeviceTv.setText(R.string.unable_to_connect_device);
+                mUpDown.setVisibility(View.GONE);
             }
         }
     };
 
     @Override
-    @OnClick({R.id.login, R.id.scan, R.id.connected_device})
+    @OnClick({R.id.login, R.id.scan, R.id.rl_connected_device})
     public void onClick(View view) { //继承BaseFragment震动事件
         super.onClick(view);
 
@@ -264,13 +266,13 @@ public class SpinnerListFragment extends BaseFragment {
                 intent.putExtra(PhiConstants.ACTION_BAR_NAME, mDeviceTv.getText());
                 startActivity(intent);
                 break;
-            case R.id.connected_device:
+            case R.id.rl_connected_device:
                 WindowManager wm = (WindowManager) getContext()
                         .getSystemService(Context.WINDOW_SERVICE);
 
                 if (DevicesUtil.getTarget() != null) {
                     setBackgroundTransparent(0.4f);
-
+                    mUpDown.setImageResource(R.drawable.icon_up);
                     mSpinerPopWindow.setWidth(wm.getDefaultDisplay().getWidth());
                     mSpinerPopWindow.showAsDropDown(mLlSpinlist);
                 }

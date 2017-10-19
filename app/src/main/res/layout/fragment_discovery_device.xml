@@ -32,8 +32,7 @@
                 android:gravity="center"
                 android:orientation="vertical">
 
-                <Button
-                    android:id="@+id/start_discovery"
+                <ImageView
                     android:layout_width="40dp"
                     android:layout_height="31.5dp"
                     android:layout_marginBottom="5dp"
@@ -85,8 +84,7 @@
                 android:gravity="center"
                 android:orientation="vertical">
 
-                <Button
-                    android:id="@+id/manual_ip"
+                <ImageView
                     android:layout_width="43.5dp"
                     android:layout_height="31.5dp"
                     android:layout_marginBottom="5dp"

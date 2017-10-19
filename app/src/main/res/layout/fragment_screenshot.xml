@@ -14,10 +14,10 @@
 
         <ImageView
             android:id="@+id/iv_show"
-            android:layout_width="321dp"
-            android:layout_height="210dp"
+            android:layout_width="match_parent"
+            android:layout_height="290dp"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="53.5dp"
+            android:layout_marginTop="10dp"
             android:src="@drawable/tv_not_connected" />
 
 
