@@ -35,7 +35,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -81,8 +80,16 @@ public class SpinnerListFragment extends BaseFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ButterKnife.bind(this, view);
         initAdapter();
+    }
+
+    private void initAdapter() {
+        mSpinerPopWindow = new SpinnerWindowView(getContext(), itemClickListener);
+        mSpinerPopWindow.setOnDismissListener(dismissListener);
+
+        mGreenDaoUserUtil = new GreenDaoUserUtil();
+        new Thread(mLoadConnectedTask).start();
+        DevicesUtil.setGreenDaoUserUtil(mGreenDaoUserUtil);
     }
 
     @Override
@@ -104,13 +111,6 @@ public class SpinnerListFragment extends BaseFragment {
         super.onResume();
     }
 
-
-    @Override
-    public void onDestroy() {
-        DevicesUtil.setTarget(null);
-        super.onDestroy();
-    }
-
     private void refreshSpinnerListView(List<RemoteBoxDevice> deviceList) {
         if (deviceList != null) {
             mUpDown.setVisibility(View.VISIBLE);
@@ -121,14 +121,6 @@ public class SpinnerListFragment extends BaseFragment {
             mUpDown.setVisibility(View.GONE);
             mDeviceTv.setEnabled(false);
         }
-    }
-
-    private void initAdapter() {
-        mSpinerPopWindow = new SpinnerWindowView(getContext(), itemClickListener);
-        mSpinerPopWindow.setOnDismissListener(dismissListener);
-        mGreenDaoUserUtil = new GreenDaoUserUtil();
-        new Thread(mLoadConnectedTask).start();
-        DevicesUtil.setGreenDaoUserUtil(mGreenDaoUserUtil);
     }
 
     Runnable mLoadConnectedTask = new Runnable() {
@@ -287,5 +279,11 @@ public class SpinnerListFragment extends BaseFragment {
         getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
         getActivity().getWindow().setAttributes(lp);
 
+    }
+
+    @Override
+    public void onDestroy() {
+        DevicesUtil.setTarget(null);
+        super.onDestroy();
     }
 }

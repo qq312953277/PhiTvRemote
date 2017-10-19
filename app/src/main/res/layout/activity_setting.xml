@@ -42,7 +42,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
                     android:text="@string/setting_vibrate_context"
-                    android:textColor="@color/device_find_tip_textcolor"
+                    android:textColor="@color/color_80484848"
                     android:textSize="@dimen/text_size_14sp" />
 
             </LinearLayout>
@@ -93,7 +93,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
                     android:text="@string/setting_voice_context"
-                    android:textColor="@color/device_find_tip_textcolor"
+                    android:textColor="@color/color_80484848"
                     android:textSize="@dimen/text_size_14sp" />
 
             </LinearLayout>

@@ -5,6 +5,7 @@
     <color name="colorAccent">#FF4081</color>
     <color name="content_color">#666666</color>
     <color name="white_normal">#ffffffff</color>
+    <color name="white_80ffffff">#80ffffff</color>
     <color name="login_button_background">#71c297</color>
     <color name="control_panel_background">#039AE5</color>
     <color name="btn_color_click">#15000000</color>
@@ -17,6 +18,7 @@
     <color name="discovery_circle">#0059ccf5</color>
     <color name="color_b3bece">#b3bece</color>
     <color name="copyright_text_color">#484848</color>
+    <color name="color_80484848">#80484848</color>
     <color name="confirm_btn_text">#FC7E51</color>
     <color name="listview_divider">#484848</color>
     <color name="alertdialog_bg">#F5F5F5</color>

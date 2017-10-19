@@ -149,7 +149,7 @@
         <item name="android:layout_centerVertical">true</item>
         <item name="android:background">@null</item>
         <item name="android:enabled">true</item>
-        <item name="android:textColor">@color/white</item>
+        <item name="android:textColor">@drawable/selector_getverifycode</item>
         <item name="android:textSize">@dimen/text_size_15sp</item>
         <item name="android:text">@string/get_verification_code</item>
         <item name="android:textAllCaps">false</item>

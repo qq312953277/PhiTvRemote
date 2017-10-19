@@ -3,7 +3,6 @@
     android:id="@+id/ll_spinlist"
     android:layout_width="match_parent"
     android:layout_height="45dp"
-    android:background="@color/white_normal"
     android:gravity="center_vertical"
     android:orientation="horizontal"
     android:padding="2dp">
@@ -52,7 +51,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="27dp"
             android:layout_toRightOf="@+id/connected_device"
-            android:visibility="gone"/>
+            android:visibility="gone" />
 
 
     </RelativeLayout>
