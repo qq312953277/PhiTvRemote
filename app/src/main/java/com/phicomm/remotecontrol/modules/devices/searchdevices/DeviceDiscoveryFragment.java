@@ -334,7 +334,6 @@ public class DeviceDiscoveryFragment extends BaseFragment implements DeviceDisco
                             mDiscoveryAdapter.clearStates(pos);
                             mDiscoveryAdapter.notifyDataSetInvalidated();
                             mTvTitle.setText(remoteDevice.getName());
-                            CommonUtils.showToastBottom("connect SUCCESS");
                         }
                         DialogUtils.cancelLoadingDialog();
                     }

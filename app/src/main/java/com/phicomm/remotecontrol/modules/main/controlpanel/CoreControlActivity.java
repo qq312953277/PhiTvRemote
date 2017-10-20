@@ -298,7 +298,6 @@ public class CoreControlActivity extends BaseActivity implements UpdateView {
         dialog.show();
 
         if (isForceUpdate) {
-            CommonUtils.showShortToast("sd");
             dialog.setCancelable(false);
             dialog.setCanceledOnTouchOutside(false);
         }

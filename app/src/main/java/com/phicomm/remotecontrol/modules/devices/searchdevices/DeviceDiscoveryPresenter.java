@@ -87,7 +87,7 @@ public class DeviceDiscoveryPresenter implements DeviceDiscoveryContract.Present
             LogUtil.d(TAG, "onFail");
             DevicesUtil.setTarget(null);
             mView.setTittle(R.string.unable_to_connect_device);
-            mView.showToast("device is offline");
+            mView.showToast(msg);
         }
     };
     private ConnectManager.ConnetResultCallback connetResultCallback = new ConnectManager.ConnetResultCallback() {
@@ -103,7 +103,6 @@ public class DeviceDiscoveryPresenter implements DeviceDiscoveryContract.Present
             mView.refreshListView(mDiscoveryDeviceList);
             DevicesUtil.insertOrUpdateRecentDevices(device);
             mView.stopIPConnectProgressBar();
-            mView.showToast("connect success");
         }
 
         @Override

@@ -44,21 +44,11 @@ public class PanelPresenter implements PanelContract.Presenter {
             @Override
             public void onSuccess(Object model) {
                 LogUtil.d("keyevent " + keyCode + " : SUCCESS");
-                if (mView != null) {
-                    mView.toastMessage("SUCCESS");
-                } else {
-                    Toast.makeText(mContext, "SUCCESS", Toast.LENGTH_SHORT).show();
-                }
             }
 
             @Override
             public void onFailure(String msg) {
                 LogUtil.d("keyevent " + keyCode + " : fail");
-                if (mView != null) {
-                    mView.toastMessage("fail");
-                } else {
-                    Toast.makeText(mContext, "fail", Toast.LENGTH_SHORT).show();
-                }
                 //mView.connectFail();
             }
 
@@ -75,12 +65,12 @@ public class PanelPresenter implements PanelContract.Presenter {
             @Override
             public void onSuccess(Object model) {
                 LogUtil.d("keyevent " + keyCode + " : SUCCESS");
-                mView.toastMessage("SUCCESS");
+//                mView.toastMessage("SUCCESS");
             }
 
             @Override
             public void onFailure(String msg) {
-                mView.toastMessage("fail");
+//                mView.toastMessage("fail");
             }
 
             @Override
@@ -96,13 +86,13 @@ public class PanelPresenter implements PanelContract.Presenter {
             @Override
             public void onSuccess(Object model) {
                 LogUtil.d("sendCommand " + cmd + " : SUCCESS");
-                mView.toastMessage("SUCCESS");
+//                mView.toastMessage("SUCCESS");
             }
 
             @Override
             public void onFailure(String msg) {
                 LogUtil.d("sendCommand " + cmd + " : fail");
-                mView.toastMessage("fail");
+//                mView.toastMessage("fail");
             }
 
             @Override
