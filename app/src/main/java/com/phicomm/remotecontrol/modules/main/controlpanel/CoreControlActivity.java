@@ -259,25 +259,30 @@ public class CoreControlActivity extends BaseActivity implements UpdateView {
                 showUpdateInfoDialog(isForceUpdate, bean.getVerName(), bean.getVerInfos(), bean.getVerDown());
             } else {
                 mPreference.put(PreferenceDef.APP_VERSION, PreferenceDef.IS_HAVE_NEW_VERSIOM, false);
-                // CommonUtils.showShortToast(getString(R.string.current_version_newest));
             }
         }
     }
 
     private void showUpdateInfoDialog(final boolean isForceUpdate, final String versionName, String versionInfo, final String url) {
+        String hint;
+        if (isForceUpdate) {
+            hint = null;
+        } else {
+            hint = getResources().getString(R.string.update_later);
+        }
+
         View view = LayoutInflater.from(this).inflate(R.layout.dialog_content_for_update_info, null);
         TextView title = (TextView) view.findViewById(R.id.update_title);
         TextView message = (TextView) view.findViewById(R.id.update_message);
         title.setText(String.format(getString(R.string.version_update_title), versionName));
         message.setText(versionInfo);
+
         final PhiGuideDialog dialog = new PhiGuideDialog(this);
         dialog.setContentPanel(view);
-        dialog.setLeftGuideOnclickListener(getResources().getString(R.string.update_later), R.color.syn_text_color, new PhiGuideDialog.onLeftGuideOnclickListener() {
+        dialog.setLeftGuideOnclickListener(hint, R.color.syn_text_color, new PhiGuideDialog.onLeftGuideOnclickListener() {
             @Override
             public void onLeftGuideClick() {
-                if (!isForceUpdate) {
-                    dialog.dismiss();
-                }
+                dialog.dismiss();
             }
 
         });
@@ -290,11 +295,13 @@ public class CoreControlActivity extends BaseActivity implements UpdateView {
                 mUpdatePresenter.downloadFile(url, versionName);
             }
         });
+        dialog.show();
+
         if (isForceUpdate) {
+            CommonUtils.showShortToast("sd");
             dialog.setCancelable(false);
             dialog.setCanceledOnTouchOutside(false);
         }
-        dialog.show();
     }
 
     @Override
