@@ -6,31 +6,48 @@
 
     <include layout="@layout/title_bar" />
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_gravity="center_horizontal"
         android:background="@color/loginout_core_bg"
-        android:orientation="vertical">
+        android:paddingTop="10dp">
 
         <ImageView
-            android:id="@+id/iv_show"
-            android:layout_width="match_parent"
-            android:layout_height="290dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="10dp"
-            android:src="@drawable/tv_not_connected" />
+            android:layout_width="375dp"
+            android:layout_height="290.5dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/tv_bg" />
+
+        <LinearLayout
+            android:id="@+id/ll_tv"
+            android:layout_width="308dp"
+            android:layout_height="196dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="43.5dp">
+
+            <ImageView
+                android:id="@+id/iv_show"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY"
+                android:src="@drawable/tv_not_connected" />
+        </LinearLayout>
 
 
         <ImageButton
             android:id="@+id/btn_screenshot"
             android:layout_width="70dp"
             android:layout_height="70dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="80dp"
+            android:layout_below="@+id/ll_tv"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="88dp"
             android:background="@null"
             android:src="@drawable/takephoto_on" />
 
-    </LinearLayout>
+    </RelativeLayout>
 
 
 </LinearLayout>

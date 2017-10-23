@@ -57,6 +57,7 @@
     <string name="no_item">没有记录</string>
     <string name="current_wifi_not_available">当前Wifi未连接</string>
     <string name="connect_fail">设备连接失败</string>
+    <string name="searching_devices">正在扫描设备</string>
     <plurals name="choose_count_box">
         <item quantity="other">共计<xliff:g id="count">%d</xliff:g>项</item>
     </plurals>

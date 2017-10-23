@@ -40,7 +40,7 @@
             android:layout_centerVertical="true"
             android:ellipsize="end"
             android:lines="1"
-            android:text="@string/unable_to_connect_device"
+            android:text=""
             android:textColor="@color/black_normal"
             android:textSize="@dimen/text_size_17sp" />
 

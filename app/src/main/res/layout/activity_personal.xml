@@ -201,7 +201,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:paddingLeft="17.9dp"
+                android:paddingLeft="18.4dp"
                 android:text="@string/personal_version"
                 android:textColor="@color/copyright_text_color"
                 android:textSize="@dimen/text_size_17sp" />

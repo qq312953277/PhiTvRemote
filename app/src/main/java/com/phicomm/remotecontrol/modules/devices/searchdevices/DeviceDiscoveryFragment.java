@@ -127,6 +127,8 @@ public class DeviceDiscoveryFragment extends BaseFragment implements DeviceDisco
             "7", "8", "9",
             ".", "0", "←",
     };
+
+    private String mTitle;
     private int mFindIndex = -1;
     public static boolean canGoBack = true;
     private boolean mIsRunning;
@@ -185,8 +187,8 @@ public class DeviceDiscoveryFragment extends BaseFragment implements DeviceDisco
     private void initActionBar() {
         Intent intent = getActivity().getIntent();
         Bundle bundle = intent.getExtras();
-        String title = bundle.getString(PhiConstants.ACTION_BAR_NAME);
-        mTvTitle.setText(title);
+        mTitle = bundle.getString(PhiConstants.ACTION_BAR_NAME);
+        mTvTitle.setText(mTitle);
         mTvRecords.setVisibility(View.VISIBLE);
         mTvRecords.setText(getString(R.string.recent_connect_devices));
     }
@@ -535,6 +537,7 @@ public class DeviceDiscoveryFragment extends BaseFragment implements DeviceDisco
     }
 
     private void stopProgressBar() {
+        setTittle(mTitle);
         mLlSearch.setVisibility(View.VISIBLE);
         mLlIP.setVisibility(View.VISIBLE);
         mTvRecords.setEnabled(true);
@@ -542,6 +545,7 @@ public class DeviceDiscoveryFragment extends BaseFragment implements DeviceDisco
     }
 
     private void startProgressBar() {
+        setTittle(R.string.searching_devices);
         mLlSearch.setVisibility(View.GONE);
         mLlIP.setVisibility(View.GONE);
         mTvRecords.setEnabled(false);

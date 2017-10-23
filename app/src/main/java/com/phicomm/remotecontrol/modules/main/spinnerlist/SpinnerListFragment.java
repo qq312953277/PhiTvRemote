@@ -112,7 +112,7 @@ public class SpinnerListFragment extends BaseFragment {
     }
 
     private void refreshSpinnerListView(List<RemoteBoxDevice> deviceList) {
-        if (deviceList != null) {
+        if (deviceList != null && deviceList.size() > 0) {
             mUpDown.setVisibility(View.VISIBLE);
             mSpinerPopWindow.notifyDataChange(deviceList);
             mUpDown.setImageResource(R.drawable.icon_down);
