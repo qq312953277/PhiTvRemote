@@ -133,13 +133,13 @@ public class DeviceDiscoveryPresenter implements DeviceDiscoveryContract.Present
     @Override
     public List<RemoteBoxDevice> getCurrentDeviceList() {
         currentDeviceList = DevicesUtil.getCurrentDevicesListResult();
-        LogUtil.d(TAG, "currentDeviceList.size()=" + currentDeviceList.size());
         mView.refreshListView(currentDeviceList);
         return currentDeviceList;
     }
 
     @Override
-    public void removeItemAndRefreshView(RemoteBoxDevice device) {
+    public void removeItemAndRefreshView(RemoteBoxDevice device,List<RemoteBoxDevice> deviceList) {
+        mDiscoveryDeviceList = deviceList;
         String deviceBssid = device.getBssid();
         mCachedRemoteAddress.remove(deviceBssid);
         mDiscoveryDeviceList.remove(device);
@@ -149,7 +149,6 @@ public class DeviceDiscoveryPresenter implements DeviceDiscoveryContract.Present
 
     @Override
     public void setCurrentDeviceList(List<RemoteBoxDevice> current_list) {
-        LogUtil.d(TAG, "setCurrentDeviceList.size()=" + current_list.size());
         DevicesUtil.setCurrentListResult(current_list);
     }
 
@@ -167,8 +166,6 @@ public class DeviceDiscoveryPresenter implements DeviceDiscoveryContract.Present
         @Override
         public void onDeviceAdd(RemoteBoxDevice device) {
             String deviceBssid = device.getBssid();
-            Log.d(TAG, "dev.mBssid=" + deviceBssid + "mSearchDeviceList.size()=" +
-                    mDiscoveryDeviceList.size());
             if (!mCachedRemoteAddress.containsKey(deviceBssid)) {
                 mCachedRemoteAddress.put(deviceBssid, device);
                 mDiscoveryDeviceList.add(device);
@@ -179,10 +176,7 @@ public class DeviceDiscoveryPresenter implements DeviceDiscoveryContract.Present
 
         @Override
         public void onDeviceRemove(RemoteBoxDevice device) {
-            LogUtil.d(TAG, "remove offline device");
             String deviceBssid = device.getBssid();
-            Log.d(TAG, "onDeviceRemove dev.mBssid=" + deviceBssid + "mSearchDeviceList.size()=" +
-                    mDiscoveryDeviceList.size());
             if (mCachedRemoteAddress.containsKey(deviceBssid) && mDiscoveryDeviceList.size() > 0) {
                 mCachedRemoteAddress.remove(deviceBssid);
                 mDiscoveryDeviceList.remove(device);

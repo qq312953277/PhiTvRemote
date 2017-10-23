@@ -340,10 +340,8 @@ public class DeviceDiscoveryFragment extends BaseFragment implements DeviceDisco
 
                     @Override
                     public void onFail(String msg) {
-                        mPresenter.removeItemAndRefreshView(remoteDevice);
-                        LogUtil.d(TAG, "remove connect fail device");
-                        CommonUtils.showToastBottom("Fail reason:" + msg);
-                        //CommonUtils.showToastBottom("this device is offline");
+                        mPresenter.removeItemAndRefreshView(remoteDevice, mPresenter.getCurrentDeviceList());
+                        CommonUtils.showToastBottom(getString(R.string.connect_fail));
                         DialogUtils.cancelLoadingDialog();
                     }
                 });
@@ -353,8 +351,6 @@ public class DeviceDiscoveryFragment extends BaseFragment implements DeviceDisco
 
     @Override
     public void onResume() {
-        LogUtil.d(TAG, "onResume() is called");
-        LogUtil.d(TAG, mPresenter.getCurrentDeviceList().toString());
         mPresenter.loadRecentList();
         mWifiManager = (WifiManager) getContext().getApplicationContext().getSystemService(WIFI_SERVICE);
         IntentFilter filter = new IntentFilter();
@@ -394,7 +390,7 @@ public class DeviceDiscoveryFragment extends BaseFragment implements DeviceDisco
 
     @Override
     public void showToast(String str) {
-        CommonUtils.showToastBottom(str);
+        CommonUtils.showToastBottom(getString(R.string.connect_fail));
     }
 
     @Override

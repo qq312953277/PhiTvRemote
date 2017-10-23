@@ -41,7 +41,7 @@ public class DeviceDiscoveryContract {
 
         void ipConnectAgain(String ip);
 
-        void removeItemAndRefreshView(RemoteBoxDevice device);
+        void removeItemAndRefreshView(RemoteBoxDevice device,List<RemoteBoxDevice> deviceList);
 
         void addDeviceItem(List<RemoteBoxDevice> mOnResumeRemoteBoxDevice, RemoteBoxDevice mDevice);
 

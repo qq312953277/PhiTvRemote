@@ -12,7 +12,7 @@ import com.phicomm.remotecontrol.constant.PhiConstants;
 public class GestureDelectorSimlpeListener extends GestureDetector.SimpleOnGestureListener {
 
     private GestureCallBackListener mGestureCallBackListener;
-    private final int SLIDE_DISTANCE = 180;
+    private final int SLIDE_DISTANCE = 200;
 
     @Override
     public boolean onDown(MotionEvent e) {
