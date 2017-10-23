@@ -55,6 +55,7 @@
     <string name="cancel_choose_box">取消选择</string>
     <string name="delete_choose_box">删除</string>
     <string name="no_item">没有记录</string>
+    <string name="current_wifi_not_available">当前Wifi未连接</string>
     <plurals name="choose_count_box">
         <item quantity="other">共计<xliff:g id="count">%d</xliff:g>项</item>
     </plurals>

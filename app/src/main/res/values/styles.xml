@@ -189,4 +189,10 @@
         <item name="android:activityCloseEnterAnimation">@animator/slide_left_in</item>
         <item name="android:activityCloseExitAnimation">@animator/slide_right_out</item>
     </style>
+
+    <!--popwindow-->
+    <style name="popwin_anim_style">
+        <item name="android:windowEnterAnimation">@anim/pop_show</item>
+        <item name="android:windowExitAnimation">@anim/pop_gone</item>
+    </style>
 </resources>

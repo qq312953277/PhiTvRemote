@@ -66,7 +66,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="13.5dp"
             android:layout_toRightOf="@+id/ll_icon_app"
             android:text="@string/personal_appliction"
             android:textColor="@color/copyright_text_color"
@@ -74,7 +74,7 @@
 
 
         <ImageView
-            android:layout_width="8.8dp"
+            android:layout_width="8.9dp"
             android:layout_height="17.9dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
@@ -114,14 +114,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="13.5dp"
             android:layout_toRightOf="@+id/ll_icon_setting"
             android:text="@string/personal_setting"
             android:textColor="@color/copyright_text_color"
             android:textSize="@dimen/text_size_17sp" />
 
         <ImageView
-            android:layout_width="8.8dp"
+            android:layout_width="8.9dp"
             android:layout_height="17.9dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
@@ -148,8 +148,8 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="19.5dp"
-                android:layout_height="19.5dp"
+                android:layout_width="19.6dp"
+                android:layout_height="19.6dp"
                 android:src="@drawable/icon_about" />
 
         </LinearLayout>
@@ -159,14 +159,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="13.5dp"
             android:layout_toRightOf="@+id/ll_icon_about"
             android:text="@string/personal_about"
             android:textColor="@color/copyright_text_color"
             android:textSize="@dimen/text_size_17sp" />
 
         <ImageView
-            android:layout_width="8.8dp"
+            android:layout_width="8.9dp"
             android:layout_height="17.9dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
@@ -193,15 +193,15 @@
 
             <ImageView
                 android:id="@+id/imageView2"
-                android:layout_width="16.5dp"
-                android:layout_height="17dp"
+                android:layout_width="16.7dp"
+                android:layout_height="17.2dp"
                 android:src="@drawable/icon_version" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:paddingLeft="17dp"
+                android:paddingLeft="17.9dp"
                 android:text="@string/personal_version"
                 android:textColor="@color/copyright_text_color"
                 android:textSize="@dimen/text_size_17sp" />

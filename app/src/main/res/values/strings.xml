@@ -3,7 +3,7 @@
     <!--devices -->
     <string name="app_name">RemoteControl</string>
     <string name="app_title">PhiBoxRemote</string>
-    <string name="unable_to_connect_device">未连接设备</string>
+    <string name="unable_to_connect_device">Unable to connect TV</string>
     <string name="devices_list">devices list</string>
     <string name="manual_ip_label">Add Phicomm BOX</string>
     <string name="manual_ip_entry_label">IP Address</string>

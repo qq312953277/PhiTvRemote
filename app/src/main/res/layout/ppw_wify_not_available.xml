@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_wifi_not_available"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/confirm_btn_text"
+    android:gravity="center_vertical"
+    android:paddingBottom="10dp"
+    android:paddingTop="10dp">
+
+    <ImageView
+        android:id="@+id/iv_wifi"
+        android:layout_width="24dp"
+        android:layout_height="18.5dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="32.5dp"
+        android:src="@drawable/wifi_not_available" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_toRightOf="@+id/iv_wifi"
+        android:text="@string/current_wifi_not_available"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_17sp" />
+
+    <ImageView
+        android:layout_width="8.9dp"
+        android:layout_height="17.9dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="20dp"
+        android:src="@drawable/arrow_right" />
+
+</RelativeLayout>

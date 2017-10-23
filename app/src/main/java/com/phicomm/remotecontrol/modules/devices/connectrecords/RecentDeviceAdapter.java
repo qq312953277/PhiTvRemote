@@ -22,7 +22,6 @@ import java.util.List;
  */
 
 public class RecentDeviceAdapter extends BaseAdapter {
-    private static String TAG = "RecentDeviceAdapter";
 
     private List<RemoteDevice> mRecentDeviceList;
     private HashMap<Integer, Integer> mCheckBosVisibleMap;
@@ -118,7 +117,7 @@ public class RecentDeviceAdapter extends BaseAdapter {
             if (device != null) {
                 mBoxName.setText(device.getName());
                 mCollectCheckBox.setChecked(mCheckedMap.get(position));
-                mCollectCheckBox.setVisibility((int) mCheckBosVisibleMap.get(position));
+                mCollectCheckBox.setVisibility(mCheckBosVisibleMap.get(position));
             }
         }
 

@@ -12,7 +12,6 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -24,9 +23,7 @@ import com.phicomm.remotecontrol.modules.devices.connectrecords.RecentDevicesCon
 import com.phicomm.remotecontrol.util.SettingUtil;
 
 import java.util.ArrayList;
-import java.util.Formatter;
 import java.util.List;
-import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -42,21 +39,18 @@ public class RecentDevicesFragment extends BaseFragment implements RecentDevices
 
     private static String TAG = "RecentDevicesFragment";
 
-    private Presenter mPresenter;
     @BindView(R.id.recent_devices_list)
-    public ListView mRecentDeivesList;
+    ListView mRecentDeivesList;
 
     @BindView(R.id.bt_cancel)
-    public Button mCancelBtn;
+    Button mCancelBtn;
 
     @BindView(R.id.bt_delete)
-    public Button mDeleteBtn;
+    Button mDeleteBtn;
 
-    @BindView(R.id.tv_sum)
-    public TextView mCountTv;
 
     @BindView(R.id.linearLayout)
-    public LinearLayout mActionBarLl;
+    RelativeLayout mActionBarLl;
 
     @BindView(android.R.id.empty)
     public TextView mEmptyTv;
@@ -76,6 +70,7 @@ public class RecentDevicesFragment extends BaseFragment implements RecentDevices
     private RecentDeviceAdapter mRecentDeviceAdapter;
     private List<RemoteDevice> mDeleteList = new ArrayList<>();
     private boolean mIsMultiSelect = false;
+    private Presenter mPresenter;
 
 
     public RecentDevicesFragment() {
@@ -159,8 +154,7 @@ public class RecentDevicesFragment extends BaseFragment implements RecentDevices
 
     private void initAdapter() {
         mRecentDeivesList.setEmptyView(mEmptyTv);
-        mRecentDeivesList.setDivider(new ColorDrawable(Color.GRAY));
-        mRecentDeivesList.setDividerHeight(1);
+
         mRecentDeviceAdapter = new RecentDeviceAdapter();
         mRecentDeivesList.setAdapter(mRecentDeviceAdapter);
     }
@@ -218,29 +212,16 @@ public class RecentDevicesFragment extends BaseFragment implements RecentDevices
                     collectCheckBox.setChecked(true);
                     mDeleteList.add(device);
                 }
-                mCountTv.setText(makeDeviceCountLabel(mDeleteList.size()));
             }
         }
     };
 
     private void clearListDelete() {
         mDeleteList.clear();
-        mCountTv.setText(makeDeviceCountLabel(0));
     }
 
     private void deleteChooseBox() {
         mPresenter.removeSelectedDevice(mDeleteList);
     }
 
-    public String makeDeviceCountLabel(int count) {
-        StringBuilder deviceCounts = new StringBuilder();
-        StringBuilder format = new StringBuilder();
-        Formatter formatter = new Formatter(format, Locale.getDefault());
-        String f = getResources().getQuantityText(R.plurals.choose_count_box, count)
-                .toString();
-        deviceCounts.setLength(0);
-        formatter.format(f, Integer.valueOf(count));
-        deviceCounts.append(format);
-        return deviceCounts.toString();
-    }
 }

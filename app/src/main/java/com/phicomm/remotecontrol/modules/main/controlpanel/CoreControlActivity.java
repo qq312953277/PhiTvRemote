@@ -1,11 +1,19 @@
 package com.phicomm.remotecontrol.modules.main.controlpanel;
 
 import android.Manifest;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.net.NetworkInfo;
+import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.os.Parcelable;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -15,19 +23,21 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.phicomm.remotecontrol.BuildConfig;
 import com.phicomm.remotecontrol.R;
-import com.phicomm.remotecontrol.RemoteBoxDevice;
 import com.phicomm.remotecontrol.base.BaseActivity;
 import com.phicomm.remotecontrol.constant.Commands;
 import com.phicomm.remotecontrol.constant.PhiConstants;
 import com.phicomm.remotecontrol.modules.main.screenprojection.activities.LocalMediaItemActivity;
-import com.phicomm.remotecontrol.modules.main.screenprojection.entity.DeviceDisplay;
 import com.phicomm.remotecontrol.modules.main.screenprojection.entity.DisplayDeviceList;
 import com.phicomm.remotecontrol.modules.main.screenprojection.presenter.LocalMediaItemPresenter;
 import com.phicomm.remotecontrol.modules.main.screenprojection.presenter.LocalMediaItemPresenterImpl;
@@ -46,7 +56,6 @@ import com.phicomm.widgets.alertdialog.PhiGuideDialog;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
@@ -60,8 +69,13 @@ public class CoreControlActivity extends BaseActivity implements UpdateView {
     @BindView(R.id.tab_second)
     ImageView mTabSecond;
 
+    @BindView(R.id.spinner_container)
+    FrameLayout frameLayout;
+
     private final static String TAG = "CoreControlActivity";
     static final int REQUEST_CODE = 101;
+    private final int POPWINDOW_FLAG = 0;
+    private final int POPWINDOW_DELAY = 1000;
     private DisplayDeviceList mDisplayDeviceList;
     private Context mContext;
     private KeyPanelFragment mKeypanelFragment;
@@ -72,6 +86,17 @@ public class CoreControlActivity extends BaseActivity implements UpdateView {
     private UpdatePresenter mUpdatePresenter;
     private PreferenceRepository mPreference;
     private long mFirstTime;
+
+    private PopupWindow wifyNotAvailablePopWindow;
+    private WifiAvailableReceiver wifiAvailableReceiver;
+    private Handler popWindowShowDelayed = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            if (msg.what == POPWINDOW_FLAG) {
+                wifyNotAvailablePopWindow.showAsDropDown(frameLayout); //进入APP无wifi时需要延时等待父窗口加载完才能展示PopWindow，否则报错
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,7 +118,6 @@ public class CoreControlActivity extends BaseActivity implements UpdateView {
 
     private void transStatusbar() {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);//状态栏
-        //getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);//导航栏
     }
 
     @Override
@@ -138,6 +162,18 @@ public class CoreControlActivity extends BaseActivity implements UpdateView {
             ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),
                     spinnerListFragment, R.id.spinner_container);
         }
+
+
+        View view = LayoutInflater.from(this).inflate(R.layout.ppw_wify_not_available, null);
+        wifyNotAvailablePopWindow = new PopupWindow(view, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        wifyNotAvailablePopWindow.setAnimationStyle(R.style.popwin_anim_style);//设置pop动画
+        RelativeLayout mRlWifyNotAvailable = (RelativeLayout) view.findViewById(R.id.rl_wifi_not_available);
+        mRlWifyNotAvailable.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
+            }
+        });
     }
 
     private void initPanel() {
@@ -190,6 +226,20 @@ public class CoreControlActivity extends BaseActivity implements UpdateView {
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CODE);
             }
         }
+
+        //注册广播
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(WifiManager.WIFI_STATE_CHANGED_ACTION);
+        filter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
+        wifiAvailableReceiver = new WifiAvailableReceiver();
+        registerReceiver(wifiAvailableReceiver, filter);
+    }
+
+    @Override
+    public void onPause() {
+        //注销广播
+        unregisterReceiver(wifiAvailableReceiver);
+        super.onPause();
     }
 
     @Override
@@ -221,16 +271,6 @@ public class CoreControlActivity extends BaseActivity implements UpdateView {
             }
             mToast.show();
         }
-    }
-
-    private boolean isSelectedDeviceNotOnline(RemoteBoxDevice mRemoteBoxDevice, List<DeviceDisplay> mDeviceDisplayList) {
-        String ip = mRemoteBoxDevice.getAddress();
-        for (int i = 0; i < mDeviceDisplayList.size(); i++) {
-            if (mDeviceDisplayList.get(i).getDevice().toString().indexOf(ip) != -1) {
-                return false;
-            }
-        }
-        return true;
     }
 
     private void checkNewVersion() {
@@ -330,6 +370,30 @@ public class CoreControlActivity extends BaseActivity implements UpdateView {
         } else {
             finish();
             System.exit(0);
+        }
+    }
+
+    class WifiAvailableReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (WifiManager.WIFI_STATE_CHANGED_ACTION.equals(action)) {
+                int wifiState = intent.getIntExtra(WifiManager.EXTRA_WIFI_STATE, -1);
+                if (wifiState == WifiManager.WIFI_STATE_DISABLED) {
+                    popWindowShowDelayed.sendEmptyMessageDelayed(POPWINDOW_FLAG, POPWINDOW_DELAY);//延时1s显示popwindow，解决首次进入APP无wifi时报错问题
+                }
+            }
+
+            if (WifiManager.NETWORK_STATE_CHANGED_ACTION.equals(action)) {
+                Parcelable parcelableExtra = intent.getParcelableExtra(WifiManager.EXTRA_NETWORK_INFO);
+                if (null != parcelableExtra) {
+                    NetworkInfo networkInfo = (NetworkInfo) parcelableExtra;
+                    NetworkInfo.State state = networkInfo.getState();
+                    if (state == NetworkInfo.State.CONNECTED && wifyNotAvailablePopWindow != null) {
+                        wifyNotAvailablePopWindow.dismiss();
+                    }
+                }
+            }
         }
     }
 }

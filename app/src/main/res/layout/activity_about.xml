@@ -54,7 +54,7 @@
 
                 <TextView
                     android:id="@+id/textView"
-                    android:layout_width="137dp"
+                    android:layout_width="115dp"
                     android:layout_height="wrap_content"
                     android:text="@string/website"
                     android:textColor="@color/core_activity_bg"
@@ -82,7 +82,7 @@
                 android:paddingLeft="22dp">
 
                 <TextView
-                    android:layout_width="137dp"
+                    android:layout_width="115dp"
                     android:layout_height="wrap_content"
                     android:text="@string/hotline"
                     android:textColor="@color/core_activity_bg"

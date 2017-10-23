@@ -2,58 +2,70 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/spinlist_bg"
+    android:background="@color/loginout_core_bg"
     android:orientation="vertical">
 
     <include layout="@layout/title_bar" />
 
-    <ListView
-        android:id="@+id/recent_devices_list"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_weight="1"
         android:layout_marginLeft="36dp"
         android:layout_marginRight="33.5dp"
-        android:divider="@color/listview_divider"
-        android:dividerHeight="0.5dp"
-        android:footerDividersEnabled="true"
-        android:scrollbars="none" />
+        android:orientation="vertical">
+
+        <ListView
+            android:id="@+id/recent_devices_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="@color/listview_divider"
+            android:dividerHeight="0.5dp"
+            android:footerDividersEnabled="true"
+            android:scrollbars="none" />
+    </LinearLayout>
+
 
     <TextView
         android:id="@android:id/empty"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:text="@string/no_item" />
+        android:text="@string/no_item"
+        android:textSize="@dimen/text_size_19sp"
+        android:visibility="gone" />
 
-    <LinearLayout
+
+    <RelativeLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
-        android:layout_marginRight="10dp"
-        android:orientation="horizontal"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="20dp"
         android:visibility="gone">
 
         <Button
             android:id="@+id/bt_cancel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/cancel_choose_box" />
-
-        <TextView
-            android:id="@+id/tv_sum"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="@plurals/choose_count_box" />
+            android:layout_width="120dp"
+            android:layout_height="42dp"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="43dp"
+            android:background="@drawable/cancel_reg_bg"
+            android:text="@string/finder_cancel"
+            android:textColor="@color/copyright_text_color"
+            android:textSize="@dimen/text_size_19sp" />
 
         <Button
             android:id="@+id/bt_delete"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/delete_choose_box" />
-    </LinearLayout>
+            android:layout_width="120dp"
+            android:layout_height="42dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="43dp"
+            android:background="@drawable/choose_reg_bg"
+            android:text="@string/delete_choose_box"
+            android:textColor="@color/confirm_btn_text"
+            android:textSize="@dimen/text_size_19sp" />
+    </RelativeLayout>
+
 
 </LinearLayout>
