@@ -50,18 +50,6 @@ public class GestureDelectorSimlpeListener extends GestureDetector.SimpleOnGestu
     }
 
     /**
-     * 当用户在触摸屏上按下，而且还未移动，松开后触发该方法
-     *
-     * @param e
-     */
-    @Override
-    public void onShowPress(MotionEvent e) {
-        if (mGestureCallBackListener != null) {
-            mGestureCallBackListener.showDirection(-1);
-        }
-    }
-
-    /**
      * 手势判断
      *
      * @param fromX
