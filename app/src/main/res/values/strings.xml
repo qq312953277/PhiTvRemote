@@ -37,6 +37,7 @@
     <string name="cancel_choose_box">cancel</string>
     <string name="delete_choose_box">delete</string>
     <string name="no_item">no item</string>
+    <string name="current_wifi_not_available">Wifi not available</string>
     <string name="connect_fail">connect fail</string>
     <string name="searching_devices">Searching Device</string>
     <string name="device_find_tip">Notice:\n \n
