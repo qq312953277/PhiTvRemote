@@ -7,7 +7,6 @@ import com.phicomm.remotecontrol.modules.main.screenprojection.callback.ContentB
 import com.phicomm.remotecontrol.modules.main.screenprojection.constants.DeviceDisplayListOperation;
 import com.phicomm.remotecontrol.modules.main.screenprojection.entity.ContentItem;
 import com.phicomm.remotecontrol.modules.main.screenprojection.utils.FiletypeUtil;
-import com.phicomm.remotecontrol.util.LogUtil;
 
 import org.fourthline.cling.model.action.ActionException;
 import org.fourthline.cling.model.action.ActionInvocation;
@@ -25,8 +24,6 @@ import org.fourthline.cling.support.model.item.Item;
  */
 public class ContentBrowseBiz {
     public static final int SUCCESS = 0;
-    public static final int FAILURE = 1;
-    private static String TAG = MediaControlBiz.class.getSimpleName();
     private UpnpServiceBiz upnpBiz;
     private Handler handler;
 
@@ -35,9 +32,6 @@ public class ContentBrowseBiz {
         this.handler = handler;
     }
 
-    /**
-     * 获取根目录下内容
-     */
     public void getRootContent(Device device) {
         Service service = device.findService(new UDAServiceType("ContentDirectory", 1));
         Container rootContainer = new Container();
@@ -57,13 +51,11 @@ public class ContentBrowseBiz {
         upnpBiz.execute(new ContentBrowseActionCallback(service, container) {
             @Override
             public void received(ActionInvocation actionInvocation, DIDLContent didl) {
-                LogUtil.d(TAG,
-                        "Received browse action DIDL descriptor, creating tree nodes");
                 try {
                     handler.sendEmptyMessage(DeviceDisplayListOperation.CLEAR_ALL);
                     for (Container container : didl.getContainers()) {
                         ContentItem ct = new ContentItem(container, service);
-                        sendMsg(ct);
+                        execute(ct.getService(), ct.getContainer());
                     }
                     for (Item item : didl.getItems()) {
                         String contentFormat = item.getFirstResource().getProtocolInfo().getContentFormat();
@@ -71,7 +63,6 @@ public class ContentBrowseBiz {
                         sendMsg(ct);
                     }
                 } catch (Exception e) {
-                    LogUtil.e(TAG, "Creating DIDL tree nodes failed: " + e);
                     actionInvocation.setFailure(new ActionException(
                             ErrorCode.ACTION_FAILED,
                             "Can't create list childs: " + e, e));
@@ -91,7 +82,6 @@ public class ContentBrowseBiz {
             @Override
             public void failure(ActionInvocation invocation,
                                 UpnpResponse operation, String defaultMsg) {
-                LogUtil.d(TAG, "failure:" + defaultMsg);
             }
         });
     }

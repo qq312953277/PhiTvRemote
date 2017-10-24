@@ -1,8 +1,11 @@
 package com.phicomm.remotecontrol.modules.main.screenprojection.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -15,10 +18,11 @@ import com.phicomm.remotecontrol.modules.main.controlpanel.PanelPresenter;
 import com.phicomm.remotecontrol.modules.main.screenprojection.contract.VideoControlContract;
 import com.phicomm.remotecontrol.modules.main.screenprojection.presenter.VideoControlPresenterImpl;
 import com.phicomm.remotecontrol.util.CommonUtils;
-import com.phicomm.remotecontrol.util.LogUtil;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+
+import static com.phicomm.remotecontrol.constant.PhiConstants.TITLE_BAR_HEIGHT_DP;
 
 /**
  * Created by kang.sun on 2017/8/23.
@@ -28,14 +32,29 @@ public class VideoControlActivity extends BaseActivity implements VideoControlCo
     private VideoControlContract.VideoControlPresenter mVideoControlPresenter;
     private PanelContract.Presenter mPresenter;
     private boolean canSeeking;
+    private String mVideoName;
+
+    @BindView(R.id.rl_title)
+    RelativeLayout mRlTitle;
+
+    @BindView(R.id.tv_title)
+    TextView mTvTitle;
+
+    @BindView(R.id.iv_back)
+    ImageView mBack;
+
     @BindView(R.id.ib_play)
     ImageButton ibPlay;
+
     @BindView(R.id.ib_pause)
     ImageButton ibPause;
+
     @BindView(R.id.tv_totalTime)
     TextView tvTotalTime;
+
     @BindView(R.id.tv_curTime)
     TextView tvCurTime;
+
     @BindView(R.id.sb_playback)
     SeekBar sbPlayback;
 
@@ -43,11 +62,25 @@ public class VideoControlActivity extends BaseActivity implements VideoControlCo
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mediacontrol);
+        initTitleView();
         mVideoControlPresenter = new VideoControlPresenterImpl(this, (BaseApplication) getApplication(),
                 sbPlayback, tvTotalTime, tvCurTime);
         canSeeking = true;
         mPresenter = new PanelPresenter(this);
         setListener();
+    }
+
+    private void initTitleView() {
+        Intent intent = getIntent();
+        mVideoName = (String) intent.getSerializableExtra("videoName");
+        mTvTitle.setText(mVideoName);
+        setMarginForStatusBar(mRlTitle, TITLE_BAR_HEIGHT_DP);
+        mBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     @Override
@@ -74,7 +107,6 @@ public class VideoControlActivity extends BaseActivity implements VideoControlCo
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
                 if (canSeeking) {
-                    LogUtil.d(TAG, "移动seekbar之前先让其暂停");
                     mVideoControlPresenter.updatePlayingState(false);
                 } else {
                     mSeekBarProg = seekBar.getProgress();
@@ -84,7 +116,6 @@ public class VideoControlActivity extends BaseActivity implements VideoControlCo
 
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                LogUtil.d(TAG, "移动seekbar之前先让其暂停");
             }
         });
     }
@@ -94,13 +125,11 @@ public class VideoControlActivity extends BaseActivity implements VideoControlCo
         switch (v.getId()) {
             case R.id.ib_play:
                 canSeeking = true;
-                LogUtil.d(TAG, "播放按钮被点击，canSeeking");
                 mVideoControlPresenter.updatePlayingState(true);
                 mPresenter.sendKeyEvent(KeyCode.CENTER);
                 break;
             case R.id.ib_pause:
                 canSeeking = false;
-                LogUtil.d(TAG, "暂停按钮被点击，notCanSeeking");
                 mVideoControlPresenter.updatePlayingState(false);
                 mPresenter.sendKeyEvent(KeyCode.CENTER);
                 break;

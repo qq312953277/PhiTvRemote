@@ -1,15 +1,13 @@
 package com.phicomm.remotecontrol.modules.main.screenprojection.activities;
 
 
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
-import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
@@ -21,19 +19,13 @@ import com.phicomm.remotecontrol.base.BaseActivity;
 import com.phicomm.remotecontrol.base.BaseApplication;
 import com.phicomm.remotecontrol.base.BaseFragment;
 import com.phicomm.remotecontrol.constant.PhiConstants;
-import com.phicomm.remotecontrol.modules.main.screenprojection.adapter.GeneralAdapter;
 import com.phicomm.remotecontrol.modules.main.screenprojection.constants.DeviceDisplayListOperation;
-import com.phicomm.remotecontrol.modules.main.screenprojection.entity.ContentItem;
 import com.phicomm.remotecontrol.modules.main.screenprojection.entity.DeviceDisplay;
 import com.phicomm.remotecontrol.modules.main.screenprojection.entity.DisplayDeviceList;
-import com.phicomm.remotecontrol.modules.main.screenprojection.fragments.PictureFragment;
-import com.phicomm.remotecontrol.modules.main.screenprojection.fragments.VideoFragment;
 import com.phicomm.remotecontrol.modules.main.screenprojection.presenter.LocalMediaItemPresenter;
 import com.phicomm.remotecontrol.modules.main.screenprojection.presenter.LocalMediaItemPresenterImpl;
 import com.phicomm.remotecontrol.util.CommonUtils;
 import com.phicomm.remotecontrol.util.DevicesUtil;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
@@ -50,8 +42,8 @@ import static com.phicomm.remotecontrol.constant.PhiConstants.TITLE_BAR_HEIGHT_D
 
 public class LocalMediaItemActivity extends BaseActivity implements MyFragmentAdapter.GetFragmentCallback, LocalMediaItemView {
     public LocalMediaItemPresenter mLocalMediaItemPresenter;
-    private int mFragmentFlag = 0;//照片页面
     private MyFragmentAdapter pageAdapter;
+    private DisplayDeviceList mDisplayDeviceList;
     Handler mDLNAHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -60,7 +52,6 @@ public class LocalMediaItemActivity extends BaseActivity implements MyFragmentAd
                 case DeviceDisplayListOperation.ADD:
                     if (!mDisplayDeviceList.getDeviceDisplayList().contains(mDeviceDisplay)) {
                         mDisplayDeviceList.addDevice(mDeviceDisplay);
-                        Log.d(TAG, "搜索到的DLNA设备是：" + mDeviceDisplay);
                     }
                     break;
                 case DeviceDisplayListOperation.REMOVE:
@@ -71,6 +62,7 @@ public class LocalMediaItemActivity extends BaseActivity implements MyFragmentAd
             }
         }
     };
+
     @BindView(R.id.viewPager)
     CustomViewPager mViewPage;
 
@@ -92,47 +84,48 @@ public class LocalMediaItemActivity extends BaseActivity implements MyFragmentAd
     @BindView(R.id.iv_back)
     ImageView mBack;
 
+    @BindView(R.id.initDLNADateProgressBar)
+    ProgressBar mInitDLNADateProgressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d("LocalMediaItemActivity", "LocalMediaItemActivity onCreate");
         setContentView(R.layout.activity_screenprojection);
         ButterKnife.bind(this);
         init();
-        getDataLogic(0);
+        getDataLogic();
     }
 
     private void init() {
         setMarginForStatusBar(mRlTitle, TITLE_BAR_HEIGHT_DP);
         mTvTitle.setText(getString(R.string.local_screenprojection));
-        setupPager();
+        //setupPager();
         mDisplayDeviceList = DisplayDeviceList.getInstance();
         mLocalMediaItemPresenter = new LocalMediaItemPresenterImpl(this, this, (BaseApplication) getApplication());
     }
 
-    private void getDataLogic(final int type) {
+    private void getDataLogic() {
         showProgressDialog();
-        mLocalMediaItemPresenter.init(this, mDLNAHandler, type);
+        mLocalMediaItemPresenter.init(this, mDLNAHandler);
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                finishScan(type);
+                finishScan();
             }
         }, PhiConstants.DISCOVER_DLNA_TIMEOUT);
     }
 
-    private void finishScan(int type) {
-        mProgressDialog.dismiss();
+    private void finishScan() {
+        mInitDLNADateProgressBar.setVisibility(View.GONE);
         mLocalMediaItemPresenter.destory();
-        Log.d(TAG, "目标设备是：" + DevicesUtil.getTarget());
         if (null == DevicesUtil.getTarget() || mDisplayDeviceList == null || isSelectedDeviceNotOnline(DevicesUtil.getTarget(), mDisplayDeviceList.getDeviceDisplayList())) {
             CommonUtils.showShortToast("初始化投屏失败");
         } else {
             DeviceDisplay mDisplayDevice = mDisplayDeviceList.getDeviceDisplayList().get(0);
             ((BaseApplication) getApplication()).setDeviceDisplay(mDisplayDevice);
             if (mDisplayDevice.getDevice().isFullyHydrated()) {
-                mLocalMediaItemPresenter.getItems(type);
+                mLocalMediaItemPresenter.getItems();
+                setupPager();
             }
         }
     }
@@ -143,33 +136,13 @@ public class LocalMediaItemActivity extends BaseActivity implements MyFragmentAd
         super.onClick(view);
         switch (view.getId()) {
             case R.id.picture:
-                mFragmentFlag = 0;
                 mViewPage.setCurrentItem(0, false);
-                getDataLogic(0);
-                mTvTitle.setText(getString(R.string.local_screenprojection));
                 break;
             case R.id.video:
-                mFragmentFlag = 1;
                 mViewPage.setCurrentItem(1, false);
-                getDataLogic(1);
-                mTvTitle.setText(getString(R.string.local_screenprojection));
                 break;
             case R.id.iv_back:
-                if ((mFragmentFlag == 0) && (PictureFragment.mLayer == 1)) {//处于图片界面次层
-                    mFragmentFlag = 0;
-                    PictureFragment.mLayer = 0;
-                    mViewPage.setCurrentItem(0, false);
-                    getDataLogic(0);
-                    mTvTitle.setText(getString(R.string.local_screenprojection));
-                } else if ((mFragmentFlag == 1) && (VideoFragment.mLayer == 1)) {//处于视频界面次层
-                    mFragmentFlag = 1;
-                    VideoFragment.mLayer = 0;
-                    mViewPage.setCurrentItem(1, false);
-                    getDataLogic(1);
-                    mTvTitle.setText(getString(R.string.local_screenprojection));
-                } else {
-                    finish();
-                }
+                finish();
                 break;
         }
     }
@@ -212,10 +185,6 @@ public class LocalMediaItemActivity extends BaseActivity implements MyFragmentAd
         return null;
     }
 
-    private final static String TAG = "LocalMediaItemActivity";
-    private ProgressDialog mProgressDialog;
-    private DisplayDeviceList mDisplayDeviceList;
-
     @Override
     public void showMessage(Object message) {
     }
@@ -228,18 +197,8 @@ public class LocalMediaItemActivity extends BaseActivity implements MyFragmentAd
     public void onFailure(Object message) {
     }
 
-    @Override
-    public void showItems(int type, GeneralAdapter<ContentItem> mContentAdapter) {
-        EventBus.getDefault().post(new PictureEvent(type, mContentAdapter, mLocalMediaItemPresenter));
-    }
-
-    @Override
-    public void setAlbumTittle(String tittle) {
-        mTvTitle.setText(tittle);
-    }
-
     private void showProgressDialog() {
-        mProgressDialog = ProgressDialog.show(this, getString(R.string.tips), getString(R.string.tips_content));
+        mInitDLNADateProgressBar.setVisibility(View.VISIBLE);
     }
 
     private boolean isSelectedDeviceNotOnline(RemoteBoxDevice mRemoteBoxDevice, List<DeviceDisplay> mDeviceDisplayList) {
@@ -256,29 +215,6 @@ public class LocalMediaItemActivity extends BaseActivity implements MyFragmentAd
     protected void onDestroy() {
         super.onDestroy();
         mLocalMediaItemPresenter.restore();
-    }
-
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            if ((mFragmentFlag == 0) && (PictureFragment.mLayer == 1)) {
-                mFragmentFlag = 0;
-                PictureFragment.mLayer = 0;
-                mViewPage.setCurrentItem(0, false);
-                getDataLogic(0);
-                mTvTitle.setText(getString(R.string.local_screenprojection));
-            } else if ((mFragmentFlag == 1) && (VideoFragment.mLayer == 1)) {
-                mFragmentFlag = 1;
-                VideoFragment.mLayer = 0;
-                mViewPage.setCurrentItem(1, false);
-                getDataLogic(1);
-                mTvTitle.setText(getString(R.string.local_screenprojection));
-            } else {
-                finish();
-            }
-            return true;
-        }
-        return super.onKeyDown(keyCode, event);
     }
 }
 

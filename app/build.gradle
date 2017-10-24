@@ -175,7 +175,7 @@ dependencies {
     compile 'com.android.support:multidex:1.0.1'
 
     //umeng analytics
-    compile 'com.umeng.analytics:analytics:latest.integration'
+    compile 'com.umeng.analytics:analytics:6.1.2'
 
     // Cling library
     compile 'org.fourthline.cling:cling-core:2.1.1'

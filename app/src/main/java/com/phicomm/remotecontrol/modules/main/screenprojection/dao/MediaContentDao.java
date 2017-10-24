@@ -31,7 +31,7 @@ public class MediaContentDao {
     }
 
     public ArrayList<MItem> getImageItems() {
-        ArrayList<MItem> items = new ArrayList<MItem>();
+        ArrayList<MItem> items = new ArrayList<>();
         String[] imageColumns = {Images.Media._ID,
                 Images.Media.TITLE,
                 Images.Media.DATA,
@@ -65,7 +65,7 @@ public class MediaContentDao {
     }
 
     public ArrayList<MItem> getVideoItems() {
-        ArrayList<MItem> items = new ArrayList<MItem>();
+        ArrayList<MItem> items = new ArrayList<>();
         String[] videoColumns = {Video.Media._ID,
                 Video.Media.TITLE,
                 Video.Media.DATA,

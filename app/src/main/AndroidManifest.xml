@@ -70,6 +70,9 @@
             android:name=".modules.main.screenprojection.activities.LocalMediaItemActivity"
             android:screenOrientation="nosensor" />
         <activity
+            android:name=".modules.main.screenprojection.activities.AlbumItemActivity"
+            android:screenOrientation="nosensor" />
+        <activity
             android:name=".modules.main.screenprojection.activities.VideoControlActivity"
             android:screenOrientation="nosensor" />
         <activity

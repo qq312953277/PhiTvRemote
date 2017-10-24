@@ -58,8 +58,21 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/tab_layout"></LinearLayout>
 
-    <com.phicomm.remotecontrol.modules.main.screenprojection.activities.CustomViewPager
-        android:id="@+id/viewPager"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent">
+
+        <com.phicomm.remotecontrol.modules.main.screenprojection.activities.CustomViewPager
+            android:id="@+id/viewPager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <ProgressBar
+            android:id="@+id/initDLNADateProgressBar"
+            style="?android:attr/progressBarStyleSmall"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:indeterminateDrawable="@drawable/imofan_round_progress_bar_2" />
+    </FrameLayout>
 </LinearLayout>

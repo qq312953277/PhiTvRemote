@@ -1,5 +1,6 @@
 package com.phicomm.remotecontrol.modules.main.screenprojection.entity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,7 +8,7 @@ import java.util.List;
  * Created by kang.sun on 2017/10/9.
  */
 
-public class PictureItemList {
+public class PictureItemList implements Serializable {
 
     private List<MItem> mPictureItemList;
 

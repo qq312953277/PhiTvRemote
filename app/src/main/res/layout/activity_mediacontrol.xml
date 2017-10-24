@@ -4,13 +4,14 @@
     android:layout_height="fill_parent"
     android:background="@android:color/black">
 
+    <include layout="@layout/title_bar" />
+
     <LinearLayout
         android:id="@+id/miniplayLayout"
         android:layout_width="match_parent"
         android:layout_height="40.0dp"
         android:layout_marginTop="450dp"
         android:orientation="horizontal">
-
 
         <ImageButton
             android:id="@+id/ib_play"
@@ -24,7 +25,6 @@
             android:layout_height="match_parent"
             android:background="@drawable/selector_btn_pause"
             android:visibility="gone"></ImageButton>
-
     </LinearLayout>
 
     <RelativeLayout
@@ -63,14 +63,12 @@
             android:text="@string/init_time"
             android:textColor="@android:color/white"
             android:textSize="20sp"></TextView>
-
-
     </RelativeLayout>
 
     <LinearLayout
-        android:layout_below="@id/rl_duration"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rl_duration">
 
         <SeekBar
             android:id="@+id/sb_playback"
@@ -86,5 +84,4 @@
             android:paddingRight="15.0dip"
             android:thumbOffset="15dp" />
     </LinearLayout>
-
 </RelativeLayout>

@@ -2,7 +2,6 @@ package com.phicomm.remotecontrol.modules.main.screenprojection.entity;
 
 import com.phicomm.remotecontrol.modules.main.screenprojection.utils.FiletypeUtil;
 
-import org.fourthline.cling.model.meta.Device;
 import org.fourthline.cling.model.meta.Service;
 import org.fourthline.cling.support.model.DIDLObject;
 import org.fourthline.cling.support.model.container.Container;
@@ -12,12 +11,11 @@ import org.fourthline.cling.support.model.item.Item;
  * Created by kang.sun on 2017/8/22.
  */
 public class ContentItem {
-    private Device device;
     private Service service;
     private DIDLObject content;
     private String id;
     private boolean isContainer;
-    private int filetype; // isContainer为false时所属文件类型
+    private int filetype;
 
     public ContentItem(Container container, Service service) {
         this.content = container;
@@ -59,13 +57,6 @@ public class ContentItem {
 
     public int getFiletype() {
         return filetype;
-    }
-
-    public void setFiletype(int filetype) {
-        if (isContainer()) {
-            filetype = FiletypeUtil.FILETYPE_OTHER;
-        }
-        this.filetype = filetype;
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.phicomm.remotecontrol.modules.main.screenprojection.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -9,14 +10,9 @@ import android.widget.GridView;
 
 import com.phicomm.remotecontrol.R;
 import com.phicomm.remotecontrol.base.BaseFragment;
-import com.phicomm.remotecontrol.modules.main.screenprojection.activities.PictureEvent;
-import com.phicomm.remotecontrol.modules.main.screenprojection.adapter.GeneralAdapter;
-import com.phicomm.remotecontrol.modules.main.screenprojection.entity.ContentItem;
-import com.phicomm.remotecontrol.modules.main.screenprojection.presenter.LocalMediaItemPresenter;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
+import com.phicomm.remotecontrol.modules.main.screenprojection.activities.AlbumItemActivity;
+import com.phicomm.remotecontrol.modules.main.screenprojection.adapter.AlbumsAdapter;
+import com.phicomm.remotecontrol.modules.main.screenprojection.model.MediaContentBiz;
 
 import butterknife.BindView;
 import butterknife.OnItemClick;
@@ -26,9 +22,9 @@ import butterknife.OnItemClick;
  * Created by yong04.zhou on 2017/9/19.
  */
 public class PictureFragment extends BaseFragment {
-    public static int mLayer = 0;
-    private GeneralAdapter<ContentItem> mContentItemAdapter;
-    private LocalMediaItemPresenter mLocalMediaItemPresenter;
+    public static int mAlbumIndex;
+    private AlbumsAdapter adapter;
+
     @BindView(R.id.album_gridv)
     GridView mGridView;
 
@@ -40,45 +36,23 @@ public class PictureFragment extends BaseFragment {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState); //init eventbus
-        if (!EventBus.getDefault().isRegistered(this)) {
-            EventBus.getDefault().register(this);
-        }
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
+        super.onViewCreated(view, savedInstanceState);
+        adapter = new AlbumsAdapter(getContext());
+        adapter.setArrayList(MediaContentBiz.mPictureItemArrayList);
+        mGridView.setAdapter(adapter);
     }
 
     @OnItemClick(R.id.album_gridv)
     public void onItemClick(int position) {
-        mLayer = 1;
-        mLocalMediaItemPresenter.browserItems(position, this);
-    }
-
-    /**
-     * 显示本地视频和照片
-     */
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void showItems(PictureEvent event) {
-        if (event.mType == 0) {
-            mGridView.setAdapter(event.mItems);
-            mContentItemAdapter = event.mItems;
-            mLocalMediaItemPresenter = event.mLocalMediaItemPresenter;
-        }
+        mAlbumIndex = position;
+        Intent intent = new Intent(getActivity(), AlbumItemActivity.class);
+        intent.putExtra("imageList", MediaContentBiz.mPictureItemArrayList.get(position));
+        intent.putExtra("pictureName", MediaContentBiz.mPicAlbumNameList.get(position));
+        startActivity(intent);
     }
 
     @Override
     public void onDestroy() {
-        if (EventBus.getDefault().isRegistered(this)) {
-            EventBus.getDefault().unregister(this);
-        }
         super.onDestroy();
     }
 }
