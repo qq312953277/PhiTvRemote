@@ -105,7 +105,6 @@ public class ApplyActivity extends BaseActivity implements ApplyView, BaseRecycl
 
     @Override
     public void onFailure(Object message) {
-        CommonUtils.showShortToast((String) message);
         DialogUtils.cancelLoadingDialog();
     }
 

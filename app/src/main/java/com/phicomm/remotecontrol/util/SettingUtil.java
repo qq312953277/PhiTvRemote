@@ -40,7 +40,6 @@ public class SettingUtil {
         TaskQuene.getInstance().sendKeyEvent(KeyCode.VOL_UP, new PhiCallBack() {
             @Override
             public void onSuccess(Object model) {
-                Toast.makeText(BaseApplication.getContext(), "SUCCESS", Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -59,7 +58,6 @@ public class SettingUtil {
         TaskQuene.getInstance().sendKeyEvent(KeyCode.VOL_DOWN, new PhiCallBack() {
             @Override
             public void onSuccess(Object model) {
-                Toast.makeText(BaseApplication.getContext(), "SUCCESS", Toast.LENGTH_SHORT).show();
             }
 
             @Override

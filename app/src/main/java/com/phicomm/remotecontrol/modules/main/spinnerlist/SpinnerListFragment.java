@@ -200,7 +200,6 @@ public class SpinnerListFragment extends BaseFragment {
                         //刷新下拉列表
                         List<RemoteBoxDevice> remoteBoxDeviceList = mGreenDaoUserUtil.querydata();
                         refreshSpinnerListView(remoteBoxDeviceList);
-                        CommonUtils.showToastBottom("connect SUCCESS");
                     }
 
                     @Override
@@ -208,7 +207,7 @@ public class SpinnerListFragment extends BaseFragment {
                         LogUtil.d("Connect fail:" + remoteDevice.toString());
                         mCurrentDevicesList.remove(remoteDevice);
                         DevicesUtil.setCurrentListResult(mCurrentDevicesList);
-                        CommonUtils.showToastBottom("connect fail");
+                        CommonUtils.showToastBottom(getString(R.string.connect_fail));
                     }
                 });
             }

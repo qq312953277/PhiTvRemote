@@ -164,7 +164,7 @@ public class ScreenshotActivity extends BaseActivity implements ScreenshotView {
 
     @Override
     public void onFailure(Object message) {
-        CommonUtils.showToastBottom((String) message);
+        CommonUtils.showToastBottom(getString(R.string.fail_screenshot));
     }
 
 }
