@@ -12,6 +12,7 @@ import com.phicomm.remotecontrol.R;
 import com.phicomm.remotecontrol.base.BaseFragment;
 import com.phicomm.remotecontrol.modules.main.screenprojection.activities.AlbumItemActivity;
 import com.phicomm.remotecontrol.modules.main.screenprojection.adapter.AlbumsAdapter;
+import com.phicomm.remotecontrol.modules.main.screenprojection.event.SetEnableEvent;
 import com.phicomm.remotecontrol.modules.main.screenprojection.model.MediaContentBiz;
 
 import butterknife.BindView;
@@ -37,6 +38,7 @@ public class PictureFragment extends BaseFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        mGridView.setEnabled(false);
         adapter = new AlbumsAdapter(getContext());
         adapter.setArrayList(MediaContentBiz.mPictureItemArrayList);
         mGridView.setAdapter(adapter);
@@ -49,6 +51,13 @@ public class PictureFragment extends BaseFragment {
         intent.putExtra("imageList", MediaContentBiz.mPictureItemArrayList.get(position));
         intent.putExtra("pictureName", MediaContentBiz.mPicAlbumNameList.get(position));
         startActivity(intent);
+    }
+
+    @Override
+    public void onEventMainThread(SetEnableEvent event) {
+        if (event.getEnable())  {
+            mGridView.setEnabled(true);
+        }
     }
 
     @Override

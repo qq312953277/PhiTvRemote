@@ -3,11 +3,13 @@ package com.phicomm.remotecontrol.modules.main.screenprojection.presenter;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.phicomm.remotecontrol.R;
 import com.phicomm.remotecontrol.base.BaseApplication;
 import com.phicomm.remotecontrol.modules.main.screenprojection.activities.PictureControlView;
 import com.phicomm.remotecontrol.modules.main.screenprojection.fragments.PictureFragment;
 import com.phicomm.remotecontrol.modules.main.screenprojection.model.MediaContentBiz;
 import com.phicomm.remotecontrol.modules.main.screenprojection.model.MediaControlBiz;
+import com.phicomm.remotecontrol.util.CommonUtils;
 
 import org.fourthline.cling.model.meta.Device;
 import org.fourthline.cling.support.model.item.Item;
@@ -30,19 +32,26 @@ public class PictureControlPresenterImpl implements PictureControlPresenter {
         item = mBaseApplication.getItem();
         mId = 0;
         controlBiz = new MediaControlBiz(device, mId);
-        for (int i = 0; i < MediaContentBiz.mPictureItemArrayList.get(PictureFragment.mAlbumIndex).getPictureItemList().size(); i++) {
-            if (item.getId().equals(MediaContentBiz.mPictureItemArrayList.get(PictureFragment.mAlbumIndex).getPictureItemList().get(i).getId())) {
-                index = i;
+        if (item != null) {
+            for (int i = 0; i < MediaContentBiz.mPictureItemArrayList.get(PictureFragment.mAlbumIndex).getPictureItemList().size(); i++) {
+                if (item.getId().equals(MediaContentBiz.mPictureItemArrayList.get(PictureFragment.mAlbumIndex).getPictureItemList().get(i).getId())) {
+                    index = i;
+                }
             }
         }
     }
 
     @Override
     public void showPicture(ImageView imageView) {
-        mView.setTittle(item.getTitle());
-        controlBiz.setPlayUri(item);
-        String pictureValues = MediaContentBiz.mPictureMapList.get(item.getId());
-        Glide.with(BaseApplication.getContext()).load(pictureValues).into(imageView);
+        if (item != null) {
+            mView.setTittle(item.getTitle());
+            controlBiz.setPlayUri(item);
+            String pictureValues = MediaContentBiz.mPictureMapList.get(item.getId());
+            Glide.with(BaseApplication.getContext()).load(pictureValues).into(imageView);
+        } else {
+            Glide.with(BaseApplication.getContext()).load(R.drawable.album_default_loading_pic).into(imageView);
+            CommonUtils.showShortToast("投屏失败，请重试！");
+        }
     }
 
     @Override

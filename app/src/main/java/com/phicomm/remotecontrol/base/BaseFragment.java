@@ -6,9 +6,14 @@ import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import com.phicomm.remotecontrol.modules.main.screenprojection.event.SetEnableEvent;
 import com.phicomm.remotecontrol.util.DialogUtils;
 import com.phicomm.remotecontrol.util.ScreenUtils;
 import com.phicomm.remotecontrol.util.SettingUtil;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.ButterKnife;
 
@@ -21,6 +26,26 @@ public class BaseFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
+    }
+
+    @Override
+    public void onResume() {
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
+        super.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
+        super.onPause();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventMainThread(SetEnableEvent event) {
     }
 
     public void onClick(View view) {
@@ -46,5 +71,10 @@ public class BaseFragment extends Fragment {
         } else {
             DialogUtils.showLoadingDialog(getActivity(), stringRes);
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
     }
 }

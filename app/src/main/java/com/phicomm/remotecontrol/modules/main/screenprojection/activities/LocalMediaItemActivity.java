@@ -22,10 +22,13 @@ import com.phicomm.remotecontrol.constant.PhiConstants;
 import com.phicomm.remotecontrol.modules.main.screenprojection.constants.DeviceDisplayListOperation;
 import com.phicomm.remotecontrol.modules.main.screenprojection.entity.DeviceDisplay;
 import com.phicomm.remotecontrol.modules.main.screenprojection.entity.DisplayDeviceList;
+import com.phicomm.remotecontrol.modules.main.screenprojection.event.SetEnableEvent;
 import com.phicomm.remotecontrol.modules.main.screenprojection.presenter.LocalMediaItemPresenter;
 import com.phicomm.remotecontrol.modules.main.screenprojection.presenter.LocalMediaItemPresenterImpl;
 import com.phicomm.remotecontrol.util.CommonUtils;
 import com.phicomm.remotecontrol.util.DevicesUtil;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
@@ -92,7 +95,6 @@ public class LocalMediaItemActivity extends BaseActivity implements MyFragmentAd
     @BindView(R.id.icon_vio_choose)
     ImageView mVioChoose;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -104,9 +106,15 @@ public class LocalMediaItemActivity extends BaseActivity implements MyFragmentAd
     private void init() {
         setMarginForStatusBar(mRlTitle, TITLE_BAR_HEIGHT_DP);
         mTvTitle.setText(getString(R.string.local_screenprojection));
-        //setupPager();
+        setDisable();
+        setupPager();
         mDisplayDeviceList = DisplayDeviceList.getInstance();
         mLocalMediaItemPresenter = new LocalMediaItemPresenterImpl(this, this, (BaseApplication) getApplication());
+    }
+
+    private void setDisable() {
+        mPic.setEnabled(false);
+        mVid.setEnabled(false);
     }
 
     private void getDataLogic() {
@@ -122,6 +130,7 @@ public class LocalMediaItemActivity extends BaseActivity implements MyFragmentAd
 
     private void finishScan() {
         mInitDLNADateProgressBar.setVisibility(View.GONE);
+        setEnable();
         mLocalMediaItemPresenter.destory();
         if (null == DevicesUtil.getTarget() || mDisplayDeviceList == null || isSelectedDeviceNotOnline(DevicesUtil.getTarget(), mDisplayDeviceList.getDeviceDisplayList())) {
             CommonUtils.showShortToast("初始化投屏失败");
@@ -130,9 +139,14 @@ public class LocalMediaItemActivity extends BaseActivity implements MyFragmentAd
             ((BaseApplication) getApplication()).setDeviceDisplay(mDisplayDevice);
             if (mDisplayDevice.getDevice().isFullyHydrated()) {
                 mLocalMediaItemPresenter.getItems();
-                setupPager();
             }
         }
+    }
+
+    private void setEnable() {
+        mPic.setEnabled(true);
+        mVid.setEnabled(true);
+        EventBus.getDefault().post(new SetEnableEvent(true));
     }
 
     @Override

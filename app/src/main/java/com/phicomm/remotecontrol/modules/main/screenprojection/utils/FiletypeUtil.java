@@ -1,22 +1,10 @@
 package com.phicomm.remotecontrol.modules.main.screenprojection.utils;
 
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffXfermode;
-import android.graphics.Rect;
-import android.graphics.RectF;
 import android.text.TextUtils;
 
 import org.fourthline.cling.support.model.ProtocolInfo;
 
-import java.io.File;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Locale;
-import java.util.TimeZone;
 
 /**
  * Created by kang.sun on 2017/8/22.
@@ -127,69 +115,5 @@ public class FiletypeUtil {
             return true;
         }
         return false;
-    }
-
-    public static Bitmap adjustSubBitmap(Bitmap currentImage, int targetWidth, int tarHeight, int filletDegree) {
-        if (currentImage == null) {
-            return currentImage;
-        }
-        int picWidth = currentImage.getWidth();
-        int picHeight = currentImage.getHeight();
-        float scaleRate = 1.0f * targetWidth / picWidth > 1.0f * tarHeight / picHeight ?
-                1.0f * targetWidth / picWidth : 1.0f * tarHeight / picHeight;
-        currentImage = Bitmap.createScaledBitmap(currentImage, (int) (scaleRate * picWidth),
-                (int) (scaleRate * picHeight), true);
-        picWidth = currentImage.getWidth();
-        picHeight = currentImage.getHeight();
-        Bitmap paintingBoard = Bitmap.createBitmap(targetWidth, tarHeight, Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(paintingBoard);
-        canvas.drawARGB(Color.TRANSPARENT, Color.TRANSPARENT, Color.TRANSPARENT, Color.TRANSPARENT);
-        final Paint paint = new Paint();
-        paint.setAntiAlias(true);
-        paint.setColor(Color.BLACK);
-        final RectF rectF = new RectF(0, 0, targetWidth, tarHeight);
-        canvas.drawRoundRect(rectF, filletDegree, filletDegree, paint);
-        int left = 0;
-        int top = 0;
-        int right = targetWidth < picWidth ? targetWidth : picWidth;
-        int bottom = tarHeight < picHeight ? tarHeight : picHeight;
-        if (picWidth > right) {
-            left = (picWidth - right) / 2;
-            right = left + right;
-        }
-        if (picHeight > bottom) {
-            top = (picHeight - bottom) / 2;
-            bottom = top + bottom;
-        }
-        final Rect src = new Rect(left, top, right, bottom);
-        final Rect dst = new Rect(0, 0, targetWidth, tarHeight);
-        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
-        canvas.drawBitmap(currentImage, src, dst, paint);
-        return paintingBoard;
-    }
-
-    public static String RemoveType(File file) {
-        String fileName = file.getName();
-        int pos = fileName.lastIndexOf(".");
-        if (pos == -1) {
-            pos = fileName.length();
-        }
-        fileName = fileName.substring(0, pos);
-        return fileName;
-    }
-
-    public static String timeParse(long duration) {
-        Date mVideoDate = new Date(duration);
-        String mTimes = "";
-        try {
-            SimpleDateFormat mSDF = new SimpleDateFormat("HH:mm:ss");
-            mSDF.setTimeZone(TimeZone.getTimeZone("GMT"));
-            mTimes = mSDF.format(mVideoDate);
-            mTimes = "▶ " + mTimes;
-            return mTimes;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
     }
 }
