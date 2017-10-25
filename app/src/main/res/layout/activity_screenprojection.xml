@@ -2,22 +2,22 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:orientation="vertical">
 
     <include layout="@layout/title_bar" />
 
-    <LinearLayout
-        android:id="@+id/tab_layout"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerVertical="true"
+        android:layout_height="50dp"
+        android:background="@color/loginout_core_bg"
+        android:paddingTop="5dp"
         android:orientation="vertical">
 
         <RadioGroup
             android:id="@+id/radio_group"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:gravity="center_horizontal"
             android:orientation="horizontal">
 
@@ -25,42 +25,55 @@
                 android:id="@+id/picture"
                 android:layout_width="100dp"
                 android:layout_height="40dp"
-                android:layout_marginBottom="10dp"
                 android:layout_marginRight="25dp"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/radiobutton"
+                android:background="@null"
                 android:button="@null"
                 android:checked="true"
                 android:gravity="center"
-                android:text="@string/photo" />
+                android:text="@string/photo"
+                android:textColor="@drawable/selector_radiotext"
+                android:textSize="@dimen/text_size_17sp" />
 
             <RadioButton
                 android:id="@+id/video"
                 android:layout_width="100dp"
                 android:layout_height="40dp"
-                android:layout_marginBottom="10dp"
                 android:layout_marginLeft="25dp"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/radiobutton"
+                android:background="@null"
                 android:button="@null"
                 android:gravity="center"
-                android:text="@string/video" />
+                android:text="@string/video"
+                android:textColor="@drawable/selector_radiotext"
+                android:textSize="@dimen/text_size_17sp" />
         </RadioGroup>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:background="#DEDEDE" />
-    </LinearLayout>
+        <ImageView
+            android:id="@+id/icon_pic_choose"
+            android:layout_width="26.5dp"
+            android:layout_height="9.5dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="92dp"
+            android:src="@drawable/icon_selected"
+            android:visibility="visible" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tab_layout"></LinearLayout>
+        <ImageView
+            android:id="@+id/icon_vio_choose"
+            android:layout_width="26.5dp"
+            android:layout_height="9.5dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="92dp"
+            android:src="@drawable/icon_selected"
+            android:visibility="gone" />
+
+
+    </RelativeLayout>
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp">
 
         <com.phicomm.remotecontrol.modules.main.screenprojection.activities.CustomViewPager
             android:id="@+id/viewPager"

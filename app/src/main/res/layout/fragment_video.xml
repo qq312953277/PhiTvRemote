@@ -2,12 +2,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingLeft="19.6dp">
 
     <ListView
         android:id="@+id/video_listview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:dividerHeight="1.5dp" />
+        android:divider="@color/loginout_core_bg"
+        android:dividerHeight="0.5dp" />
 
 </LinearLayout>

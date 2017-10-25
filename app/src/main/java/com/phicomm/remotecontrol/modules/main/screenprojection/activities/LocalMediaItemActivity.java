@@ -30,7 +30,6 @@ import com.phicomm.remotecontrol.util.DevicesUtil;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static com.phicomm.remotecontrol.constant.PhiConstants.TITLE_BAR_HEIGHT_DP;
@@ -87,11 +86,17 @@ public class LocalMediaItemActivity extends BaseActivity implements MyFragmentAd
     @BindView(R.id.initDLNADateProgressBar)
     ProgressBar mInitDLNADateProgressBar;
 
+    @BindView(R.id.icon_pic_choose)
+    ImageView mPicChoose;
+
+    @BindView(R.id.icon_vio_choose)
+    ImageView mVioChoose;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_screenprojection);
-        ButterKnife.bind(this);
         init();
         getDataLogic();
     }
@@ -137,9 +142,13 @@ public class LocalMediaItemActivity extends BaseActivity implements MyFragmentAd
         switch (view.getId()) {
             case R.id.picture:
                 mViewPage.setCurrentItem(0, false);
+                mPicChoose.setVisibility(View.VISIBLE);
+                mVioChoose.setVisibility(View.GONE);
                 break;
             case R.id.video:
                 mViewPage.setCurrentItem(1, false);
+                mPicChoose.setVisibility(View.GONE);
+                mVioChoose.setVisibility(View.VISIBLE);
                 break;
             case R.id.iv_back:
                 finish();

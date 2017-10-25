@@ -18,7 +18,8 @@
             android:ellipsize="end"
             android:gravity="left"
             android:text="share"
-            android:textColor="#000000" />
+            android:textColor="@color/listview_divider"
+            android:textSize="@dimen/text_size_14sp" />
 
         <View
             android:layout_width="1.2dp"
@@ -27,15 +28,16 @@
             android:layout_marginBottom="3dp"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="4dp"
-            android:background="#aa000000" />
+            android:background="@color/listview_divider" />
 
         <TextView
             android:id="@+id/count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="left"
-            android:text="0"
-            android:textColor="#DCDCDC" />
+            android:text=""
+            android:textColor="@color/color_80484848"
+            android:textSize="@dimen/text_size_14sp" />
     </LinearLayout>
 
 
@@ -45,36 +47,26 @@
         android:layout_height="80dp"
         android:layout_gravity="center"
         android:layout_marginBottom="5dp"
-        android:background="@drawable/regtangle_bg1"
-        android:padding="2dp"
         android:scaleType="fitXY" />
 
     <RelativeLayout
         android:id="@+id/rl_bottom_photo"
-        android:layout_width="wrap_content"
+        android:layout_width="160dp"
         android:layout_height="wrap_content"
-        android:padding="2dp">
+        android:layout_gravity="center">
 
         <ImageView
             android:id="@+id/image2"
-            android:layout_width="77dp"
-            android:layout_height="55dp"
-            android:layout_alignParentLeft="true"
+            android:layout_width="78dp"
+            android:layout_height="57dp"
             android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_gravity="center"
-            android:background="@drawable/regtangle_bg2"
-            android:padding="2dp"
             android:scaleType="fitXY" />
 
         <ImageView
             android:id="@+id/image3"
-            android:layout_width="77dp"
-            android:layout_height="55dp"
+            android:layout_width="78dp"
+            android:layout_height="57dp"
             android:layout_alignParentRight="true"
-            android:layout_gravity="center"
-            android:background="@drawable/regtangle_bg2"
-            android:padding="2dp"
             android:scaleType="fitXY" />
     </RelativeLayout>
 
