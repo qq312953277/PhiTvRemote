@@ -12,6 +12,7 @@ import android.view.View;
 
 import com.phicomm.remotecontrol.R;
 import com.phicomm.remotecontrol.base.BaseApplication;
+import com.phicomm.remotecontrol.util.SettingUtil;
 
 /**
  * Created by yong04.zhou on 2017/9/28.
@@ -58,6 +59,8 @@ public class EditTextWithDel extends AppCompatEditText implements View.OnFocusCh
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        SettingUtil.checkVibrate();
+
         if (event.getAction() == MotionEvent.ACTION_UP) {
             if (getCompoundDrawables()[2] != null) {
                 //getTotalPaddingRight()图标左边缘至控件右边缘的距离

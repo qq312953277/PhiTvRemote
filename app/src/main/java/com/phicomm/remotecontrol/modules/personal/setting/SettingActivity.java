@@ -47,7 +47,7 @@ public class SettingActivity extends BaseActivity {
         mVibrate.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                SettingUtil.isVibrate();
+                SettingUtil.checkVibrate();
 
                 if (isChecked)
                     SettingUtil.putVibrateStatus(true);
@@ -61,7 +61,7 @@ public class SettingActivity extends BaseActivity {
         mVoice.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                SettingUtil.isVibrate();
+                SettingUtil.checkVibrate();
 
                 if (isChecked)
                     SettingUtil.putVoiceStatus(true);

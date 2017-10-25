@@ -1,7 +1,5 @@
 package com.phicomm.remotecontrol.modules.devices.connectrecords;
 
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;

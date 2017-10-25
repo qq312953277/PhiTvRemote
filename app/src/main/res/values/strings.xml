@@ -195,6 +195,8 @@
     <string name="please_login">login</string>
     <string name="login_tips">the number is phicomm account, please log in.</string>
     <string name="exit">exit</string>
+    <string name="logout_title">Exit account</string>
+    <string name="logout_content">Sure to exit?</string>
     <string name="kick_tips">Your account has been logged on to another device. Please login again and change the password.</string>
     <string name="account_exit">Sure to exist account？</string>
     <string name="account_exit_msg">Data cannot be synchronized after exit account</string>

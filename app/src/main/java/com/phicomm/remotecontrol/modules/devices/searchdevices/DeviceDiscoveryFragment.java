@@ -40,7 +40,6 @@ import com.phicomm.remotecontrol.modules.devices.searchdevices.DeviceDiscoveryCo
 import com.phicomm.remotecontrol.util.CommonUtils;
 import com.phicomm.remotecontrol.util.DevicesUtil;
 import com.phicomm.remotecontrol.util.DialogUtils;
-import com.phicomm.remotecontrol.util.LogUtil;
 import com.phicomm.remotecontrol.util.SettingUtil;
 import com.tandong.bottomview.view.BottomView;
 
@@ -238,6 +237,8 @@ public class DeviceDiscoveryFragment extends BaseFragment implements DeviceDisco
     View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+            SettingUtil.checkVibrate();
+
             if (v == mIPCancleBt) {
                 mBottomView.dismissBottomView();
             } else if (v == mIPConfirmBt) {
@@ -278,6 +279,8 @@ public class DeviceDiscoveryFragment extends BaseFragment implements DeviceDisco
     private AdapterView.OnItemClickListener manualConnectDevice = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+            SettingUtil.checkVibrate();
+
             String str = mIPInputEditText.getText().toString();
             String text = (String) adapterView.getAdapter().getItem(position);
             if (text.equals("←")) {
@@ -318,10 +321,10 @@ public class DeviceDiscoveryFragment extends BaseFragment implements DeviceDisco
     private AdapterView.OnItemClickListener selectHandler = new AdapterView.OnItemClickListener() {
         public void onItemClick(AdapterView<?> parent, View v, int position,
                                 long id) {
+            SettingUtil.checkVibrate();
+
             showLoadingDialog(null);
-            if (SettingUtil.isVibrateOn()) {
-                SettingUtil.doVibrate();
-            }
+
             final int pos = position;
             mFindIndex = position;
             final RemoteBoxDevice remoteDevice = (RemoteBoxDevice) parent.getItemAtPosition(
@@ -376,13 +379,8 @@ public class DeviceDiscoveryFragment extends BaseFragment implements DeviceDisco
 
     @Override
     public void onPause() {
-        super.onPause();
-    }
-
-    @Override
-    public void onStop() {
         getActivity().unregisterReceiver(mWifiChangeReceiver);
-        super.onStop();
+        super.onPause();
     }
 
     @Override

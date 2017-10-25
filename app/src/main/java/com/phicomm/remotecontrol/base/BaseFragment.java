@@ -49,7 +49,7 @@ public class BaseFragment extends Fragment {
     }
 
     public void onClick(View view) {
-        SettingUtil.isVibrate();//震动事件，子类继承
+        SettingUtil.checkVibrate();//震动事件，子类继承
     }
 
     /**
@@ -61,7 +61,8 @@ public class BaseFragment extends Fragment {
      */
     public void setMarginForStatusBar(View view, int titleBarHeightDp) {
         LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) view.getLayoutParams();
-        params.height = ScreenUtils.getSystemBarHeight() + ScreenUtils.dp2px(titleBarHeightDp);
+        //params.height = ScreenUtils.getSystemBarHeight() + ScreenUtils.dp2px(titleBarHeightDp);
+        params.height = ScreenUtils.dp2px(titleBarHeightDp);
         view.setLayoutParams(params);
     }
 

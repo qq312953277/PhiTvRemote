@@ -36,5 +36,5 @@ public class PhiConstants {
     public static final String APP_USER_REGISTER_PROTOCAL_BASE_URL = "http://ihome.phicomm.com:10011/balance-app/h5/user/register/protocol/v1/";
 
     //TitleBar height
-    public static final int TITLE_BAR_HEIGHT_DP = 40;//单位dp
+    public static final int TITLE_BAR_HEIGHT_DP = 45;//单位dp
 }

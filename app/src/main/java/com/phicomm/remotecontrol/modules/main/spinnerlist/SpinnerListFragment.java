@@ -181,7 +181,7 @@ public class SpinnerListFragment extends BaseFragment {
 
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            SettingUtil.isVibrate();
+            SettingUtil.checkVibrate();
 
             final RemoteBoxDevice remoteDevice = (RemoteBoxDevice) parent.getAdapter().getItem
                     (position);

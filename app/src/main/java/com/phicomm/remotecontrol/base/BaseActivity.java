@@ -13,15 +13,13 @@ import com.phicomm.remotecontrol.modules.personal.account.event.LogoutEvent;
 import com.phicomm.remotecontrol.modules.personal.account.event.MultiLogoutEvent;
 import com.phicomm.remotecontrol.modules.personal.account.event.OffLineEvent;
 import com.phicomm.remotecontrol.modules.personal.account.local.LocalDataRepository;
-import com.phicomm.remotecontrol.preference.PreferenceDef;
+import com.phicomm.remotecontrol.modules.personal.personaldetail.PersonalActivity;
 import com.phicomm.remotecontrol.util.DevicesUtil;
 import com.phicomm.remotecontrol.util.DialogUtils;
 import com.phicomm.remotecontrol.util.ScreenUtils;
 import com.phicomm.remotecontrol.util.SettingUtil;
-import com.phicomm.remotecontrol.util.StatusBarUtils;
 import com.phicomm.widgets.alertdialog.PhiAlertDialog;
 import com.umeng.analytics.MobclickAgent;
-import com.phicomm.remotecontrol.modules.personal.personaldetail.PersonalActivity;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -44,7 +42,7 @@ public class BaseActivity extends AppCompatActivity {
         super.setContentView(layoutResID);
         injectViews();
         BaseApplication.getApplication().add(this);
-        StatusBarUtils.setImmersionStatusBar(this);
+        //StatusBarUtils.setImmersionStatusBar(this);
     }
 
     private void injectViews() {
@@ -163,7 +161,7 @@ public class BaseActivity extends AppCompatActivity {
 
 
     public void onClick(View view) {
-        SettingUtil.isVibrate();//震动事件，子类继承
+        SettingUtil.checkVibrate();//震动事件，子类继承
     }
 
     /**
@@ -175,7 +173,8 @@ public class BaseActivity extends AppCompatActivity {
      */
     public void setMarginForStatusBar(View view, int titleBarHeightDp) {
         LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) view.getLayoutParams();
-        params.height = ScreenUtils.getSystemBarHeight() + ScreenUtils.dp2px(titleBarHeightDp);
+//        params.height = ScreenUtils.getSystemBarHeight() + ScreenUtils.dp2px(titleBarHeightDp);
+        params.height = ScreenUtils.dp2px(titleBarHeightDp);
         view.setLayoutParams(params);
     }
 

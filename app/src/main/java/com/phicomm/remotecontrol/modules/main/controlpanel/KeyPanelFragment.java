@@ -12,7 +12,6 @@ import android.widget.Toast;
 import com.phicomm.remotecontrol.R;
 import com.phicomm.remotecontrol.constant.Commands;
 import com.phicomm.remotecontrol.constant.KeyCode;
-import com.phicomm.remotecontrol.util.CommonUtils;
 import com.phicomm.remotecontrol.util.LogUtil;
 import com.phicomm.remotecontrol.util.SettingUtil;
 
@@ -111,7 +110,7 @@ public class KeyPanelFragment extends Fragment implements PanelContract.View, an
 
     @Override
     public void onClick(android.view.View v) {
-        SettingUtil.isVibrate();
+        SettingUtil.checkVibrate();
 
         LogUtil.d(TAG, "onClick");
         if (v == mRightBtn) {

@@ -103,7 +103,7 @@ public class CoreControlActivity extends BaseActivity implements UpdateView {
         clearRestoreFragment(savedInstanceState);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_core_controler);
-        transStatusbar();
+        //transStatusbar();
         mDisplayDeviceList = DisplayDeviceList.getInstance();
         mContext = this;
         initSpinner();

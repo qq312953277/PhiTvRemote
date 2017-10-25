@@ -168,6 +168,9 @@
     <string name="login">登录</string>
     <string name="login_divide">登&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;录</string>
     <string name="logout">退出当前账号</string>
+    <string name="logout_title">退出登录</string>
+    <string name="logout_content">您确定要退出登录吗？</string>
+
     <string name="device">我的设备</string>
     <string name="my_device">我的设备</string>
     <string name="find">发现</string>

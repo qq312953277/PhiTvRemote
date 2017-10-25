@@ -1,7 +1,5 @@
 package com.phicomm.remotecontrol.util;
 
-import android.widget.Toast;
-
 import com.phicomm.remotecontrol.TaskQuene;
 import com.phicomm.remotecontrol.base.BaseApplication;
 import com.phicomm.remotecontrol.constant.KeyCode;
@@ -72,7 +70,7 @@ public class SettingUtil {
         });
     }
 
-    public static void isVibrate() {
+    public static void checkVibrate() {
         if (SettingUtil.isVibrateOn()) {
             SettingUtil.doVibrate();
         }

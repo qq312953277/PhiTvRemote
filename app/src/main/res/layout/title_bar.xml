@@ -2,32 +2,31 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white"
-    android:orientation="vertical">
+    android:background="@color/white">
 
     <RelativeLayout
         android:id="@+id/rl_title"
         android:layout_width="match_parent"
-        android:layout_height="35dp"
-        android:paddingBottom="5dp"
-        android:paddingTop="5dp">
+        android:layout_height="45dp"
+        android:paddingBottom="5dp">
 
         <ImageView
             android:id="@+id/iv_back"
             android:layout_width="16.9dp"
-            android:layout_height="23.9dp"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
+            android:layout_height="20.9dp"
+            android:layout_centerVertical="true"
             android:layout_marginLeft="19.1dp"
-            android:padding="3dp"
+            android:paddingLeft="3dp"
+            android:paddingRight="3dp"
+            android:paddingTop="3dp"
             android:src="@drawable/titlebar_back_icon" />
 
         <TextView
             android:id="@+id/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
             android:layout_centerInParent="true"
+            android:layout_centerVertical="true"
             android:textColor="@color/core_activity_bg"
             android:textSize="@dimen/text_size_17sp" />
 
@@ -35,10 +34,9 @@
             android:id="@+id/iv_right"
             android:layout_width="22.5dp"
             android:layout_height="22.5dp"
-            android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
             android:layout_marginRight="18dp"
-            android:paddingBottom="3dp"
             android:paddingRight="3dp"
             android:visibility="gone" />
 
@@ -46,8 +44,8 @@
             android:id="@+id/tv_right"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
             android:layout_marginRight="21dp"
             android:textColor="@color/bottom_text_color"
             android:textSize="@dimen/text_size_14sp"
