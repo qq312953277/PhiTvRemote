@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.phicomm.remotecontrol.R;
 import com.phicomm.remotecontrol.RemoteBoxDevice;
+import com.phicomm.remotecontrol.util.DevicesUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,7 +61,6 @@ public class SpinnerListAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
 
         }
-        //只显示前10个字符，多余的用省略号表示
         String mDeviceName = mSpinnerDeviceList.get(position).getName();
         if (mDeviceName.length() <= 10) {
             holder.mTextView.setText(mDeviceName);
@@ -68,7 +68,7 @@ public class SpinnerListAdapter extends BaseAdapter {
             String mShortDeviceName = mDeviceName.substring(0, 10) + "...";
             holder.mTextView.setText(mShortDeviceName);
         }
-        if (position == 0) {
+        if (position == 0 && DevicesUtil.getTarget() != null) {
             holder.mImageViewSelected.setVisibility(View.VISIBLE);
         } else {
             holder.mImageViewSelected.setVisibility(View.INVISIBLE);

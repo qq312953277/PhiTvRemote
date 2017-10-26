@@ -44,8 +44,9 @@ public class SpinnerListFragment extends BaseFragment {
     private static String TAG = "SpinnerListFragment";
     private SpinnerWindowView mSpinerPopWindow;
     private GreenDaoUserUtil mGreenDaoUserUtil;
-    private List<RemoteBoxDevice> mCurrentDevicesList = new ArrayList<>(0);
+    private List<RemoteBoxDevice> mCurrentDevicesList = new ArrayList<>();
     private boolean mIsSuccess = false;
+    private List<RemoteBoxDevice> remoteBoxDeviceList;
 
     @BindView(R.id.connected_device)
     TextView mDeviceTv;
@@ -57,7 +58,6 @@ public class SpinnerListFragment extends BaseFragment {
     ImageView mUpDown;
 
     public SpinnerListFragment() {
-
     }
 
     public static SpinnerListFragment newInstance() {
@@ -86,7 +86,6 @@ public class SpinnerListFragment extends BaseFragment {
     private void initAdapter() {
         mSpinerPopWindow = new SpinnerWindowView(getContext(), itemClickListener);
         mSpinerPopWindow.setOnDismissListener(dismissListener);
-
         mGreenDaoUserUtil = new GreenDaoUserUtil();
         new Thread(mLoadConnectedTask).start();
         DevicesUtil.setGreenDaoUserUtil(mGreenDaoUserUtil);
@@ -95,19 +94,24 @@ public class SpinnerListFragment extends BaseFragment {
     @Override
     public void onResume() {
         DevicesUtil.loadRecentList();
-
-        //获取连接记录并显示
-        List<RemoteBoxDevice> remoteBoxDeviceList = mGreenDaoUserUtil.querydata();
+        remoteBoxDeviceList = mGreenDaoUserUtil.querydata();
         RemoteBoxDevice target = DevicesUtil.getTarget();
-
         if (target != null) {
+            mUpDown.setImageResource(R.drawable.icon_down);
             mUpDown.setVisibility(View.VISIBLE);
             mDeviceTv.setText(target.getName());
+            refreshSpinnerListView(remoteBoxDeviceList);
         } else {
-            mUpDown.setVisibility(View.GONE);
-            mDeviceTv.setText(getString(R.string.unable_to_connect_device));
+            if (remoteBoxDeviceList.size() != 0) {
+                mUpDown.setImageResource(R.drawable.icon_down);
+                mUpDown.setVisibility(View.VISIBLE);
+                mDeviceTv.setText(getString(R.string.unable_to_connect_device));
+                refreshSpinnerListView(remoteBoxDeviceList);
+            } else {
+                mUpDown.setVisibility(View.GONE);
+                mDeviceTv.setText(getString(R.string.unable_to_connect_device));
+            }
         }
-        refreshSpinnerListView(remoteBoxDeviceList);
         super.onResume();
     }
 
@@ -115,7 +119,6 @@ public class SpinnerListFragment extends BaseFragment {
         if (deviceList != null && deviceList.size() > 0) {
             mUpDown.setVisibility(View.VISIBLE);
             mSpinerPopWindow.notifyDataChange(deviceList);
-            mUpDown.setImageResource(R.drawable.icon_down);
             mDeviceTv.setEnabled(true);
         } else {
             mUpDown.setVisibility(View.GONE);
@@ -145,9 +148,7 @@ public class SpinnerListFragment extends BaseFragment {
                     public void onSuccess(RemoteBoxDevice device) {
                         Log.d(TAG, "onSuccess device=" + device);
                         DevicesUtil.setTarget(device);
-                        if (mCurrentDevicesList.size() == 0) {
-                            mCurrentDevicesList.add(device);
-                        }
+                        mCurrentDevicesList.add(device);
                         mIsSuccess = true;
                         sendMessage();
                         DevicesUtil.setTarget(device);
@@ -178,22 +179,22 @@ public class SpinnerListFragment extends BaseFragment {
 
     private AdapterView.OnItemClickListener itemClickListener = new AdapterView
             .OnItemClickListener() {
-
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             SettingUtil.checkVibrate();
-
             final RemoteBoxDevice remoteDevice = (RemoteBoxDevice) parent.getAdapter().getItem
                     (position);
             Log.d(TAG, "onItemSelected remoteDevice=" + remoteDevice);
             if (remoteDevice != null) {
                 ConnectManager.getInstance().connect(remoteDevice, new ConnectManager
                         .ConnetResultCallback() {
-
                     @Override
                     public void onSuccess(RemoteBoxDevice device) {
                         RemoteBoxDevice target = DevicesUtil.getTarget();
-                        if (target != null && !(target.getBssid().equals(device.getBssid()))) {
+                        if (target == null) {
+                            DevicesUtil.setTarget(remoteDevice);
+                            DevicesUtil.insertOrUpdateRecentDevices(device);
+                        } else if (!(target.getBssid().equals(device.getBssid()))) {
                             DevicesUtil.insertOrUpdateRecentDevices(device);
                         }
                         mDeviceTv.setText(remoteDevice.getName());
@@ -247,7 +248,6 @@ public class SpinnerListFragment extends BaseFragment {
     @OnClick({R.id.login, R.id.scan, R.id.rl_connected_device})
     public void onClick(View view) { //继承BaseFragment震动事件
         super.onClick(view);
-
         switch (view.getId()) {
             case R.id.login:
                 CommonUtils.startIntent(getActivity(), null, PersonalActivity.class);
@@ -261,7 +261,7 @@ public class SpinnerListFragment extends BaseFragment {
                 WindowManager wm = (WindowManager) getContext()
                         .getSystemService(Context.WINDOW_SERVICE);
 
-                if (DevicesUtil.getTarget() != null) {
+                if (DevicesUtil.getTarget() != null || remoteBoxDeviceList.size() > 0) {
                     setBackgroundTransparent(0.4f);
                     mUpDown.setImageResource(R.drawable.icon_up);
                     mSpinerPopWindow.setWidth(wm.getDefaultDisplay().getWidth());

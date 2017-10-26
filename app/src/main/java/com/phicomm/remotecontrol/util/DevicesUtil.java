@@ -21,11 +21,11 @@ public class DevicesUtil {
 
     private static String TAG = "DevicesUtil";
 
-    public static List<RemoteDevice> mRecentedConnectedList = new ArrayList<>(0);
+    public static List<RemoteDevice> mRecentedConnectedList = new ArrayList<>();
 
-    private static Map<Long, String> mRecentedConnectedMap = new HashMap<>(0);
+    private static Map<Long, String> mRecentedConnectedMap = new HashMap<>();
 
-    public static List<RemoteBoxDevice> mCurrentDevicesListResult = new ArrayList<>(0);
+    public static List<RemoteBoxDevice> mCurrentDevicesListResult = new ArrayList<>();
 
     public static GreenDaoUserUtil mGreenDaoUserUtil;
 
