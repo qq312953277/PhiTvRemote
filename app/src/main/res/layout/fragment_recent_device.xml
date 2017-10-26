@@ -10,9 +10,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
         android:layout_marginLeft="36dp"
         android:layout_marginRight="33.5dp"
+        android:layout_weight="1"
         android:orientation="vertical">
 
         <ListView
@@ -40,12 +40,13 @@
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
         android:layout_marginBottom="20dp"
+        android:layout_marginTop="50dp"
         android:visibility="gone">
 
         <Button
             android:id="@+id/bt_cancel"
+            style="?android:attr/borderlessButtonStyle"
             android:layout_width="120dp"
             android:layout_height="42dp"
             android:layout_alignParentLeft="true"
@@ -57,6 +58,7 @@
 
         <Button
             android:id="@+id/bt_delete"
+            style="?android:attr/borderlessButtonStyle"
             android:layout_width="120dp"
             android:layout_height="42dp"
             android:layout_alignParentRight="true"

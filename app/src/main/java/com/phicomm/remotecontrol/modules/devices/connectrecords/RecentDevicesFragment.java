@@ -7,9 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -40,21 +38,11 @@ public class RecentDevicesFragment extends BaseFragment implements RecentDevices
     @BindView(R.id.recent_devices_list)
     ListView mRecentDeivesList;
 
-    @BindView(R.id.bt_cancel)
-    Button mCancelBtn;
-
-    @BindView(R.id.bt_delete)
-    Button mDeleteBtn;
-
-
     @BindView(R.id.linearLayout)
     RelativeLayout mActionBarLl;
 
     @BindView(android.R.id.empty)
     public TextView mEmptyTv;
-
-    @BindView(R.id.iv_back)
-    ImageView mIvBack;
 
     @BindView(R.id.tv_title)
     TextView mTvTitle;
@@ -95,7 +83,6 @@ public class RecentDevicesFragment extends BaseFragment implements RecentDevices
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ButterKnife.bind(this, view);
         init();
         initAdapter();
         setonClickListener();
