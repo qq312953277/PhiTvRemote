@@ -4,10 +4,13 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.Toast;
 
 import com.phicomm.remotecontrol.R;
+import com.phicomm.remotecontrol.base.BaseApplication;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,12 +21,14 @@ import java.util.List;
 
 public class DiscoveryProgressbar extends View {
     private Paint mPaint;
-    private int mMaxWidth = 255;
+    private int mMaxWidth = 260;
+    private int mMaxWidthWithAndroid7 = 180;
     private boolean mIsStarting = false;
-    private List<String> mAlphaList = new ArrayList<String>();
-    private List<String> mStartWidthList = new ArrayList<String>();
+    private List<String> mAlphaList = new ArrayList<>();
+    private List<String> mStartWidthList = new ArrayList<>();
     public static final String mInitAlphaList = "255";
     public static final String mInitStartWidthList = "0";
+    public static final int CIRCLE_MIN_RADIUS = 30;
 
     public DiscoveryProgressbar(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
@@ -50,21 +55,22 @@ public class DiscoveryProgressbar extends View {
     @Override
     public void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+        int maxWidth = (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) ? mMaxWidthWithAndroid7 : mMaxWidth;
+
         setBackgroundColor(Color.TRANSPARENT);
         for (int i = 0; i < mAlphaList.size(); i++) {
             int mAlpha = Integer.parseInt(mAlphaList.get(i));
             int mStartWidth = Integer.parseInt(mStartWidthList.get(i));
             mPaint.setAlpha(mAlpha);
-            canvas.drawCircle(getWidth() / 2, getHeight() / 2, mStartWidth + 50,
+            canvas.drawCircle(getWidth() / 2, getHeight() / 2, mStartWidth + CIRCLE_MIN_RADIUS,
                     mPaint);
-            if (mIsStarting && mAlpha > 0 && mStartWidth < mMaxWidth) {
+            if (mIsStarting && mAlpha > 0 && mStartWidth < maxWidth) {
                 mAlphaList.set(i, (mAlpha - 1) + "");
                 mStartWidthList.set(i, (mStartWidth + 1) + "");
             }
         }
-        if (mIsStarting
-                && Integer
-                .parseInt(mStartWidthList.get(mStartWidthList.size() - 1)) == mMaxWidth / 5) {
+        String startLength = mStartWidthList.get(mStartWidthList.size() - 1);
+        if (mIsStarting && Integer.parseInt(startLength) == maxWidth / 5) {
             mAlphaList.add(mInitAlphaList);
             mStartWidthList.add(mInitStartWidthList);
         }
@@ -79,12 +85,5 @@ public class DiscoveryProgressbar extends View {
         mIsStarting = true;
     }
 
-    public void stop() {
-        mIsStarting = false;
-    }
-
-    public boolean isStarting() {
-        return mIsStarting;
-    }
 }
 

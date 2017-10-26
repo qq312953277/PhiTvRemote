@@ -33,7 +33,7 @@ public class SpinnerWindowView extends PopupWindow {
         setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
         setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
         setOutsideTouchable(true);
-        setFocusable(true);//点击空白处时，隐藏掉pop窗口
+        setFocusable(true);//点击空白处时，隐藏掉pop窗口且阻止点击其他区域的点击事件
         ColorDrawable dw = new ColorDrawable(0x00);
         setBackgroundDrawable(dw);
         mSpinnerListAdapter = new SpinnerListAdapter();

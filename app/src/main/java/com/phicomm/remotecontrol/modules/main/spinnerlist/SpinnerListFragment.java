@@ -57,7 +57,18 @@ public class SpinnerListFragment extends BaseFragment {
     @BindView(R.id.iv_up_down)
     ImageView mUpDown;
 
+    private ShowGrayLayout mCallback;
+
+    public interface ShowGrayLayout {
+        void callback(boolean isVisible);
+    }
+
     public SpinnerListFragment() {
+
+    }
+
+    public void setGrayLayoutListener(ShowGrayLayout listener) {
+        this.mCallback = listener;
     }
 
     public static SpinnerListFragment newInstance() {
@@ -219,8 +230,10 @@ public class SpinnerListFragment extends BaseFragment {
     private PopupWindow.OnDismissListener dismissListener = new PopupWindow.OnDismissListener() {
         @Override
         public void onDismiss() {
-            setBackgroundTransparent(1.0f);
             mUpDown.setImageResource(R.drawable.icon_down);
+            if (mCallback != null) {
+                mCallback.callback(false);
+            }
         }
     };
 
@@ -258,26 +271,27 @@ public class SpinnerListFragment extends BaseFragment {
                 startActivity(intent);
                 break;
             case R.id.rl_connected_device:
-                WindowManager wm = (WindowManager) getContext()
-                        .getSystemService(Context.WINDOW_SERVICE);
+                if (mSpinerPopWindow != null) {
+                    if (mSpinerPopWindow.isShowing()) {
+                        mSpinerPopWindow.dismiss();
+                    } else {
+                        WindowManager wm = (WindowManager) getContext()
+                                .getSystemService(Context.WINDOW_SERVICE);
 
-                if (DevicesUtil.getTarget() != null || mRemoteBoxDeviceList.size() > 0) {
-                    setBackgroundTransparent(0.4f);
-                    mUpDown.setImageResource(R.drawable.icon_up);
-                    mSpinerPopWindow.setWidth(wm.getDefaultDisplay().getWidth());
-                    mSpinerPopWindow.showAsDropDown(mLlSpinlist);
+                        if (DevicesUtil.getTarget() != null || mRemoteBoxDeviceList.size() > 0) {
+                            mUpDown.setImageResource(R.drawable.icon_up);
+                            mSpinerPopWindow.setWidth(wm.getDefaultDisplay().getWidth());
+                            mSpinerPopWindow.showAsDropDown(mLlSpinlist);
+                            if (mCallback != null) {
+                                mCallback.callback(true);
+                            }
+                        }
+                    }
+
                 }
+
                 break;
         }
-    }
-
-    private void setBackgroundTransparent(float value) {
-        WindowManager.LayoutParams lp = getActivity().getWindow()
-                .getAttributes();
-        lp.alpha = value;
-        getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
-        getActivity().getWindow().setAttributes(lp);
-
     }
 
     @Override

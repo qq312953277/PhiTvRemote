@@ -27,6 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_centerVertical="true"
+            android:gravity="center"
             android:ellipsize="middle"
             android:maxLines="1"
             android:textColor="@color/core_activity_bg"

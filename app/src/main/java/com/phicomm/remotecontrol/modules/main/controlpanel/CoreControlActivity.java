@@ -61,7 +61,7 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class CoreControlActivity extends BaseActivity implements UpdateView {
+public class CoreControlActivity extends BaseActivity implements UpdateView, SpinnerListFragment.ShowGrayLayout {
 
     @BindView(R.id.tab_first)
     ImageView mTabFirst;
@@ -71,6 +71,9 @@ public class CoreControlActivity extends BaseActivity implements UpdateView {
 
     @BindView(R.id.spinner_container)
     FrameLayout frameLayout;
+
+    @BindView(R.id.gray_layout)
+    View mGrayLayout;
 
     private final static String TAG = "CoreControlActivity";
     static final int REQUEST_CODE = 101;
@@ -89,6 +92,8 @@ public class CoreControlActivity extends BaseActivity implements UpdateView {
 
     private PopupWindow wifyNotAvailablePopWindow;
     private WifiAvailableReceiver wifiAvailableReceiver;
+
+
     private Handler popWindowShowDelayed = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -97,6 +102,16 @@ public class CoreControlActivity extends BaseActivity implements UpdateView {
             }
         }
     };
+
+    @Override
+    public void callback(boolean isVisible) {
+        //控制阴影逻辑
+        if (isVisible) {
+            mGrayLayout.setVisibility(View.VISIBLE);
+        } else {
+            mGrayLayout.setVisibility(View.GONE);
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -162,7 +177,8 @@ public class CoreControlActivity extends BaseActivity implements UpdateView {
             ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),
                     spinnerListFragment, R.id.spinner_container);
         }
-
+        //监听popwindow阴影效果
+        spinnerListFragment.setGrayLayoutListener(this);
 
         View view = LayoutInflater.from(this).inflate(R.layout.ppw_wify_not_available, null);
         wifyNotAvailablePopWindow = new PopupWindow(view, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
