@@ -46,7 +46,7 @@ public class SpinnerListFragment extends BaseFragment {
     private GreenDaoUserUtil mGreenDaoUserUtil;
     private List<RemoteBoxDevice> mCurrentDevicesList = new ArrayList<>();
     private boolean mIsSuccess = false;
-    private List<RemoteBoxDevice> remoteBoxDeviceList;
+    private List<RemoteBoxDevice> mRemoteBoxDeviceList;
 
     @BindView(R.id.connected_device)
     TextView mDeviceTv;
@@ -94,19 +94,19 @@ public class SpinnerListFragment extends BaseFragment {
     @Override
     public void onResume() {
         DevicesUtil.loadRecentList();
-        remoteBoxDeviceList = mGreenDaoUserUtil.querydata();
+        mRemoteBoxDeviceList = mGreenDaoUserUtil.querydata();
         RemoteBoxDevice target = DevicesUtil.getTarget();
         if (target != null) {
             mUpDown.setImageResource(R.drawable.icon_down);
             mUpDown.setVisibility(View.VISIBLE);
             mDeviceTv.setText(target.getName());
-            refreshSpinnerListView(remoteBoxDeviceList);
+            refreshSpinnerListView(mRemoteBoxDeviceList);
         } else {
-            if (remoteBoxDeviceList.size() != 0) {
+            if (mRemoteBoxDeviceList.size() != 0) {
                 mUpDown.setImageResource(R.drawable.icon_down);
                 mUpDown.setVisibility(View.VISIBLE);
                 mDeviceTv.setText(getString(R.string.unable_to_connect_device));
-                refreshSpinnerListView(remoteBoxDeviceList);
+                refreshSpinnerListView(mRemoteBoxDeviceList);
             } else {
                 mUpDown.setVisibility(View.GONE);
                 mDeviceTv.setText(getString(R.string.unable_to_connect_device));
@@ -261,7 +261,7 @@ public class SpinnerListFragment extends BaseFragment {
                 WindowManager wm = (WindowManager) getContext()
                         .getSystemService(Context.WINDOW_SERVICE);
 
-                if (DevicesUtil.getTarget() != null || remoteBoxDeviceList.size() > 0) {
+                if (DevicesUtil.getTarget() != null || mRemoteBoxDeviceList.size() > 0) {
                     setBackgroundTransparent(0.4f);
                     mUpDown.setImageResource(R.drawable.icon_up);
                     mSpinerPopWindow.setWidth(wm.getDefaultDisplay().getWidth());

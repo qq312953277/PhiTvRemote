@@ -390,7 +390,9 @@ public class DeviceDiscoveryFragment extends BaseFragment implements DeviceDisco
 
     @Override
     public void showToast(String str) {
-        CommonUtils.showToastBottom(getString(R.string.connect_fail));
+        if (getActivity() != null) {
+            CommonUtils.showToastBottom(getString(R.string.connect_fail));
+        }
     }
 
     @Override

@@ -11,8 +11,8 @@ android {
         applicationId "com.phicomm.remotecontrol"
         minSdkVersion 19
         targetSdkVersion 25
-        versionCode 8
-        versionName "1.0.0.2008"
+        versionCode 9
+        versionName "1.0.0.2009"
         buildConfigField "String", "LOG_TAG", "\"phicomm\""
         multiDexEnabled true
     }

@@ -39,21 +39,34 @@ public class UpdateService extends Service {
     public static final String DOWNLOAD_NAME = "download_name";
     private static final String DirName = "PhiTvRemote";
     private PreferenceRepository mPreference;
+    private String filePath;
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         String url = intent.getStringExtra(DOWNLOAD_URL);
         String versionName = intent.getStringExtra(DOWNLOAD_NAME);
         mPreference = new PreferenceRepository(getApplicationContext());
-        String path = Environment.getExternalStoragePublicDirectory(DirName) + File.separator + versionName;
-        File file = new File(path);
         hint = getApplicationContext().getResources().getString(R.string.download_wait);
 
-        if (!TextUtils.isEmpty(url)) {
-            if (isNeedDownloadAgain()) {
-                Toast.makeText(getApplicationContext(), hint, Toast.LENGTH_SHORT).show();
-                // 调用下载
-                initDownManager(url, versionName);
+        // check if file exist
+        filePath = Environment.getExternalStoragePublicDirectory(DirName) + File.separator + versionName;
+        File file = new File(filePath);
+        if (file.exists()) {
+            if (Uri.fromFile(file) != null) {
+                String realPath = getRealFilePath(getApplicationContext(), Uri.fromFile(file));
+                File realFile = new File(realPath);
+                if (realFile.exists()) {
+                    installAPK(realPath, getApplicationContext());
+                }
+            }
+            UpdateService.this.stopSelf();
+        } else {
+            if (!TextUtils.isEmpty(url)) {
+                if (isNeedDownloadAgain()) {
+                    Toast.makeText(getApplicationContext(), hint, Toast.LENGTH_SHORT).show();
+                    // 调用下载
+                    initDownManager(url, versionName);
+                }
             }
         }
         return Service.START_REDELIVER_INTENT;
@@ -98,7 +111,7 @@ public class UpdateService extends Service {
         request.setVisibleInDownloadsUi(true);
 
         // 设置下载后文件存放的位置，注意7.0使用setDestinationInExternalPublicDir，而不是setDestinationInExternalFilesDir
-        request.setDestinationInExternalPublicDir(DirName, DirName + "-" + versionName);
+        request.setDestinationInExternalPublicDir(DirName, versionName);
 
         request.setTitle(DirName + "-" + versionName);
         request.setDescription(getApplicationContext().getResources().getString(R.string.update_description));
@@ -153,6 +166,66 @@ public class UpdateService extends Service {
         return isNeedDownloadAgain;
     }
 
+    /**
+     * 解决6.0,7.0系统以上安装问题，方法一：
+     * Try to return the absolute file path from the given Uri
+     *
+     * @param context
+     * @param uri
+     * @return the file path or null
+     * 此方法可以正确解析url对应的真实路径
+     */
+    public String getRealFilePath(final Context context, final Uri uri) {
+        if (null == uri) return null;
+        final String scheme = uri.getScheme();
+        String path = null;
+        if (scheme == null)
+            path = uri.getPath();
+        else if (ContentResolver.SCHEME_FILE.equals(scheme)) {
+            path = uri.getPath();
+        } else if (ContentResolver.SCHEME_CONTENT.equals(scheme)) {
+            Cursor cursor = context.getContentResolver().query(uri, new String[]{MediaStore.Images.ImageColumns.DATA}, null, null, null);
+            if (null != cursor) {
+                if (cursor.moveToFirst()) {
+                    int index = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+                    if (index > -1) {
+                        path = cursor.getString(index);
+                    }
+                }
+                cursor.close();
+            }
+        }
+        return path;
+    }
+
+    /**
+     * 安装apk文件
+     */
+    private void installAPK(String path, Context context) {
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_VIEW);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        File apkFile = new File(path);
+        String hint = getApplicationContext().getResources().getString(R.string.file_not_exist);
+        try {
+            if (apkFile.exists()) {
+                if (Build.VERSION.SDK_INT >= 24) {
+                    //7.0系统需要在AndroidManifest.xml里配置provider固定不变
+                    Uri uriForFile = FileProvider.getUriForFile(context, BuildConfig.APPLICATION_ID + ".provider", apkFile);
+                    intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                    intent.setDataAndType(uriForFile, "application/vnd.android.package-archive");
+                } else {
+                    intent.setDataAndType(Uri.fromFile(apkFile), "application/vnd.android.package-archive");
+                }
+            } else {
+                CommonUtils.showShortToast(hint);
+            }
+            startActivity(intent);
+        } catch (Exception e) {
+            CommonUtils.showShortToast(hint);
+
+        }
+    }
 
     // 接受下载完成后的intent
     class DownloadCompleteReceiver extends BroadcastReceiver {
@@ -170,104 +243,14 @@ public class UpdateService extends Service {
                 Uri uri = downloadManager.getUriForDownloadedFile(completeDownloadId);
                 if (uri != null) {
                     //自动安装apk
-                    installAPK(downloadManager.getUriForDownloadedFile(completeDownloadId), context);
+                    installAPK(getRealFilePath(context, downloadManager.getUriForDownloadedFile(completeDownloadId)), context);
                 } else {
                     String hint = getApplicationContext().getResources().getString(R.string.download_failure);
                     Toast.makeText(getApplicationContext(), hint, Toast.LENGTH_SHORT).show();
                 }
                 //停止服务并关闭广播
                 UpdateService.this.stopSelf();
-
             }
-        }
-
-        /**
-         * 安装apk文件
-         */
-        private void installAPK(Uri uri, Context context) {
-            Intent intent = new Intent();
-            intent.setAction(Intent.ACTION_VIEW);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            File apkFile = queryDownloadedApk();
-            String hint = getApplicationContext().getResources().getString(R.string.file_not_exist);
-            try {
-                if (apkFile.exists()) {
-                    if (Build.VERSION.SDK_INT >= 24) {
-                        //7.0系统需要在AndroidManifest.xml里配置provider固定不变
-                        Uri uriForFile = FileProvider.getUriForFile(context, BuildConfig.APPLICATION_ID + ".provider", apkFile);
-                        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                        intent.setDataAndType(uriForFile, "application/vnd.android.package-archive");
-                    } else {
-                        intent.setDataAndType(Uri.fromFile(apkFile), "application/vnd.android.package-archive");
-                    }
-                } else {
-                    CommonUtils.showShortToast(hint);
-                }
-                startActivity(intent);
-            } catch (Exception e) {
-                CommonUtils.showShortToast(hint);
-
-            }
-        }
-
-        /**
-         * 解决6.0,7.0系统以上安装问题，方法一：
-         * Try to return the absolute file path from the given Uri
-         *
-         * @param context
-         * @param uri
-         * @return the file path or null
-         * 此方法可以正确解析url对应的真实路径
-         */
-        public String getRealFilePath(final Context context, final Uri uri) {
-            if (null == uri) return null;
-            final String scheme = uri.getScheme();
-            String path = null;
-            if (scheme == null)
-                path = uri.getPath();
-            else if (ContentResolver.SCHEME_FILE.equals(scheme)) {
-                path = uri.getPath();
-            } else if (ContentResolver.SCHEME_CONTENT.equals(scheme)) {
-                Cursor cursor = context.getContentResolver().query(uri, new String[]{MediaStore.Images.ImageColumns.DATA}, null, null, null);
-                if (null != cursor) {
-                    if (cursor.moveToFirst()) {
-                        int index = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
-                        if (index > -1) {
-                            path = cursor.getString(index);
-                        }
-                    }
-                    cursor.close();
-                }
-            }
-            return path;
-        }
-
-        /**
-         * 解决6.0,7.0系统以上安装问题，方法二：
-         * Try to return the absolute file path from the given Uri
-         *
-         * @return the file path or null
-         * 此方法可以正确解析url对应的真实路径文件
-         */
-        public File queryDownloadedApk() {
-            File targetApkFile = null;
-            if (downloadId != -1) {
-                DownloadManager.Query query = new DownloadManager.Query();
-                query.setFilterById(downloadId);
-                query.setFilterByStatus(DownloadManager.STATUS_SUCCESSFUL);
-                Cursor cur = downloadManager.query(query);
-                if (cur != null) {
-                    if (cur.moveToFirst()) {
-                        String uriString = cur.getString(cur.getColumnIndex(DownloadManager.COLUMN_LOCAL_URI));
-                        if (!TextUtils.isEmpty(uriString)) {
-                            targetApkFile = new File(Uri.parse(uriString).getPath());
-                        }
-                    }
-                    cur.close();
-                }
-            }
-            return targetApkFile;
         }
     }
-
 }
