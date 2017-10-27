@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -20,6 +19,7 @@ import com.phicomm.remotecontrol.modules.personal.account.http.CustomSubscriber;
 import com.phicomm.remotecontrol.modules.personal.account.http.HttpDataRepository;
 import com.phicomm.remotecontrol.modules.personal.account.local.LocalDataRepository;
 import com.phicomm.remotecontrol.modules.personal.account.resultbean.AccountDetailBean;
+import com.phicomm.remotecontrol.util.SettingUtil;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -97,6 +97,8 @@ public class LoginoutActivity extends BaseActivity {
 
     @OnClick(R.id.bt_loginout)
     public void clickLogout() {
+        SettingUtil.checkVibrate();
+
         final AlertDialog myDialog = new AlertDialog.Builder(this).create();
         myDialog.show();
         myDialog.setCancelable(false);
@@ -106,8 +108,10 @@ public class LoginoutActivity extends BaseActivity {
         TextView cancelBtn = (TextView) myDialog.getWindow().findViewById(R.id.bt_cancel);
 
         cancelBtn.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
+                SettingUtil.checkVibrate();
                 myDialog.dismiss();
             }
         });
@@ -115,6 +119,7 @@ public class LoginoutActivity extends BaseActivity {
         confirmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SettingUtil.checkVibrate();
                 myDialog.dismiss();
                 //send logout event
                 EventBus.getDefault().post(new LogoutEvent());//BaseActivity接收该事件

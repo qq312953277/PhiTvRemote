@@ -7,10 +7,8 @@ import android.graphics.Paint;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.Toast;
 
 import com.phicomm.remotecontrol.R;
-import com.phicomm.remotecontrol.base.BaseApplication;
 
 import java.util.ArrayList;
 import java.util.List;

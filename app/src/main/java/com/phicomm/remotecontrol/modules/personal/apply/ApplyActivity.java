@@ -14,6 +14,7 @@ import com.phicomm.remotecontrol.base.BaseRecycleAdapter;
 import com.phicomm.remotecontrol.util.CommonUtils;
 import com.phicomm.remotecontrol.util.DialogUtils;
 import com.phicomm.remotecontrol.util.NetworkManagerUtils;
+import com.phicomm.remotecontrol.util.SettingUtil;
 import com.phicomm.remotecontrol.widget.refreshlayout.CustomPtrFrameLayoutRefreshHeader;
 
 import java.util.HashMap;
@@ -138,6 +139,8 @@ public class ApplyActivity extends BaseActivity implements ApplyView, BaseRecycl
 
     @Override
     public void onItemViewClick(Object object, int position) {
+        SettingUtil.checkVibrate();
+
         showLoadingDialog(null);
         ApplyInfosBean.AppInfo info = (ApplyInfosBean.AppInfo) object;
         Map<String, String> options = new HashMap<>();

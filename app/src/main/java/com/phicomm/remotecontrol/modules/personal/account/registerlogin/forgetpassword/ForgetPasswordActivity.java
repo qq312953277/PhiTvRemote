@@ -32,6 +32,7 @@ import com.phicomm.remotecontrol.util.CommonUtils;
 import com.phicomm.remotecontrol.util.DialogUtils;
 import com.phicomm.remotecontrol.util.MD5Utils;
 import com.phicomm.remotecontrol.util.NetworkManagerUtils;
+import com.phicomm.remotecontrol.util.SettingUtil;
 import com.phicomm.remotecontrol.util.StringUtils;
 
 import java.util.concurrent.TimeUnit;
@@ -139,6 +140,8 @@ public class ForgetPasswordActivity extends BaseActivity implements ForgetPasswo
 
     @OnClick(R.id.password_display_imageview)
     public void clickDisplayPassword() {
+        SettingUtil.checkVibrate();
+
         if (mIsPasswordDisplay) {
             mIsPasswordDisplay = false;
             password_display_imageview.setImageResource(R.drawable.icon_eye_open_white);
@@ -256,6 +259,8 @@ public class ForgetPasswordActivity extends BaseActivity implements ForgetPasswo
 
     @OnClick(R.id.captcha_code)
     public void getCaptchaCode() {
+        SettingUtil.checkVibrate();
+
         if (NetworkManagerUtils.instance().networkError()) {
             return;
         }
@@ -302,6 +307,8 @@ public class ForgetPasswordActivity extends BaseActivity implements ForgetPasswo
 
     @OnClick(R.id.bt_submit)
     public void submit() {
+        SettingUtil.checkVibrate();
+
         mPhoneNo = mPhoneNumberEdit.getText().toString();
         mVerifyCode = mCodeEdit.getText().toString();
         mPassword = mPasswordEdit.getText().toString();

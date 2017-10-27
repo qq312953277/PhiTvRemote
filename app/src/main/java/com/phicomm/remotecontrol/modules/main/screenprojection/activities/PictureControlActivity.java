@@ -15,6 +15,7 @@ import com.phicomm.remotecontrol.base.BaseApplication;
 import com.phicomm.remotecontrol.modules.main.screenprojection.presenter.PictureControlPresenter;
 import com.phicomm.remotecontrol.modules.main.screenprojection.presenter.PictureControlPresenterImpl;
 import com.phicomm.remotecontrol.util.CommonUtils;
+import com.phicomm.remotecontrol.util.SettingUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -105,6 +106,8 @@ public class PictureControlActivity extends BaseActivity implements PictureContr
         mBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SettingUtil.checkVibrate();
+
                 finish();
             }
         });

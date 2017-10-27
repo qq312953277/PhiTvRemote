@@ -1,7 +1,6 @@
 package com.phicomm.remotecontrol.modules.main.controlpanel;
 
 import android.content.Context;
-import android.widget.Toast;
 
 import com.phicomm.remotecontrol.TaskQuene;
 import com.phicomm.remotecontrol.httpclient.PhiCallBack;

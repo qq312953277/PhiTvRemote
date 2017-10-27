@@ -59,7 +59,7 @@ public class MediaServer {
     }
 
     public void restore() {
-        if (null != mHttpServer){
+        if (null != mHttpServer) {
             mHttpServer.stop();
         }
     }

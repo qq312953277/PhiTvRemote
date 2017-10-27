@@ -19,6 +19,7 @@ import com.phicomm.remotecontrol.modules.main.screenprojection.model.UpnpService
 import com.phicomm.remotecontrol.modules.main.screenprojection.presenter.LocalMediaItemPresenterImpl;
 import com.phicomm.remotecontrol.util.CommonUtils;
 import com.phicomm.remotecontrol.util.DevicesUtil;
+import com.phicomm.remotecontrol.util.SettingUtil;
 
 import org.fourthline.cling.model.meta.Device;
 import org.fourthline.cling.model.types.UDAServiceType;
@@ -76,6 +77,8 @@ public class AlbumItemActivity extends BaseActivity {
         mBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SettingUtil.checkVibrate();
+
                 finish();
             }
         });
@@ -83,6 +86,8 @@ public class AlbumItemActivity extends BaseActivity {
 
     @OnItemClick(R.id.album_item_grid)
     public void onItemClick(int position) {
+        SettingUtil.checkVibrate();
+
         selectDMPToPlay(LocalMediaItemPresenterImpl.mDlnaPictureMapList
                 .get(mPictureItemList.getPictureItemList().get(position).getId()), PictureControlActivity.class);
     }

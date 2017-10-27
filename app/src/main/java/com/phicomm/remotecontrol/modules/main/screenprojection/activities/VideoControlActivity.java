@@ -18,6 +18,7 @@ import com.phicomm.remotecontrol.modules.main.controlpanel.PanelPresenter;
 import com.phicomm.remotecontrol.modules.main.screenprojection.contract.VideoControlContract;
 import com.phicomm.remotecontrol.modules.main.screenprojection.presenter.VideoControlPresenterImpl;
 import com.phicomm.remotecontrol.util.CommonUtils;
+import com.phicomm.remotecontrol.util.SettingUtil;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -78,6 +79,8 @@ public class VideoControlActivity extends BaseActivity implements VideoControlCo
         mBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SettingUtil.checkVibrate();
+
                 finish();
             }
         });
@@ -122,6 +125,8 @@ public class VideoControlActivity extends BaseActivity implements VideoControlCo
 
     @OnClick({R.id.ib_play, R.id.ib_pause})
     public void onClick(View v) {
+        super.onClick(v);//震动
+
         switch (v.getId()) {
             case R.id.ib_play:
                 canSeeking = true;

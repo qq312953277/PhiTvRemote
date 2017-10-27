@@ -11,6 +11,6 @@
         android:gravity="center_vertical"
         android:paddingLeft="21.5dp"
         android:text="@string/installed_app"
-        android:textSize="@dimen/text_size_14sp"
-        android:textColor="@color/core_activity_bg"/>
+        android:textSize="@dimen/text_size_16sp"
+        android:textColor="@color/core_activity_bg" />
 </LinearLayout>

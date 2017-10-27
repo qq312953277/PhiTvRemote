@@ -138,7 +138,7 @@ public class DeviceDiscoveryPresenter implements DeviceDiscoveryContract.Present
     }
 
     @Override
-    public void removeItemAndRefreshView(RemoteBoxDevice device,List<RemoteBoxDevice> deviceList) {
+    public void removeItemAndRefreshView(RemoteBoxDevice device, List<RemoteBoxDevice> deviceList) {
         mDiscoveryDeviceList = deviceList;
         String deviceBssid = device.getBssid();
         mCachedRemoteAddress.remove(deviceBssid);

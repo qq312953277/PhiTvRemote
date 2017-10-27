@@ -53,8 +53,7 @@ public class LocalMediaItemPresenterImpl implements LocalMediaItemPresenter {
                                 mDlnaPictureIdList.add(mContentItem.getItem().getId());
                                 mDlnaPictureMapList.put(mContentItem.getItem().getId(), mContentItem.getItem());
                             }
-                        }
-                        else if (mContentItem.getFiletype() == 2) {
+                        } else if (mContentItem.getFiletype() == 2) {
                             if (!mDlnaVideoIdList.contains(mContentItem.getItem().getId())) {
                                 mDlnaVideoIdList.add(mContentItem.getItem().getId());
                                 mDlnaVideoMapList.put(mContentItem.getItem().getId(), mContentItem.getItem());

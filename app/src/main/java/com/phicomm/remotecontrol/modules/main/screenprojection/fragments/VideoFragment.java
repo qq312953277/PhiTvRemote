@@ -18,6 +18,7 @@ import com.phicomm.remotecontrol.modules.main.screenprojection.model.MediaConten
 import com.phicomm.remotecontrol.modules.main.screenprojection.model.UpnpServiceBiz;
 import com.phicomm.remotecontrol.util.CommonUtils;
 import com.phicomm.remotecontrol.util.DevicesUtil;
+import com.phicomm.remotecontrol.util.SettingUtil;
 
 import org.fourthline.cling.model.meta.Device;
 import org.fourthline.cling.model.types.UDAServiceType;
@@ -52,6 +53,8 @@ public class VideoFragment extends BaseFragment {
 
     @OnItemClick(R.id.video_listview)
     public void onItemClick(int position) {
+        SettingUtil.checkVibrate();
+
         selectDMPToPlay(MediaContentBiz.mVideoItemArrayList.get(position), VideoControlActivity.class, position);
     }
 

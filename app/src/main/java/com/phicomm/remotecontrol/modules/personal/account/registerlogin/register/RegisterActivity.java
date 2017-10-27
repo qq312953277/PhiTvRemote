@@ -38,6 +38,7 @@ import com.phicomm.remotecontrol.util.CommonUtils;
 import com.phicomm.remotecontrol.util.DialogUtils;
 import com.phicomm.remotecontrol.util.MD5Utils;
 import com.phicomm.remotecontrol.util.NetworkManagerUtils;
+import com.phicomm.remotecontrol.util.SettingUtil;
 import com.phicomm.remotecontrol.util.StringUtils;
 import com.phicomm.widgets.alertdialog.PhiGuideDialog;
 
@@ -262,6 +263,8 @@ public class RegisterActivity extends BaseActivity implements RegisterContract.V
 
     @OnClick(R.id.captcha_code)
     public void getCaptchaCode() {
+        SettingUtil.checkVibrate();
+
         if (NetworkManagerUtils.instance().networkError()) {
             return;
         }
@@ -307,6 +310,8 @@ public class RegisterActivity extends BaseActivity implements RegisterContract.V
 
     @OnClick(R.id.password_display_imageview)
     public void clickDisplayPassword() {
+        SettingUtil.checkVibrate();
+
         if (mIsPasswordDisplay) {
             mIsPasswordDisplay = false;
             password_display_imageview.setImageResource(R.drawable.icon_eye_open_white);
@@ -323,6 +328,8 @@ public class RegisterActivity extends BaseActivity implements RegisterContract.V
 
     @OnCheckedChanged(R.id.protocal_checkbox)
     public void protocalChecked() {
+        SettingUtil.checkVibrate();
+
         if (mProtocalCheckbox.isChecked()) {
             isProtocalChecked = true;
         } else {
@@ -342,6 +349,8 @@ public class RegisterActivity extends BaseActivity implements RegisterContract.V
 
     @OnClick(R.id.protocal_textview)
     public void clickProtocal() {
+        SettingUtil.checkVibrate();
+
         Intent intent = new Intent(this, WebViewActivity.class);
         intent.putExtra(WebViewActivity.WEB_KEY_STATUS, getString(R.string.protocal_name));
         intent.putExtra(WebViewActivity.WEB_VALUE_URL,
@@ -355,6 +364,8 @@ public class RegisterActivity extends BaseActivity implements RegisterContract.V
      */
     @OnClick(R.id.bt_register)
     public void register() {
+        SettingUtil.checkVibrate();
+
         mPhoneNo = mPhoneNumberEdit.getText().toString();
         mVerifyCode = mCodeEdit.getText().toString();
         mPassword = mPasswordEdit.getText().toString();
@@ -499,7 +510,7 @@ public class RegisterActivity extends BaseActivity implements RegisterContract.V
                     @Override
                     public void onNext(Long aLong) {
                         String showText = String.format("%s s", aLong);
-                        mGetCodeBtn.setText(showText +  getString(R.string.verifycode_resend));
+                        mGetCodeBtn.setText(showText + getString(R.string.verifycode_resend));
                     }
                 });
 
