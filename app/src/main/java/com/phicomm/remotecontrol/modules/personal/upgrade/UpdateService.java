@@ -37,7 +37,7 @@ public class UpdateService extends Service {
     private String hint;
     public static final String DOWNLOAD_URL = "download_url";
     public static final String DOWNLOAD_NAME = "download_name";
-    private static final String DirName = "PhiTvRemote";
+    public static final String DirName = "PhiTvRemote";
     private PreferenceRepository mPreference;
     private String filePath;
 

@@ -10,6 +10,7 @@ import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.os.Parcelable;
@@ -46,14 +47,17 @@ import com.phicomm.remotecontrol.modules.main.spinnerlist.SpinnerListFragment;
 import com.phicomm.remotecontrol.modules.personal.upgrade.UpdateInfoResponseBean;
 import com.phicomm.remotecontrol.modules.personal.upgrade.UpdatePresenter;
 import com.phicomm.remotecontrol.modules.personal.upgrade.UpdatePresenterImpl;
+import com.phicomm.remotecontrol.modules.personal.upgrade.UpdateService;
 import com.phicomm.remotecontrol.modules.personal.upgrade.UpdateView;
 import com.phicomm.remotecontrol.preference.PreferenceDef;
 import com.phicomm.remotecontrol.preference.PreferenceRepository;
 import com.phicomm.remotecontrol.util.ActivityUtils;
 import com.phicomm.remotecontrol.util.CommonUtils;
 import com.phicomm.remotecontrol.util.DevicesUtil;
+import com.phicomm.remotecontrol.util.FileUtil;
 import com.phicomm.widgets.alertdialog.PhiGuideDialog;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -315,6 +319,8 @@ public class CoreControlActivity extends BaseActivity implements UpdateView, Spi
                 showUpdateInfoDialog(isForceUpdate, bean.getVerName(), bean.getVerInfos(), bean.getVerDown());
             } else {
                 mPreference.put(PreferenceDef.APP_VERSION, PreferenceDef.IS_HAVE_NEW_VERSIOM, false);
+                String path = Environment.getExternalStoragePublicDirectory(UpdateService.DirName) + File.separator;
+                FileUtil.deleteFolder(path);
             }
         }
     }
