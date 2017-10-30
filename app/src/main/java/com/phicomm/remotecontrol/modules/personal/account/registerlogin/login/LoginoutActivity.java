@@ -95,9 +95,10 @@ public class LoginoutActivity extends BaseActivity {
         }, access_token);
     }
 
-    @OnClick(R.id.bt_loginout)
-    public void clickLogout() {
-        SettingUtil.checkVibrate();
+    @Override
+    @OnClick({R.id.bt_loginout, R.id.iv_header_picture, R.id.tv_user_name})
+    public void onClick(View view) {
+        super.onClick(view);
 
         final AlertDialog myDialog = new AlertDialog.Builder(this).create();
         myDialog.show();

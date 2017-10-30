@@ -42,6 +42,7 @@
                     android:layout_height="154.5dp"
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
+                    android:layout_marginLeft="0.4dp"
                     android:clickable="true"
                     android:src="@drawable/selector_button_left" />
 

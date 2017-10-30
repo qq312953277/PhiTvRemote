@@ -24,7 +24,8 @@ import rx.schedulers.Schedulers;
 
 public class HttpDataRepository {
 
-    public static final int CONNECT_TIMEOUT = 15;
+    public static final int CONNECT_TIMEOUT = 10;
+    public static final int READ_TIMEOUT = 15;
 
     private static HttpDataRepository mInstance = null;
     private Retrofit mCommonRetrofit = null;
@@ -47,6 +48,8 @@ public class HttpDataRepository {
 
         OkHttpClient.Builder okHttpClientBuilder = new OkHttpClient.Builder();
         okHttpClientBuilder.connectTimeout(CONNECT_TIMEOUT, TimeUnit.SECONDS)
+                .writeTimeout(READ_TIMEOUT, TimeUnit.SECONDS)
+                .readTimeout(READ_TIMEOUT, TimeUnit.SECONDS)
                 .addNetworkInterceptor(okhttpLoggingInterceptor);
 
         mCommonRetrofit = new Retrofit.Builder().baseUrl(HttpConfig.PHICOMM_CLOUD_BASE_URL)

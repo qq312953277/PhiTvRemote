@@ -155,7 +155,7 @@ public class PersonalActivity extends BaseActivity implements UpdateView, Person
     }
 
     @Override
-    @OnClick({R.id.rl_about, R.id.rl_appilcation, R.id.rl_setting, R.id.rl_version, R.id.iv_header_picture, R.id.iv_back})
+    @OnClick({R.id.rl_about, R.id.rl_appilcation, R.id.rl_setting, R.id.rl_version, R.id.iv_header_picture, R.id.iv_back, R.id.tv_user_name})
     public void onClick(View view) {
         super.onClick(view);
         switch (view.getId()) {
@@ -172,6 +172,9 @@ public class PersonalActivity extends BaseActivity implements UpdateView, Person
                 checkNewVersion();
                 break;
             case R.id.iv_header_picture:
+                toLoginOrloginoutActivity();
+                break;
+            case R.id.tv_user_name:
                 toLoginOrloginoutActivity();
                 break;
             case R.id.iv_back:

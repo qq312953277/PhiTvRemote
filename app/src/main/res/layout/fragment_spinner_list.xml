@@ -41,7 +41,7 @@
             android:ellipsize="end"
             android:lines="1"
             android:text=""
-            android:textColor="@color/black_normal"
+            android:textColor="@color/core_activity_bg"
             android:textSize="@dimen/text_size_17sp" />
 
         <ImageView

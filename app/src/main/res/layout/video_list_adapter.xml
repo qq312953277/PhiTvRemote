@@ -30,7 +30,7 @@
 
         <TextView
             android:id="@+id/file_name"
-            android:layout_width="120dp"
+            android:layout_width="170dp"
             android:layout_height="wrap_content"
             android:ellipsize="middle"
             android:maxLines="1"

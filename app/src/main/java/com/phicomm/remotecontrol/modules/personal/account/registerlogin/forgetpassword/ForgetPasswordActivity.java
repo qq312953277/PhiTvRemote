@@ -115,7 +115,7 @@ public class ForgetPasswordActivity extends BaseActivity implements ForgetPasswo
 
     private void initTitleView() {
         setMarginForStatusBar(mRlTitle, TITLE_BAR_HEIGHT_DP);
-        mTvTitle.setText(getString(R.string.forget_password));
+        mTvTitle.setText(getString(R.string.reset_password));
         mBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
