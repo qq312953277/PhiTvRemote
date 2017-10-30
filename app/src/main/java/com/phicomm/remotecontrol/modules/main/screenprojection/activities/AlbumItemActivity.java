@@ -107,7 +107,7 @@ public class AlbumItemActivity extends BaseActivity {
             }
         }
         if (!flag) {
-            CommonUtils.showShortToast("设备已掉线，请重新连接");
+            CommonUtils.showShortToast(getString(R.string.fail_screenprojection));
         }
     }
 

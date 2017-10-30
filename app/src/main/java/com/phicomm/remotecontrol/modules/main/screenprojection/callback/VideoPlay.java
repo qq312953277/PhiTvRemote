@@ -12,10 +12,10 @@ import java.util.Map;
 /**
  * Created by kang.sun on 2017/8/22.
  */
-public abstract class Play extends UpnpActionCallback {
-    private static String TAG = Play.class.getSimpleName();
+public abstract class VideoPlay extends UpnpActionCallback {
+    private static String TAG = VideoPlay.class.getSimpleName();
 
-    public Play(UnsignedIntegerFourBytes instanceId, Service service) {
+    public VideoPlay(UnsignedIntegerFourBytes instanceId, Service service) {
         super(new ActionInvocation(service.getAction("Play")));
         try {
             setInput("InstanceID", instanceId);
@@ -27,7 +27,7 @@ public abstract class Play extends UpnpActionCallback {
 
     @Override
     public void received(ActionInvocation invocation, Map<String, Object> result) {
-        onSuccess("Play successful");
+        onSuccess("VideoPlay successful");
     }
 
     public abstract void onSuccess(String msg);

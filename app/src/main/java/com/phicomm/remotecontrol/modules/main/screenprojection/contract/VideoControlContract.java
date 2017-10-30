@@ -7,7 +7,6 @@ import com.phicomm.remotecontrol.base.BasicView;
  */
 
 public class VideoControlContract {
-
     public interface VideoControlView extends BasicView {
         void fromPlayToPause();
 
@@ -20,6 +19,8 @@ public class VideoControlContract {
         void playVideo();
 
         void pauseVideo();
+
+        void stopVideo();
 
         void seekVideo(String totalTime, int prog);
 

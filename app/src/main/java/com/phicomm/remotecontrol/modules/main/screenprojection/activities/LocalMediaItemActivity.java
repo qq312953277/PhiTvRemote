@@ -6,6 +6,9 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
@@ -22,10 +25,9 @@ import com.phicomm.remotecontrol.constant.PhiConstants;
 import com.phicomm.remotecontrol.modules.main.screenprojection.constants.DeviceDisplayListOperation;
 import com.phicomm.remotecontrol.modules.main.screenprojection.entity.DeviceDisplay;
 import com.phicomm.remotecontrol.modules.main.screenprojection.entity.DisplayDeviceList;
-import com.phicomm.remotecontrol.modules.main.screenprojection.event.SetEnableEvent;
+import com.phicomm.remotecontrol.modules.main.screenprojection.event.ClickStateEvent;
 import com.phicomm.remotecontrol.modules.main.screenprojection.presenter.LocalMediaItemPresenter;
 import com.phicomm.remotecontrol.modules.main.screenprojection.presenter.LocalMediaItemPresenterImpl;
-import com.phicomm.remotecontrol.util.CommonUtils;
 import com.phicomm.remotecontrol.util.DevicesUtil;
 
 import org.greenrobot.eventbus.EventBus;
@@ -46,6 +48,7 @@ public class LocalMediaItemActivity extends BaseActivity implements MyFragmentAd
     public LocalMediaItemPresenter mLocalMediaItemPresenter;
     private MyFragmentAdapter pageAdapter;
     private DisplayDeviceList mDisplayDeviceList;
+    private Animation mLoadingAnimation;
     Handler mDLNAHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -64,7 +67,6 @@ public class LocalMediaItemActivity extends BaseActivity implements MyFragmentAd
             }
         }
     };
-
     @BindView(R.id.viewPager)
     CustomViewPager mViewPage;
 
@@ -129,12 +131,11 @@ public class LocalMediaItemActivity extends BaseActivity implements MyFragmentAd
     }
 
     private void finishScan() {
+        mInitDLNADateProgressBar.clearAnimation();
         mInitDLNADateProgressBar.setVisibility(View.GONE);
         setEnable();
         mLocalMediaItemPresenter.destory();
-        if (null == DevicesUtil.getTarget() || mDisplayDeviceList == null || isSelectedDeviceNotOnline(DevicesUtil.getTarget(), mDisplayDeviceList.getDeviceDisplayList())) {
-            CommonUtils.showShortToast("初始化投屏失败");
-        } else {
+        if ((DevicesUtil.getTarget() != null) && (mDisplayDeviceList != null) && (!isSelectedDeviceNotOnline(DevicesUtil.getTarget(), mDisplayDeviceList.getDeviceDisplayList()))) {
             DeviceDisplay mDisplayDevice = mDisplayDeviceList.getDeviceDisplayList().get(0);
             ((BaseApplication) getApplication()).setDeviceDisplay(mDisplayDevice);
             if (mDisplayDevice.getDevice().isFullyHydrated()) {
@@ -146,7 +147,7 @@ public class LocalMediaItemActivity extends BaseActivity implements MyFragmentAd
     private void setEnable() {
         mPic.setEnabled(true);
         mVid.setEnabled(true);
-        EventBus.getDefault().post(new SetEnableEvent(true));
+        EventBus.getDefault().post(new ClickStateEvent(true));
     }
 
     @Override
@@ -221,6 +222,9 @@ public class LocalMediaItemActivity extends BaseActivity implements MyFragmentAd
     }
 
     private void showProgressDialog() {
+        mLoadingAnimation = AnimationUtils.loadAnimation(this, R.animator.rotate__refresh_anim);
+        mLoadingAnimation.setInterpolator(new LinearInterpolator());
+        mInitDLNADateProgressBar.startAnimation(mLoadingAnimation);
         mInitDLNADateProgressBar.setVisibility(View.VISIBLE);
     }
 

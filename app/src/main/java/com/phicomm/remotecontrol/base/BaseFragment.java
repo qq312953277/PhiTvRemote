@@ -6,7 +6,8 @@ import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import com.phicomm.remotecontrol.modules.main.screenprojection.event.SetEnableEvent;
+import com.phicomm.remotecontrol.modules.main.screenprojection.event.CheckTargetEvent;
+import com.phicomm.remotecontrol.modules.main.screenprojection.event.ClickStateEvent;
 import com.phicomm.remotecontrol.util.DialogUtils;
 import com.phicomm.remotecontrol.util.ScreenUtils;
 import com.phicomm.remotecontrol.util.SettingUtil;
@@ -45,7 +46,11 @@ public class BaseFragment extends Fragment {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventMainThread(SetEnableEvent event) {
+    public void onEventMainThread(ClickStateEvent event) {
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventMainThread(CheckTargetEvent event) {
     }
 
     public void onClick(View view) {

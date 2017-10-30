@@ -10,23 +10,24 @@ import org.fourthline.cling.model.types.UnsignedIntegerFourBytes;
 import java.util.Map;
 
 /**
- * Created by kang.sun on 2017/8/22.
+ * Created by kang.sun on 2017/10/27.
  */
-public abstract class Pause extends UpnpActionCallback {
-    private static String TAG = Pause.class.getSimpleName();
 
-    public Pause(UnsignedIntegerFourBytes instanceId, Service service) {
-        super(new ActionInvocation(service.getAction("Pause")));
+public abstract class VideoStop extends UpnpActionCallback {
+    private static String TAG = VideoStop.class.getSimpleName();
+
+    public VideoStop(UnsignedIntegerFourBytes instanceId, Service service) {
+        super(new ActionInvocation(service.getAction("Stop")));
         try {
             setInput("InstanceID", instanceId);
-        } catch (InvalidValueException e) {
-            LogUtil.e(TAG, e.toString());
+        } catch (InvalidValueException exception) {
+            LogUtil.d(TAG, exception.toString());
         }
     }
 
     @Override
     public void received(ActionInvocation invocation, Map<String, Object> result) {
-        onSuccess("Pause play successful");
+        onSuccess("VideoStop play successful");
     }
 
     public abstract void onSuccess(String msg);

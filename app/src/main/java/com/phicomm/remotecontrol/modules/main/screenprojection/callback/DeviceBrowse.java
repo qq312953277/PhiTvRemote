@@ -17,7 +17,7 @@ import java.util.logging.Logger;
 /**
  * Created by kang.sun on 2017/8/22.
  */
-public abstract class Browse extends UpnpActionCallback {
+public abstract class DeviceBrowse extends UpnpActionCallback {
     public static final String CAPS_WILDCARD = "*";
     public static final long MAXRESULTS = 999;
 
@@ -34,15 +34,15 @@ public abstract class Browse extends UpnpActionCallback {
         }
     }
 
-    private static Logger log = Logger.getLogger(Browse.class.getName());
+    private static Logger log = Logger.getLogger(DeviceBrowse.class.getName());
 
-    public Browse(Service service, String containerId, BrowseFlag flag) {
+    public DeviceBrowse(Service service, String containerId, BrowseFlag flag) {
         this(service, containerId, flag, CAPS_WILDCARD, 0, null);
     }
 
-    public Browse(Service service, String objectID, BrowseFlag flag,
-                  String filter, long firstResult, Long maxResults,
-                  SortCriterion... orderBy) {
+    public DeviceBrowse(Service service, String objectID, BrowseFlag flag,
+                        String filter, long firstResult, Long maxResults,
+                        SortCriterion... orderBy) {
         super(new ActionInvocation(service.getAction("Browse")));
         log.fine("Creating browse action for object ID: " + objectID);
         setInput("ObjectID", objectID);

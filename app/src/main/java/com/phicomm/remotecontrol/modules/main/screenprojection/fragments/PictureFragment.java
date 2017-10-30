@@ -12,7 +12,7 @@ import com.phicomm.remotecontrol.R;
 import com.phicomm.remotecontrol.base.BaseFragment;
 import com.phicomm.remotecontrol.modules.main.screenprojection.activities.AlbumItemActivity;
 import com.phicomm.remotecontrol.modules.main.screenprojection.adapter.AlbumsAdapter;
-import com.phicomm.remotecontrol.modules.main.screenprojection.event.SetEnableEvent;
+import com.phicomm.remotecontrol.modules.main.screenprojection.event.ClickStateEvent;
 import com.phicomm.remotecontrol.modules.main.screenprojection.model.MediaContentBiz;
 import com.phicomm.remotecontrol.util.SettingUtil;
 
@@ -48,7 +48,6 @@ public class PictureFragment extends BaseFragment {
     @OnItemClick(R.id.album_gridv)
     public void onItemClick(int position) {
         SettingUtil.checkVibrate();
-
         mAlbumIndex = position;
         Intent intent = new Intent(getActivity(), AlbumItemActivity.class);
         intent.putExtra("imageList", MediaContentBiz.mPictureItemArrayList.get(position));
@@ -57,8 +56,8 @@ public class PictureFragment extends BaseFragment {
     }
 
     @Override
-    public void onEventMainThread(SetEnableEvent event) {
-        if (event.getEnable()) {
+    public void onEventMainThread(ClickStateEvent event) {
+        if (event.getClickState()) {
             mGridView.setEnabled(true);
         }
     }

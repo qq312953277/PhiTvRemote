@@ -2,6 +2,7 @@ package com.phicomm.remotecontrol.modules.main.screenprojection.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -80,7 +81,7 @@ public class VideoControlActivity extends BaseActivity implements VideoControlCo
             @Override
             public void onClick(View v) {
                 SettingUtil.checkVibrate();
-
+                mVideoControlPresenter.stopVideo();
                 finish();
             }
         });
@@ -126,7 +127,6 @@ public class VideoControlActivity extends BaseActivity implements VideoControlCo
     @OnClick({R.id.ib_play, R.id.ib_pause})
     public void onClick(View v) {
         super.onClick(v);//震动
-
         switch (v.getId()) {
             case R.id.ib_play:
                 canSeeking = true;
@@ -164,5 +164,13 @@ public class VideoControlActivity extends BaseActivity implements VideoControlCo
     public void fromPauseToPlay() {
         ibPlay.setVisibility(View.VISIBLE);
         ibPause.setVisibility(View.GONE);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            mVideoControlPresenter.stopVideo();
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

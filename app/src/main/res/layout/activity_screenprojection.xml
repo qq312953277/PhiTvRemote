@@ -11,8 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@color/loginout_core_bg"
-        android:paddingTop="5dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingTop="5dp">
 
         <RadioGroup
             android:id="@+id/radio_group"
@@ -66,8 +66,6 @@
             android:layout_marginRight="92dp"
             android:src="@drawable/icon_selected"
             android:visibility="gone" />
-
-
     </RelativeLayout>
 
     <FrameLayout
@@ -86,6 +84,6 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_gravity="center"
-            android:indeterminateDrawable="@drawable/imofan_round_progress_bar_2" />
+            android:indeterminateDrawable="@drawable/loading_big" />
     </FrameLayout>
 </LinearLayout>

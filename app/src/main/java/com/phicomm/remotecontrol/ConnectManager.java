@@ -31,6 +31,12 @@ public class ConnectManager {
         void onFail(String msg);
     }
 
+    public interface CheckResultCallback {
+        void onSuccess(boolean result);
+
+        void onFail(boolean result);
+    }
+
     static public ConnectManager getInstance() {
         return SingletonHolder.instance;
     }
@@ -46,7 +52,6 @@ public class ConnectManager {
         if (mConnectingDevice != null && mConnectingDevice.equals(dev)) {
             return true;
         }
-
         mConnectingDevice = dev;
         initConnect(mConnectingDevice.getAddress(), mConnectingDevice.getPort());
         return true;
@@ -57,10 +62,8 @@ public class ConnectManager {
     }
 
     public void connect(final String ipAddress, final int port, final ConnetResultCallback result) {
-
         LogUtil.d("connect:" + ipAddress + "/" + port);
         final IRemoterService service = new RemoteServiceImpl(ipAddress, port);
-
         TaskQuene.getInstance().addSubscription(
                 service.getStatus(), new PhiCallBack<Status>() {
                     @Override
@@ -78,7 +81,6 @@ public class ConnectManager {
 
                     @Override
                     public void onFinish() {
-
                     }
                 }
         );
@@ -88,7 +90,6 @@ public class ConnectManager {
         if (mConnectingDevice != null && mConnectingDevice.equals(dev)) {
             result.onSuccess(mConnectingDevice);
         }
-
         this.connect(dev.getAddress(), dev.getPort(), result);
     }
 
@@ -106,7 +107,6 @@ public class ConnectManager {
     }
 
     public void addListener(ConnectListener listener) {
-
         for (ConnectListener l : mListeners) {
             if (l == listener) {
                 return;
@@ -123,5 +123,29 @@ public class ConnectManager {
         for (ConnectListener l : mListeners) {
             l.onConnectChanged();
         }
+    }
+
+    public void checkTarget(final String ipAddress, final int port, final CheckResultCallback result) {
+        LogUtil.d("connect:" + ipAddress + "/" + port);
+        final IRemoterService service = new RemoteServiceImpl(ipAddress, port);
+        TaskQuene.getInstance().addSubscription(
+                service.getStatus(), new PhiCallBack<Status>() {
+                    @Override
+                    public void onSuccess(Status status) {
+                        LogUtil.d("connect onSuccess");
+                        TaskQuene.getInstance().setRemoterService(service);
+                        result.onSuccess(true);
+                    }
+
+                    @Override
+                    public void onFailure(String msg) {
+                        result.onFail(false);
+                    }
+
+                    @Override
+                    public void onFinish() {
+                    }
+                }
+        );
     }
 }

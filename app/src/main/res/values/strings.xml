@@ -261,5 +261,7 @@
     <string name="installed_app">Installed applocations</string>
     <string name="apply_title">Application</string>
 
+    <!--screenprojection-->
+    <string name="fail_screenprojection">screenprojection fail</string>
 
 </resources>

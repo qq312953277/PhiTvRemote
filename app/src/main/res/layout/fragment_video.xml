@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
     <ListView
         android:id="@+id/video_listview"
@@ -11,4 +10,12 @@
         android:divider="@color/loginout_core_bg"
         android:dividerHeight="0.5dp" />
 
-</LinearLayout>
+    <ProgressBar
+        android:id="@+id/check_progressbar"
+        style="?android:attr/progressBarStyleSmall"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:indeterminateDrawable="@drawable/load"
+        android:visibility="gone" />
+</FrameLayout>

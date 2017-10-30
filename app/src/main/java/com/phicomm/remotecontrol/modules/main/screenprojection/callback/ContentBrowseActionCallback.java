@@ -8,7 +8,7 @@ import org.fourthline.cling.support.model.container.Container;
 /**
  * Created by kang.sun on 2017/8/22.
  */
-public abstract class ContentBrowseActionCallback extends Browse {
+public abstract class ContentBrowseActionCallback extends DeviceBrowse {
     public ContentBrowseActionCallback(Service service, Container container) {
         super(service, container.getId(), BrowseFlag.DIRECT_CHILDREN, "*", 0,
                 null, new SortCriterion(true, "dc:title"));

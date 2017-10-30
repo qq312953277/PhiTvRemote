@@ -5,10 +5,11 @@ import android.os.Message;
 
 import com.phicomm.remotecontrol.modules.main.screenprojection.callback.GetMediaInfo;
 import com.phicomm.remotecontrol.modules.main.screenprojection.callback.GetPositionInfo;
-import com.phicomm.remotecontrol.modules.main.screenprojection.callback.Pause;
-import com.phicomm.remotecontrol.modules.main.screenprojection.callback.Play;
-import com.phicomm.remotecontrol.modules.main.screenprojection.callback.Seek;
+import com.phicomm.remotecontrol.modules.main.screenprojection.callback.VideoPause;
+import com.phicomm.remotecontrol.modules.main.screenprojection.callback.VideoPlay;
+import com.phicomm.remotecontrol.modules.main.screenprojection.callback.VideoSeek;
 import com.phicomm.remotecontrol.modules.main.screenprojection.callback.SetAVTransportURI;
+import com.phicomm.remotecontrol.modules.main.screenprojection.callback.VideoStop;
 import com.phicomm.remotecontrol.modules.main.screenprojection.constants.MediaControlOperation;
 import com.phicomm.remotecontrol.modules.main.screenprojection.entity.MediaInfo;
 import com.phicomm.remotecontrol.modules.main.screenprojection.entity.PositionInfo;
@@ -71,7 +72,6 @@ public class MediaControlBiz {
         }
         upnpBiz.execute(new SetAVTransportURI(instanceId, serviceAVT, uri,
                 metadata) {
-
             @Override
             public void failure(ActionInvocation invocation,
                                 UpnpResponse operation, String defaultMsg) {
@@ -81,10 +81,6 @@ public class MediaControlBiz {
             @Override
             public void onSuccess(String defaultMsg) {
                 LogUtil.d(TAG, "SetAVTransportURI successed:" + defaultMsg);
-//                Message msg = Message.obtain(handler);
-//                msg.what = MediaControlOperation.SET_AVTRANSPORT_URI;
-//                msg.arg1 = SUCCESS;
-//                msg.sendToTarget();
             }
         });
     }
@@ -143,22 +139,19 @@ public class MediaControlBiz {
      * 播放
      */
     public void play() {
-        upnpBiz.execute(new Play(instanceId, serviceAVT) {
+        upnpBiz.execute(new VideoPlay(instanceId, serviceAVT) {
             @Override
             public void failure(ActionInvocation invocation,
                                 UpnpResponse operation, String defaultMsg) {
-                LogUtil.d(TAG, "Play failure:" + defaultMsg);
-                LogUtil.d(TAG, "Play failure!!!!!,具体信息是：" + defaultMsg);
             }
 
             @Override
             public void onSuccess(String defaultMsg) {
-                LogUtil.d(TAG, "Play successed:" + defaultMsg);
+                LogUtil.d(TAG, "VideoPlay successed:" + defaultMsg);
                 Message msg = Message.obtain(handler);
                 msg.what = MediaControlOperation.PLAY;
                 msg.arg1 = SUCCESS;
                 msg.sendToTarget();
-                LogUtil.d(TAG, "Play SUCCESS!!!!!,具体信息是：" + defaultMsg);
             }
         });
     }
@@ -167,22 +160,35 @@ public class MediaControlBiz {
      * 暂停
      */
     public void pause() {
-        upnpBiz.execute(new Pause(instanceId, serviceAVT) {
+        upnpBiz.execute(new VideoPause(instanceId, serviceAVT) {
             @Override
             public void failure(ActionInvocation invocation,
                                 UpnpResponse operation, String defaultMsg) {
-                LogUtil.d(TAG, "Pause failure:" + defaultMsg);
-                LogUtil.d(TAG, "Pause failure!!!!!,具体信息是：" + defaultMsg);
             }
 
             @Override
             public void onSuccess(String defaultMsg) {
-                LogUtil.d(TAG, "Pause successed:" + defaultMsg);
+                LogUtil.d(TAG, "VideoPause successed:" + defaultMsg);
                 Message msg = Message.obtain(handler);
                 msg.what = MediaControlOperation.PAUSE;
                 msg.arg1 = SUCCESS;
                 msg.sendToTarget();
-                LogUtil.d(TAG, "Pause SUCCESS!!!!!,具体信息是：" + defaultMsg);
+            }
+        });
+    }
+
+    public void stop() {
+        upnpBiz.execute(new VideoStop(instanceId, serviceAVT) {
+            @Override
+            public void failure(ActionInvocation invocation,
+                                UpnpResponse operation, String defaultMsg) {
+                LogUtil.d(TAG, "VideoStop failure:" + defaultMsg);
+            }
+
+            @Override
+            public void onSuccess(String defaultMsg) {
+                LogUtil.d(TAG, "VideoStop successed:" + defaultMsg);
+
             }
         });
     }
@@ -194,24 +200,20 @@ public class MediaControlBiz {
         long duration = ModelUtil.fromTimeString(totalTime);
         long seekTime = percent * duration / 100;
         String seekTo = ModelUtil.toTimeString(seekTime);
-        LogUtil.d(TAG, "seek时pro是：" + percent + ",视频时间是：" + duration + "，seekTime是：" + seekTime);
-
-        upnpBiz.execute(new Seek(instanceId, serviceAVT, seekTo) {
+        upnpBiz.execute(new VideoSeek(instanceId, serviceAVT, seekTo) {
             @Override
             public void failure(ActionInvocation invocation,
                                 UpnpResponse operation, String defaultMsg) {
-                LogUtil.d(TAG, "Seek failure:" + defaultMsg);
-                LogUtil.d(TAG, "Seek failure!!!!!,具体信息是：" + defaultMsg);
+                LogUtil.d(TAG, "VideoSeek failure:" + defaultMsg);
             }
 
             @Override
             public void onSuccess(String defaultMsg) {
-                LogUtil.d(TAG, "Seek successed:" + defaultMsg);
+                LogUtil.d(TAG, "VideoSeek successed:" + defaultMsg);
                 Message msg = Message.obtain(handler);
                 msg.what = MediaControlOperation.SEEK;
                 msg.arg1 = SUCCESS;
                 msg.sendToTarget();
-                LogUtil.d(TAG, "Seek SUCCESS!!!!!,具体信息是：" + defaultMsg);
             }
         });
     }
