@@ -20,12 +20,6 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="stance_view">
-        <item name="android:layout_width">0.0dip</item>
-        <item name="android:layout_height">0.0dip</item>
-        <item name="android:layout_weight">1.0</item>
-    </style>
-
     <style name="MyToggleButton" parent="@android:style/Widget.CompoundButton">
         <item name="android:button">@drawable/setting_checkbox_button</item>
     </style>

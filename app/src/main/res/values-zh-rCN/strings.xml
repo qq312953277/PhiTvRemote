@@ -20,47 +20,20 @@
 
     <!--设备 -->
     <string name="app_name">遥控器</string>
-    <string name="app_title">斐讯盒子遥控器</string>
     <string name="unable_to_connect_device">电视未连接</string>
-    <string name="devices_list">设备列表</string>
-    <string name="manual_ip_label">请输入斐讯盒子的IP</string>
-    <string name="manual_ip_entry_label">IP地址输入</string>
-    <string name="manual_ip_hint">xxx.xxx.xxx.xxx</string>
-    <string name="manual_ip_message">IP地址在斐讯盒子:设置 &gt; 网络设备 &gt; 网络信息查看</string>
-    <string name="manual_ip_error_address">无效IP地址.</string>
-    <string name="manual_ip_default_box_name">未知盒子</string>
-    <string name="manual_ip_connect">连接</string>
-    <string name="manual_ip_cancel">取消</string>
     <string name="manual_ip_input">输入IP</string>
     <string name="choose_box_controll">选择盒子进行控制</string>
     <string name="recent_connect_devices">连接记录</string>
     <string name="research_discovery_devices">重新搜索</string>
-    <string name="finder_searching">正在搜索网络上的设备.</string>
-    <string name="searching">正在搜索...</string>
-    <string name="finder_searching_with_ssid">搜索网络 \"%s\" 上的设备.</string>
-    <string name="finder_wifi_waiting">等待wifi网络.</string>
     <string name="current_wifi">当前Wifi:</string>
-    <string name="finder_add_other">添加其他设备</string>
-    <string name="finder_connect">连接</string>
     <string name="finder_cancel">取消</string>
-    <string name="finder_manual">手动输入盒子</string>
-    <string name="finder_enable">可用</string>
-    <string name="finder_configure">配置</string>
-    <string name="finder_wait">等待</string>
-    <string name="finder_no_devices">没有发现斐讯盒子</string>
-    <string name="finder_no_devices_with_ssid">没有发现斐讯盒子 \"%s\"</string>
     <string name="finder_wifi_not_available">WiFi不可用</string>
-    <string name="finder_recently_connected">最近连接的设备</string>
     <string name="edit_recent_connect_devices">编辑</string>
-    <string name="cancel_choose_box">取消选择</string>
     <string name="delete_choose_box">删除</string>
     <string name="no_item">没有记录</string>
     <string name="current_wifi_not_available">当前Wifi未连接</string>
     <string name="connect_fail">设备连接失败</string>
     <string name="searching_devices">正在扫描设备</string>
-    <plurals name="choose_count_box">
-        <item quantity="other">共计<xliff:g id="count">%d</xliff:g>项</item>
-    </plurals>
     <string name="device_find_tip">提示:\n \n
         1.当前只支持斐讯盒子 \n
         2.请确保盒子和手机在一个局域网内 \n
@@ -71,20 +44,6 @@
     </plurals>
 
     <!--主界面控制键-->
-    <string name="key_up">Up</string>
-    <string name="key_down">Down</string>
-    <string name="key_right">Right</string>
-    <string name="key_left">Left</string>
-    <string name="key_enter">Ok</string>
-    <string name="key_vol_down">Volume Down</string>
-    <string name="key_vol_up">Volume Up</string>
-    <string name="key_chanel_down">Chanel Down</string>
-    <string name="key_chanel_up">Chanel Up</string>
-    <string name="key_menu">Menu</string>
-    <string name="key_home">Home</string>
-    <string name="key_back">Back</string>
-    <string name="vol">音量</string>
-    <string name="chanel">频道</string>
     <string name="exit_application_hint">再按一次退出程序</string>
     <string name="click_force_hint">力度不够哦，用力点</string>
 
@@ -94,18 +53,14 @@
     <string name="childlock">儿童锁</string>
     <string name="clear">一键清理</string>
     <string name="init_time">0:00:00</string>
-    <string name="separate"> / </string>
     <string name="success_screenshot">"截屏成功"</string>
     <string name="fail_screenshot">"截屏失败"</string>
-    <string name="success_save">"保存成功"</string>
     <string name="fail_save">"保存失败"</string>
     <string name="screenshot_title_not_connnect">电视截图</string>
     <string name="photo_help_tips">请前往&#060;本地存储&#062;-&#060;Pictures&#062;-&#060;Phibox&#x000A;Screenshot&#062;查找截图</string>
     <string name="confirm">确定</string>
 
     <!--投屏-->
-    <string name="tips">提示</string>
-    <string name="tips_content">正在获取媒体资源，请等待</string>
     <string name="device_search">正在查找设备详情,请稍后.</string>
     <string name="local_screenprojection">本地投影</string>
     <string name="wifi_connecting">正在连接Wifi...</string>
@@ -133,20 +88,13 @@
 
     <!--更新-->
     <string name="update_description">新版本更新</string>
-    <string name="version_info_tips">最新版本更新内容:</string>
     <string name="version_update_title">发现新版本(%s)</string>
-    <string name="update_current_version">当前版本</string>
-    <string name="update_latest_version">最新版本</string>
-    <string name="update_version">更新版本</string>
     <string name="current_version_newest">当前已是最新版本</string>
     <string name="download_wait">正在下载，请稍后...</string>
     <string name="download_failure">下载失败</string>
     <string name="file_not_exist">安装文件不存在</string>
     <string name="update_later">以后再说</string>
     <string name="update_now">立即更新</string>
-    <string name="error_no_device">没有指定设备</string>
-    <string name="timeout_msg">该版本不可用，请更新应用！</string>
-    <string name="network_invailable_msg">"无法访问网络"</string>
 
     <!--设置-->
     <string name="setting_title">遥控器设置</string>
@@ -159,49 +107,27 @@
     <string name="register">注册</string>
     <string name="new_user_register">新用户注册</string>
     <string name="register_divide">注&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;册</string>
-    <string name="submit">提交</string>
-    <string name="reset">重置</string>
     <string name="reset_divide">重&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;置</string>
-    <string name="complete">完成</string>
     <string name="forget_password">忘记密码</string>
     <string name="reset_password">重置密码</string>
     <string name="login">登录</string>
     <string name="login_divide">登&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;录</string>
-    <string name="logout">退出当前账号</string>
     <string name="logout_title">退出登录</string>
     <string name="logout_content">您确定要退出登录吗？</string>
 
-    <string name="device">我的设备</string>
-    <string name="my_device">我的设备</string>
-    <string name="find">发现</string>
-    <string name="messages">消息</string>
-    <string name="personal">我的</string>
-    <string name="personal_center">个人中心</string>
-    <string name="username">用户名</string>
     <string name="phonenum_hint">请输入手机号码</string>
     <string name="captcha_hint">请输入图形验证码</string>
     <string name="verifycode_hint">请输入短信验证码</string>
     <string name="password_hint">请输入密码</string>
     <string name="password_tips">6-18位、至少含数字、字母、符号中两种</string>
-    <string name="old_password_tips">输入原密码：</string>
-    <string name="old_password_hint">请输入原密码</string>
-    <string name="new_password_tips">输入新密码：</string>
-    <string name="new_password_hint">请输入新密码</string>
-    <string name="confirm_new_password_hint">请再次输入新密码</string>
     <string name="phonenum_is_null">手机号不能为空！</string>
     <string name="phonenum_is_illegal">您的手机号码有误，请重新输入</string>
     <string name="password_is_null">密码不能为空！</string>
     <string name="password_format_wrong">密码格式不正确，6-18位，至少含数字、字母、符号中的两种</string>
     <string name="password_length_wrong">您的密码不满足6-18位，请重新设置</string>
-    <string name="newpassword_format_wrong">新密码格式不正确，6-18位，至少含数字、字母、符号中的两种</string>
-    <string name="newpassword_length_wrong">您的新密码不满足6-18位，请重新设置</string>
-    <string name="being_processed">数据请求中…</string>
-    <string name="loading_default_hint">加载中...</string>
     <string name="net_connect_fail">网络连接不可用</string>
     <string name="get_verification_code">获取验证码</string>
     <string name="send_verifycode_success">验证码发送成功！</string>
-    <string name="getting_msg_code">正在获取验证码</string>
-    <string name="getting_captcha">正在获取图形码</string>
     <string name="send_again">重新发送</string>
     <string name="input_verify_code">请输入短信验证码！</string>
     <string name="input_captcha_code">请输入图形验证码！</string>
@@ -216,8 +142,6 @@
     <string name="login_tips">此号码已经注册斐讯账号，请前去登录</string>
     <string name="exit">退出当前账号</string>
     <string name="kick_tips">你的账号已在其他设备上登录。如非本人操作，请重新登录后修改密码。</string>
-    <string name="account_exit">确定退出当前账号？</string>
-    <string name="account_exit_msg">退出账号后将无法同步数据</string>
     <string name="phicomm_account">斐讯账户</string>
     <string name="no_network_layout">无网络</string>
     <string name="no_network_reload">重新加载</string>

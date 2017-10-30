@@ -24,8 +24,8 @@ import rx.schedulers.Schedulers;
 
 public class HttpDataRepository {
 
-    public static final int CONNECT_TIMEOUT = 10;
-    public static final int READ_TIMEOUT = 15;
+    public static final int CONNECT_TIMEOUT = 6;
+    public static final int READ_TIMEOUT = 10;
 
     private static HttpDataRepository mInstance = null;
     private Retrofit mCommonRetrofit = null;

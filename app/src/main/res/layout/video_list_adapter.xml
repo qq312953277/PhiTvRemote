@@ -30,7 +30,7 @@
 
         <TextView
             android:id="@+id/file_name"
-            android:layout_width="170dp"
+            android:layout_width="220dp"
             android:layout_height="wrap_content"
             android:ellipsize="middle"
             android:maxLines="1"
@@ -46,7 +46,6 @@
             android:maxLines="1"
             android:textColor="@color/color_80484848"
             android:textSize="@dimen/text_size_14sp" />
-
 
     </LinearLayout>
 

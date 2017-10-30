@@ -2,39 +2,15 @@
 
     <!--devices -->
     <string name="app_name">RemoteControl</string>
-    <string name="app_title">PhiBoxRemote</string>
     <string name="unable_to_connect_device">Unable to connect TV</string>
-    <string name="devices_list">devices list</string>
-    <string name="manual_ip_label">Add Phicomm BOX</string>
-    <string name="manual_ip_entry_label">IP Address</string>
-    <string name="manual_ip_hint">xxx.xxx.xxx.xxx</string>
-    <string name="manual_ip_message">You can find IP address of your Phicomm Box device by going to:\nSettings &gt; Network &gt; Network Information</string>
-    <string name="manual_ip_error_address">Invalid address.</string>
-    <string name="manual_ip_default_box_name">Unknown box</string>
-    <string name="manual_ip_connect">Connect</string>
-    <string name="manual_ip_cancel">Cancel</string>
     <string name="manual_ip_input">Manual IP</string>
     <string name="choose_box_controll">choose box control</string>
     <string name="recent_connect_devices">connected devices</string>
     <string name="research_discovery_devices">research</string>
-    <string name="finder_searching">Searching for Phicomm Box on your network.</string>
-    <string name="searching">Searching ...</string>
-    <string name="finder_searching_with_ssid">Searching for Phicomm Box on \"%s\" network.</string>
-    <string name="finder_wifi_waiting">Waiting for WiFi network.</string>
     <string name="current_wifi">Current Wifi</string>
-    <string name="finder_add_other">Add other device</string>
-    <string name="finder_connect">Connect</string>
     <string name="finder_cancel">Cancel</string>
-    <string name="finder_manual">Add Phicomm TV manually</string>
-    <string name="finder_enable">Enable</string>
-    <string name="finder_configure">Configure</string>
-    <string name="finder_wait">Wait</string>
-    <string name="finder_no_devices">No Phicomm Box found</string>
-    <string name="finder_no_devices_with_ssid">No Phicomm Box found on \"%s\"</string>
     <string name="finder_wifi_not_available">WiFi network not available</string>
-    <string name="finder_recently_connected">Recently connected devices</string>
     <string name="edit_recent_connect_devices">edit</string>
-    <string name="cancel_choose_box">cancel</string>
     <string name="delete_choose_box">delete</string>
     <string name="no_item">no item</string>
     <string name="current_wifi_not_available">Wifi not available</string>
@@ -49,25 +25,7 @@
         <item quantity="other">Total <xliff:g id="count">%d</xliff:g> devices</item>
     </plurals>
 
-    <plurals name="choose_count_box">
-        <item quantity="other">Total <xliff:g id="count">%d</xliff:g>Item</item>
-    </plurals>
-
     <!--main boarder controller-->
-    <string name="key_up">Up</string>
-    <string name="key_down">Down</string>
-    <string name="key_right">Right</string>
-    <string name="key_left">Left</string>
-    <string name="key_enter">Ok</string>
-    <string name="key_vol_down">Volume Down</string>
-    <string name="key_vol_up">Volume Up</string>
-    <string name="key_chanel_down">Chanel Down</string>
-    <string name="key_chanel_up">Chanel Up</string>
-    <string name="key_menu">Menu</string>
-    <string name="key_home">Home</string>
-    <string name="key_back">Back</string>
-    <string name="vol">vol</string>
-    <string name="chanel">chanel</string>
     <string name="exit_application_hint">click again then exit application</string>
     <string name="click_force_hint">please force deep</string>
 
@@ -77,18 +35,14 @@
     <string name="childlock">ChildLock</string>
     <string name="clear">Clean</string>
     <string name="init_time">0:00:00</string>
-    <string name="separate"> / </string>
     <string name="success_screenshot">"Screenshot success"</string>
     <string name="fail_screenshot">"Screenshot failed"</string>
-    <string name="success_save">"Save success"</string>
     <string name="fail_save">"Save failed"</string>
     <string name="screenshot_title_not_connnect">TV screenshot</string>
     <string name="photo_help_tips">Ple goto&#060;local storage&#062;-&#060;Pictures&#062;-&#060;Phibox&#x000A;Screenshot&#062;check</string>
     <string name="confirm">Confirm</string>
 
     <!--screen projection-->
-    <string name="tips">Tips</string>
-    <string name="tips_content">Initializing the casting devices , please waite.</string>
     <string name="device_search">Looking for the devices , please waite.</string>
     <string name="wifi_connecting">Wifi connecting...</string>
     <string name="wifi_disconnecting">Wifi disconnecting...</string>
@@ -116,20 +70,13 @@
 
     <!--update-->
     <string name="update_description">New version update</string>
-    <string name="version_info_tips">Latest version content update:</string>
     <string name="version_update_title">Find new version(%s)</string>
-    <string name="update_current_version">Current version</string>
-    <string name="update_latest_version">Latest version</string>
-    <string name="update_version">Version update</string>
     <string name="current_version_newest">Current version is the latest</string>
     <string name="download_wait">downloading,pls wait...</string>
     <string name="download_failure">download fail</string>
     <string name="file_not_exist">Installed file not exist</string>
     <string name="update_later">Later to consider</string>
     <string name="update_now">Update now</string>
-    <string name="error_no_device">No devices secified</string>
-    <string name="timeout_msg">The version is not available, please update！</string>
-    <string name="network_invailable_msg">"Unable to connect network"</string>
 
     <!--setting-->
     <string name="setting_title">Remote control setting</string>
@@ -142,46 +89,24 @@
     <string name="register">Register</string>
     <string name="new_user_register">New user register</string>
     <string name="register_divide">Register</string>
-    <string name="submit">Submit</string>
-    <string name="reset">Reset</string>
     <string name="reset_divide">Reset</string>
-    <string name="complete">Complete</string>
     <string name="forget_password">Forget Password</string>
     <string name="reset_password">Reset Password</string>
     <string name="login">Login</string>
     <string name="login_divide">Login</string>
-    <string name="logout">Logout</string>
-    <string name="device">Device</string>
-    <string name="my_device">My Devices</string>
-    <string name="find">Find</string>
-    <string name="messages">Messages</string>
-    <string name="personal">Personal</string>
-    <string name="personal_center">Personal Center</string>
-    <string name="username">Username</string>
     <string name="phonenum_hint">Pls input phonenumber</string>
     <string name="captcha_hint">Pls input captcha</string>
     <string name="verifycode_hint">Pls input verifycode</string>
     <string name="password_hint">Pls input password</string>
     <string name="password_tips">6-18 bit, At least two kinds of numbers, letters and symbols</string>
-    <string name="old_password_tips">Input old password:</string>
-    <string name="old_password_hint">Pls input old password</string>
-    <string name="new_password_tips">input new password:</string>
-    <string name="new_password_hint">Pls input new password</string>
-    <string name="confirm_new_password_hint">Pls input confirm new password</string>
     <string name="phonenum_is_null">Empty phonenumber.</string>
     <string name="phonenum_is_illegal">Illegal phonenumber</string>
     <string name="password_is_null">Empty password</string>
     <string name="password_format_wrong">Password format wrong</string>
     <string name="password_length_wrong">Password length wrong</string>
-    <string name="newpassword_format_wrong">Newpassword format wrong</string>
-    <string name="newpassword_length_wrong">Newpassword length wrong</string>
-    <string name="being_processed">Requesting</string>
-    <string name="loading_default_hint">Loading</string>
     <string name="net_connect_fail">net work connect fail.</string>
     <string name="get_verification_code">Get VerifyCode</string>
     <string name="send_verifycode_success">send verify code success</string>
-    <string name="getting_msg_code">getting verify code</string>
-    <string name="getting_captcha">getting captcha</string>
     <string name="send_again">resend</string>
     <string name="input_verify_code">pls input verify code</string>
     <string name="input_captcha_code">pls input captcha</string>
@@ -198,8 +123,6 @@
     <string name="logout_title">Exit account</string>
     <string name="logout_content">Sure to exit?</string>
     <string name="kick_tips">Your account has been logged on to another device. Please login again and change the password.</string>
-    <string name="account_exit">Sure to exist account？</string>
-    <string name="account_exit_msg">Data cannot be synchronized after exit account</string>
     <string name="phicomm_account">Phicomm account</string>
     <string name="no_network_layout">no network</string>
     <string name="no_network_reload">reload</string>

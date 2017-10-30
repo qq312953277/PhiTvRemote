@@ -20,6 +20,10 @@ import com.phicomm.remotecontrol.util.StringUtils;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.net.SocketException;
+import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
+
 import rx.Subscriber;
 
 /**
@@ -44,7 +48,21 @@ public abstract class CustomSubscriber<T> extends Subscriber<T> {
 
     @Override
     public void onError(Throwable e) {
-        Log.d(TAG, "onError:" + e.toString());
+        if (e != null) {
+            Log.d(TAG, "onError:" + e.toString());
+        }
+        DialogUtils.cancelLoadingDialog();
+
+        //get errorstring by exception type
+        int errorStringRes = R.string.common_error;
+        if (e instanceof SocketTimeoutException) {
+            errorStringRes = R.string.connect_timeout;
+        } else if (e instanceof UnknownHostException || e instanceof SocketException) {
+            errorStringRes = R.string.net_connect_fail;
+        }
+
+        CommonUtils.showToastBottom(BaseApplication.getContext().getString(errorStringRes));
+
     }
 
     @Override

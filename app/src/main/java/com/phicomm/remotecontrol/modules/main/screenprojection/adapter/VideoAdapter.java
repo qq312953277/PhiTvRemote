@@ -64,22 +64,13 @@ public class VideoAdapter extends BaseAdapter {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        viewHolder.mFileName.setText(getTittle(mTittle));
+        viewHolder.mFileName.setText(mTittle);
         Glide.with(mContext).load("file://" + movieValues).dontAnimate()
                 .error(R.drawable.album_default_loading_pic).centerCrop()
                 .placeholder(R.drawable.album_default_loading_pic)
                 .priority(Priority.HIGH).into(viewHolder.mFileImage);
         viewHolder.mFileLength.setText(mDuration);
         return convertView;
-    }
-
-    private String getTittle(String tittle) {
-        if (tittle.length() <= TITTLE_LIMIT_LENGTH) {
-            return tittle;
-        } else {
-            String mShortContentTitle = tittle.substring(0, TITTLE_FRONT_LENGTH) + "..." + tittle.substring(tittle.length() - TITTLE_BACK_LENGTH, tittle.length());
-            return mShortContentTitle;
-        }
     }
 
     public class ViewHolder {

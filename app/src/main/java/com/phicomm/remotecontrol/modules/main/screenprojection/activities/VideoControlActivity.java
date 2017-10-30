@@ -6,7 +6,6 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -18,13 +17,12 @@ import com.phicomm.remotecontrol.modules.main.controlpanel.PanelContract;
 import com.phicomm.remotecontrol.modules.main.controlpanel.PanelPresenter;
 import com.phicomm.remotecontrol.modules.main.screenprojection.contract.VideoControlContract;
 import com.phicomm.remotecontrol.modules.main.screenprojection.presenter.VideoControlPresenterImpl;
+import com.phicomm.remotecontrol.widget.MarqueeText;
 import com.phicomm.remotecontrol.util.CommonUtils;
 import com.phicomm.remotecontrol.util.SettingUtil;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-
-import static com.phicomm.remotecontrol.constant.PhiConstants.TITLE_BAR_HEIGHT_DP;
 
 /**
  * Created by kang.sun on 2017/8/23.
@@ -36,11 +34,8 @@ public class VideoControlActivity extends BaseActivity implements VideoControlCo
     private boolean canSeeking;
     private String mVideoName;
 
-    @BindView(R.id.rl_title)
-    RelativeLayout mRlTitle;
-
     @BindView(R.id.tv_title)
-    TextView mTvTitle;
+    MarqueeText mTvTitle;
 
     @BindView(R.id.iv_back)
     ImageView mBack;
@@ -76,7 +71,6 @@ public class VideoControlActivity extends BaseActivity implements VideoControlCo
         Intent intent = getIntent();
         mVideoName = (String) intent.getSerializableExtra("videoName");
         mTvTitle.setText(mVideoName);
-        setMarginForStatusBar(mRlTitle, TITLE_BAR_HEIGHT_DP);
         mBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
