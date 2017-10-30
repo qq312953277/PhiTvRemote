@@ -192,7 +192,7 @@
 
     <!--popwindow-->
     <style name="popwin_anim_style">
-        <item name="android:windowEnterAnimation">@anim/pop_show</item>
-        <item name="android:windowExitAnimation">@anim/pop_gone</item>
+        <item name="android:windowEnterAnimation">@animator/pop_show</item>
+        <item name="android:windowExitAnimation">@animator/pop_gone</item>
     </style>
 </resources>
