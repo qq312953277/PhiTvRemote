@@ -338,13 +338,17 @@ public class DeviceDiscoveryFragment extends BaseFragment implements DeviceDisco
                             mPresenter.insertOrUpdateRecentDevices(remoteDevice);
                             mDiscoveryAdapter.clearStates(pos);
                             mDiscoveryAdapter.notifyDataSetInvalidated();
-                            mTvTitle.setText(remoteDevice.getName());
                         }
+                        mTvTitle.setText(remoteDevice.getName());
                         DialogUtils.cancelLoadingDialog();
                     }
 
                     @Override
                     public void onFail(String msg) {
+                        if (remoteDevice.getBssid().equals(DevicesUtil.getTarget().getBssid())) {
+                            DevicesUtil.setTarget(null);
+                            mTvTitle.setText(getString(R.string.unable_to_connect_device));
+                        }
                         mPresenter.removeItemAndRefreshView(remoteDevice, mPresenter.getCurrentDeviceList());
                         CommonUtils.showToastBottom(getString(R.string.connect_fail));
                         DialogUtils.cancelLoadingDialog();
@@ -356,6 +360,7 @@ public class DeviceDiscoveryFragment extends BaseFragment implements DeviceDisco
 
     @Override
     public void onResume() {
+        super.onResume();
         mPresenter.loadRecentList();
         mWifiManager = (WifiManager) getContext().getApplicationContext().getSystemService(WIFI_SERVICE);
         IntentFilter filter = new IntentFilter();
@@ -363,9 +368,7 @@ public class DeviceDiscoveryFragment extends BaseFragment implements DeviceDisco
         filter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
         mWifiChangeReceiver = new WifiChangeReceiver();
         getActivity().registerReceiver(mWifiChangeReceiver, filter);
-        //修复首页下拉列表异常
         addSelectedItem();
-        super.onResume();
     }
 
     private void addSelectedItem() {
@@ -461,7 +464,7 @@ public class DeviceDiscoveryFragment extends BaseFragment implements DeviceDisco
         mPresenter.stop();
     }
 
-    public String makeDeviceCountLabel(int count) {
+    private String makeDeviceCountLabel(int count) {
         StringBuilder deviceCount = new StringBuilder();
         StringBuilder formatBuilder = new StringBuilder();
         Formatter sFormatter = new Formatter(formatBuilder, Locale.getDefault());
@@ -530,6 +533,9 @@ public class DeviceDiscoveryFragment extends BaseFragment implements DeviceDisco
                 continue;
             }
             if (target.getBssid().equals(currentList.get(i).getBssid())) {
+                if (!target.getName().equals(currentList.get(i).getName())) {
+                    DevicesUtil.setTarget(currentList.get(i));
+                }
                 return i;
             }
         }
