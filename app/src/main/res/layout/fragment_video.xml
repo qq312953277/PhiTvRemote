@@ -17,5 +17,5 @@
         android:layout_height="50dp"
         android:layout_gravity="center"
         android:indeterminateDrawable="@drawable/loading_big"
-        android:visibility="invisible" />
+        android:visibility="gone" />
 </FrameLayout>

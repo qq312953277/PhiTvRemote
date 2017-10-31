@@ -25,6 +25,7 @@ import com.phicomm.remotecontrol.base.BaseFragment;
 import com.phicomm.remotecontrol.constant.PhiConstants;
 import com.phicomm.remotecontrol.greendao.GreenDaoUserUtil;
 import com.phicomm.remotecontrol.modules.devices.searchdevices.DeviceDiscoveryActivity;
+import com.phicomm.remotecontrol.modules.main.controlpanel.LogoffNoticeEvent;
 import com.phicomm.remotecontrol.modules.personal.personaldetail.PersonalActivity;
 import com.phicomm.remotecontrol.util.CommonUtils;
 import com.phicomm.remotecontrol.util.DevicesUtil;
@@ -36,6 +37,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+
 
 /**
  * Created by chunya02.li on 2017/7/13.
@@ -64,7 +66,6 @@ public class SpinnerListFragment extends BaseFragment {
     }
 
     public SpinnerListFragment() {
-
     }
 
     public void setGrayLayoutListener(ShowGrayLayout listener) {
@@ -226,7 +227,6 @@ public class SpinnerListFragment extends BaseFragment {
             mSpinerPopWindow.dismiss();
         }
     };
-
     private PopupWindow.OnDismissListener dismissListener = new PopupWindow.OnDismissListener() {
         @Override
         public void onDismiss() {
@@ -236,7 +236,6 @@ public class SpinnerListFragment extends BaseFragment {
             }
         }
     };
-
     Handler mLoadTargetDevice = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -245,7 +244,6 @@ public class SpinnerListFragment extends BaseFragment {
             List<RemoteBoxDevice> deviceList = bundle.getParcelableArrayList(PhiConstants
                     .SPINNER_DEVICES_LIST);
             Log.d(TAG, " handleMessage deviceList.size()=" + deviceList.size());
-            //手机后台自动connect连接记录的device，然后更新下拉展开栏
             List<RemoteBoxDevice> remoteBoxDeviceList = mGreenDaoUserUtil.querydata();
             refreshSpinnerListView(remoteBoxDeviceList);
             if (deviceList.size() > 0) {
@@ -298,5 +296,12 @@ public class SpinnerListFragment extends BaseFragment {
     public void onDestroy() {
         DevicesUtil.setTarget(null);
         super.onDestroy();
+    }
+
+    @Override
+    public void onEventMainThread(LogoffNoticeEvent event) {
+        if (event.getDeviceState()) {
+            mDeviceTv.setText(getString(R.string.unable_to_connect_device));
+        }
     }
 }

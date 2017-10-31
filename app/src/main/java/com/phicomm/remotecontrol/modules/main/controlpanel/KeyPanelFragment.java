@@ -12,8 +12,12 @@ import android.widget.Toast;
 import com.phicomm.remotecontrol.R;
 import com.phicomm.remotecontrol.constant.Commands;
 import com.phicomm.remotecontrol.constant.KeyCode;
+import com.phicomm.remotecontrol.util.CommonUtils;
+import com.phicomm.remotecontrol.util.DevicesUtil;
 import com.phicomm.remotecontrol.util.LogUtil;
 import com.phicomm.remotecontrol.util.SettingUtil;
+
+import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -24,7 +28,6 @@ import butterknife.ButterKnife;
 
 public class KeyPanelFragment extends Fragment implements PanelContract.View, android.view.View.OnClickListener {
     final static String TAG = "keypanel";
-
     private PanelContract.Presenter mPresenter;
     private Toast mToast;
 
@@ -84,19 +87,15 @@ public class KeyPanelFragment extends Fragment implements PanelContract.View, an
     public void onViewCreated(android.view.View view, @Nullable Bundle savedInstanceState) {
         LogUtil.d(TAG, "onViewCreated");
         ButterKnife.bind(this, view);
-
         mRightBtn.setOnClickListener(this);
         mLeftBtn.setOnClickListener(this);
         mUpBtn.setOnClickListener(this);
         mDownBtn.setOnClickListener(this);
         mEnterBtn.setOnClickListener(this);
-
         mVolDownBtn.setOnClickListener(this);
         mVolUpBtn.setOnClickListener(this);
-
         mHomeBtn.setOnClickListener(this);
         mBackBtn.setOnClickListener(this);
-
         mSettingBtn.setOnClickListener(this);
         mMenuBtn.setOnClickListener(this);
         mPowerBtn.setOnClickListener(this);
@@ -111,7 +110,6 @@ public class KeyPanelFragment extends Fragment implements PanelContract.View, an
     @Override
     public void onClick(android.view.View v) {
         SettingUtil.checkVibrate();
-
         LogUtil.d(TAG, "onClick");
         if (v == mRightBtn) {
             mPresenter.sendKeyEvent(KeyCode.RIGHT);
@@ -148,5 +146,12 @@ public class KeyPanelFragment extends Fragment implements PanelContract.View, an
             mToast.setText(msg);
         }
         mToast.show();
+    }
+
+    @Override
+    public void connectFail() {
+        EventBus.getDefault().post(new LogoffNoticeEvent(true));
+        DevicesUtil.setTarget(null);
+        CommonUtils.showShortToast(getString(R.string.unable_to_connect_device));
     }
 }

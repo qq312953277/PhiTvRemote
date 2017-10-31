@@ -68,6 +68,7 @@
     <string name="wifi_not_connected">未连接Wifi...</string>
     <string name="photo">照片</string>
     <string name="video">视频</string>
+    <string name="fail_screenprojection">投屏失败</string>
 
     <!--我的-->
     <string name="personal_title">我的</string>
@@ -202,7 +203,4 @@
     <string name="refershlayout_is_loading">刷新中</string>
     <string name="installed_app">已安装应用</string>
     <string name="apply_title">应用</string>
-
-    <!--投屏-->
-    <string name="fail_screenprojection">投屏失败</string>
 </resources>

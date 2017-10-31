@@ -34,6 +34,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.phicomm.remotecontrol.BuildConfig;
+import com.phicomm.remotecontrol.ConnectManager;
 import com.phicomm.remotecontrol.R;
 import com.phicomm.remotecontrol.base.BaseActivity;
 import com.phicomm.remotecontrol.constant.Commands;
@@ -56,6 +57,8 @@ import com.phicomm.remotecontrol.util.CommonUtils;
 import com.phicomm.remotecontrol.util.DevicesUtil;
 import com.phicomm.remotecontrol.util.FileUtil;
 import com.phicomm.widgets.alertdialog.PhiGuideDialog;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -93,11 +96,8 @@ public class CoreControlActivity extends BaseActivity implements UpdateView, Spi
     private UpdatePresenter mUpdatePresenter;
     private PreferenceRepository mPreference;
     private long mFirstTime;
-
     private PopupWindow wifyNotAvailablePopWindow;
     private WifiAvailableReceiver wifiAvailableReceiver;
-
-
     private Handler popWindowShowDelayed = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -175,7 +175,6 @@ public class CoreControlActivity extends BaseActivity implements UpdateView, Spi
     private void initSpinner() {
         SpinnerListFragment spinnerListFragment = (SpinnerListFragment)
                 getSupportFragmentManager().findFragmentById(R.id.spinner_container);
-
         if (spinnerListFragment == null) {
             spinnerListFragment = SpinnerListFragment.newInstance();
             ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),
@@ -183,7 +182,6 @@ public class CoreControlActivity extends BaseActivity implements UpdateView, Spi
         }
         //监听popwindow阴影效果
         spinnerListFragment.setGrayLayoutListener(this);
-
         View view = LayoutInflater.from(this).inflate(R.layout.ppw_wify_not_available, null);
         wifyNotAvailablePopWindow = new PopupWindow(view, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         wifyNotAvailablePopWindow.setAnimationStyle(R.style.popwin_anim_style);//设置pop动画
@@ -211,7 +209,6 @@ public class CoreControlActivity extends BaseActivity implements UpdateView, Spi
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
             }
 
             @Override
@@ -232,7 +229,6 @@ public class CoreControlActivity extends BaseActivity implements UpdateView, Spi
 
             @Override
             public void onPageScrollStateChanged(int state) {
-
             }
         });
     }
@@ -246,13 +242,14 @@ public class CoreControlActivity extends BaseActivity implements UpdateView, Spi
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CODE);
             }
         }
-
         //注册广播
         IntentFilter filter = new IntentFilter();
         filter.addAction(WifiManager.WIFI_STATE_CHANGED_ACTION);
         filter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
         wifiAvailableReceiver = new WifiAvailableReceiver();
         registerReceiver(wifiAvailableReceiver, filter);
+        //检测设备是否在线
+        ConnectManager.getInstance().deviceDetect();
     }
 
     @Override
@@ -291,6 +288,13 @@ public class CoreControlActivity extends BaseActivity implements UpdateView, Spi
             }
             mToast.show();
         }
+
+        @Override
+        public void connectFail() {
+            EventBus.getDefault().post(new LogoffNoticeEvent(true));
+            DevicesUtil.setTarget(null);
+            CommonUtils.showShortToast(getString(R.string.unable_to_connect_device));
+        }
     }
 
     private void checkNewVersion() {
@@ -300,6 +304,14 @@ public class CoreControlActivity extends BaseActivity implements UpdateView, Spi
         options.put("channel", CommonUtils.getAppChannel());
         options.put("vercode", BuildConfig.VERSION_CODE + "");
         mUpdatePresenter.checkVersion(options);
+    }
+
+    @Override
+    public void onEventMainThread(DeviceDetectEvent event) {
+        if (!event.getTargetState()) {
+            DevicesUtil.setTarget(null);
+            EventBus.getDefault().post(new LogoffNoticeEvent(true));
+        }
     }
 
     @Override
@@ -332,13 +344,11 @@ public class CoreControlActivity extends BaseActivity implements UpdateView, Spi
         } else {
             hint = getResources().getString(R.string.update_later);
         }
-
         View view = LayoutInflater.from(this).inflate(R.layout.dialog_content_for_update_info, null);
         TextView title = (TextView) view.findViewById(R.id.update_title);
         TextView message = (TextView) view.findViewById(R.id.update_message);
         title.setText(String.format(getString(R.string.version_update_title), versionName));
         message.setText(versionInfo);
-
         final PhiGuideDialog dialog = new PhiGuideDialog(this);
         dialog.setContentPanel(view);
         dialog.setLeftGuideOnclickListener(hint, R.color.syn_text_color, new PhiGuideDialog.onLeftGuideOnclickListener() {
@@ -358,7 +368,6 @@ public class CoreControlActivity extends BaseActivity implements UpdateView, Spi
             }
         });
         dialog.show();
-
         if (isForceUpdate) {
             dialog.setCancelable(false);
             dialog.setCanceledOnTouchOutside(false);
@@ -405,7 +414,6 @@ public class CoreControlActivity extends BaseActivity implements UpdateView, Spi
                     popWindowShowDelayed.sendEmptyMessageDelayed(POPWINDOW_FLAG, POPWINDOW_DELAY);//延时1s显示popwindow，解决首次进入APP无wifi时报错问题
                 }
             }
-
             if (WifiManager.NETWORK_STATE_CHANGED_ACTION.equals(action)) {
                 Parcelable parcelableExtra = intent.getParcelableExtra(WifiManager.EXTRA_NETWORK_INFO);
                 if (null != parcelableExtra) {

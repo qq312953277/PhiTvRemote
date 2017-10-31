@@ -6,6 +6,8 @@ import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import com.phicomm.remotecontrol.modules.main.controlpanel.DeviceDetectEvent;
+import com.phicomm.remotecontrol.modules.main.controlpanel.LogoffNoticeEvent;
 import com.phicomm.remotecontrol.modules.main.screenprojection.event.CheckTargetEvent;
 import com.phicomm.remotecontrol.modules.main.screenprojection.event.ClickStateEvent;
 import com.phicomm.remotecontrol.util.DialogUtils;
@@ -51,6 +53,14 @@ public class BaseFragment extends Fragment {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(CheckTargetEvent event) {
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventMainThread(LogoffNoticeEvent event) {
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventMainThread(DeviceDetectEvent event) {
     }
 
     public void onClick(View view) {

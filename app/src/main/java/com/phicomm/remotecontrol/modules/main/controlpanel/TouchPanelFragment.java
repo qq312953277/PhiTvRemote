@@ -21,6 +21,9 @@ import com.phicomm.remotecontrol.constant.KeyCode;
 import com.phicomm.remotecontrol.constant.PhiConstants;
 import com.phicomm.remotecontrol.event.GestureDelectorSimlpeListener;
 import com.phicomm.remotecontrol.util.CommonUtils;
+import com.phicomm.remotecontrol.util.DevicesUtil;
+
+import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -33,8 +36,10 @@ public class TouchPanelFragment extends BaseFragment implements PanelContract.Vi
     private GestureDetector mGestureDetector;
     PanelContract.Presenter mPresenter;
     private Toast mToast;
+
     @BindView(R.id.ll_touch_area)
     RelativeLayout mTouchArea;
+
     @BindView(R.id.scrollView)
     ScrollView mScrollView;
 
@@ -68,7 +73,6 @@ public class TouchPanelFragment extends BaseFragment implements PanelContract.Vi
     }
 
     public TouchPanelFragment() {
-
     }
 
     @Override
@@ -99,7 +103,6 @@ public class TouchPanelFragment extends BaseFragment implements PanelContract.Vi
                         mScrollView.requestDisallowInterceptTouchEvent(true);//子View告诉父容器不要拦截
                         break;
                     case MotionEvent.ACTION_MOVE:
-
                         break;
                     case MotionEvent.ACTION_UP:
                         //只有重写自己用到的View的onTouchEvent方法，在其ACTION_DOWN的时候，
@@ -119,12 +122,10 @@ public class TouchPanelFragment extends BaseFragment implements PanelContract.Vi
         mPresenter.setView(this);
     }
 
-
     @Override
     @OnClick({R.id.btn_vol_up, R.id.btn_vol_down, R.id.btn_home, R.id.btn_back, R.id.btn_setting, R.id.btn_menu, R.id.btn_power})
     public void onClick(View view) {
         super.onClick(view);
-
         switch (view.getId()) {
             case R.id.btn_vol_up:
                 mPresenter.sendKeyEvent(KeyCode.VOL_UP);
@@ -149,7 +150,6 @@ public class TouchPanelFragment extends BaseFragment implements PanelContract.Vi
             default:
                 break;
         }
-
     }
 
     @Override
@@ -190,6 +190,13 @@ public class TouchPanelFragment extends BaseFragment implements PanelContract.Vi
             mToast.setText(msg);
         }
         mToast.show();
+    }
+
+    @Override
+    public void connectFail() {
+        EventBus.getDefault().post(new LogoffNoticeEvent(true));
+        DevicesUtil.setTarget(null);
+        CommonUtils.showShortToast(getString(R.string.unable_to_connect_device));
     }
 
     private void showSlideHint() {

@@ -4,7 +4,11 @@ import com.phicomm.remotecontrol.beans.Status;
 import com.phicomm.remotecontrol.httpclient.IRemoterService;
 import com.phicomm.remotecontrol.httpclient.PhiCallBack;
 import com.phicomm.remotecontrol.httpclient.RemoteServiceImpl;
+import com.phicomm.remotecontrol.modules.main.controlpanel.DeviceDetectEvent;
+import com.phicomm.remotecontrol.util.DevicesUtil;
 import com.phicomm.remotecontrol.util.LogUtil;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 
@@ -45,6 +49,35 @@ public class ConnectManager {
         if (mListeners == null) {
             mListeners = new ArrayList<ConnectListener>();
         }
+    }
+
+    public void deviceDetect() {
+        if (DevicesUtil.getTarget() != null) {
+            checkTarget(DevicesUtil.getTarget().getAddress(), 8080);
+        }
+    }
+
+    public void checkTarget(final String ipAddress, final int port) {
+        LogUtil.d("connect:" + ipAddress + "/" + port);
+        final IRemoterService service = new RemoteServiceImpl(ipAddress, port);
+        TaskQuene.getInstance().addSubscription(
+                service.getStatus(), new PhiCallBack<Status>() {
+                    @Override
+                    public void onSuccess(Status status) {
+                        LogUtil.d("connect onSuccess");
+                        TaskQuene.getInstance().setRemoterService(service);
+                    }
+
+                    @Override
+                    public void onFailure(String msg) {
+                        EventBus.getDefault().post(new DeviceDetectEvent(false));
+                    }
+
+                    @Override
+                    public void onFinish() {
+                    }
+                }
+        );
     }
 
     @Deprecated

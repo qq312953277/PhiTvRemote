@@ -37,6 +37,7 @@ import com.phicomm.remotecontrol.base.BaseFragment;
 import com.phicomm.remotecontrol.constant.PhiConstants;
 import com.phicomm.remotecontrol.modules.devices.connectrecords.RecentDevicesActivity;
 import com.phicomm.remotecontrol.modules.devices.searchdevices.DeviceDiscoveryContract.Presenter;
+import com.phicomm.remotecontrol.modules.main.controlpanel.DeviceDetectEvent;
 import com.phicomm.remotecontrol.util.CommonUtils;
 import com.phicomm.remotecontrol.util.DevicesUtil;
 import com.phicomm.remotecontrol.util.DialogUtils;
@@ -238,7 +239,6 @@ public class DeviceDiscoveryFragment extends BaseFragment implements DeviceDisco
         @Override
         public void onClick(View v) {
             SettingUtil.checkVibrate();
-
             if (v == mIPCancleBt) {
                 mBottomView.dismissBottomView();
             } else if (v == mIPConfirmBt) {
@@ -280,7 +280,6 @@ public class DeviceDiscoveryFragment extends BaseFragment implements DeviceDisco
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
             SettingUtil.checkVibrate();
-
             String str = mIPInputEditText.getText().toString();
             String text = (String) adapterView.getAdapter().getItem(position);
             if (text.equals("←")) {
@@ -322,9 +321,7 @@ public class DeviceDiscoveryFragment extends BaseFragment implements DeviceDisco
         public void onItemClick(AdapterView<?> parent, View v, int position,
                                 long id) {
             SettingUtil.checkVibrate();
-
             showLoadingDialog(null);
-
             final int pos = position;
             mFindIndex = position;
             final RemoteBoxDevice remoteDevice = (RemoteBoxDevice) parent.getItemAtPosition(
@@ -369,6 +366,24 @@ public class DeviceDiscoveryFragment extends BaseFragment implements DeviceDisco
         mWifiChangeReceiver = new WifiChangeReceiver();
         getActivity().registerReceiver(mWifiChangeReceiver, filter);
         addSelectedItem();
+        ConnectManager.getInstance().deviceDetect();
+    }
+
+    @Override
+    public void onEventMainThread(DeviceDetectEvent event) {
+        if (!event.getTargetState()) {
+            turnOffDevice();
+        }
+    }
+
+    private void turnOffDevice() {
+        int position = findTargetPos(DevicesUtil.getCurrentDevicesListResult());
+        if (position != -1) {
+            mDiscoveryAdapter.noClearStates(position);
+            mDiscoveryAdapter.notifyDataChange(DevicesUtil.getCurrentDevicesListResult());
+        }
+        DevicesUtil.setTarget(null);
+        mTvTitle.setText(R.string.unable_to_connect_device);
     }
 
     private void addSelectedItem() {

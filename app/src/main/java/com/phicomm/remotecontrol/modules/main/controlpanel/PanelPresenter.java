@@ -11,7 +11,6 @@ import com.phicomm.remotecontrol.util.LogUtil;
  */
 
 public class PanelPresenter implements PanelContract.Presenter {
-
     PanelContract.View mView;
     private Context mContext;
 
@@ -24,7 +23,6 @@ public class PanelPresenter implements PanelContract.Presenter {
 
     @Override
     public void start() {
-
     }
 
     @Override
@@ -48,12 +46,11 @@ public class PanelPresenter implements PanelContract.Presenter {
             @Override
             public void onFailure(String msg) {
                 LogUtil.d("keyevent " + keyCode + " : fail");
-                //mView.connectFail();
+                mView.connectFail();
             }
 
             @Override
             public void onFinish() {
-
             }
         });
     }
@@ -64,17 +61,14 @@ public class PanelPresenter implements PanelContract.Presenter {
             @Override
             public void onSuccess(Object model) {
                 LogUtil.d("keyevent " + keyCode + " : SUCCESS");
-//                mView.toastMessage("SUCCESS");
             }
 
             @Override
             public void onFailure(String msg) {
-//                mView.toastMessage("fail");
             }
 
             @Override
             public void onFinish() {
-
             }
         });
     }
@@ -85,18 +79,16 @@ public class PanelPresenter implements PanelContract.Presenter {
             @Override
             public void onSuccess(Object model) {
                 LogUtil.d("sendCommand " + cmd + " : SUCCESS");
-//                mView.toastMessage("SUCCESS");
             }
 
             @Override
             public void onFailure(String msg) {
                 LogUtil.d("sendCommand " + cmd + " : fail");
-//                mView.toastMessage("fail");
+                mView.connectFail();
             }
 
             @Override
             public void onFinish() {
-
             }
         });
     }

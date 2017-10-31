@@ -50,6 +50,7 @@
     <string name="local_screenprojection">Local ScreenProjection</string>
     <string name="photo">Photo</string>
     <string name="video">Video</string>
+    <string name="fail_screenprojection">screenprojection fail</string>
 
     <!--mine-->
     <string name="personal_title">Mine</string>
@@ -183,8 +184,4 @@
     <string name="refershlayout_is_loading">Refreshing</string>
     <string name="installed_app">Installed applocations</string>
     <string name="apply_title">Application</string>
-
-    <!--screenprojection-->
-    <string name="fail_screenprojection">screenprojection fail</string>
-
 </resources>

@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 
 import com.phicomm.remotecontrol.R;
 import com.phicomm.remotecontrol.RemoteBoxDevice;
+import com.phicomm.remotecontrol.modules.main.controlpanel.DeviceDetectEvent;
 import com.phicomm.remotecontrol.modules.personal.account.event.LogoutEvent;
 import com.phicomm.remotecontrol.modules.personal.account.event.MultiLogoutEvent;
 import com.phicomm.remotecontrol.modules.personal.account.event.OffLineEvent;
@@ -32,9 +33,7 @@ import butterknife.ButterKnife;
  */
 
 public class BaseActivity extends AppCompatActivity {
-
     public final String TAG = BaseActivity.this.getClass().getSimpleName();
-
     private static boolean mIsMultiLoginDialogShowing = false;
 
     @Override
@@ -55,7 +54,6 @@ public class BaseActivity extends AppCompatActivity {
         MobclickAgent.onResume(this);
         //init eventbus
         EventBus.getDefault().register(this);
-
     }
 
     public void showLoadingDialog(Integer stringRes) {
@@ -105,6 +103,10 @@ public class BaseActivity extends AppCompatActivity {
         return super.onKeyDown(keyCode, event);
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventMainThread(DeviceDetectEvent event) {
+    }
+
     /**
      * Logout EventBus
      * 该子类凡是调用 post(new LogoutEvent())都会执行此方法
@@ -113,22 +115,15 @@ public class BaseActivity extends AppCompatActivity {
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventLogout(LogoutEvent msg) {
-
-        EventBus.getDefault().post(new OffLineEvent());//使用户中心下线，在PersonalActivity接收
-
-        //clear user data 仅清楚云端登录状态，不能把所有sp清空，登录界面“记住我”还需从本地获取登录信息
+        EventBus.getDefault().post(new OffLineEvent());
         LocalDataRepository.getInstance(BaseApplication.getContext()).setCloudLoginStatus(false);
         BaseApplication.getApplication().isLogined = false;
-
-        //判断当前activity不是PersonalActivity则跳转过来
         if (TAG.equalsIgnoreCase(PersonalActivity.class.getSimpleName())) {
-
         } else {
             Intent extras = new Intent();
             extras.putExtra("offline_flag", true);
             startActivityClearTopAndFinishSelf(extras, PersonalActivity.class);
         }
-
     }
 
     /**
@@ -138,12 +133,9 @@ public class BaseActivity extends AppCompatActivity {
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMultiAccountLogout(MultiLogoutEvent msg) {
-
-        //only show once
         if (mIsMultiLoginDialogShowing) {
             return;
         }
-
         mIsMultiLoginDialogShowing = true;
         PhiAlertDialog.Builder builder = new PhiAlertDialog.Builder(this);
         builder.setTitle(R.string.exit);
@@ -158,7 +150,6 @@ public class BaseActivity extends AppCompatActivity {
         });
         builder.show();
     }
-
 
     public void onClick(View view) {
         SettingUtil.checkVibrate();//震动事件，子类继承
@@ -190,5 +181,4 @@ public class BaseActivity extends AppCompatActivity {
             this.finish();
         }
     }
-
 }
