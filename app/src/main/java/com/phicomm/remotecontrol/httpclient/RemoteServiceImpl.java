@@ -7,6 +7,8 @@ import com.phicomm.remotecontrol.beans.Status;
 import com.phicomm.remotecontrol.constant.ErrorCode;
 import com.phicomm.remotecontrol.util.LogUtil;
 
+import java.util.concurrent.TimeUnit;
+
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -28,7 +30,11 @@ public class RemoteServiceImpl implements IRemoterService {
 
     public RemoteServiceImpl(String ip, int port) {
         mRootPath = "http://" + ip + ":" + port + "/";
-        mOkHttpClient = new OkHttpClient();
+        mOkHttpClient = new OkHttpClient.Builder()
+                .connectTimeout(5, TimeUnit.SECONDS)
+                .readTimeout(10, TimeUnit.SECONDS)
+                .writeTimeout(10, TimeUnit.SECONDS)
+                .build();
     }
 
     @Override

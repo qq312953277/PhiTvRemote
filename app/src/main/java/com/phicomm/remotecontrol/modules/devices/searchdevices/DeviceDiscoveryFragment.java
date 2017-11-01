@@ -342,9 +342,11 @@ public class DeviceDiscoveryFragment extends BaseFragment implements DeviceDisco
 
                     @Override
                     public void onFail(String msg) {
-                        if (remoteDevice.getBssid().equals(DevicesUtil.getTarget().getBssid())) {
-                            DevicesUtil.setTarget(null);
-                            mTvTitle.setText(getString(R.string.unable_to_connect_device));
+                        if (DevicesUtil.getTarget() != null) {
+                            if (remoteDevice.getBssid().equals(DevicesUtil.getTarget().getBssid())) {
+                                DevicesUtil.setTarget(null);
+                                mTvTitle.setText(getString(R.string.unable_to_connect_device));
+                            }
                         }
                         mPresenter.removeItemAndRefreshView(remoteDevice, mPresenter.getCurrentDeviceList());
                         CommonUtils.showToastBottom(getString(R.string.connect_fail));
