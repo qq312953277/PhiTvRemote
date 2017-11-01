@@ -3,6 +3,7 @@ package com.phicomm.remotecontrol.modules.main.screenprojection.activities;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.GestureDetector;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -12,6 +13,9 @@ import android.widget.TextView;
 import com.phicomm.remotecontrol.R;
 import com.phicomm.remotecontrol.base.BaseActivity;
 import com.phicomm.remotecontrol.base.BaseApplication;
+import com.phicomm.remotecontrol.constant.KeyCode;
+import com.phicomm.remotecontrol.modules.main.controlpanel.PanelContract;
+import com.phicomm.remotecontrol.modules.main.controlpanel.PanelPresenter;
 import com.phicomm.remotecontrol.modules.main.screenprojection.presenter.PictureControlPresenter;
 import com.phicomm.remotecontrol.modules.main.screenprojection.presenter.PictureControlPresenterImpl;
 import com.phicomm.remotecontrol.util.CommonUtils;
@@ -33,6 +37,8 @@ public class PictureControlActivity extends BaseActivity implements PictureContr
     public static final int TITTLE_BACK_LENGTH = 4;
     private PictureControlPresenter mPictureControlPresenter;
     private GestureDetector mGestureDetector;
+    private PanelContract.Presenter mPanelPresenter;
+
     @BindView(R.id.rl_title)
     RelativeLayout mRlTitle;
 
@@ -58,6 +64,7 @@ public class PictureControlActivity extends BaseActivity implements PictureContr
     private void init() {
         mPictureControlPresenter = new PictureControlPresenterImpl(this, (BaseApplication) getApplication());
         mGestureDetector = new GestureDetector(new MyGestureListener());
+        mPanelPresenter = new PanelPresenter(this);
     }
 
     @Override
@@ -107,7 +114,7 @@ public class PictureControlActivity extends BaseActivity implements PictureContr
             @Override
             public void onClick(View v) {
                 SettingUtil.checkVibrate();
-
+                mPanelPresenter.sendKeyEvent(KeyCode.BACK);
                 finish();
             }
         });
@@ -129,6 +136,14 @@ public class PictureControlActivity extends BaseActivity implements PictureContr
             }
             return super.onFling(e1, e2, velocityX, velocityY);
         }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            mPanelPresenter.sendKeyEvent(KeyCode.BACK);
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }
 

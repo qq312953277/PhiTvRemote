@@ -60,6 +60,7 @@ import static com.phicomm.remotecontrol.R.id.ipConnectProgressBar;
 import static com.phicomm.remotecontrol.constant.PhiConstants.TITLE_BAR_HEIGHT_DP;
 
 
+
 /**
  * Created by chunya02.li on 2017/7/11.
  */
@@ -348,6 +349,7 @@ public class DeviceDiscoveryFragment extends BaseFragment implements DeviceDisco
                                 mTvTitle.setText(getString(R.string.unable_to_connect_device));
                             }
                         }
+                        mDiscoveryAdapter.noClearStates(pos);
                         mPresenter.removeItemAndRefreshView(remoteDevice, mPresenter.getCurrentDeviceList());
                         CommonUtils.showToastBottom(getString(R.string.connect_fail));
                         DialogUtils.cancelLoadingDialog();

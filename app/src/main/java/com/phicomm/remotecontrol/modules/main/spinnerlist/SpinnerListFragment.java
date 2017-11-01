@@ -217,6 +217,12 @@ public class SpinnerListFragment extends BaseFragment {
 
                     @Override
                     public void onFail(String msg) {
+                        RemoteBoxDevice target = DevicesUtil.getTarget();
+                        if (target != null && (target.getBssid().equals(remoteDevice.getBssid()))) {
+                            DevicesUtil.setTarget(null);
+                            mDeviceTv.setText(getString(R.string.unable_to_connect_device));
+                            refreshSpinnerListView(mRemoteBoxDeviceList);
+                        }
                         LogUtil.d("Connect fail:" + remoteDevice.toString());
                         mCurrentDevicesList.remove(remoteDevice);
                         DevicesUtil.setCurrentListResult(mCurrentDevicesList);
