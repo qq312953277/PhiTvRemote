@@ -22,6 +22,7 @@ import com.phicomm.remotecontrol.constant.PhiConstants;
 import com.phicomm.remotecontrol.event.GestureDelectorSimlpeListener;
 import com.phicomm.remotecontrol.util.CommonUtils;
 import com.phicomm.remotecontrol.util.DevicesUtil;
+import com.phicomm.remotecontrol.util.SettingUtil;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -99,6 +100,7 @@ public class TouchPanelFragment extends BaseFragment implements PanelContract.Vi
                     //可以调用requestDisallowInterceptTouchEvent，让Scroll
                     //View不拦截MOVE事件
                     case MotionEvent.ACTION_DOWN:
+                        SettingUtil.checkVibrate();
                         hideSlideHint();
                         mScrollView.requestDisallowInterceptTouchEvent(true);//子View告诉父容器不要拦截
                         break;

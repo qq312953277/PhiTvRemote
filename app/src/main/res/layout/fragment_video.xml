@@ -10,12 +10,4 @@
         android:divider="@color/loginout_core_bg"
         android:dividerHeight="0.5dp" />
 
-    <ProgressBar
-        android:id="@+id/check_progressbar"
-        style="?android:attr/progressBarStyleSmall"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_gravity="center"
-        android:indeterminateDrawable="@drawable/loading_big"
-        android:visibility="gone" />
 </FrameLayout>

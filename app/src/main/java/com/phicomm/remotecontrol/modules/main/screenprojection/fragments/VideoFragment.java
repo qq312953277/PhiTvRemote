@@ -6,11 +6,7 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.view.animation.LinearInterpolator;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 
 import com.phicomm.remotecontrol.R;
 import com.phicomm.remotecontrol.base.BaseApplication;
@@ -25,6 +21,7 @@ import com.phicomm.remotecontrol.modules.main.screenprojection.model.UpnpService
 import com.phicomm.remotecontrol.modules.main.screenprojection.presenter.VideoContentPresenterImpl;
 import com.phicomm.remotecontrol.util.CommonUtils;
 import com.phicomm.remotecontrol.util.DevicesUtil;
+import com.phicomm.remotecontrol.util.DialogUtils;
 import com.phicomm.remotecontrol.util.SettingUtil;
 
 import org.fourthline.cling.model.meta.Device;
@@ -42,14 +39,10 @@ import static com.phicomm.remotecontrol.base.BaseApplication.getApplication;
 public class VideoFragment extends BaseFragment implements VideoContentContract.VideoContentView {
     private VideoAdapter mVideoAdapter;
     private VideoContentContract.VideoContentPresenter mVideoContentPresenter;
-    private Animation mLoadingAnimation;
     private int mPosition;
 
     @BindView(R.id.video_listview)
     ListView mListView;
-
-    @BindView(R.id.check_progressbar)
-    ProgressBar mCheckProgressBar;
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -122,15 +115,11 @@ public class VideoFragment extends BaseFragment implements VideoContentContract.
 
     @Override
     public void showCheckDialog() {
-        mLoadingAnimation = AnimationUtils.loadAnimation(getContext(), R.animator.rotate__refresh_anim);
-        mLoadingAnimation.setInterpolator(new LinearInterpolator());
-        mCheckProgressBar.startAnimation(mLoadingAnimation);
-        mCheckProgressBar.setVisibility(View.VISIBLE);
+        DialogUtils.showLoadingDialog(getContext());
     }
 
     @Override
     public void dimissCheckDialog() {
-        mCheckProgressBar.clearAnimation();
-        mCheckProgressBar.setVisibility(View.GONE);
+        DialogUtils.cancelLoadingDialog();
     }
 }

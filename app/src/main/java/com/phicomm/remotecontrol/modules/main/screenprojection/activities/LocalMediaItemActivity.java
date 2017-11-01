@@ -7,10 +7,7 @@ import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.view.View;
 import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
@@ -29,6 +26,7 @@ import com.phicomm.remotecontrol.modules.main.screenprojection.event.ClickStateE
 import com.phicomm.remotecontrol.modules.main.screenprojection.presenter.LocalMediaItemPresenter;
 import com.phicomm.remotecontrol.modules.main.screenprojection.presenter.LocalMediaItemPresenterImpl;
 import com.phicomm.remotecontrol.util.DevicesUtil;
+import com.phicomm.remotecontrol.util.DialogUtils;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -88,9 +86,6 @@ public class LocalMediaItemActivity extends BaseActivity implements MyFragmentAd
     @BindView(R.id.iv_back)
     ImageView mBack;
 
-    @BindView(R.id.initDLNADateProgressBar)
-    ProgressBar mInitDLNADateProgressBar;
-
     @BindView(R.id.icon_pic_choose)
     ImageView mPicChoose;
 
@@ -120,7 +115,7 @@ public class LocalMediaItemActivity extends BaseActivity implements MyFragmentAd
     }
 
     private void getDataLogic() {
-        showProgressDialog();
+        DialogUtils.showLoadingDialog(this);
         mLocalMediaItemPresenter.init(this, mDLNAHandler);
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -131,8 +126,8 @@ public class LocalMediaItemActivity extends BaseActivity implements MyFragmentAd
     }
 
     private void finishScan() {
-        mInitDLNADateProgressBar.clearAnimation();
-        mInitDLNADateProgressBar.setVisibility(View.GONE);
+        DialogUtils.cancelLoadingDialog();
+
         setEnable();
         mLocalMediaItemPresenter.destory();
         if ((DevicesUtil.getTarget() != null) && (mDisplayDeviceList != null) && (!isSelectedDeviceNotOnline(DevicesUtil.getTarget(), mDisplayDeviceList.getDeviceDisplayList()))) {
@@ -221,12 +216,6 @@ public class LocalMediaItemActivity extends BaseActivity implements MyFragmentAd
     public void onFailure(Object message) {
     }
 
-    private void showProgressDialog() {
-        mLoadingAnimation = AnimationUtils.loadAnimation(this, R.animator.rotate__refresh_anim);
-        mLoadingAnimation.setInterpolator(new LinearInterpolator());
-        mInitDLNADateProgressBar.startAnimation(mLoadingAnimation);
-        mInitDLNADateProgressBar.setVisibility(View.VISIBLE);
-    }
 
     private boolean isSelectedDeviceNotOnline(RemoteBoxDevice mRemoteBoxDevice, List<DeviceDisplay> mDeviceDisplayList) {
         String ip = mRemoteBoxDevice.getAddress();

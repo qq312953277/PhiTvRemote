@@ -134,7 +134,6 @@ public class ScreenshotActivity extends BaseActivity implements ScreenshotView {
     private void showHelpDialog() {
         PhiAlertDialog.Builder builder = new PhiAlertDialog.Builder(this);
         builder.setMessage(R.string.photo_help_tips);
-        builder.setCancelable(false);//点击框外不取消
         builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -165,6 +164,16 @@ public class ScreenshotActivity extends BaseActivity implements ScreenshotView {
     @Override
     public void onFailure(Object message) {
         CommonUtils.showToastBottom(getString(R.string.fail_screenshot));
+        refreshScreenshotFailed();
+    }
+
+    private void refreshScreenshotFailed() {
+        DevicesUtil.setTarget(null);
+        mTarget = DevicesUtil.getTarget();
+        mImageShow.setImageResource(R.drawable.tv_not_connected);
+        mTvTitle.setText(getString(R.string.screenshot_title_not_connnect));
+        mScreenshot.setImageResource(R.drawable.takephoto_on);
+        mScreenshot.setEnabled(true);//可点击
     }
 
 }

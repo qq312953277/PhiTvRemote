@@ -17,9 +17,9 @@ import com.phicomm.remotecontrol.modules.main.controlpanel.PanelContract;
 import com.phicomm.remotecontrol.modules.main.controlpanel.PanelPresenter;
 import com.phicomm.remotecontrol.modules.main.screenprojection.contract.VideoControlContract;
 import com.phicomm.remotecontrol.modules.main.screenprojection.presenter.VideoControlPresenterImpl;
-import com.phicomm.remotecontrol.widget.MarqueeText;
 import com.phicomm.remotecontrol.util.CommonUtils;
 import com.phicomm.remotecontrol.util.SettingUtil;
+import com.phicomm.remotecontrol.widget.MarqueeText;
 
 import butterknife.BindView;
 import butterknife.OnClick;
