@@ -128,7 +128,6 @@ public class ScreenshotActivity extends BaseActivity implements ScreenshotView {
         Intent intent = new Intent(this, DeviceDiscoveryActivity.class);
         intent.putExtra(PhiConstants.ACTION_BAR_NAME, getString(R.string.unable_to_connect_device));
         startActivity(intent);
-        finish();
     }
 
     private void showHelpDialog() {

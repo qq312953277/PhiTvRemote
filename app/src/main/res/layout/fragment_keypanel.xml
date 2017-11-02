@@ -31,55 +31,15 @@
             </RelativeLayout>
 
             <RelativeLayout
-                android:layout_width="218.3dp"
-                android:layout_height="218.3dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="15dp">
 
-                <ImageView
-                    android:id="@+id/btn_left"
-                    android:layout_width="109dp"
-                    android:layout_height="154.5dp"
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="0.4dp"
-                    android:clickable="true"
-                    android:src="@drawable/selector_button_left" />
-
-                <ImageView
-                    android:id="@+id/btn_right"
-                    android:layout_width="109dp"
-                    android:layout_height="154.5dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="0.3dp"
-                    android:clickable="true"
-                    android:src="@drawable/selector_button_right" />
-
-                <ImageView
-                    android:id="@+id/btn_up"
-                    android:layout_width="154.5dp"
-                    android:layout_height="109dp"
-                    android:layout_alignParentTop="true"
-                    android:layout_centerHorizontal="true"
-                    android:clickable="true"
-                    android:src="@drawable/selector_button_up" />
-
-                <ImageView
-                    android:id="@+id/btn_down"
-                    android:layout_width="154.5dp"
-                    android:layout_height="109dp"
-                    android:layout_alignParentBottom="true"
-                    android:layout_centerHorizontal="true"
-                    android:clickable="true"
-                    android:src="@drawable/selector_button_down" />
-
-                <ImageView
-                    android:id="@+id/btn_enter"
-                    android:layout_width="117dp"
-                    android:layout_height="117dp"
-                    android:layout_centerInParent="true"
-                    android:src="@drawable/selector_button_ok" />
+                <com.phicomm.remotecontrol.widget.CircleView
+                    android:id="@+id/circleView"
+                    android:layout_width="218dp"
+                    android:layout_height="218dp" />
 
             </RelativeLayout>
 

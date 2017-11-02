@@ -20,7 +20,10 @@
     <color name="loginout_core_bg">#F7F7F7</color>
     <color name="loginout_alert_bg">#E6E6E6</color>
     <color name="bottom_text_color">#FF6731</color>
+    <color name="color_272727">#272727</color>
+    <color name="color_96968D">#96968D</color>
     <color name="seekbar_color">#545454</color>
     <color name="core_board_pop_bg">#66000000</color>
+
 
 </resources>

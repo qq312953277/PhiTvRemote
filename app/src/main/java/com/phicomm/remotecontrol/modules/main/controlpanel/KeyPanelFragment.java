@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.phicomm.remotecontrol.R;
@@ -16,6 +15,7 @@ import com.phicomm.remotecontrol.util.CommonUtils;
 import com.phicomm.remotecontrol.util.DevicesUtil;
 import com.phicomm.remotecontrol.util.LogUtil;
 import com.phicomm.remotecontrol.util.SettingUtil;
+import com.phicomm.remotecontrol.widget.CircleView;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -26,25 +26,10 @@ import butterknife.ButterKnife;
  * Created by xufeng02.zhou on 2017/7/13.
  */
 
-public class KeyPanelFragment extends Fragment implements PanelContract.View, android.view.View.OnClickListener {
+public class KeyPanelFragment extends Fragment implements PanelContract.View, android.view.View.OnClickListener, CircleView.TouchListener {
     final static String TAG = "keypanel";
     private PanelContract.Presenter mPresenter;
     private Toast mToast;
-
-    @BindView(R.id.btn_right)
-    ImageView mRightBtn;
-
-    @BindView(R.id.btn_left)
-    ImageView mLeftBtn;
-
-    @BindView(R.id.btn_up)
-    ImageView mUpBtn;
-
-    @BindView(R.id.btn_down)
-    ImageView mDownBtn;
-
-    @BindView(R.id.btn_enter)
-    ImageView mEnterBtn;
 
     @BindView(R.id.btn_vol_up)
     ImageButton mVolUpBtn;
@@ -67,6 +52,9 @@ public class KeyPanelFragment extends Fragment implements PanelContract.View, an
     @BindView(R.id.btn_power)
     ImageButton mPowerBtn;
 
+    @BindView(R.id.circleView)
+    CircleView mCircleView;
+
 
     public static KeyPanelFragment newInstance() {
         return new KeyPanelFragment();
@@ -87,11 +75,6 @@ public class KeyPanelFragment extends Fragment implements PanelContract.View, an
     public void onViewCreated(android.view.View view, @Nullable Bundle savedInstanceState) {
         LogUtil.d(TAG, "onViewCreated");
         ButterKnife.bind(this, view);
-        mRightBtn.setOnClickListener(this);
-        mLeftBtn.setOnClickListener(this);
-        mUpBtn.setOnClickListener(this);
-        mDownBtn.setOnClickListener(this);
-        mEnterBtn.setOnClickListener(this);
         mVolDownBtn.setOnClickListener(this);
         mVolUpBtn.setOnClickListener(this);
         mHomeBtn.setOnClickListener(this);
@@ -99,6 +82,8 @@ public class KeyPanelFragment extends Fragment implements PanelContract.View, an
         mSettingBtn.setOnClickListener(this);
         mMenuBtn.setOnClickListener(this);
         mPowerBtn.setOnClickListener(this);
+
+        mCircleView.setTouchListener(this);
     }
 
     @Override
@@ -111,17 +96,7 @@ public class KeyPanelFragment extends Fragment implements PanelContract.View, an
     public void onClick(android.view.View v) {
         SettingUtil.checkVibrate();
         LogUtil.d(TAG, "onClick");
-        if (v == mRightBtn) {
-            mPresenter.sendKeyEvent(KeyCode.RIGHT);
-        } else if (v == mLeftBtn) {
-            mPresenter.sendKeyEvent(KeyCode.LEFT);
-        } else if (v == mUpBtn) {
-            mPresenter.sendKeyEvent(KeyCode.UP);
-        } else if (v == mDownBtn) {
-            mPresenter.sendKeyEvent(KeyCode.DOWN);
-        } else if (v == mEnterBtn) {
-            mPresenter.sendKeyEvent(KeyCode.CENTER);
-        } else if (v == mVolDownBtn) {
+        if (v == mVolDownBtn) {
             mPresenter.sendKeyEvent(KeyCode.VOL_DOWN);
         } else if (v == mVolUpBtn) {
             mPresenter.sendKeyEvent(KeyCode.VOL_UP);
@@ -136,6 +111,35 @@ public class KeyPanelFragment extends Fragment implements PanelContract.View, an
         } else if (v == mPowerBtn) {
             mPresenter.sendKeyEvent(KeyCode.POWER);
         }
+    }
+
+    @Override
+    public void onTouchRight() {
+        mPresenter.sendKeyEvent(KeyCode.RIGHT);
+    }
+
+    @Override
+    public void onTouchLeft() {
+        mPresenter.sendKeyEvent(KeyCode.LEFT);
+    }
+
+    @Override
+    public void onTouchUp() {
+        mPresenter.sendKeyEvent(KeyCode.UP);
+    }
+
+    @Override
+    public void onTouchDown() {
+        mPresenter.sendKeyEvent(KeyCode.DOWN);
+    }
+
+    @Override
+    public void onTouchCenter() {
+        mPresenter.sendKeyEvent(KeyCode.CENTER);
+    }
+
+    @Override
+    public void onTouchOut() {
     }
 
     @Override

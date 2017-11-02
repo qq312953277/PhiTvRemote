@@ -82,6 +82,9 @@ public class CoreControlActivity extends BaseActivity implements UpdateView, Spi
     @BindView(R.id.gray_layout)
     View mGrayLayout;
 
+    @BindView(R.id.viewPageMainContent)
+    ViewPager mViewPager;
+
     private final static String TAG = "CoreControlActivity";
     static final int REQUEST_CODE = 101;
     private final int POPWINDOW_FLAG = 0;
@@ -204,9 +207,9 @@ public class CoreControlActivity extends BaseActivity implements UpdateView, Spi
         mFragmentList = new ArrayList<>();
         mFragmentList.add(mKeypanelFragment);
         mFragmentList.add(mTouchPanelFragment);
-        ViewPager viewPager = (ViewPager) findViewById(R.id.viewPageMainContent);
-        viewPager.setAdapter(new ViewPageAdapter(getSupportFragmentManager(), mFragmentList));
-        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+
+        mViewPager.setAdapter(new ViewPageAdapter(getSupportFragmentManager(), mFragmentList));
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
             }
