@@ -68,7 +68,7 @@
     <string name="wifi_not_connected">未连接Wifi...</string>
     <string name="photo">照片</string>
     <string name="video">视频</string>
-    <string name="fail_screenprojection">投屏失败</string>
+    <string name="fail_screenprojection">投屏失败，请重试</string>
 
     <!--我的-->
     <string name="personal_title">我的</string>

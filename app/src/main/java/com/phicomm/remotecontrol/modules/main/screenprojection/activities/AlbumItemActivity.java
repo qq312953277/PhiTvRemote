@@ -107,7 +107,7 @@ public class AlbumItemActivity extends BaseActivity {
             }
         }
         if (!flag) {
-            CommonUtils.showShortToast(getString(R.string.fail_screenprojection));
+            CommonUtils.showToastBottom(getString(R.string.fail_screenprojection));
         }
     }
 

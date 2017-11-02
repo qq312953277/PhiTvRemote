@@ -50,7 +50,7 @@ public class PictureControlPresenterImpl implements PictureControlPresenter {
             Glide.with(BaseApplication.getContext()).load(pictureValues).into(imageView);
         } else {
             Glide.with(BaseApplication.getContext()).load(R.drawable.album_default_loading_pic).into(imageView);
-            CommonUtils.showShortToast("投屏失败，请重试！");
+            CommonUtils.showToastBottom(BaseApplication.getContext().getString(R.string.fail_screenprojection));
         }
     }
 

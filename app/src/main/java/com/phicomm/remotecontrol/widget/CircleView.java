@@ -12,6 +12,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import com.phicomm.remotecontrol.R;
+import com.phicomm.remotecontrol.util.SettingUtil;
 
 public class CircleView extends View {
 
@@ -76,7 +77,8 @@ public class CircleView extends View {
 
         setMeasuredDimension(measuredWidth, measuredHeight);
 
-        mCenter = mOutRadius = getWidth() / 2;
+        mCenter = getWidth() / 2;
+        mOutRadius = mCenter - 5;//大圆不能填满父View，否则安卓7.0点击按键后出现边缘橙色阴影
         mInnerCircleRadius = mCenter / 2;
         setOnTouchListener(onTouchListener);
     }
@@ -131,7 +133,7 @@ public class CircleView extends View {
         super.onDraw(canvas);
         initBackground(canvas);
         drawDirTriangle(canvas, dir);
-        if (mFlag) { //点击中间时置位false，不要覆盖橙色
+        if (mFlag) { //点击中间时置为false，不要覆盖橙色
             drawInnerCircle(canvas);
         }
     }
@@ -276,11 +278,13 @@ public class CircleView extends View {
 
         @Override
         public boolean onTouch(View view, MotionEvent event) {
-            final int action = event.getAction();
 
+            final int action = event.getAction();
             switch (action) {
                 //按下时变色
                 case MotionEvent.ACTION_DOWN:
+                    SettingUtil.checkVibrate();//震动
+
                     dir = checkDir(event.getX(), event.getY());
                     if (dir != Dir.OUT) {
                         if (dir == Dir.CENTER) {
@@ -295,7 +299,7 @@ public class CircleView extends View {
                     mRefreshHandler.sendEmptyMessageDelayed(REFRESH_FLAG, 100); //完美解决：快速滑动时会执行UP事件，延时0.1S将布局还原
                     break;
                 case MotionEvent.ACTION_MOVE:
-                    getParent().requestDisallowInterceptTouchEvent(true);//告诉父View任何时候都不要拦截我的事件
+                    getParent().requestDisallowInterceptTouchEvent(true);//告诉父View滑动的时候都不要拦截我的事件
                     break;
                 case MotionEvent.ACTION_CANCEL:
                     getParent().requestDisallowInterceptTouchEvent(false);//可以拦截

@@ -88,7 +88,7 @@
             android:maxHeight="5dp"
             android:minHeight="5dp"
             android:progressDrawable="@drawable/seekbar_progress_style"
-            android:thumb="@null" />
+            android:thumb="@drawable/seekerbar_thumb" />
 
         <TextView
             android:id="@+id/tv_totalTime"
