@@ -7,7 +7,6 @@ import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.phicomm.remotecontrol.R;
@@ -25,8 +24,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnTouch;
 
-import static com.phicomm.remotecontrol.constant.PhiConstants.TITLE_BAR_HEIGHT_DP;
-
 /**
  * Created by kang.sun on 2017/8/28.
  */
@@ -39,14 +36,12 @@ public class PictureControlActivity extends BaseActivity implements PictureContr
     private GestureDetector mGestureDetector;
     private PanelContract.Presenter mPanelPresenter;
 
-    @BindView(R.id.rl_title)
-    RelativeLayout mRlTitle;
-
     @BindView(R.id.tv_title)
     TextView mTvTitle;
 
     @BindView(R.id.iv_back)
     ImageView mBack;
+
     @BindView(R.id.iv_showpicture)
     ImageView mImageView;
 
@@ -100,16 +95,10 @@ public class PictureControlActivity extends BaseActivity implements PictureContr
 
     @Override
     public void setTittle(String tittle) {
-        if (tittle.length() <= TITTLE_LIMIT_LENGTH) {
-            mTvTitle.setText(tittle);
-        } else {
-            String mShortTvTitle = tittle.substring(0, TITTLE_FRONT_LENGTH) + "..." + tittle.substring(tittle.length() - TITTLE_BACK_LENGTH, tittle.length());
-            mTvTitle.setText(mShortTvTitle);
-        }
+        mTvTitle.setText(tittle);
     }
 
     private void initTitleView() {
-        setMarginForStatusBar(mRlTitle, TITLE_BAR_HEIGHT_DP);
         mBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

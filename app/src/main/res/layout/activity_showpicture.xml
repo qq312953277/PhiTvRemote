@@ -5,15 +5,45 @@
     android:background="@color/loginout_core_bg"
     android:orientation="vertical">
 
-    <include
-        layout="@layout/title_bar"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="45dp"
+        android:background="@color/white"
+        android:paddingBottom="5dp">
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="16.9dp"
+            android:layout_height="20.9dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="19.1dp"
+            android:paddingLeft="3dp"
+            android:paddingRight="3dp"
+            android:paddingTop="3dp"
+            android:src="@drawable/titlebar_back_icon" />
+
+        <com.phicomm.remotecontrol.widget.MarqueeText
+            android:id="@+id/tv_title"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:ellipsize="marquee"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:gravity="center"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:scrollHorizontally="true"
+            android:singleLine="true"
+            android:textColor="@color/core_activity_bg"
+            android:textSize="@dimen/text_size_17sp" />
+
+    </RelativeLayout>
+
 
     <ImageView
         android:id="@+id/iv_showpicture"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center_vertical"
-        android:scaleType="centerInside"/>
+        android:scaleType="centerInside" />
 </LinearLayout>
