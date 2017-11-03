@@ -46,7 +46,9 @@ public class PanelPresenter implements PanelContract.Presenter {
             @Override
             public void onFailure(String msg) {
                 LogUtil.d("keyevent " + keyCode + " : fail");
-                mView.connectFail();
+                if (mView != null) {
+                    mView.connectFail();
+                }
             }
 
             @Override

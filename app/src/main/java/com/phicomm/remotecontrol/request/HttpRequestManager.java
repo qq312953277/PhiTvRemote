@@ -31,7 +31,7 @@ public class HttpRequestManager {
     private HttpVersionService mHttpVersionService = null;
     private HttpAppInfosService mHttpAppInfosService = null;
     private static OkHttpClient mOkHttpClient;
-    public static final long DEFAULT_TIMEOUT = 3 * 1000;
+    public static final long DEFAULT_TIMEOUT = 3;
 
     public static HttpRequestManager getInstance() {
         if (mInsatnce == null) {
@@ -126,7 +126,6 @@ public class HttpRequestManager {
                     .subscribe(new Subscriber<BaseResponseBean>() {
                         @Override
                         public void onCompleted() {
-
                         }
 
                         @Override

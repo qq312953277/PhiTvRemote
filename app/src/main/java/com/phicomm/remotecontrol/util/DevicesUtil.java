@@ -75,6 +75,38 @@ public class DevicesUtil {
         setTarget(remoteDevice);
     }
 
+    public static void modifyDeviceInfo(RemoteBoxDevice remoteDevice) {
+        loadRecentList();
+        RemoteDevice device = null;
+        for (int i = 0; i < mRecentedConnectedList.size(); i++) {
+            RemoteDevice mDevice = mRecentedConnectedList.get(i);
+            if (mDevice.getBssid().equals(remoteDevice.getBssid())) {
+                device = new RemoteDevice(null, remoteDevice.getName(),
+                        remoteDevice.getAddress(), remoteDevice.getPort(), remoteDevice.getBssid(), mDevice.getTime());
+                break;
+            }
+        }
+
+        Set<Long> ids = mRecentedConnectedMap.keySet();
+        Long findId = null;
+        for (Long id : ids) {
+            String tempBssid = mRecentedConnectedMap.get(id);
+            LogUtil.d(TAG, "tempBssid=" + tempBssid + " remoteDevice.getBssid()=" + remoteDevice.getBssid());
+            if (tempBssid == null || remoteDevice == null) {
+                continue;
+            }
+            if (tempBssid.equals(remoteDevice.getBssid())) {
+                findId = id;
+                break;
+            }
+        }
+
+        if (findId != null) {
+            device.setId(findId);
+            mGreenDaoUserUtil.upateData(device);
+        }
+    }
+
     public static void loadRecentList() {
         mRecentedConnectedMap.clear();
         mRecentedConnectedList.clear();

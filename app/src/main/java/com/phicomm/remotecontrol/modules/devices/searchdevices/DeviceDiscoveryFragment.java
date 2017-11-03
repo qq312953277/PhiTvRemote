@@ -35,6 +35,8 @@ import com.phicomm.remotecontrol.R;
 import com.phicomm.remotecontrol.RemoteBoxDevice;
 import com.phicomm.remotecontrol.base.BaseFragment;
 import com.phicomm.remotecontrol.constant.PhiConstants;
+import com.phicomm.remotecontrol.greendao.Entity.RemoteDevice;
+import com.phicomm.remotecontrol.greendao.GreenDaoUserUtil;
 import com.phicomm.remotecontrol.modules.devices.connectrecords.RecentDevicesActivity;
 import com.phicomm.remotecontrol.modules.devices.searchdevices.DeviceDiscoveryContract.Presenter;
 import com.phicomm.remotecontrol.modules.main.controlpanel.DeviceDetectEvent;
@@ -58,7 +60,6 @@ import static com.phicomm.remotecontrol.R.id.bt_cancelinput;
 import static com.phicomm.remotecontrol.R.id.bt_confirminput;
 import static com.phicomm.remotecontrol.R.id.ipConnectProgressBar;
 import static com.phicomm.remotecontrol.constant.PhiConstants.TITLE_BAR_HEIGHT_DP;
-
 
 
 /**
@@ -134,6 +135,8 @@ public class DeviceDiscoveryFragment extends BaseFragment implements DeviceDisco
     public static boolean canGoBack = true;
     private boolean mIsRunning;
     private int mProcess;
+    private List<RemoteBoxDevice> mHistoryDeviceList;
+    private GreenDaoUserUtil mGreenDaoUserUtil;
     private Handler mHandler = new Handler() {
         public void handleMessage(Message msg) {
             mDiscoveryProgressTv.setText(msg.what + "%");
@@ -195,6 +198,8 @@ public class DeviceDiscoveryFragment extends BaseFragment implements DeviceDisco
     }
 
     private void initAdapter() {
+        mGreenDaoUserUtil = new GreenDaoUserUtil();
+        DevicesUtil.setGreenDaoUserUtil(mGreenDaoUserUtil);
         mDiscoveryListDevices.setEmptyView(mEmptyTv);
         mDiscoveryAdapter = new DeviceDiscoveryAdapter();
         mDiscoveryListDevices.setAdapter(mDiscoveryAdapter);
@@ -481,6 +486,7 @@ public class DeviceDiscoveryFragment extends BaseFragment implements DeviceDisco
             mTvTitle.setText(target.getName());
         }
         mPresenter.stop();
+        updateHistoryDeviceRecords(DevicesUtil.getCurrentDevicesListResult());
     }
 
     private String makeDeviceCountLabel(int count) {
@@ -559,6 +565,21 @@ public class DeviceDiscoveryFragment extends BaseFragment implements DeviceDisco
             }
         }
         return -1;
+    }
+
+    private void updateHistoryDeviceRecords(List<RemoteBoxDevice> currentList) {
+        mHistoryDeviceList = mGreenDaoUserUtil.querydata();
+        for (int j = 0; j < mHistoryDeviceList.size(); j++) {
+            for (int i = 0; i < currentList.size(); i++) {
+                RemoteBoxDevice searchDevice = currentList.get(i);
+                RemoteBoxDevice historyDevice = mHistoryDeviceList.get(j);
+                if (historyDevice.getBssid().equals(searchDevice.getBssid())
+                        && !historyDevice.getName().equals(searchDevice.getName())) {
+                    DevicesUtil.modifyDeviceInfo(searchDevice);
+                    break;
+                }
+            }
+        }
     }
 
     private void stopProgressBar() {
