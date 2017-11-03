@@ -185,6 +185,12 @@ public class TouchPanelFragment extends BaseFragment implements PanelContract.Vi
     }
 
     @Override
+    public void onClickConfirm() {
+        showSlideHint();
+        mPresenter.sendKeyEvent(KeyCode.CENTER);
+    }
+
+    @Override
     public void toastMessage(String msg) {
         if (mToast == null) {
             mToast = Toast.makeText(this.getContext(), msg, Toast.LENGTH_SHORT);

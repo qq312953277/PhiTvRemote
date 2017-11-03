@@ -12,7 +12,7 @@ import com.phicomm.remotecontrol.constant.PhiConstants;
 public class GestureDelectorSimlpeListener extends GestureDetector.SimpleOnGestureListener {
 
     private GestureCallBackListener mGestureCallBackListener;
-    private final int SLIDE_DISTANCE = 200;
+    private final int SLIDE_DISTANCE = 100;
 
     @Override
     public boolean onDown(MotionEvent e) {
@@ -44,11 +44,10 @@ public class GestureDelectorSimlpeListener extends GestureDetector.SimpleOnGestu
     @Override
     public boolean onSingleTapUp(MotionEvent e) {
         if (mGestureCallBackListener != null) {
-            mGestureCallBackListener.showDirection(-1);
+            mGestureCallBackListener.onClickConfirm();
         }
         return false;
     }
-
     /**
      * 手势判断
      *
@@ -86,5 +85,6 @@ public class GestureDelectorSimlpeListener extends GestureDetector.SimpleOnGestu
 
     public interface GestureCallBackListener {
         void showDirection(int direction);
+        void onClickConfirm();
     }
 }
