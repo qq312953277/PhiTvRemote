@@ -48,6 +48,15 @@ public class GestureDelectorSimlpeListener extends GestureDetector.SimpleOnGestu
         }
         return false;
     }
+
+    @Override
+    public void onLongPress(MotionEvent e) {
+        super.onLongPress(e);
+        if (mGestureCallBackListener != null) {
+            mGestureCallBackListener.showDirection(-1);
+        }
+    }
+
     /**
      * 手势判断
      *
@@ -85,6 +94,7 @@ public class GestureDelectorSimlpeListener extends GestureDetector.SimpleOnGestu
 
     public interface GestureCallBackListener {
         void showDirection(int direction);
+
         void onClickConfirm();
     }
 }
