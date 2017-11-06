@@ -262,7 +262,7 @@ public class SpinnerListFragment extends BaseFragment {
                     Bundle bundle = msg.getData();
                     List<RemoteBoxDevice> deviceList = bundle.getParcelableArrayList(PhiConstants
                             .SPINNER_DEVICES_LIST);
-                    refreshSpinnerListView(mHistoryDeviceList);
+                    refreshSpinnerListView(mGreenDaoUserUtil.querydata());
                     if (deviceList.size() > 0) {
                         mDeviceTv.setText(deviceList.get(0).getName());
                     } else {
