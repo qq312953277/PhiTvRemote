@@ -9,9 +9,11 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.phicomm.remotecontrol.ConnectManager;
 import com.phicomm.remotecontrol.R;
 import com.phicomm.remotecontrol.base.BaseActivity;
 import com.phicomm.remotecontrol.base.BaseApplication;
+import com.phicomm.remotecontrol.modules.main.controlpanel.DeviceDetectEvent;
 import com.phicomm.remotecontrol.modules.main.screenprojection.adapter.AlbumItemAdapter;
 import com.phicomm.remotecontrol.modules.main.screenprojection.entity.DeviceDisplay;
 import com.phicomm.remotecontrol.modules.main.screenprojection.entity.PictureItemList;
@@ -19,6 +21,7 @@ import com.phicomm.remotecontrol.modules.main.screenprojection.model.UpnpService
 import com.phicomm.remotecontrol.modules.main.screenprojection.presenter.LocalMediaItemPresenterImpl;
 import com.phicomm.remotecontrol.util.CommonUtils;
 import com.phicomm.remotecontrol.util.DevicesUtil;
+import com.phicomm.remotecontrol.util.DialogUtils;
 import com.phicomm.remotecontrol.util.SettingUtil;
 
 import org.fourthline.cling.model.meta.Device;
@@ -33,6 +36,7 @@ import butterknife.OnItemClick;
 import static com.phicomm.remotecontrol.constant.PhiConstants.TITLE_BAR_HEIGHT_DP;
 
 
+
 /**
  * Created by kang.sun on 2017/10/20.
  */
@@ -41,6 +45,7 @@ public class AlbumItemActivity extends BaseActivity {
     private PictureItemList mPictureItemList;
     private AlbumItemAdapter adapter;
     private String mAlbumName;
+    private int mPosition;
 
     @BindView(R.id.album_item_grid)
     GridView mGridView;
@@ -86,10 +91,22 @@ public class AlbumItemActivity extends BaseActivity {
 
     @OnItemClick(R.id.album_item_grid)
     public void onItemClick(int position) {
+        mPosition = position;
         SettingUtil.checkVibrate();
+        //检测设备是否在线
+        ConnectManager.getInstance().deviceDetect();
+        DialogUtils.showLoadingDialog(this);
+    }
 
-        selectDMPToPlay(LocalMediaItemPresenterImpl.mDlnaPictureMapList
-                .get(mPictureItemList.getPictureItemList().get(position).getId()), PictureControlActivity.class);
+    @Override
+    public void onEventMainThread(DeviceDetectEvent event) {
+        DialogUtils.cancelLoadingDialog();
+        if (event.getTargetState()) {
+            selectDMPToPlay(LocalMediaItemPresenterImpl.mDlnaPictureMapList
+                    .get(mPictureItemList.getPictureItemList().get(mPosition).getId()), PictureControlActivity.class);
+        } else {
+            CommonUtils.showToastBottom(getString(R.string.fail_screenprojection));
+        }
     }
 
     private void selectDMPToPlay(final Item mItem, Class<?> cls) {

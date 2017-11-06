@@ -64,6 +64,7 @@ public class ConnectManager {
                 service.getStatus(), new PhiCallBack<Status>() {
                     @Override
                     public void onSuccess(Status status) {
+                        EventBus.getDefault().post(new DeviceDetectEvent(true));
                         LogUtil.d("connect onSuccess");
                         TaskQuene.getInstance().setRemoterService(service);
                     }
