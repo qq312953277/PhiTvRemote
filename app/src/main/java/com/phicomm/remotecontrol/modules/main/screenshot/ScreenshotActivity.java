@@ -60,17 +60,25 @@ public class ScreenshotActivity extends BaseActivity implements ScreenshotView {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_screenshot);
-        init();
+        initTitle();
 
     }
 
-    private void init() {
+    @Override
+    protected void onResume() {
+        super.onResume();
+        init();
+    }
+
+    private void initTitle() {
         setMarginForStatusBar(mRlTitle, TITLE_BAR_HEIGHT_DP);
         mScreenshotPresenter = new ScreenshotPresenterImp(this, this);
         mHelper.setVisibility(View.VISIBLE);
         mHelper.setImageResource(R.drawable.help_icon);
         mHelper.setClickable(true);
+    }
 
+    private void init() {
         mTarget = DevicesUtil.getTarget();
         if (mTarget == null || !NetworkManagerUtils.isCurrWifiAvailable(BaseApplication.getContext())) {
             mImageShow.setImageResource(R.drawable.tv_not_connected);
