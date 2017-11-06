@@ -180,4 +180,7 @@ dependencies {
     // Cling library
     compile 'org.fourthline.cling:cling-core:2.1.1'
     compile 'org.fourthline.cling:cling-support:2.1.1'
+
+    //rx permissions
+    compile 'com.tbruyelle.rxpermissions:rxpermissions:0.9.4@aar'
 }

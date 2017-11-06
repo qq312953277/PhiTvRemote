@@ -39,6 +39,7 @@
         2.请确保盒子和手机在一个局域网内 \n
         3.请尝试重新扫描或者输入ip \n
     </string>
+    <string name="please_grant_app_permission">请到设置里授权该APP相关权限，否则无法使用。</string>
     <plurals name="NdeviceCount">
         <item quantity="other">搜索到 <xliff:g id="count">%d</xliff:g> 个盒子</item>
     </plurals>

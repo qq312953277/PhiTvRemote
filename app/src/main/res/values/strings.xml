@@ -21,6 +21,7 @@
         2:On the same network \n
         3:Restart or ip input \n
     </string>
+    <string name="please_grant_app_permission">Pls grant_ app permissions in settings</string>
     <plurals name="NdeviceCount">
         <item quantity="other">Total <xliff:g id="count">%d</xliff:g> devices</item>
     </plurals>
