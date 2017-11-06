@@ -1,7 +1,7 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
     <!--devices -->
-    <string name="app_name">RemoteControl</string>
+    <string name="app_name">PHi RemoteControl</string>
     <string name="unable_to_connect_device">Unable to connect TV</string>
     <string name="manual_ip_input">Manual IP</string>
     <string name="choose_box_controll">choose box control</string>

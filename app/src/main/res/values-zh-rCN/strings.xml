@@ -19,7 +19,7 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
     <!--设备 -->
-    <string name="app_name">遥控器</string>
+    <string name="app_name">斐讯遥控器</string>
     <string name="unable_to_connect_device">电视未连接</string>
     <string name="manual_ip_input">输入IP</string>
     <string name="choose_box_controll">选择盒子进行控制</string>
