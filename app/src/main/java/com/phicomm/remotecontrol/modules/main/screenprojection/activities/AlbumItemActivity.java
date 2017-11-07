@@ -36,7 +36,6 @@ import butterknife.OnItemClick;
 import static com.phicomm.remotecontrol.constant.PhiConstants.TITLE_BAR_HEIGHT_DP;
 
 
-
 /**
  * Created by kang.sun on 2017/10/20.
  */
@@ -114,13 +113,15 @@ public class AlbumItemActivity extends BaseActivity {
         ArrayList<Device> mPlayDeviceList = new ArrayList<Device>(
                 UpnpServiceBiz.newInstance().getDevices(new UDAServiceType("AVTransport")));
         for (int i = 0; i < mPlayDeviceList.size(); i++) {
-            if (mPlayDeviceList.get(i).toString().indexOf(DevicesUtil.getTarget().getAddress()) != -1) {
-                BaseApplication mBaseApplication = (BaseApplication) getApplication();
-                mBaseApplication.setDeviceDisplay(new DeviceDisplay(mPlayDeviceList.get(i)));
-                mBaseApplication.setItem(mItem);
-                CommonUtils.startIntent(this, null, cls);
-                flag = true;
-                break;
+            if (DevicesUtil.getTarget() != null) {
+                if (mPlayDeviceList.get(i).toString().indexOf(DevicesUtil.getTarget().getAddress()) != -1) {
+                    BaseApplication mBaseApplication = (BaseApplication) getApplication();
+                    mBaseApplication.setDeviceDisplay(new DeviceDisplay(mPlayDeviceList.get(i)));
+                    mBaseApplication.setItem(mItem);
+                    CommonUtils.startIntent(this, null, cls);
+                    flag = true;
+                    break;
+                }
             }
         }
         if (!flag) {
