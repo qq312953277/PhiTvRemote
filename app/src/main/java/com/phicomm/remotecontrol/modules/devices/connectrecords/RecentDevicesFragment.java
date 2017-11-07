@@ -13,9 +13,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.phicomm.remotecontrol.R;
+import com.phicomm.remotecontrol.RemoteBoxDevice;
 import com.phicomm.remotecontrol.base.BaseFragment;
 import com.phicomm.remotecontrol.greendao.Entity.RemoteDevice;
 import com.phicomm.remotecontrol.modules.devices.connectrecords.RecentDevicesContract.Presenter;
+import com.phicomm.remotecontrol.util.CommonUtils;
+import com.phicomm.remotecontrol.util.DevicesUtil;
 import com.phicomm.remotecontrol.util.SettingUtil;
 
 import java.util.ArrayList;
@@ -185,10 +188,18 @@ public class RecentDevicesFragment extends BaseFragment implements RecentDevices
             }
 
             RemoteDevice device = (RemoteDevice) parent.getAdapter().getItem(position);
+            RemoteBoxDevice targetDevice = DevicesUtil.getTarget();
             RecentDeviceAdapter.DeviceViewHolder holder = (RecentDeviceAdapter.DeviceViewHolder)
                     view.getTag();
+            CheckBox collectCheckBox = holder.getCollectCheckBox();
+            if (targetDevice != null && device != null) {
+                if (mIsMultiSelect && targetDevice.getBssid().equals(device.getBssid())) {
+                    collectCheckBox.setChecked(false);
+                    CommonUtils.showShortToast(getString(R.string.current_device_cannot_delete));
+                    return;
+                }
+            }
             if (mIsMultiSelect && mRecentDeviceAdapter.getRecentDeviceList().size() > 0) {
-                CheckBox collectCheckBox = holder.getCollectCheckBox();
                 if (collectCheckBox.isChecked()) {
                     collectCheckBox.setChecked(false);
                     mDeleteList.remove(device);

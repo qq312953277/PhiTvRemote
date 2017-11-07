@@ -16,6 +16,7 @@
     <string name="current_wifi_not_available">Wifi not available</string>
     <string name="connect_fail">connect fail</string>
     <string name="searching_devices">Searching Device</string>
+    <string name="current_device_cannot_delete">current device can not delete</string>
     <string name="device_find_tip">Notice:\n \n
         1:Support Phicomm Box \n
         2:On the same network \n
