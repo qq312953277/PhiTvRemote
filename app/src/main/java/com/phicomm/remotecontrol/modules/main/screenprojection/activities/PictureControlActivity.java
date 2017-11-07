@@ -7,6 +7,7 @@ import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.phicomm.remotecontrol.R;
@@ -29,9 +30,6 @@ import butterknife.OnTouch;
  */
 public class PictureControlActivity extends BaseActivity implements PictureControlView {
     public static final int SLIDING_DISTANCE = 50;
-    public static final int TITTLE_LIMIT_LENGTH = 20;
-    public static final int TITTLE_FRONT_LENGTH = 10;
-    public static final int TITTLE_BACK_LENGTH = 4;
     private PictureControlPresenter mPictureControlPresenter;
     private GestureDetector mGestureDetector;
     private PanelContract.Presenter mPanelPresenter;
@@ -44,6 +42,9 @@ public class PictureControlActivity extends BaseActivity implements PictureContr
 
     @BindView(R.id.iv_showpicture)
     ImageView mImageView;
+
+    @BindView(R.id.rl_title)
+    RelativeLayout mRlTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

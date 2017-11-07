@@ -129,7 +129,6 @@ public class PersonalActivity extends BaseActivity implements UpdateView, Person
     }
 
     private void init() {
-        setMarginForStatusBar(mRlTitle, TITLE_BAR_HEIGHT_DP);
         mPreference = new PreferenceRepository(this);
         boolean isHasNewVersion = (boolean) mPreference.get(PreferenceDef.APP_VERSION, PreferenceDef.IS_HAVE_NEW_VERSIOM, false);
         mTvTitle.setText(getString(R.string.personal_title));

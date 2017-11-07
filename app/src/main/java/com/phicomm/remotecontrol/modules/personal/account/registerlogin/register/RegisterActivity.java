@@ -131,7 +131,6 @@ public class RegisterActivity extends BaseActivity implements RegisterContract.V
     }
 
     private void initTitleView() {
-        setMarginForStatusBar(mRlTitle, TITLE_BAR_HEIGHT_DP);
         mTvTitle.setText(getString(R.string.new_user_register));
         mBack.setOnClickListener(new View.OnClickListener() {
             @Override

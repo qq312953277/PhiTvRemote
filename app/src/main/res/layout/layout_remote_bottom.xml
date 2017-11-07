@@ -4,6 +4,7 @@
     android:layout_height="50dp"
     android:layout_gravity="bottom"
     android:layout_marginBottom="5.5dp"
+    android:background="@color/white_normal"
     android:gravity="bottom">
 
     <TextView

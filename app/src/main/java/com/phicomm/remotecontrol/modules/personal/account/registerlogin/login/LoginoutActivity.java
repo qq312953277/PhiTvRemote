@@ -62,7 +62,6 @@ public class LoginoutActivity extends BaseActivity {
 
     private void initViews() {
         mTvTitle.setText(getString(R.string.exit));
-        setMarginForStatusBar(mRlTitle, TITLE_BAR_HEIGHT_DP);
         mBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

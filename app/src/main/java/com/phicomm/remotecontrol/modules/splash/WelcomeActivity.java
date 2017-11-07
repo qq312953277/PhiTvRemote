@@ -4,7 +4,6 @@ import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
@@ -32,15 +31,14 @@ public class WelcomeActivity extends BaseActivity {
     private RxPermissions rxPermissions;
     Handler mHandler;
     private static final long DELAY_Millis = 1000;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcom);
         mHandler = new Handler();
         StatusBarUtils.setFullScreen(WelcomeActivity.this);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            requestAllPermissions();
-        }
+        requestAllPermissions();
     }
 
     private void requestAllPermissions() {
@@ -72,6 +70,7 @@ public class WelcomeActivity extends BaseActivity {
                 checkLoginStatus();
                 CommonUtils.startIntent(WelcomeActivity.this, CoreControlActivity.class);
                 finish();
+
             }
         };
 

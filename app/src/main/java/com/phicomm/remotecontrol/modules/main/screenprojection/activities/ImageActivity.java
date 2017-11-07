@@ -78,7 +78,6 @@ public class ImageActivity extends BaseActivity {
     }
 
     private void initTitleView() {
-        setMarginForStatusBar(mRlTitle, TITLE_BAR_HEIGHT_DP);
         mTvTitle.setText(mImageList.get(mCurrentPosition).getmImageId());
         mBack.setOnClickListener(new View.OnClickListener() {
             @Override

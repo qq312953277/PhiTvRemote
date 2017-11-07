@@ -44,7 +44,6 @@ public class AboutActivity extends BaseActivity {
     private void init() {
         mTvTitle.setText(getString(R.string.personal_about));
         mTvVersion.setText(getString(R.string.about_project_name, BuildConfig.VERSION_NAME));
-        setMarginForStatusBar(mRlTitle, TITLE_BAR_HEIGHT_DP);
     }
 
     @OnClick({R.id.iv_back, R.id.ll_visit_website, R.id.ll_dial_phone})

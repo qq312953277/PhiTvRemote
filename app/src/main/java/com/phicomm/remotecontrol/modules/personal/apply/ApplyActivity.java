@@ -57,7 +57,6 @@ public class ApplyActivity extends BaseActivity implements ApplyView, BaseRecycl
     }
 
     private void init() {
-        setMarginForStatusBar(mRlTitle, TITLE_BAR_HEIGHT_DP);
         mTvTitle.setText(getString(R.string.apply_title));
         mApplyAdapter = new ApplyAdapter(this);
         mApplyAdapter.setOnItemViewClickListener(this);

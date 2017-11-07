@@ -19,7 +19,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
@@ -119,7 +118,7 @@ public class CoreControlActivity extends BaseActivity implements UpdateView, Spi
         clearRestoreFragment(savedInstanceState);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_core_controler);
-        //transStatusbar();
+
         mDisplayDeviceList = DisplayDeviceList.getInstance();
         mContext = this;
         initSpinner();
@@ -132,9 +131,6 @@ public class CoreControlActivity extends BaseActivity implements UpdateView, Spi
         checkNewVersion();
     }
 
-    private void transStatusbar() {
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);//状态栏
-    }
 
     @Override
     @OnClick({R.id.ib_screenshot, R.id.ib_screenprojection, R.id.ib_childrenlock, R.id.ib_clear})

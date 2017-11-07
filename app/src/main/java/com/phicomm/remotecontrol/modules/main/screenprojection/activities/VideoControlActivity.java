@@ -55,6 +55,7 @@ public class VideoControlActivity extends BaseActivity implements VideoControlCo
     @BindView(R.id.sb_playback)
     SeekBar sbPlayback;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

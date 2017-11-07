@@ -19,6 +19,7 @@ import com.phicomm.remotecontrol.util.DevicesUtil;
 import com.phicomm.remotecontrol.util.DialogUtils;
 import com.phicomm.remotecontrol.util.ScreenUtils;
 import com.phicomm.remotecontrol.util.SettingUtil;
+import com.phicomm.remotecontrol.util.StatusBarUtils;
 import com.phicomm.widgets.alertdialog.PhiAlertDialog;
 import com.umeng.analytics.MobclickAgent;
 
@@ -41,7 +42,9 @@ public class BaseActivity extends AppCompatActivity {
         super.setContentView(layoutResID);
         injectViews();
         BaseApplication.getApplication().add(this);
-        //StatusBarUtils.setImmersionStatusBar(this);
+
+        StatusBarUtils.setImmersionStatusBar(this);
+        initStatusBar();
     }
 
     private void injectViews() {
@@ -54,6 +57,14 @@ public class BaseActivity extends AppCompatActivity {
         MobclickAgent.onResume(this);
         //init eventbus
         EventBus.getDefault().register(this);
+    }
+
+    private void initStatusBar() {
+        StatusBarUtils.setStatusBarColor(this, R.color.white_normal);
+        int lightMode = StatusBarUtils.StatusBarLightMode(this);
+        //字体随状态栏颜色自动适配，这里背景为白色则使用淡色模式
+        StatusBarUtils.StatusBarLightMode(this, lightMode); //系统状态栏淡色模式
+        //StatusbarUtil.StatusBarDarkMode(this, lightMode);  //系统状态栏暗色模式
     }
 
     public void showLoadingDialog(Integer stringRes) {
@@ -153,20 +164,6 @@ public class BaseActivity extends AppCompatActivity {
 
     public void onClick(View view) {
         SettingUtil.checkVibrate();//震动事件，子类继承
-    }
-
-    /**
-     * 沉浸式状态栏 ，为了避免状态栏覆盖到titlebar，需要重新计算titlebar高度，将状态栏高度算进去
-     * ScreenUtils.getSystemBarHeight()状态栏高度
-     *
-     * @param view
-     * @param titleBarHeightDp
-     */
-    public void setMarginForStatusBar(View view, int titleBarHeightDp) {
-        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) view.getLayoutParams();
-//        params.height = ScreenUtils.getSystemBarHeight() + ScreenUtils.dp2px(titleBarHeightDp);
-        params.height = ScreenUtils.dp2px(titleBarHeightDp);
-        view.setLayoutParams(params);
     }
 
     private void startActivityClearTopAndFinishSelf(Intent extras, Class<?> cls) {

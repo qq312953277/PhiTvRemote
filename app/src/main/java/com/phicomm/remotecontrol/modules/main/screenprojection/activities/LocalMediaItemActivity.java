@@ -101,7 +101,6 @@ public class LocalMediaItemActivity extends BaseActivity implements MyFragmentAd
     }
 
     private void init() {
-        setMarginForStatusBar(mRlTitle, TITLE_BAR_HEIGHT_DP);
         mTvTitle.setText(getString(R.string.local_screenprojection));
         setDisable();
         setupPager();

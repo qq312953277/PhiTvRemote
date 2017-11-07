@@ -39,7 +39,6 @@ public class SettingActivity extends BaseActivity {
     }
 
     private void init() {
-        setMarginForStatusBar(mRlTitle, TITLE_BAR_HEIGHT_DP);
         //进入设置界面时获取本地保存的音量、震动初始值
         mTvTitle.setText(getString(R.string.setting_title));
 

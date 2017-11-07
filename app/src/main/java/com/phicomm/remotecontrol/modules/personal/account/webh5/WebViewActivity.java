@@ -88,7 +88,6 @@ public class WebViewActivity extends BaseActivity {
         mWebKey = intent.getStringExtra(WEB_KEY_STATUS);
         mWebUrl = intent.getStringExtra(WEB_VALUE_URL);
 
-        setMarginForStatusBar(mRlTitle, TITLE_BAR_HEIGHT_DP);
         mTvTitle.setText(mWebKey);
         mBack.setOnClickListener(new View.OnClickListener() {
             @Override

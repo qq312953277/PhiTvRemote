@@ -77,7 +77,6 @@ public class AlbumItemActivity extends BaseActivity {
         mPictureItemList = (PictureItemList) intent.getSerializableExtra("imageList");
         mAlbumName = (String) intent.getSerializableExtra("pictureName");
         mTvTitle.setText(mAlbumName);
-        setMarginForStatusBar(mRlTitle, TITLE_BAR_HEIGHT_DP);
         mBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

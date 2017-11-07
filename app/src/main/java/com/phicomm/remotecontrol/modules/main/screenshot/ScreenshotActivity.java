@@ -71,7 +71,6 @@ public class ScreenshotActivity extends BaseActivity implements ScreenshotView {
     }
 
     private void initTitle() {
-        setMarginForStatusBar(mRlTitle, TITLE_BAR_HEIGHT_DP);
         mScreenshotPresenter = new ScreenshotPresenterImp(this, this);
         mHelper.setVisibility(View.VISIBLE);
         mHelper.setImageResource(R.drawable.help_icon);

@@ -123,7 +123,6 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
     }
 
     private void initTitleView() {
-        setMarginForStatusBar(mRlTitle, TITLE_BAR_HEIGHT_DP);
         mTvTitle.setText(getString(R.string.login));
         mBack.setOnClickListener(new View.OnClickListener() {
             @Override

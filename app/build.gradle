@@ -150,6 +150,9 @@ dependencies {
     //Cling
     compile files('libs/Cling-2.1.1.jar')
 
+    //systembartint
+    compile files('libs/systembartint-1.0.4.jar')
+
     //eventbus
     compile 'org.greenrobot:eventbus:3.0.0'
 

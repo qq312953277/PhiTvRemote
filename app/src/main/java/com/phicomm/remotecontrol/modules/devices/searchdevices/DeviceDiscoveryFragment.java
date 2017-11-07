@@ -35,7 +35,6 @@ import com.phicomm.remotecontrol.R;
 import com.phicomm.remotecontrol.RemoteBoxDevice;
 import com.phicomm.remotecontrol.base.BaseFragment;
 import com.phicomm.remotecontrol.constant.PhiConstants;
-import com.phicomm.remotecontrol.greendao.Entity.RemoteDevice;
 import com.phicomm.remotecontrol.greendao.GreenDaoUserUtil;
 import com.phicomm.remotecontrol.modules.devices.connectrecords.RecentDevicesActivity;
 import com.phicomm.remotecontrol.modules.devices.searchdevices.DeviceDiscoveryContract.Presenter;
@@ -185,7 +184,6 @@ public class DeviceDiscoveryFragment extends BaseFragment implements DeviceDisco
         initAdapter();
         initActionBar();
         setOnClickListener();
-        setMarginForStatusBar(mRlTitle, TITLE_BAR_HEIGHT_DP);
     }
 
     private void initActionBar() {

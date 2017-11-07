@@ -95,7 +95,6 @@ public class RecentDevicesFragment extends BaseFragment implements RecentDevices
         mTvTitle.setText(getString(R.string.recent_connect_devices));
         mTvEdit.setVisibility(View.VISIBLE);
         mTvEdit.setText(getString(R.string.edit_recent_connect_devices));
-        setMarginForStatusBar(mRlTitle, TITLE_BAR_HEIGHT_DP);
     }
 
     @Override
