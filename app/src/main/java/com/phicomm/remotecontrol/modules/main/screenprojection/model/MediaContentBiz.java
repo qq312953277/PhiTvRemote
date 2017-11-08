@@ -37,6 +37,7 @@ public class MediaContentBiz {
         }
         mPictureItemArrayList.clear();
         mVideoItemArrayList.clear();
+        mPicAlbumNameList.clear();
         MediaContentDao contentDao = new MediaContentDao(ctx, serverAdd);
         ContentNode rootNode = ContentTree.getRootNode();
         Container rootContainer = rootNode.getContainer();

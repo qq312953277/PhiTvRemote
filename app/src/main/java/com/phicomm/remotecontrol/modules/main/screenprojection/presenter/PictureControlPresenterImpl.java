@@ -66,7 +66,7 @@ public class PictureControlPresenterImpl implements PictureControlPresenter {
                 controlBiz.setPlayUri(item);
             }
         } else {
-            mView.showMessage("已经是第一张图片");
+            CommonUtils.showShortToast(BaseApplication.getContext().getString(R.string.first_picture));
         }
     }
 
@@ -82,7 +82,7 @@ public class PictureControlPresenterImpl implements PictureControlPresenter {
                 controlBiz.setPlayUri(item);
             }
         } else {
-            mView.showMessage("已经是最后一张图片");
+            CommonUtils.showShortToast(BaseApplication.getContext().getString(R.string.last_picture));
         }
     }
 }

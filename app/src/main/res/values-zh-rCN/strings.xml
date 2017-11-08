@@ -71,6 +71,9 @@
     <string name="photo">照片</string>
     <string name="video">视频</string>
     <string name="fail_screenprojection">投屏失败，请重试</string>
+    <string name="reject_seek">视频已暂停，不可拖动</string>
+    <string name="first_picture">当前是第一张</string>
+    <string name="last_picture">当前是最后一张</string>
 
     <!--我的-->
     <string name="personal_title">我的</string>

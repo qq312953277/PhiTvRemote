@@ -53,6 +53,9 @@
     <string name="photo">Photo</string>
     <string name="video">Video</string>
     <string name="fail_screenprojection">screenprojection fail</string>
+    <string name="reject_seek">reject seek when video pause</string>
+    <string name="first_picture">already first picture</string>
+    <string name="last_picture">already last picture</string>
 
     <!--mine-->
     <string name="personal_title">Mine</string>

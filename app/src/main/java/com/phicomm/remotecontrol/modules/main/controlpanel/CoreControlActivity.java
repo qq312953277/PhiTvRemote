@@ -142,7 +142,7 @@ public class CoreControlActivity extends BaseActivity implements UpdateView, Spi
                 break;
             case R.id.ib_screenprojection:
                 if (DevicesUtil.getTarget() == null) {
-                    Toast.makeText(mContext, "请先连接设备", Toast.LENGTH_SHORT).show();
+                    CommonUtils.showShortToast(getString(R.string.unable_to_connect_device));
                 } else {
                     Intent intent = new Intent();
                     intent.setClass(this, LocalMediaItemActivity.class);

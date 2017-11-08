@@ -109,7 +109,7 @@ public class VideoControlActivity extends BaseActivity implements VideoControlCo
                     mVideoControlPresenter.updatePlayingState(false);
                 } else {
                     mSeekBarProg = seekBar.getProgress();
-                    mVideoControlPresenter.showMessage("视频已暂停，不可拖动");
+                    mVideoControlPresenter.showMessage(getString(R.string.reject_seek));
                 }
             }
 
