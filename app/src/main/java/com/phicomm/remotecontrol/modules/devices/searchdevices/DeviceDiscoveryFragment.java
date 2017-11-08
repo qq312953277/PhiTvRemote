@@ -100,9 +100,6 @@ public class DeviceDiscoveryFragment extends BaseFragment implements DeviceDisco
     @BindView(R.id.tv_title)
     TextView mTvTitle;
 
-    @BindView(R.id.rl_title)
-    RelativeLayout mRlTitle;
-
     @BindView(R.id.ll_search)
     LinearLayout mLlSearch;
 

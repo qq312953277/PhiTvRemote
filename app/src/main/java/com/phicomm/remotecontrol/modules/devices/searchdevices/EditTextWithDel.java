@@ -59,7 +59,9 @@ public class EditTextWithDel extends AppCompatEditText implements View.OnFocusCh
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        SettingUtil.checkVibrate();
+        if (event.getAction() == MotionEvent.ACTION_DOWN){
+            SettingUtil.checkVibrate();
+        }
 
         if (event.getAction() == MotionEvent.ACTION_UP) {
             if (getCompoundDrawables()[2] != null) {

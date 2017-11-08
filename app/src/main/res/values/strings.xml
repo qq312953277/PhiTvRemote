@@ -5,7 +5,7 @@
     <string name="unable_to_connect_device">Unable to connect TV</string>
     <string name="manual_ip_input">Manual IP</string>
     <string name="choose_box_controll">choose box control</string>
-    <string name="recent_connect_devices">connected devices</string>
+    <string name="recent_connect_devices">devices</string>
     <string name="research_discovery_devices">research</string>
     <string name="current_wifi">Current Wifi</string>
     <string name="finder_cancel">Cancel</string>
@@ -121,7 +121,7 @@
     <string name="read_and_agree_protocal">Read and agree</string>
     <string name="protocal_name">《User protocal》</string>
     <string name="not_read_protocal">Pls read and agree《User protocal》</string>
-    <string name="remember_me">Remember me</string>
+    <string name="remember_me">Remember</string>
     <string name="phone_prefix">+86</string>
     <string name="please_login">login</string>
     <string name="login_tips">the number is phicomm account, please log in.</string>
