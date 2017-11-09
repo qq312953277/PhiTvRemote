@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.res.Configuration;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
@@ -56,6 +57,7 @@ import org.greenrobot.eventbus.EventBus;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import butterknife.BindView;
@@ -77,6 +79,19 @@ public class CoreControlActivity extends BaseActivity implements UpdateView, Spi
 
     @BindView(R.id.viewPageMainContent)
     ViewPager mViewPager;
+
+    @BindView(R.id.ib_screenshot)
+    TextView mScreenshotView;
+
+    @BindView(R.id.ib_screenprojection)
+    TextView mScreenprojection;
+
+    @BindView(R.id.ib_childrenlock)
+    TextView mChildrenlock;
+
+    @BindView(R.id.ib_clear)
+    TextView mClear;
+
 
     private final static String TAG = "CoreControlActivity";
     static final int REQUEST_CODE = 101;
@@ -102,6 +117,7 @@ public class CoreControlActivity extends BaseActivity implements UpdateView, Spi
             }
         }
     };
+    private String mLocale;
 
     @Override
     public void callback(boolean isVisible) {
@@ -119,6 +135,8 @@ public class CoreControlActivity extends BaseActivity implements UpdateView, Spi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_core_controler);
 
+        mLocale = Locale.getDefault().toString();
+
         mDisplayDeviceList = DisplayDeviceList.getInstance();
         mContext = this;
         initSpinner();
@@ -129,6 +147,24 @@ public class CoreControlActivity extends BaseActivity implements UpdateView, Spi
         mLocalMediaItemPresenter = new LocalMediaItemPresenterImpl();
         mPreference = new PreferenceRepository(this);
         checkNewVersion();
+    }
+
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        //manifest中加入locale|layoutDirection等属性禁止Activity重启，加了这些属性进入onConfigurationChanged()且不执行onCreate()
+        //如果是切换语言则作特殊处理
+        String locale = newConfig.locale.toString();
+
+        if (!mLocale.equals(locale)) {
+            mScreenshotView.setText(R.string.screenshot);
+            mScreenprojection.setText(R.string.dlna);
+            mChildrenlock.setText(R.string.childlock);
+            mClear.setText(R.string.clear);
+        }
+
+        mLocale = locale;
     }
 
 

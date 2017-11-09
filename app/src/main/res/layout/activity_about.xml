@@ -51,6 +51,7 @@
                 android:paddingLeft="22dp">
 
                 <TextView
+                    android:id="@+id/tv_website"
                     android:layout_width="115dp"
                     android:layout_height="wrap_content"
                     android:text="@string/website"
@@ -79,6 +80,7 @@
                 android:paddingLeft="22dp">
 
                 <TextView
+                    android:id="@+id/tv_hotline"
                     android:layout_width="115dp"
                     android:layout_height="wrap_content"
                     android:text="@string/hotline"

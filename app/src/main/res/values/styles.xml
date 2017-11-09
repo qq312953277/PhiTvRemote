@@ -40,6 +40,7 @@
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">@dimen/text_size_17sp</item>
         <item name="android:textColorHint">@color/textHint</item>
+        <item name="android:textCursorDrawable">@drawable/text_cursor_shape</item>
     </style>
 
     <style name="verifycode_edittext_style">
@@ -57,6 +58,7 @@
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">@dimen/text_size_17sp</item>
         <item name="android:textColorHint">@color/textHint</item>
+        <item name="android:textCursorDrawable">@drawable/text_cursor_shape</item>
     </style>
 
     <style name="loginregister_passwrod_edittext_style">
@@ -72,6 +74,7 @@
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">@dimen/text_size_17sp</item>
         <item name="android:textColorHint">@color/textHint</item>
+        <item name="android:textCursorDrawable">@drawable/text_cursor_shape</item>
         <item name="android:maxLength">18</item>
     </style>
 
@@ -117,6 +120,7 @@
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">@dimen/text_size_17sp</item>
         <item name="android:textColorHint">@color/textHint</item>
+        <item name="android:textCursorDrawable">@drawable/text_cursor_shape</item>
     </style>
 
     <style name="captcha_imageview_style">

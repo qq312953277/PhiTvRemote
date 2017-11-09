@@ -5,8 +5,10 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -15,10 +17,10 @@ import com.phicomm.remotecontrol.R;
 import com.phicomm.remotecontrol.base.BaseActivity;
 import com.phicomm.widgets.alertdialog.PhiGuideDialog;
 
+import java.util.Locale;
+
 import butterknife.BindView;
 import butterknife.OnClick;
-
-import static com.phicomm.remotecontrol.constant.PhiConstants.TITLE_BAR_HEIGHT_DP;
 
 public class AboutActivity extends BaseActivity {
 
@@ -34,6 +36,16 @@ public class AboutActivity extends BaseActivity {
     @BindView(R.id.rl_title)
     RelativeLayout mRlTitle;
 
+    @BindView(R.id.tv_website)
+    TextView mWebsite;
+
+    @BindView(R.id.tv_hotline)
+    TextView mHotline;
+
+    private String mLocale;
+    private LinearLayout.LayoutParams websiteParams;
+    private LinearLayout.LayoutParams hotlineParams;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +56,27 @@ public class AboutActivity extends BaseActivity {
     private void init() {
         mTvTitle.setText(getString(R.string.personal_about));
         mTvVersion.setText(getString(R.string.about_project_name, BuildConfig.VERSION_NAME));
+
+        mLocale = Locale.getDefault().toString();
+        if (mLocale.equals("zh_CN")) {
+            //中文
+            initWidth(115);
+            mWebsite.setLayoutParams(websiteParams);
+            mHotline.setLayoutParams(hotlineParams);
+        } else {
+            //英文
+            initWidth(135);
+            mWebsite.setLayoutParams(websiteParams);
+            mHotline.setLayoutParams(hotlineParams);
+        }
+    }
+
+    private void initWidth(float value) {
+        //动态设置宽度
+        websiteParams = (LinearLayout.LayoutParams) mWebsite.getLayoutParams();
+        hotlineParams = (LinearLayout.LayoutParams) mHotline.getLayoutParams();
+        websiteParams.width = ((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, value, getResources().getDisplayMetrics()));//单位dp
+        hotlineParams.width = ((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, value, getResources().getDisplayMetrics()));
     }
 
     @OnClick({R.id.iv_back, R.id.ll_visit_website, R.id.ll_dial_phone})
