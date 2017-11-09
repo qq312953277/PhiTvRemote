@@ -346,7 +346,9 @@ public class DeviceDiscoveryFragment extends BaseFragment implements DeviceDisco
                         if (DevicesUtil.getTarget() != null) {
                             if (remoteDevice.getBssid().equals(DevicesUtil.getTarget().getBssid())) {
                                 DevicesUtil.setTarget(null);
-                                mTvTitle.setText(getString(R.string.unable_to_connect_device));
+                                if (isAdded()) {
+                                    mTvTitle.setText(getString(R.string.unable_to_connect_device));
+                                }
                             }
                         }
                         mDiscoveryAdapter.noClearStates(pos);
