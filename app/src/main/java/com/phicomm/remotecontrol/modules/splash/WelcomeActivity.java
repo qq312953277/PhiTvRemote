@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
@@ -68,8 +69,14 @@ public class WelcomeActivity extends BaseActivity {
             @Override
             public void run() {
                 checkLoginStatus();
-                CommonUtils.startIntent(WelcomeActivity.this, CoreControlActivity.class);
-                finish();
+
+                if (Build.VERSION.SDK_INT <= 22) { // 22 -> 5.1
+                    finish();
+                    CommonUtils.startIntent(WelcomeActivity.this, CoreControlActivity.class);
+                } else {
+                    CommonUtils.startIntent(WelcomeActivity.this, CoreControlActivity.class);
+                    finish();
+                }
 
             }
         };

@@ -43,8 +43,8 @@ public class BaseActivity extends AppCompatActivity {
         injectViews();
         BaseApplication.getApplication().add(this);
 
-        StatusBarUtils.setImmersionStatusBar(this);
-        initStatusBar();
+        //StatusBarUtils.setImmersionStatusBar(this);
+        //initStatusBar();
     }
 
     private void injectViews() {

@@ -62,12 +62,8 @@ public class SpinnerListAdapter extends BaseAdapter {
 
         }
         String mDeviceName = mSpinnerDeviceList.get(position).getName();
-        if (mDeviceName.length() <= 10) {
-            holder.mTextView.setText(mDeviceName);
-        } else {
-            String mShortDeviceName = mDeviceName.substring(0, 10) + "...";
-            holder.mTextView.setText(mShortDeviceName);
-        }
+        holder.mTextView.setText(mDeviceName);
+
         if (position == 0 && DevicesUtil.getTarget() != null) {
             holder.mImageViewSelected.setVisibility(View.VISIBLE);
         } else {

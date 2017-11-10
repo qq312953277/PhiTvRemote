@@ -55,8 +55,7 @@
         layout="@layout/layout_remote_bottom"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_alignParentBottom="true"
-        android:layout_toEndOf="@+id/gray_layout" />
+        android:layout_alignParentBottom="true" />
 
     <View
         android:id="@+id/gray_layout"
