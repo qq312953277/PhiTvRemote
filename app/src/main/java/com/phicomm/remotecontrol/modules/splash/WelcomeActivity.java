@@ -1,6 +1,7 @@
 package com.phicomm.remotecontrol.modules.splash;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
@@ -28,7 +29,7 @@ import rx.functions.Action1;
  * Created by xufeng02.zhou on 2017/7/26.
  */
 
-public class WelcomeActivity extends BaseActivity {
+public class WelcomeActivity extends Activity {
     private RxPermissions rxPermissions;
     Handler mHandler;
     private static final long DELAY_Millis = 1000;
@@ -38,7 +39,6 @@ public class WelcomeActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcom);
         mHandler = new Handler();
-        StatusBarUtils.setFullScreen(WelcomeActivity.this);
         requestAllPermissions();
     }
 
@@ -120,7 +120,6 @@ public class WelcomeActivity extends BaseActivity {
                 Intent intent = new Intent();
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                Log.d(TAG, "getPackageName(): " + BaseApplication.getContext().getPackageName());
                 Uri uri = Uri.fromParts("package", BaseApplication.getContext().getPackageName(), null);
                 intent.setData(uri);
                 WelcomeActivity.this.startActivity(intent);
