@@ -353,7 +353,9 @@ public class DeviceDiscoveryFragment extends BaseFragment implements DeviceDisco
                         }
                         mDiscoveryAdapter.noClearStates(pos);
                         mPresenter.removeItemAndRefreshView(remoteDevice, mPresenter.getCurrentDeviceList());
-                        CommonUtils.showToastBottom(getString(R.string.connect_fail));
+                        if(isAdded()){
+                            CommonUtils.showToastBottom(getString(R.string.connect_fail));
+                        }
                         DialogUtils.cancelLoadingDialog();
                     }
                 });
