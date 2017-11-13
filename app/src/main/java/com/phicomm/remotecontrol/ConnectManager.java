@@ -18,7 +18,6 @@ import java.util.ArrayList;
 
 public class ConnectManager {
     public static final int PORT = 8080;
-    private RemoteBoxDevice mConnectingDevice;
     private ArrayList<ConnectListener> mListeners;
 
     private static class SingletonHolder {
@@ -81,16 +80,6 @@ public class ConnectManager {
         );
     }
 
-    @Deprecated
-    public boolean connect(RemoteBoxDevice dev) {
-        if (mConnectingDevice != null && mConnectingDevice.equals(dev)) {
-            return true;
-        }
-        mConnectingDevice = dev;
-        initConnect(mConnectingDevice.getAddress(), mConnectingDevice.getPort());
-        return true;
-    }
-
     public void getStatus(String ip, int port, final ConnetResultCallback result) {
         connect(ip, PORT, result);
     }
@@ -104,7 +93,7 @@ public class ConnectManager {
                     public void onSuccess(Status status) {
                         LogUtil.d("connect onSuccess");
                         TaskQuene.getInstance().setRemoterService(service);
-                        mConnectingDevice = new RemoteBoxDevice(status.getName(), ipAddress, port, status.getSn());
+                        RemoteBoxDevice mConnectingDevice = new RemoteBoxDevice(status.getName(), ipAddress, port, status.getSn());
                         result.onSuccess(mConnectingDevice);
                     }
 
@@ -121,10 +110,12 @@ public class ConnectManager {
     }
 
     public void connect(final RemoteBoxDevice dev, final ConnetResultCallback result) {
+        RemoteBoxDevice mConnectingDevice = DevicesUtil.getTarget();
         if (mConnectingDevice != null && mConnectingDevice.equals(dev)) {
             result.onSuccess(mConnectingDevice);
+        } else {
+            this.connect(dev.getAddress(), dev.getPort(), result);
         }
-        this.connect(dev.getAddress(), dev.getPort(), result);
     }
 
     public void unConnect() {
@@ -132,7 +123,7 @@ public class ConnectManager {
     }
 
     public RemoteBoxDevice getConnectingDevice() {
-        return mConnectingDevice;
+        return DevicesUtil.getTarget();
     }
 
     private void initConnect(String ip, int port) {
