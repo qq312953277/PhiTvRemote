@@ -3,9 +3,9 @@
     android:id="@+id/ll_spinlist"
     android:layout_width="match_parent"
     android:layout_height="45dp"
+    android:background="@color/white_normal"
     android:gravity="center_vertical"
     android:orientation="horizontal"
-    android:background="@color/white_normal"
     android:padding="2dp">
 
     <LinearLayout
@@ -31,16 +31,17 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_weight="1"
-        android:gravity="center">
+        android:gravity="center_horizontal">
 
         <TextView
             android:id="@+id/connected_device"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/iv_up_down"
+            android:layout_marginRight="20dp"
             android:ellipsize="end"
-            android:lines="1"
-            android:text=""
+            android:maxLines="1"
             android:textColor="@color/core_activity_bg"
             android:textSize="@dimen/text_size_17sp" />
 
@@ -48,9 +49,9 @@
             android:id="@+id/iv_up_down"
             android:layout_width="19.5dp"
             android:layout_height="12dp"
+            android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="27dp"
-            android:layout_toRightOf="@+id/connected_device"
+            android:src="@drawable/icon_up"
             android:visibility="gone" />
 
 

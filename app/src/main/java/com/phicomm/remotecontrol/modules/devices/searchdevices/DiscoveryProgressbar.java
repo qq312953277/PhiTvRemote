@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.os.Build;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -19,8 +18,8 @@ import java.util.List;
 
 public class DiscoveryProgressbar extends View {
     private Paint mPaint;
-    private int mMaxWidth = 260;
-    private int mMaxWidthWithAndroid7 = 180;
+    private int mWidth;
+    private int mHeight;
     private boolean mIsStarting = false;
     private List<String> mAlphaList = new ArrayList<>();
     private List<String> mStartWidthList = new ArrayList<>();
@@ -51,24 +50,84 @@ public class DiscoveryProgressbar extends View {
     }
 
     @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+
+        int measuredHeight = measureHeight(heightMeasureSpec);
+        int measuredWidth = measureWidth(widthMeasureSpec);
+
+        setMeasuredDimension(measuredWidth, measuredHeight);
+
+        mWidth = getWidth();
+        mHeight = getHeight();
+
+    }
+
+    /**
+     * 测量宽度
+     *
+     * @param measureSpec
+     * @return
+     */
+    private int measureWidth(int measureSpec) {
+        int specMode = MeasureSpec.getMode(measureSpec);
+        int specSize = MeasureSpec.getSize(measureSpec);
+
+        int result = 0;
+
+        if (specMode == MeasureSpec.AT_MOST) {
+            result = getWidth();
+        } else if (specMode == MeasureSpec.EXACTLY) {
+            result = specSize;
+        }
+        return result;
+    }
+
+    /**
+     * 测量高度
+     *
+     * @param measureSpec
+     * @return
+     */
+    private int measureHeight(int measureSpec) {
+
+        int specMode = MeasureSpec.getMode(measureSpec);
+        int specSize = MeasureSpec.getSize(measureSpec);
+
+        int result = 0;
+
+        if (specMode == MeasureSpec.AT_MOST) {
+
+            result = specSize;
+        } else if (specMode == MeasureSpec.EXACTLY) {
+            result = specSize;
+        }
+        return result;
+    }
+
+
+    @Override
     public void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        int maxWidth = (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) ? mMaxWidthWithAndroid7 : mMaxWidth;
 
         setBackgroundColor(Color.TRANSPARENT);
         for (int i = 0; i < mAlphaList.size(); i++) {
             int mAlpha = Integer.parseInt(mAlphaList.get(i));
             int mStartWidth = Integer.parseInt(mStartWidthList.get(i));
             mPaint.setAlpha(mAlpha);
-            canvas.drawCircle(getWidth() / 2, getHeight() / 2, mStartWidth + CIRCLE_MIN_RADIUS,
-                    mPaint);
-            if (mIsStarting && mAlpha > 0 && mStartWidth < maxWidth) {
+            int radius = mStartWidth + CIRCLE_MIN_RADIUS;
+            if (radius <= mWidth / 2) {
+                canvas.drawCircle(mWidth / 2, mHeight / 2, radius, mPaint);
+            } else {
+                continue;
+            }
+            if (mIsStarting && mAlpha > 0 && mStartWidth < 11 * mWidth / 28) {
                 mAlphaList.set(i, (mAlpha - 1) + "");
                 mStartWidthList.set(i, (mStartWidth + 1) + "");
             }
         }
         String startLength = mStartWidthList.get(mStartWidthList.size() - 1);
-        if (mIsStarting && Integer.parseInt(startLength) == maxWidth / 5) {
+        if (mIsStarting && Integer.parseInt(startLength) == mWidth / 7) {
             mAlphaList.add(mInitAlphaList);
             mStartWidthList.add(mInitStartWidthList);
         }
