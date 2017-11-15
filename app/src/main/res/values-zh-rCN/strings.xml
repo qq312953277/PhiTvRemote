@@ -74,7 +74,7 @@
     <string name="reject_seek">视频已暂停，不可拖动</string>
     <string name="first_picture">当前是第一张</string>
     <string name="last_picture">当前是最后一张</string>
-    <string name="dissupport_screenprojection">该视频不支持投屏</string>
+    <string name="dissupport_screenprojection">该视频太大，不支持投屏</string>
 
     <!--我的-->
     <string name="personal_title">我的</string>

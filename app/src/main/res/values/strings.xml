@@ -56,7 +56,7 @@
     <string name="reject_seek">reject seek when video pause</string>
     <string name="first_picture">already first picture</string>
     <string name="last_picture">already last picture</string>
-    <string name="dissupport_screenprojection">The video does not support casting</string>
+    <string name="dissupport_screenprojection">Video is too big to support the screenproject </string>
 
     <!--mine-->
     <string name="personal_title">Mine</string>
