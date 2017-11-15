@@ -15,6 +15,7 @@ import com.phicomm.remotecontrol.modules.main.screenprojection.activities.VideoC
 import com.phicomm.remotecontrol.modules.main.screenprojection.adapter.VideoAdapter;
 import com.phicomm.remotecontrol.modules.main.screenprojection.contract.VideoContentContract;
 import com.phicomm.remotecontrol.modules.main.screenprojection.entity.DeviceDisplay;
+import com.phicomm.remotecontrol.modules.main.screenprojection.entity.MItem;
 import com.phicomm.remotecontrol.modules.main.screenprojection.event.CheckTargetEvent;
 import com.phicomm.remotecontrol.modules.main.screenprojection.model.MediaContentBiz;
 import com.phicomm.remotecontrol.modules.main.screenprojection.model.UpnpServiceBiz;
@@ -40,6 +41,8 @@ public class VideoFragment extends BaseFragment implements VideoContentContract.
     private VideoAdapter mVideoAdapter;
     private VideoContentContract.VideoContentPresenter mVideoContentPresenter;
     private int mPosition;
+    private static final int mConversionsSize = 1024 * 1024 * 1024;
+    private static final double mMaxAllowSize = 2.0;
 
     @BindView(R.id.video_listview)
     ListView mListView;
@@ -69,7 +72,12 @@ public class VideoFragment extends BaseFragment implements VideoContentContract.
     @Override
     public void onEventMainThread(CheckTargetEvent event) {
         if (event.getTargetState()) {
-            selectDMPToPlay(MediaContentBiz.mVideoItemArrayList.get(mPosition), VideoControlActivity.class, mPosition);
+            MItem mItem = MediaContentBiz.mVideoItemArrayList.get(mPosition);
+            if ((double) (mItem.getFirstResource().getSize()) / mConversionsSize <= mMaxAllowSize) {
+                selectDMPToPlay(mItem, VideoControlActivity.class, mPosition);
+            } else {
+                CommonUtils.showShortToast(getString(R.string.dissupport_screenprojection));
+            }
         } else {
             CommonUtils.showShortToast(getString(R.string.fail_screenprojection));
         }
