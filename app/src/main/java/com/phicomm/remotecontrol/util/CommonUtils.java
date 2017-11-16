@@ -63,9 +63,9 @@ public class CommonUtils {
     public static void startIntent(Activity activity, Class clazz) {
         BaseApplication.getApplication().remove(activity);
         activity.startActivity(new Intent(activity, clazz));
-        //activity.finish();
+        activity.overridePendingTransition(R.animator.open_from_bottom, R.animator.close_from_top);
         //实现淡入浅出的效果
-        activity.overridePendingTransition(R.animator.alpha_anim_in, R.animator.alpha_anim_out);
+//        activity.overridePendingTransition(R.animator.alpha_anim_in, R.animator.alpha_anim_out);
     }
 
     public static void showToastCenter(String str) {
