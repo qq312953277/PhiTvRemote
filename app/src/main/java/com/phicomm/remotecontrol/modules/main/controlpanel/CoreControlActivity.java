@@ -149,7 +149,9 @@ public class CoreControlActivity extends BaseActivity implements UpdateView, Spi
         checkNewVersion();
     }
 
-
+    /*
+    CircleView中使用getMeasuredWidth后，这里以及Manifest.xml可以不需要特殊处理，但是activity重绘比较消耗资源，所以还是禁止它重绘，暂时不删掉
+    */
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);

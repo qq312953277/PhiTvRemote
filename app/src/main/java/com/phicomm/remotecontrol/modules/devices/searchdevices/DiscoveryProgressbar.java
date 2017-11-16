@@ -53,58 +53,10 @@ public class DiscoveryProgressbar extends View {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 
-        int measuredHeight = measureHeight(heightMeasureSpec);
-        int measuredWidth = measureWidth(widthMeasureSpec);
-
-        setMeasuredDimension(measuredWidth, measuredHeight);
-
-        mWidth = getWidth();
-        mHeight = getHeight();
+        mWidth = getMeasuredWidth();
+        mHeight = getMeasuredHeight();
 
     }
-
-    /**
-     * 测量宽度
-     *
-     * @param measureSpec
-     * @return
-     */
-    private int measureWidth(int measureSpec) {
-        int specMode = MeasureSpec.getMode(measureSpec);
-        int specSize = MeasureSpec.getSize(measureSpec);
-
-        int result = 0;
-
-        if (specMode == MeasureSpec.AT_MOST) {
-            result = getWidth();
-        } else if (specMode == MeasureSpec.EXACTLY) {
-            result = specSize;
-        }
-        return result;
-    }
-
-    /**
-     * 测量高度
-     *
-     * @param measureSpec
-     * @return
-     */
-    private int measureHeight(int measureSpec) {
-
-        int specMode = MeasureSpec.getMode(measureSpec);
-        int specSize = MeasureSpec.getSize(measureSpec);
-
-        int result = 0;
-
-        if (specMode == MeasureSpec.AT_MOST) {
-
-            result = specSize;
-        } else if (specMode == MeasureSpec.EXACTLY) {
-            result = specSize;
-        }
-        return result;
-    }
-
 
     @Override
     public void onDraw(Canvas canvas) {

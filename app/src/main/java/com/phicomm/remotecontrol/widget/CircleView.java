@@ -71,58 +71,14 @@ public class CircleView extends View {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-
-        int measuredHeight = measureHeight(heightMeasureSpec);
-        int measuredWidth = measureWidth(widthMeasureSpec);
-
-        setMeasuredDimension(measuredWidth, measuredHeight);
-
-        mCenter = getWidth() / 2;
+        /*
+        getMeasuredWidth()获取的是view原始的大小，也就是这个view在XML文件中配置或者是代码中设置的大小。我们需要的就是xml原始宽高
+        getWidth（）获取的是这个view最终显示的大小，这个大小有可能等于原始的大小也有可能不等于原始大小。
+         */
+        mCenter = getMeasuredWidth() / 2;
         mOutRadius = mCenter - 5;//大圆不能填满父View，否则安卓7.0点击按键后出现边缘橙色阴影
         mInnerCircleRadius = mCenter / 2;
         setOnTouchListener(onTouchListener);
-    }
-
-    /**
-     * 测量宽度
-     *
-     * @param measureSpec
-     * @return
-     */
-    private int measureWidth(int measureSpec) {
-        int specMode = MeasureSpec.getMode(measureSpec);
-        int specSize = MeasureSpec.getSize(measureSpec);
-
-        int result = 0;
-
-        if (specMode == MeasureSpec.AT_MOST) {
-            result = getWidth();
-        } else if (specMode == MeasureSpec.EXACTLY) {
-            result = specSize;
-        }
-        return result;
-    }
-
-    /**
-     * 测量高度
-     *
-     * @param measureSpec
-     * @return
-     */
-    private int measureHeight(int measureSpec) {
-
-        int specMode = MeasureSpec.getMode(measureSpec);
-        int specSize = MeasureSpec.getSize(measureSpec);
-
-        int result = 0;
-
-        if (specMode == MeasureSpec.AT_MOST) {
-
-            result = specSize;
-        } else if (specMode == MeasureSpec.EXACTLY) {
-            result = specSize;
-        }
-        return result;
     }
 
     /**

@@ -15,8 +15,8 @@
 
         <ImageView
             android:id="@+id/imageViewTV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="21dp"
+            android:layout_height="18dp"
             android:src="@drawable/phi_pic_tv" />
     </LinearLayout>
 
