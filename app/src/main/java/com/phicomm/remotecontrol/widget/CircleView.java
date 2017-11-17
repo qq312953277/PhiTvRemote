@@ -175,10 +175,9 @@ public class CircleView extends View {
         mPaint.setAntiAlias(true);
         mPaint.setStyle(Paint.Style.FILL);
         canvas.drawCircle(mCenter, mCenter, mInnerCircleRadius, mPaint);
+
         mPaint.setColor(getResources().getColor(R.color.color_96968D));
-        mPaint.setTextSize(sp2px(35));
-        mPaint.setTypeface(Typeface.SANS_SERIF);
-        canvas.drawText("OK", 4 * mCenter / 5, 9 * mCenter / 8, mPaint);
+        drawOK(canvas);
     }
 
     private void drawPressInnerCircle(Canvas canvas) {
@@ -186,10 +185,26 @@ public class CircleView extends View {
         mPaint.setAntiAlias(true);
         mPaint.setStyle(Paint.Style.FILL);
         canvas.drawCircle(mCenter, mCenter, mInnerCircleRadius, mPaint);
+
         mPaint.setColor(getResources().getColor(R.color.white_normal));
-        mPaint.setTextSize(sp2px(35));
-        mPaint.setTypeface(Typeface.SANS_SERIF);//设置字体
-        canvas.drawText("OK", 4 * mCenter / 5, 9 * mCenter / 8, mPaint);
+        drawOK(canvas);
+    }
+
+    private void drawOK(Canvas canvas) {
+        mPaint.setTextSize(sp2px(35)); //大小
+        mPaint.setTypeface(Typeface.SANS_SERIF); //字体
+        mPaint.setStyle(Paint.Style.FILL);
+        mPaint.setTextAlign(Paint.Align.CENTER); //基准线默认LEFT
+
+        //一定要在设置字体大小或者样式等等一系列会影响字体的方法后在调用,不然获取到的top和bottom值不准
+        Paint.FontMetrics fontMetrics = mPaint.getFontMetrics();
+        //top基线到字体上边框的距离，为负数, bottom基线到字体下边框的距离
+        float top = fontMetrics.top;
+        float bottom = fontMetrics.bottom;
+        //基准线下移量，top、bottom是相对于基准线的,所以公式为 (-top+bottom)/2 - bottom = (-bottom - top) / 2
+        int baseLineX = mCenter;
+        int baseLineY = mCenter - (int) (bottom + top) / 2;
+        canvas.drawText("OK", baseLineX, baseLineY, mPaint);
     }
 
     /**
