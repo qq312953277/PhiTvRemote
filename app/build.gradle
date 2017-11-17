@@ -11,8 +11,8 @@ android {
         applicationId "com.phicomm.remotecontrol"
         minSdkVersion 19
         targetSdkVersion 25
-        versionCode 16
-        versionName "1.0.0.2016"
+        versionCode 17
+        versionName "1.0.0.2017"
         buildConfigField "String", "LOG_TAG", "\"phicomm\""
         multiDexEnabled true
     }
@@ -73,7 +73,7 @@ android {
         }
     }
 
-    // rename output file
+    //rename output file
     applicationVariants.all { variant ->
         variant.outputs.each { output ->
             def oldOutputApkFile = output.outputFile
