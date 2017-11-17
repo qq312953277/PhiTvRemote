@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.phicomm.remotecontrol.TaskQuene;
 import com.phicomm.remotecontrol.httpclient.PhiCallBack;
+import com.phicomm.remotecontrol.util.DevicesUtil;
 import com.phicomm.remotecontrol.util.LogUtil;
 
 /**
@@ -37,24 +38,26 @@ public class PanelPresenter implements PanelContract.Presenter {
 
     @Override
     public void sendKeyEvent(final int keyCode) {
-        TaskQuene.getInstance().sendKeyEvent(keyCode, new PhiCallBack() {
-            @Override
-            public void onSuccess(Object model) {
-                LogUtil.d("keyevent " + keyCode + " : SUCCESS");
-            }
-
-            @Override
-            public void onFailure(String msg) {
-                LogUtil.d("keyevent " + keyCode + " : fail");
-                if (mView != null) {
-                    mView.connectFail();
+        if (DevicesUtil.getTarget() != null) {
+            TaskQuene.getInstance().sendKeyEvent(keyCode, new PhiCallBack() {
+                @Override
+                public void onSuccess(Object model) {
+                    LogUtil.d("keyevent " + keyCode + " : SUCCESS");
                 }
-            }
 
-            @Override
-            public void onFinish() {
-            }
-        });
+                @Override
+                public void onFailure(String msg) {
+                    LogUtil.d("keyevent " + keyCode + " : fail");
+                    if (mView != null) {
+                        mView.connectFail();
+                    }
+                }
+
+                @Override
+                public void onFinish() {
+                }
+            });
+        }
     }
 
     @Override
@@ -77,21 +80,23 @@ public class PanelPresenter implements PanelContract.Presenter {
 
     @Override
     public void sendCommand(final String cmd) {
-        TaskQuene.getInstance().sendCommand(cmd, new PhiCallBack() {
-            @Override
-            public void onSuccess(Object model) {
-                LogUtil.d("sendCommand " + cmd + " : SUCCESS");
-            }
+        if (DevicesUtil.getTarget() != null) {
+            TaskQuene.getInstance().sendCommand(cmd, new PhiCallBack() {
+                @Override
+                public void onSuccess(Object model) {
+                    LogUtil.d("sendCommand " + cmd + " : SUCCESS");
+                }
 
-            @Override
-            public void onFailure(String msg) {
-                LogUtil.d("sendCommand " + cmd + " : fail");
-                mView.connectFail();
-            }
+                @Override
+                public void onFailure(String msg) {
+                    LogUtil.d("sendCommand " + cmd + " : fail");
+                    mView.connectFail();
+                }
 
-            @Override
-            public void onFinish() {
-            }
-        });
+                @Override
+                public void onFinish() {
+                }
+            });
+        }
     }
 }
