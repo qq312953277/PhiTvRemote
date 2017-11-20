@@ -17,7 +17,8 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:gravity="left"
-            android:text="share"
+            android:maxLines="1"
+            android:maxWidth="120dp"
             android:textColor="@color/listview_divider"
             android:textSize="@dimen/text_size_14sp" />
 
@@ -34,8 +35,9 @@
             android:id="@+id/count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:ellipsize="end"
             android:gravity="left"
-            android:text=""
+            android:maxLines="1"
             android:textColor="@color/color_80484848"
             android:textSize="@dimen/text_size_14sp" />
     </LinearLayout>

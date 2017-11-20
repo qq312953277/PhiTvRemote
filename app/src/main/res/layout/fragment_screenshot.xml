@@ -20,21 +20,26 @@
             android:layout_centerHorizontal="true"
             android:background="@drawable/tv_bg" />
 
-        <LinearLayout
+        <FrameLayout
             android:id="@+id/ll_tv"
             android:layout_width="308dp"
-            android:layout_height="196dp"
+            android:layout_height="200dp"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="43.5dp">
+            android:layout_marginTop="41dp">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/black" />
 
             <ImageView
                 android:id="@+id/iv_show"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="centerCrop"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:src="@drawable/tv_not_connected" />
-        </LinearLayout>
+        </FrameLayout>
 
 
         <ImageButton

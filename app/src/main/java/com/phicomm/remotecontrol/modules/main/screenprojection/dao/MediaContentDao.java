@@ -118,7 +118,7 @@ public class MediaContentDao {
         try {
             while (cur.moveToNext()) {
                 String mBucketName = cur.getString(cur.getColumnIndexOrThrow(Images.Media.BUCKET_DISPLAY_NAME));
-                if (mBucketName.equals(mAlbumName)) {
+                if (mBucketName.equalsIgnoreCase(mAlbumName)) {
                     String id = ContentTree.IMAGE_PREFIX + cur.getInt(cur.getColumnIndex(MediaStore.Images.Media._ID));
                     String creator = "unkown";
                     String filePath = cur.getString(cur.getColumnIndex(MediaStore.Images.Media.DATA));
