@@ -10,6 +10,9 @@ import android.widget.LinearLayout;
 import com.phicomm.remotecontrol.R;
 import com.phicomm.remotecontrol.RemoteBoxDevice;
 import com.phicomm.remotecontrol.modules.main.controlpanel.DeviceDetectEvent;
+import com.phicomm.remotecontrol.modules.main.screenprojection.event.CheckTargetEvent;
+import com.phicomm.remotecontrol.modules.main.screenprojection.event.SetSeekBarStateEvent;
+import com.phicomm.remotecontrol.modules.main.screenprojection.event.StopVideoEvent;
 import com.phicomm.remotecontrol.modules.personal.account.event.LogoutEvent;
 import com.phicomm.remotecontrol.modules.personal.account.event.MultiLogoutEvent;
 import com.phicomm.remotecontrol.modules.personal.account.event.OffLineEvent;
@@ -118,6 +121,14 @@ public class BaseActivity extends AppCompatActivity {
     public void onEventMainThread(DeviceDetectEvent event) {
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventMainThread(StopVideoEvent event) {
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventMainThread(SetSeekBarStateEvent event) {
+    }
+
     /**
      * Logout EventBus
      * 该子类凡是调用 post(new LogoutEvent())都会执行此方法
@@ -160,6 +171,10 @@ public class BaseActivity extends AppCompatActivity {
             }
         });
         builder.show();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventMainThread(CheckTargetEvent event) {
     }
 
     public void onClick(View view) {

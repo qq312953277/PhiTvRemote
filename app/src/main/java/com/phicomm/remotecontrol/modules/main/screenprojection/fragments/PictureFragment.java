@@ -12,7 +12,7 @@ import com.phicomm.remotecontrol.R;
 import com.phicomm.remotecontrol.base.BaseFragment;
 import com.phicomm.remotecontrol.modules.main.screenprojection.activities.AlbumItemActivity;
 import com.phicomm.remotecontrol.modules.main.screenprojection.adapter.AlbumsAdapter;
-import com.phicomm.remotecontrol.modules.main.screenprojection.event.ClickStateEvent;
+import com.phicomm.remotecontrol.modules.main.screenprojection.event.SetClickStateEvent;
 import com.phicomm.remotecontrol.modules.main.screenprojection.model.MediaContentBiz;
 import com.phicomm.remotecontrol.util.SettingUtil;
 
@@ -56,7 +56,7 @@ public class PictureFragment extends BaseFragment {
     }
 
     @Override
-    public void onEventMainThread(ClickStateEvent event) {
+    public void onEventMainThread(SetClickStateEvent event) {
         if (event.getClickState()) {
             mGridView.setEnabled(true);
         }

@@ -4,10 +4,10 @@ package com.phicomm.remotecontrol.modules.main.screenprojection.event;
  * Created by kang.sun on 2017/10/25.
  */
 
-public class ClickStateEvent {
+public class SetClickStateEvent {
     private boolean mIsClickable;
 
-    public ClickStateEvent(boolean isClickable) {
+    public SetClickStateEvent(boolean isClickable) {
         this.mIsClickable = isClickable;
     }
 

@@ -4,14 +4,12 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.View;
-import android.widget.LinearLayout;
 
 import com.phicomm.remotecontrol.modules.main.controlpanel.DeviceDetectEvent;
 import com.phicomm.remotecontrol.modules.main.controlpanel.LogoffNoticeEvent;
 import com.phicomm.remotecontrol.modules.main.screenprojection.event.CheckTargetEvent;
-import com.phicomm.remotecontrol.modules.main.screenprojection.event.ClickStateEvent;
+import com.phicomm.remotecontrol.modules.main.screenprojection.event.SetClickStateEvent;
 import com.phicomm.remotecontrol.util.DialogUtils;
-import com.phicomm.remotecontrol.util.ScreenUtils;
 import com.phicomm.remotecontrol.util.SettingUtil;
 
 import org.greenrobot.eventbus.EventBus;
@@ -48,7 +46,7 @@ public class BaseFragment extends Fragment {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventMainThread(ClickStateEvent event) {
+    public void onEventMainThread(SetClickStateEvent event) {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

@@ -22,7 +22,7 @@ import com.phicomm.remotecontrol.constant.PhiConstants;
 import com.phicomm.remotecontrol.modules.main.screenprojection.constants.DeviceDisplayListOperation;
 import com.phicomm.remotecontrol.modules.main.screenprojection.entity.DeviceDisplay;
 import com.phicomm.remotecontrol.modules.main.screenprojection.entity.DisplayDeviceList;
-import com.phicomm.remotecontrol.modules.main.screenprojection.event.ClickStateEvent;
+import com.phicomm.remotecontrol.modules.main.screenprojection.event.SetClickStateEvent;
 import com.phicomm.remotecontrol.modules.main.screenprojection.presenter.LocalMediaItemPresenter;
 import com.phicomm.remotecontrol.modules.main.screenprojection.presenter.LocalMediaItemPresenterImpl;
 import com.phicomm.remotecontrol.util.DevicesUtil;
@@ -34,8 +34,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-
-import static com.phicomm.remotecontrol.constant.PhiConstants.TITLE_BAR_HEIGHT_DP;
 
 
 /**
@@ -141,7 +139,7 @@ public class LocalMediaItemActivity extends BaseActivity implements MyFragmentAd
     private void setEnable() {
         mPic.setEnabled(true);
         mVid.setEnabled(true);
-        EventBus.getDefault().post(new ClickStateEvent(true));
+        EventBus.getDefault().post(new SetClickStateEvent(true));
     }
 
     @Override

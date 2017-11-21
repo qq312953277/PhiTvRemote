@@ -13,10 +13,14 @@ import com.phicomm.remotecontrol.R;
 import com.phicomm.remotecontrol.base.BaseActivity;
 import com.phicomm.remotecontrol.base.BaseApplication;
 import com.phicomm.remotecontrol.constant.KeyCode;
+import com.phicomm.remotecontrol.modules.main.controlpanel.DeviceDetectEvent;
 import com.phicomm.remotecontrol.modules.main.controlpanel.PanelContract;
 import com.phicomm.remotecontrol.modules.main.controlpanel.PanelPresenter;
 import com.phicomm.remotecontrol.modules.main.screenprojection.contract.VideoControlContract;
+import com.phicomm.remotecontrol.modules.main.screenprojection.event.SetSeekBarStateEvent;
+import com.phicomm.remotecontrol.modules.main.screenprojection.event.StopVideoEvent;
 import com.phicomm.remotecontrol.modules.main.screenprojection.presenter.VideoControlPresenterImpl;
+import com.phicomm.remotecontrol.modules.main.screenprojection.utils.DurationUtil;
 import com.phicomm.remotecontrol.util.CommonUtils;
 import com.phicomm.remotecontrol.util.SettingUtil;
 import com.phicomm.remotecontrol.widget.MarqueeText;
@@ -61,6 +65,7 @@ public class VideoControlActivity extends BaseActivity implements VideoControlCo
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mediacontrol);
         initTitleView();
+        sbPlayback.setEnabled(false);
         mVideoControlPresenter = new VideoControlPresenterImpl(this, (BaseApplication) getApplication(),
                 sbPlayback, tvTotalTime, tvCurTime);
         canSeeking = true;
@@ -83,6 +88,21 @@ public class VideoControlActivity extends BaseActivity implements VideoControlCo
     }
 
     @Override
+    public void onEventMainThread(StopVideoEvent event) {
+        if (event.getPlayState()) {
+            mVideoControlPresenter.stopVideo();
+            finish();
+        }
+    }
+
+    @Override
+    public void onEventMainThread(SetSeekBarStateEvent event) {
+        if (event.getSeekBarState()) {
+            sbPlayback.setEnabled(true);
+        }
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         mVideoControlPresenter.destroy();
@@ -97,7 +117,12 @@ public class VideoControlActivity extends BaseActivity implements VideoControlCo
                 if (canSeeking) {
                     int prog = seekBar.getProgress();
                     String totalTime = tvTotalTime.getText().toString();
-                    mVideoControlPresenter.seekVideo(totalTime, prog);
+                    if (DurationUtil.convertToSeconds(totalTime) * (100 - prog) / 100 < 3) {
+                        mVideoControlPresenter.stopVideo();
+                        finish();
+                    } else {
+                        mVideoControlPresenter.seekVideo(totalTime, prog);
+                    }
                 } else {
                     seekBar.setProgress(mSeekBarProg);
                 }

@@ -17,5 +17,10 @@ public class DurationUtil {
                 + ":" + (minutes < 10 ? "0" : "") + minutes
                 + ":" + (second < 10 ? "0" : "") + second);
     }
+
+    public static int convertToSeconds(String time) {
+        String[] timeArray = time.split(":");
+        return Integer.parseInt(timeArray[0]) * 3600 + Integer.parseInt(timeArray[1]) * 60 + Integer.parseInt(timeArray[2]);
+    }
 }
 
